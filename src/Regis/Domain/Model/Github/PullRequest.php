@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Domain\Model;
+namespace Regis\Domain\Model\Github;
 
 class PullRequest
 {
@@ -10,21 +10,13 @@ class PullRequest
     private $number;
     private $head;
     private $base;
-    /** @var Commit[] */
-    private $commits = [];
 
-    public function withCommits(array $commits): PullRequest
-    {
-        return new static($this->repository, $this->number, $this->head, $this->base, $commits);
-    }
-
-    public function __construct(Repository $repository, int $number, string $head, string $base, array $commits = [])
+    public function __construct(Repository $repository, int $number, string $head, string $base)
     {
         $this->repository = $repository;
         $this->number = $number;
         $this->head = $head;
         $this->base = $base;
-        $this->commits = $commits;
     }
 
     public function getRepository(): Repository
@@ -45,13 +37,5 @@ class PullRequest
     public function getBase(): string
     {
         return $this->base;
-    }
-
-    /**
-     * @return Commit[]
-     */
-    public function getCommits(): array 
-    {
-        return $this->commits;
     }
 }

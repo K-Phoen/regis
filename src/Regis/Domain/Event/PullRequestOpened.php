@@ -2,7 +2,7 @@
 
 namespace Regis\Domain\Event;
 
-use Regis\Domain\Model\PullRequest;
+use Regis\Domain\Model\Github\PullRequest;
 
 class PullRequestOpened
 {

@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Regis\Domain\Inspection;
 
+use Regis\Domain\Model\Violation;
 use Symfony\Component\Process\Process;
 
 use Regis\Domain\Inspection;
-use Regis\Domain\Model;
+use Regis\Domain\Model\Git as Model;
 use Regis\Domain\Reporter;
 
 class CodeSniffer implements Inspection
@@ -47,7 +48,7 @@ class CodeSniffer implements Inspection
                 continue;
             }
 
-            yield new Model\Violation($file->getNewName(), $position, $message['message']);
+            yield new Violation($file->getNewName(), $position, $message['message']);
         }
     }
 

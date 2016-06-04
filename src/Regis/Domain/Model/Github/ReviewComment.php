@@ -2,7 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Regis\Domain\Model;
+namespace Regis\Domain\Model\Github;
+
+use Regis\Domain\Model\Violation;
 
 class ReviewComment
 {

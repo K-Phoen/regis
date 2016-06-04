@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Regis\Github;
 
 use Github\HttpClient\HttpClientInterface;
-use Regis\Domain\Model;
+use Regis\Domain\Model\Github as Model;
 
 class Client
 {

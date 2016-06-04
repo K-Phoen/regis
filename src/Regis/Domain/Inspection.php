@@ -6,5 +6,5 @@ namespace Regis\Domain;
 
 interface Inspection
 {
-    function inspectDiff(Model\Diff $diff): \Traversable;
+    function inspectDiff(Model\Git\Diff $diff): \Traversable;
 }

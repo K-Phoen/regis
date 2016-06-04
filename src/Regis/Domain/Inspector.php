@@ -21,7 +21,7 @@ class Inspector
         $this->inspections = $inspections;
     }
 
-    public function inspectPullRequest(Model\PullRequest $pullRequest)
+    public function inspectPullRequest(Model\Github\PullRequest $pullRequest)
     {
         $gitRepository = $this->git->getRepository($pullRequest->getRepository());
         $gitRepository->update();
@@ -30,7 +30,7 @@ class Inspector
         $this->inspectDiff($pullRequest, $diff);
     }
 
-    private function inspectDiff(Model\PullRequest $pullRequest, Model\Diff $diff)
+    private function inspectDiff(Model\Github\PullRequest $pullRequest, Model\Git\Diff $diff)
     {
         foreach ($this->inspections as $inspection) {
             foreach ($inspection->inspectDiff($diff) as $violation) {

@@ -17,8 +17,8 @@ class Github implements Reporter
         $this->client = $client;
     }
 
-    public function report(Model\Violation $violation, Model\PullRequest $pullRequest)
+    public function report(Model\Violation $violation, Model\Github\PullRequest $pullRequest)
     {
-        $this->client->sendComment($pullRequest, Model\ReviewComment::fromViolation($violation));
+        $this->client->sendComment($pullRequest, Model\Github\ReviewComment::fromViolation($violation));
     }
 }

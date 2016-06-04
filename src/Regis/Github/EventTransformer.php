@@ -7,7 +7,7 @@ namespace Regis\Github;
 use Symfony\Component\HttpFoundation\Request;
 
 use Regis\Domain\Event\PullRequestOpened;
-use Regis\Domain\Model;
+use Regis\Domain\Model\Github as Model;
 
 class EventTransformer
 {
@@ -41,8 +41,6 @@ class EventTransformer
             $payload['pull_request']['head']['sha'], $payload['pull_request']['base']['sha']
         );
 
-        $commits = $this->client->getCommits($pullRequest);
-
-        return new PullRequestOpened($pullRequest->withCommits($commits));
+        return new PullRequestOpened($pullRequest);
     }
 }

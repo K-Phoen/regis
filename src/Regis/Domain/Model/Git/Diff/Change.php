@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Domain\Model\Diff;
+namespace Regis\Domain\Model\Git\Diff;
 
 class Change
 {

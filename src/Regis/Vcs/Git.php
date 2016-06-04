@@ -27,7 +27,7 @@ class Git
         $this->repositoriesDirectory = $repositoriesDirectory;
     }
 
-    public function getRepository(Model\Repository $repository): Repository
+    public function getRepository(Model\Github\Repository $repository): Repository
     {
         $repositoryPath = $this->getRepositoryPath($repository);
 
@@ -47,7 +47,7 @@ class Git
         return new Repository($gitRepo);
     }
 
-    private function getRepositoryPath(Model\Repository $repository): string
+    private function getRepositoryPath(Model\Github\Repository $repository): string
     {
         return sprintf('%s/%s/%s', $this->repositoriesDirectory, $repository->getOwner(), $repository->getName());
     }

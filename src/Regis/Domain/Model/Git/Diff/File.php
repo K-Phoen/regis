@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Regis\Domain\Model\Diff;
+namespace Regis\Domain\Model\Git\Diff;
 
-use Regis\Domain\Model\Blob;
+use Regis\Domain\Model\Git\Blob;
 
 class File
 {
