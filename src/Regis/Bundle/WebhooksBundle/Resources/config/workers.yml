@@ -1,0 +1,4 @@
+services:
+    regis.worker.webhook_event:
+        class: Regis\Bundle\WebhooksBundle\Worker\WebhookEvent
+        arguments: [ '@regis.inspector' ]

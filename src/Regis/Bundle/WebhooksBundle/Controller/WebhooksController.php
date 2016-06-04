@@ -2,11 +2,12 @@
 
 namespace Regis\Bundle\WebhooksBundle\Controller;
 
-use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
-use Regis\Domain\Events;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+
+use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
+use Regis\Domain\Events;
 
 class WebhooksController extends Controller
 {

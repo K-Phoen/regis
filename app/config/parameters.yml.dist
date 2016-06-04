@@ -11,3 +11,9 @@ parameters:
 
     git_binary: /usr/bin/git
     repositories_directory: '%kernel.root_dir%/../var/repositories'
+
+    rabbitmq_host: localhost
+    rabbitmq_port: 5672
+    rabbitmq_user: ~
+    rabbitmq_password: ~
+    rabbitmq_vhost: regis_vhost

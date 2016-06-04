@@ -14,8 +14,9 @@ class AppKernel extends Kernel
             new Symfony\Bundle\MonologBundle\MonologBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
-            new AppBundle\AppBundle(),
+            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
 
+            new AppBundle\AppBundle(),
             new Regis\Bundle\WebhooksBundle\RegisWebhooksBundle(),
         ];
 

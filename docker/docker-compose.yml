@@ -1,7 +1,31 @@
 version: '2'
 services:
+    rabbit:
+        image: 'rabbitmq:3.6-management'
+        ports:
+            - 8081:15672
+        environment:
+            - RABBITMQ_DEFAULT_USER=admin
+            - RABBITMQ_DEFAULT_PASS=admin
+            - RABBITMQ_DEFAULT_VHOST=regis_vhost
+
+    worker:
+        build:
+            context: .
+            dockerfile: ./Dockerfile-worker
+        depends_on:
+            - rabbit
+        volumes:
+            - ..:/var/www/html
+        command: ./bin/console rabbitmq:consumer -vvv webhook_event
+
     web:
-        build: .
+        build:
+            context: .
+            dockerfile: Dockerfile-web
+        depends_on:
+            - rabbit
+            - worker
         ports:
             - '8080:80'
         volumes:

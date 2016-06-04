@@ -2,20 +2,20 @@
 
 namespace Regis\Bundle\WebhooksBundle\EventListener;
 
+use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
 use Regis\Domain\Event\PullRequestOpened;
 use Regis\Domain\Events;
-use Regis\Domain\Inspector;
 
 class PullRequestListener implements EventSubscriberInterface
 {
-    private $inspector;
+    private $producer;
 
-    public function __construct(Inspector $inspector)
+    public function __construct(ProducerInterface $producer)
     {
-        $this->inspector = $inspector;
+        $this->producer = $producer;
     }
 
     public static function getSubscribedEvents()
@@ -32,6 +32,6 @@ class PullRequestListener implements EventSubscriberInterface
         /** @var PullRequestOpened $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
-        $this->inspector->inspectPullRequest($domainEvent->getPullRequest());
+        $this->producer->publish(serialize($domainEvent));
     }
 }
