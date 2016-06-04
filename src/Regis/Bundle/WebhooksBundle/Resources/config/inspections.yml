@@ -6,10 +6,6 @@ services:
             - '@regis.violation_reporter.github'
             - [ '@regis.inspection.code_sniffer' ]
 
-    regis.inspection.fos_php_cs_fixer:
-        class: Regis\Domain\Inspection\FosPhpCsFixer
-        public: false
-
     regis.inspection.code_sniffer:
         class: Regis\Domain\Inspection\CodeSniffer
         arguments: [ '%phpcs_binary%' ]

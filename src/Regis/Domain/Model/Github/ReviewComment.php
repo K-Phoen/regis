@@ -9,7 +9,6 @@ use Regis\Domain\Model\Violation;
 class ReviewComment
 {
     private $content;
-    private $commit;
     private $position;
     private $file;
 
@@ -17,29 +16,20 @@ class ReviewComment
     {
         return new static(
             $violation->getFile(), $violation->getPosition(),
-            $violation->getDescription(), $violation->getCommit() ? $violation->getCommit()->getSha() : null
+            $violation->getDescription()
         );
     }
 
-    public function __construct(string $file, int $position, string $content, string $commit = null)
+    public function __construct(string $file, int $position, string $content)
     {
         $this->file = $file;
         $this->position = $position;
         $this->content = $content;
-        $this->commit = $commit;
     }
 
     public function getContent(): string
     {
         return $this->content;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getCommit()
-    {
-        return $this->commit;
     }
 
     public function getPosition(): int

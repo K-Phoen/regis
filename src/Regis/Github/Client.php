@@ -27,10 +27,10 @@ class Client
         $repository = $pullRequest->getRepository();
 
         $this->client->api('pull_request')->comments()->create($repository->getOwner(), $repository->getName(), $pullRequest->getNumber(), [
-            'commit_id' => $comment->getCommit() ?: $pullRequest->getHead(),
-            'path'      => $comment->getFile(),
-            'position'  => $comment->getPosition(),
-            'body'      => $comment->getContent(),
+            'commit_id' => $pullRequest->getHead(),
+            'path' => $comment->getFile(),
+            'position' => $comment->getPosition(),
+            'body' => $comment->getContent(),
         ]);
     }
 
@@ -38,6 +38,7 @@ class Client
     {
         if (!$this->authenticated) {
             $this->client->authenticate($this->apiToken, '', \Github\Client::AUTH_URL_TOKEN);
+            $this->authenticated = true;
         }
     }
 }

@@ -9,20 +9,19 @@ class Violation
     private $file;
     private $position;
     private $description;
-    private $commit;
 
-    public function __construct(string $file, int $position, string $description, Commit $commit = null)
+    public function __construct(string $file, int $position, string $description)
     {
         $this->file = $file;
         $this->position = $position;
         $this->description = $description;
-        $this->commit = $commit;
     }
 
     public function getDescription(): string
     {
         return $this->description;
     }
+
     public function getFile(): string
     {
         return $this->file;
@@ -32,13 +31,4 @@ class Violation
     {
         return $this->position;
     }
-
-    /**
-     * @return Commit|null
-     */
-    public function getCommit()
-    {
-        return $this->commit;
-    }
-
 }
