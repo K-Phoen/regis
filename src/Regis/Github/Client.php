@@ -34,19 +34,6 @@ class Client
         ]);
     }
 
-    public function getCommits(Model\PullRequest $pullRequest)
-    {
-        $this->assertAuthenticated();
-
-        $repository = $pullRequest->getRepository();
-
-        $commits = $this->client->api('pull_request')->commits($repository->getOwner(), $repository->getName(), $pullRequest->getNumber());
-
-        return array_map(function($commit) {
-            return new Model\Commit($commit['sha']);
-        }, $commits);
-    }
-
     private function assertAuthenticated()
     {
         if (!$this->authenticated) {
