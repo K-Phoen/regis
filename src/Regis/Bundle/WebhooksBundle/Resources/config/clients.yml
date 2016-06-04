@@ -1,0 +1,15 @@
+services:
+    regis.github.http_client:
+        class: Github\HttpClient\CachedHttpClient
+        arguments:
+            - { cache_dir: '%kernel.cache_dir%/github-api-cache' }
+        public: false
+
+    regis.github.client:
+        class: Regis\Github\Client
+        arguments: [ '@regis.github.http_client', '%github_api_token%' ]
+        public: false
+
+    regis.github.event_transformer:
+        class: Regis\Github\EventTransformer
+        arguments: [ '@regis.github.client' ]

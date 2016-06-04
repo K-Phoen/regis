@@ -1,0 +1,6 @@
+services:
+    domain.subscriber.pull_request:
+        class: Regis\Bundle\WebhooksBundle\EventListener\PullRequestListener
+        arguments: [ '@regis.inspector' ]
+        tags:
+            - { name: kernel.event_subscriber }
