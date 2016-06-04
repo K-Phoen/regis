@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Regis\Domain;
 
 use Gitonomy\Git as Gitonomy;
@@ -28,7 +30,7 @@ class Inspector
         $this->inspectDiff($pullRequest, $diff);
     }
 
-    private function inspectDiff(Model\PullRequest $pullRequest, Gitonomy\Diff\Diff $diff)
+    private function inspectDiff(Model\PullRequest $pullRequest, Model\Diff $diff)
     {
         foreach ($this->inspections as $inspection) {
             foreach ($inspection->inspectDiff($diff) as $violation) {

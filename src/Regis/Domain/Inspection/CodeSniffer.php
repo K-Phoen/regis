@@ -1,10 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Regis\Domain\Inspection;
 
-use Gitonomy\Git as Gitonomy;
-use Gitonomy\Git\Diff\File;
-use Gitonomy\Git\Diff\FileChange;
 use Symfony\Component\Process\Process;
 
 use Regis\Domain\Inspection;
@@ -20,11 +19,11 @@ class CodeSniffer implements Inspection
         $this->phpcsBin = $phpCsBin;
     }
 
-    public function inspectDiff(Gitonomy\Diff\Diff $diff): \Traversable
+    public function inspectDiff(Model\Diff $diff): \Traversable
     {
-        /** @var File $file */
+        /** @var Model\Diff\File $file */
         foreach ($diff->getFiles() as $file) {
-            if ($file->isBinary() || $file->isRename()) {
+            if ($file->isBinary() || $file->isRename() || $file->isDeletion()) {
                 continue;
             }
 
@@ -39,7 +38,7 @@ class CodeSniffer implements Inspection
         }
     }
 
-    private function buildViolations(File $file, array $report): \Traversable
+    private function buildViolations(Model\Diff\File $file, array $report): \Traversable
     {
         foreach ($report['messages'] as $message) {
             try {
@@ -61,24 +60,18 @@ class CodeSniffer implements Inspection
         return json_decode($process->getOutput(), true);
     }
 
-    private function findPositionForLine(int $line, File $file): int
+    private function findPositionForLine(int $line, Model\Diff\File $file): int
     {
         $changes = $file->getChanges();
 
-        /** @var FileChange $change */
+        /** @var Model\Diff\Change $change */
         foreach ($changes as $change) {
             $rangeStart = $change->getRangeNewStart() - 1;
 
-            foreach ($change->getLines() as $i => $diffLine) {
-
-                if ($diffLine[0] !== FileChange::LINE_ADD) {
-                    continue;
-                }
-
-                $diffPosition = $i + 1;
-
-                if ($rangeStart + $diffPosition === $line) {
-                    return $diffPosition;
+            /** @var Model\Diff\Line $diffLine */
+            foreach ($change->getAddedLines() as $diffLine) {
+                if ($rangeStart + $diffLine->getPosition() === $line) {
+                    return $diffLine->getPosition();
                 }
             }
         }

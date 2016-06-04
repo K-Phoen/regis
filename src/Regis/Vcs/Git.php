@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Regis\Vcs;
 
 use Gitonomy\Git as Gitonomy;

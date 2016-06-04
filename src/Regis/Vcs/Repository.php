@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Regis\Vcs;
 
 use Gitonomy\Git as Gitonomy;
@@ -21,18 +23,48 @@ class Repository
         $this->repository->run('fetch');
     }
 
-    public function getDiff(string $base, string $head): Gitonomy\Diff\Diff
+    public function getDiff(string $base, string $head): Model\Diff
     {
-        return $this->repository->getDiff(sprintf('%s..%s', $base, $head));
+        $gitDiff = $this->repository->getDiff(sprintf('%s..%s', $base, $head));
+
+        return new Model\Diff($base, $head, array_map(function(Gitonomy\Diff\File $file) {
+            return $this->convertDiffFile($file);
+        }, $gitDiff->getFiles()));
     }
 
-    public function getBlobContent(string $sha): string
+    private function convertDiffFile(Gitonomy\Diff\File $file): Model\Diff\File
     {
-        return $this->repository->getBlob($sha);
+        $blob = $this->convertBlob($file->getNewBlob());
+        $changes = array_map(function(Gitonomy\Diff\FileChange $change) {
+            return $this->convertChange($change);
+        }, $file->getChanges());
+
+        return new Model\Diff\File($file->getOldName(), $file->getNewName(), $file->isBinary(), $blob, $changes);
     }
 
-    public function getCommit(string $sha): Gitonomy\Commit
+    private function convertBlob(Gitonomy\Blob $blob): Model\Blob
     {
-        return $this->repository->getCommit($sha);
+        return new Model\Blob($blob->getHash(), $blob->getContent(), $blob->getMimetype());
+    }
+
+    private function convertChange(Gitonomy\Diff\FileChange $change): Model\Diff\Change
+    {
+        $lines = [];
+        foreach ($change->getLines() as $i => $line) {
+            $lines[] = $this->convertChangeLine($i + 1, $line);
+        }
+            
+        return new Model\Diff\Change(
+            (int) $change->getRangeOldStart(),
+            (int) $change->getRangeOldCount(),
+            (int) $change->getRangeNewStart(),
+            (int) $change->getRangeNewCount(),
+            $lines
+        );
+    }
+
+    private function convertChangeLine(int $position, array $line): Model\Diff\Line
+    {
+        return new Model\Diff\Line($line[0], $position, $line[1]);
     }
 }

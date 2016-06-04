@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Regis\Domain\Reporter;
 
 use Regis\Domain\Model;

@@ -1,10 +1,10 @@
 <?php
 
-namespace Regis\Domain;
+declare(strict_types=1);
 
-use Gitonomy\Git as Gitonomy;
+namespace Regis\Domain;
 
 interface Inspection
 {
-    function inspectDiff(Gitonomy\Diff\Diff $diff): \Traversable;
+    function inspectDiff(Model\Diff $diff): \Traversable;
 }
