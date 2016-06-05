@@ -31,7 +31,6 @@ class Git
     {
         $repositoryPath = $this->getRepositoryPath($repository);
 
-        // TODO logs
         if (!is_dir($repositoryPath)) {
             $gitRepo = Gitonomy\Admin::cloneTo($repositoryPath, $repository->getCloneUrl(), false, [
                 'command' => $this->gitBinary,
