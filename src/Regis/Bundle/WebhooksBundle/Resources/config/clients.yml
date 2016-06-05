@@ -13,7 +13,6 @@ services:
     regis.github.client:
         class: Regis\Github\Client
         arguments: [ '@regis.github.github', '%github_api_token%', '@logger' ]
-        public: false
         tags:
             - { name: monolog.logger, channel: github }
 

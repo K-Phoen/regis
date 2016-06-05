@@ -22,6 +22,29 @@ class Client
         $this->logger = $logger;
     }
 
+    public function createWebhook(string $owner, string $repository, string $url, $secret = null)
+    {
+        $this->assertAuthenticated();
+
+        $this->logger->info('Creating webhook for {repository} to call {url}', [
+            'repository' => sprintf('%s/%s', $owner, $repository),
+            'url' => $url,
+        ]);
+
+        //var_dump($this->client->api('repo')->hooks()->all($owner, $repository));
+
+        $this->client->api('repo')->hooks()->create($owner, $repository, [
+            'name' => 'web',
+            'config' => [
+                'url' => $url,
+                'content_type' => 'json',
+                'secret' => $secret,
+            ],
+            'events' => ['*'],
+            'active' => true,
+        ]);
+    }
+
     public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment)
     {
         $this->assertAuthenticated();
