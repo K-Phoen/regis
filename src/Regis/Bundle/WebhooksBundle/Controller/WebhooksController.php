@@ -9,6 +9,7 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
 use Regis\Domain\Event;
+use Regis\Github\Exception\EventNotHandled;
 use Regis\Github\Exception\PayloadSignature;
 
 class WebhooksController extends Controller
@@ -28,11 +29,11 @@ class WebhooksController extends Controller
                 'analysed_type' => $event->getEventName(),
                 'payload_id' => $request->headers->get('X-GitHub-Delivery'),
             ]);
-        } catch (\Exception $e) {
+        } catch (EventNotHandled $e) {
             $this->info('Ignored payload of type {type}', [
                 'type' => $request->headers->get('X-GitHub-Event'),
                 'payload_id' => $request->headers->get('X-GitHub-Delivery'),
-                'explanation' => $e->getMessage().PHP_EOL.$e->getTraceAsString()
+                'explanation' => $e->getMessage()
             ]);
 
             return new Response();
