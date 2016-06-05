@@ -18,7 +18,7 @@ class ViolationsCache
 
     public function has(Model\Violation $violation, Model\Github\PullRequest $pullRequest): bool
     {
-        return $this->redis->sismember($this->getPullRequestKey($pullRequest), $this->getViolationKey($violation));
+        return (bool) $this->redis->sismember($this->getPullRequestKey($pullRequest), $this->getViolationKey($violation));
     }
 
     public function save(Model\Violation $violation, Model\Github\PullRequest $pullRequest)
