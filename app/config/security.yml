@@ -15,6 +15,7 @@ security:
 
         main:
             anonymous: ~
+            stateless: true
             # activate different ways to authenticate
 
             # http_basic: ~
