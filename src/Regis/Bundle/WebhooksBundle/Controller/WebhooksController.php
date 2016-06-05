@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Regis\Bundle\WebhooksBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;

@@ -4,3 +4,9 @@ services:
         arguments: [ '@old_sound_rabbit_mq.webhook_event_producer', '@regis.violations_cache' ]
         tags:
             - { name: kernel.event_subscriber }
+
+    regis.subscriber.pull_request_inspection_status:
+        class: Regis\Bundle\WebhooksBundle\EventListener\PullRequestInspectionStatusListener
+        arguments: [ '@regis.github.client' ]
+        tags:
+            - { name: kernel.event_subscriber }

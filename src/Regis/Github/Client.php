@@ -10,6 +10,11 @@ use Regis\Domain\Model\Github as Model;
 
 class Client
 {
+    const INTEGRATION_PENDING = 'pending';
+    const INTEGRATION_SUCCESS = 'success';
+    const INTEGRATION_FAILURE = 'failure';
+    const INTEGRATION_ERROR = 'error';
+
     private $client;
     private $apiToken;
     private $logger;
@@ -22,6 +27,25 @@ class Client
         $this->logger = $logger;
     }
 
+    public function createIntegrationStatus(Model\PullRequest $pullRequest, string $state, string $description, string $context)
+    {
+        $this->assertAuthenticated();
+
+        $repository = $pullRequest->getRepository();
+
+        $this->logger->info('Creating integration status for PR {pull_request}', [
+            'pull_request' => $pullRequest,
+            'head' => $pullRequest->getHead(),
+            'description' => $description,
+        ]);
+
+        $this->client->api('repo')->statuses()->create($repository->getOwner(), $repository->getName(), $pullRequest->getHead(), [
+            'state' => $state,
+            'context' => $context,
+            'description' => $description,
+        ]);
+    }
+
     public function createWebhook(string $owner, string $repository, string $url, $secret = null)
     {
         $this->assertAuthenticated();
@@ -30,8 +54,6 @@ class Client
             'repository' => sprintf('%s/%s', $owner, $repository),
             'url' => $url,
         ]);
-
-        //var_dump($this->client->api('repo')->hooks()->all($owner, $repository));
 
         $this->client->api('repo')->hooks()->create($owner, $repository, [
             'name' => 'web',
@@ -52,7 +74,7 @@ class Client
         $repository = $pullRequest->getRepository();
 
         $this->logger->info('Sending review comment for PR {pull_request} -- {commit_id}@{path}:{position} -- {comment}', [
-            'pull_request' => sprintf('%s#%d', $repository, $pullRequest->getNumber()),
+            'pull_request' => $pullRequest->getNumber(),
             'commit_id' => $pullRequest->getHead(),
             'path' => $comment->getFile(),
             'position' => $comment->getPosition(),
