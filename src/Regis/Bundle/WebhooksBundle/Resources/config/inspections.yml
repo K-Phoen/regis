@@ -8,6 +8,11 @@ services:
 
     regis.inspection.code_sniffer:
         class: Regis\Domain\Inspection\CodeSniffer
+        arguments: [ '@regis.tools.code_sniffer' ]
+        public: false
+
+    regis.tools.code_sniffer:
+        class: Regis\CodeSniffer\CodeSniffer
         arguments: [ '%phpcs_binary%' ]
         public: false
 

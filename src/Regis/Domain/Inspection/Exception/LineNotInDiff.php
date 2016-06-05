@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Domain\Inspection\Exception;
 
-class LineNotInDiff
+class LineNotInDiff extends \RuntimeException
 {
     public static function line(int $line)
     {

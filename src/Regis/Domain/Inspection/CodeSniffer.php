@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace Regis\Domain\Inspection;
 
-use Regis\Domain\Model\Violation;
-use Symfony\Component\Process\Process;
-
+use Regis\CodeSniffer\CodeSniffer as CodeSnifferRunner;
 use Regis\Domain\Inspection;
 use Regis\Domain\Model\Git as Model;
+use Regis\Domain\Model\Violation;
 use Regis\Domain\Reporter;
 
 class CodeSniffer implements Inspection
 {
-    private $phpcsBin;
+    private $codeSniffer;
 
-    public function __construct(string $phpCsBin)
+    public function __construct(CodeSnifferRunner $codeSniffer)
     {
-        $this->phpcsBin = $phpCsBin;
+        $this->codeSniffer = $codeSniffer;
     }
 
     public function inspectDiff(Model\Diff $diff): \Traversable
@@ -29,7 +28,7 @@ class CodeSniffer implements Inspection
             }
 
             $fileName = $file->getNewName();
-            $report = $this->executePhpCs($fileName, $file->getNewBlob()->getContent());
+            $report = $this->codeSniffer->execute($fileName, $file->getNewBlob()->getContent());
 
             if (empty($report['files'][$fileName])) {
                 continue;
@@ -52,15 +51,6 @@ class CodeSniffer implements Inspection
         }
     }
 
-    private function executePhpCs(string $fileName, string $fileContent): array
-    {
-        $process = new Process(sprintf('%s --report=json --stdin-path=%s', escapeshellarg($this->phpcsBin), escapeshellarg($fileName)));
-        $process->setInput($fileContent);
-        $process->run();
-
-        return json_decode($process->getOutput(), true);
-    }
-
     private function findPositionForLine(int $line, Model\Diff\File $file): int
     {
         $changes = $file->getChanges();
@@ -77,7 +67,6 @@ class CodeSniffer implements Inspection
             }
         }
 
-        // TODO specific exception
         throw Exception\LineNotInDiff::line($line);
     }
 }
