@@ -78,6 +78,6 @@ class CodeSniffer implements Inspection
         }
 
         // TODO specific exception
-        throw new \RuntimeException('Unable to find change for line '.$line);
+        throw Exception\LineNotInDiff::line($line);
     }
 }

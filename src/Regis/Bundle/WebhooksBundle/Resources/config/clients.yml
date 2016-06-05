@@ -12,4 +12,3 @@ services:
 
     regis.github.event_transformer:
         class: Regis\Github\EventTransformer
-        arguments: [ '@regis.github.client' ]

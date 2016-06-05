@@ -2,7 +2,6 @@
 
 namespace Regis\Github\Exception;
 
-class EventNotHandled
+class EventNotHandled extends \RuntimeException
 {
-
 }

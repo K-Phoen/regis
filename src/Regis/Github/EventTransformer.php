@@ -15,13 +15,6 @@ class EventTransformer
     const ACTION_OPEN_PULL_REQUEST = 'opened';
     const ACTION_SYNC_PULL_REQUEST = 'synchronize';
 
-    private $client;
-
-    public function __construct(Client $client)
-    {
-        $this->client = $client;
-    }
-
     public function transform(Request $request)
     {
         $eventType = $request->headers->get('X-GitHub-Event');
@@ -36,7 +29,7 @@ class EventTransformer
             }
         }
 
-        throw new \Exception(sprintf('Event of type "%s" not handled.', $eventType));
+        throw new Exception\EventNotHandled(sprintf('Event of type "%s" not handled.', $eventType));
     }
 
     private function transformPullRequestOpened(array $payload): Event\PullRequestOpened
