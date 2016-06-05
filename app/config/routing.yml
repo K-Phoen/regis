@@ -1,6 +1,2 @@
-app:
-    resource: "@AppBundle/Controller/"
-    type:     annotation
-
 webhooks:
     resource: "@RegisWebhooksBundle/Resources/config/routing.yml"
