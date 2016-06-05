@@ -13,7 +13,7 @@ services:
 
     regis.tools.code_sniffer:
         class: Regis\CodeSniffer\CodeSniffer
-        arguments: [ '%phpcs_binary%' ]
+        arguments: [ '%phpcs_binary%', '%regis.config.inspections.phpcs%' ]
         public: false
 
     regis.violation_reporter.github:

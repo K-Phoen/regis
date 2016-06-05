@@ -1,4 +1,8 @@
 regis_webhooks:
+    inspections:
+        phpcs:
+            options: [ '--standard=psr1,psr2' ]
+
     repositories:
         -
             identifier: K-Phoen/test

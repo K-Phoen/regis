@@ -21,6 +21,10 @@ class RegisWebhooksExtension extends Extension
         $loader->load('workers.yml');
 
         $container->setParameter('regis.config.repositories', $config['repositories']);
+
+        foreach ($config['inspections'] as $inspection => $inspectionConfig) {
+            $container->setParameter('regis.config.inspections.'.$inspection, $inspectionConfig);
+        }
     }
 
     /**
