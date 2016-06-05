@@ -32,13 +32,15 @@ class WebhooksController extends Controller
             $this->info('Ignored payload of type {type}', [
                 'type' => $request->headers->get('X-GitHub-Event'),
                 'payload_id' => $request->headers->get('X-GitHub-Delivery'),
+                'explanation' => $e->getMessage().PHP_EOL.$e->getTraceAsString()
             ]);
-            return new Response(sprintf("ignored:\n%s\n%s", $e->getMessage(), $e->getTraceAsString()));
+
+            return new Response();
         }
 
         $this->get('event_dispatcher')->dispatch($event->getEventName(), new DomainEventWrapper($event));
 
-        return new Response('ok');
+        return new Response('', Response::HTTP_ACCEPTED);
     }
 
     private function info(string $message, array $context = [])
