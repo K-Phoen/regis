@@ -19,3 +19,5 @@ parameters:
     rabbitmq_vhost: regis_vhost
 
     redis_host: redis
+
+    test_repo_secret: ~

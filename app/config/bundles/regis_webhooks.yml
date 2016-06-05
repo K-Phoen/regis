@@ -1,0 +1,5 @@
+regis_webhooks:
+    repositories:
+        -
+            identifier: K-Phoen/test
+            secret: '%test_repo_secret%'

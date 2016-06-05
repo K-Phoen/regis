@@ -12,3 +12,7 @@ services:
 
     regis.github.event_transformer:
         class: Regis\Github\EventTransformer
+
+    regis.github.payload_validator:
+        class: Regis\Github\PayloadValidator
+        arguments: [ '%regis.config.repositories%' ]
