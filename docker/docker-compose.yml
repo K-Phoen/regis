@@ -3,7 +3,8 @@ services:
     redis:
         image: 'redis:3.2-alpine'
         volumes:
-            - ./docker/redis/data:/data
+            - ./redis/data:/data:rw
+        command: redis-server --appendonly yes
 
     rabbit:
         image: 'rabbitmq:3.6-management'
