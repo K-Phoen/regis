@@ -23,12 +23,26 @@ class WebhooksController extends Controller
 
         try {
             $event = $this->get('regis.github.event_transformer')->transform($request);
+            $this->info('Received payload of type {type}', [
+                'type' => $request->headers->get('X-GitHub-Event'),
+                'analysed_type' => $event->getEventName(),
+                'payload_id' => $request->headers->get('X-GitHub-Delivery'),
+            ]);
         } catch (\Exception $e) {
+            $this->info('Ignored payload of type {type}', [
+                'type' => $request->headers->get('X-GitHub-Event'),
+                'payload_id' => $request->headers->get('X-GitHub-Delivery'),
+            ]);
             return new Response(sprintf("ignored:\n%s\n%s", $e->getMessage(), $e->getTraceAsString()));
         }
 
         $this->get('event_dispatcher')->dispatch($event->getEventName(), new DomainEventWrapper($event));
 
         return new Response('ok');
+    }
+
+    private function info(string $message, array $context = [])
+    {
+        $this->get('monolog.logger.github')->info($message, $context);
     }
 }
