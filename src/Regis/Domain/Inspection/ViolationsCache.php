@@ -38,6 +38,6 @@ class ViolationsCache
 
     private function getViolationKey(Model\Violation $violation)
     {
-        return (string) $violation;
+        return md5((string) $violation);
     }
 }
