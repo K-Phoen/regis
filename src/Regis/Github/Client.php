@@ -5,19 +5,21 @@ declare(strict_types=1);
 namespace Regis\Github;
 
 use Github\HttpClient\HttpClientInterface;
+use Psr\Log\LoggerInterface;
 use Regis\Domain\Model\Github as Model;
 
 class Client
 {
     private $client;
     private $apiToken;
+    private $logger;
     private $authenticated = false;
 
-    public function __construct(HttpClientInterface $httpClient, string $apiToken)
+    public function __construct(\Github\Client $client, string $apiToken, LoggerInterface $logger)
     {
-        // TODO logs
-        $this->client = new \Github\Client($httpClient);
+        $this->client = $client;
         $this->apiToken = $apiToken;
+        $this->logger = $logger;
     }
 
     public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment)
@@ -25,6 +27,14 @@ class Client
         $this->assertAuthenticated();
 
         $repository = $pullRequest->getRepository();
+
+        $this->logger->info('Sending review comment for PR {pull_request} -- {commit_id}@{path}:{position} -- {comment}', [
+            'pull_request' => sprintf('%s#%d', $repository, $pullRequest->getNumber()),
+            'commit_id' => $pullRequest->getHead(),
+            'path' => $comment->getFile(),
+            'position' => $comment->getPosition(),
+            'comment' => $comment->getContent(),
+        ]);
 
         $this->client->api('pull_request')->comments()->create($repository->getOwner(), $repository->getName(), $pullRequest->getNumber(), [
             'commit_id' => $pullRequest->getHead(),

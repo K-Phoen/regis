@@ -1,14 +1,21 @@
 services:
-    regis.github.http_client:
+    regis.github.cached_http_client:
         class: Github\HttpClient\CachedHttpClient
         arguments:
             - { cache_dir: '%kernel.cache_dir%/github-api-cache' }
         public: false
 
+    regis.github.github:
+        class: Github\Client
+        arguments: [ '@regis.github.cached_http_client' ]
+        public: false
+
     regis.github.client:
         class: Regis\Github\Client
-        arguments: [ '@regis.github.http_client', '%github_api_token%' ]
+        arguments: [ '@regis.github.github', '%github_api_token%', '@logger' ]
         public: false
+        tags:
+            - { name: monolog.logger, channel: github }
 
     regis.github.event_transformer:
         class: Regis\Github\EventTransformer
