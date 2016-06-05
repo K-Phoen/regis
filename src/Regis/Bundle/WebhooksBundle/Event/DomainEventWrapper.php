@@ -3,20 +3,18 @@
 namespace Regis\Bundle\WebhooksBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
+use Regis\Domain\Event as DomainEvent;
 
 class DomainEventWrapper extends Event
 {
     private $domainEvent;
 
-    public function __construct($event)
+    public function __construct(DomainEvent $event)
     {
         $this->domainEvent = $event;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDomainEvent()
+    public function getDomainEvent(): DomainEvent
     {
         return $this->domainEvent;
     }

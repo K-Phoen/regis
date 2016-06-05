@@ -4,7 +4,7 @@ namespace Regis\Bundle\WebhooksBundle\Worker;
 
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
-use Regis\Domain\Event\PullRequestOpened;
+use Regis\Domain\Event;
 use Regis\Domain\Inspector;
 
 class WebhookEvent implements ConsumerInterface
@@ -20,8 +20,8 @@ class WebhookEvent implements ConsumerInterface
     {
         $event = unserialize($msg->body);
 
-        if ($event instanceof PullRequestOpened) {
-            $this->inspector->inspectPullRequest($event->getPullRequest());
+        if ($event instanceof Event\PullRequestOpened || $event instanceof Event\PullRequestSynced) {
+            $this->inspector->inspect($event->getPullRequest());
         }
     }
 }

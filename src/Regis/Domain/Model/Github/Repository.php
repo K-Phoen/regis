@@ -31,4 +31,9 @@ class Repository
     {
         return $this->name;
     }
+
+    public function __toString(): string
+    {
+        return sprintf('%s/%s', $this->owner, $this->name);
+    }
 }

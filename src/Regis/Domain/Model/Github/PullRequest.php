@@ -38,4 +38,9 @@ class PullRequest
     {
         return $this->base;
     }
+
+    public function __toString(): string
+    {
+        return sprintf('%s#%d', $this->repository, $this->number);
+    }
 }

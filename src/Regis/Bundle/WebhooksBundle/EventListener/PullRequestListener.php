@@ -6,8 +6,7 @@ use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
-use Regis\Domain\Event\PullRequestOpened;
-use Regis\Domain\Events;
+use Regis\Domain\Event;
 
 class PullRequestListener implements EventSubscriberInterface
 {
@@ -21,15 +20,18 @@ class PullRequestListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            Events::PULL_REQUEST_OPENED => [
-                ['onPullRequestOpened', 0],
+            Event::PULL_REQUEST_OPENED => [
+                ['onPullRequestUpdated', 0],
+            ],
+            Event::PULL_REQUEST_SYNCED => [
+                ['onPullRequestUpdated', 0],
             ],
         ];
     }
 
-    public function onPullRequestOpened(DomainEventWrapper $event)
+    public function onPullRequestUpdated(DomainEventWrapper $event)
     {
-        /** @var PullRequestOpened $domainEvent */
+        /** @var Event $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
         $this->producer->publish(serialize($domainEvent));

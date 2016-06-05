@@ -1,0 +1,6 @@
+snc_redis:
+    clients:
+        violations:
+            type: predis
+            alias: violations
+            dsn: redis://%redis_host%

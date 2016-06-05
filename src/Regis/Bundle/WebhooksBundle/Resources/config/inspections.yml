@@ -3,7 +3,7 @@ services:
         class: Regis\Domain\Inspector
         arguments:
             - '@regis.vcs.git'
-            - '@regis.violation_reporter.github'
+            - '@regis.violation_reporter.duplication_guard'
             - [ '@regis.inspection.code_sniffer' ]
 
     regis.inspection.code_sniffer:
@@ -14,4 +14,9 @@ services:
     regis.violation_reporter.github:
         class: Regis\Domain\Reporter\Github
         arguments: [ '@regis.github.client' ]
+        public: false
+
+    regis.violation_reporter.duplication_guard:
+        class: Regis\Domain\Reporter\DuplicationGuard
+        arguments: [ '@regis.violation_reporter.github', '@snc_redis.violations' ]
         public: false

@@ -31,4 +31,9 @@ class Violation
     {
         return $this->position;
     }
+
+    public function __toString(): string
+    {
+        return sprintf('%s:%d -- %s', $this->file, $this->position, $this->description);
+    }
 }

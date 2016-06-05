@@ -17,3 +17,5 @@ parameters:
     rabbitmq_user: ~
     rabbitmq_password: ~
     rabbitmq_vhost: regis_vhost
+
+    redis_host: redis

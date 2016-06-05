@@ -1,5 +1,10 @@
 version: '2'
 services:
+    redis:
+        image: 'redis:3.2-alpine'
+        volumes:
+            - ./docker/redis/data:/data
+
     rabbit:
         image: 'rabbitmq:3.6-management'
         ports:
@@ -15,9 +20,10 @@ services:
             dockerfile: ./Dockerfile-worker
         depends_on:
             - rabbit
+            - redis
         volumes:
             - ..:/var/www/html
-        command: ./bin/console rabbitmq:consumer -vvv webhook_event
+        command: './docker/wait-for-it.sh rabbit:5672 -- ./bin/console rabbitmq:consumer -vvv webhook_event'
 
     web:
         build:

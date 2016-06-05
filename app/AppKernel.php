@@ -15,6 +15,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
 
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+            new Snc\RedisBundle\SncRedisBundle(),
 
             new AppBundle\AppBundle(),
             new Regis\Bundle\WebhooksBundle\RegisWebhooksBundle(),

@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
-use Regis\Domain\Events;
+use Regis\Domain\Event;
 
 class WebhooksController extends Controller
 {
@@ -19,7 +19,7 @@ class WebhooksController extends Controller
             return new Response(sprintf("ignored:\n%s\n%s", $e->getMessage(), $e->getTraceAsString()));
         }
 
-        $this->get('event_dispatcher')->dispatch(Events::PULL_REQUEST_OPENED, new DomainEventWrapper($event));
+        $this->get('event_dispatcher')->dispatch($event->getEventName(), new DomainEventWrapper($event));
 
         return new Response('ok');
     }

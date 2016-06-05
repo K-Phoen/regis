@@ -21,7 +21,7 @@ class Inspector
         $this->inspections = $inspections;
     }
 
-    public function inspectPullRequest(Model\Github\PullRequest $pullRequest)
+    public function inspect(Model\Github\PullRequest $pullRequest)
     {
         $gitRepository = $this->git->getRepository($pullRequest->getRepository());
         $gitRepository->update();
