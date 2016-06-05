@@ -13,6 +13,7 @@ class EventTransformer
 {
     const TYPE_PULL_REQUEST = 'pull_request';
     const ACTION_OPEN_PULL_REQUEST = 'opened';
+    const ACTION_CLOSE_PULL_REQUEST = 'closed';
     const ACTION_SYNC_PULL_REQUEST = 'synchronize';
 
     public function transform(Request $request)
@@ -26,6 +27,8 @@ class EventTransformer
                 return $this->transformPullRequestOpened($payload);
             } else if ($payload['action'] === self::ACTION_SYNC_PULL_REQUEST) {
                 return $this->transformPullRequestSynced($payload);
+            } else if ($payload['action'] === self::ACTION_CLOSE_PULL_REQUEST) {
+                return $this->transformPullRequestClosed($payload);
             }
         }
 
@@ -37,6 +40,13 @@ class EventTransformer
         $pullRequest = $this->transformPullRequest($payload);
 
         return new Event\PullRequestOpened($pullRequest);
+    }
+
+    private function transformPullRequestClosed(array $payload): Event\PullRequestClosed
+    {
+        $pullRequest = $this->transformPullRequest($payload);
+
+        return new Event\PullRequestClosed($pullRequest);
     }
 
     private function transformPullRequestSynced(array $payload): Event\PullRequestSynced

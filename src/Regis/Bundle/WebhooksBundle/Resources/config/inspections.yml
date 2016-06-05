@@ -23,5 +23,10 @@ services:
 
     regis.violation_reporter.duplication_guard:
         class: Regis\Domain\Reporter\DuplicationGuard
-        arguments: [ '@regis.violation_reporter.github', '@snc_redis.violations' ]
+        arguments: [ '@regis.violation_reporter.github', '@regis.violations_cache' ]
+        public: false
+
+    regis.violations_cache:
+        class: Regis\Domain\Inspection\ViolationsCache
+        arguments: [ '@snc_redis.violations' ]
         public: false

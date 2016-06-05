@@ -4,32 +4,29 @@ declare(strict_types=1);
 
 namespace Regis\Domain\Reporter;
 
-use Predis\ClientInterface;
+use Regis\Domain\Inspection\ViolationsCache;
 use Regis\Domain\Model;
 use Regis\Domain\Reporter;
 
 class DuplicationGuard implements Reporter
 {
     private $originalReporter;
-    private $redis;
+    private $violationsCache;
 
-    public function __construct(Reporter $originalReporter, ClientInterface $redis)
+    public function __construct(Reporter $originalReporter, ViolationsCache $violationsCache)
     {
         $this->originalReporter = $originalReporter;
-        $this->redis = $redis;
+        $this->violationsCache = $violationsCache;
     }
 
     public function report(Model\Violation $violation, Model\Github\PullRequest $pullRequest)
     {
-        $setKey = (string) $pullRequest;
-        $violationKey = (string) $violation;
-
-        if ($this->redis->sismember($setKey, $violationKey)) {
+        if ($this->violationsCache->has($violation, $pullRequest)) {
             return;
         }
 
         $this->originalReporter->report($violation, $pullRequest);
 
-        $this->redis->sadd($setKey, $violationKey);
+        $this->violationsCache->save($violation, $pullRequest);
     }
 }
