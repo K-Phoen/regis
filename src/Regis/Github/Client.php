@@ -26,7 +26,7 @@ class Client
         $this->logger = $logger;
     }
 
-    public function createIntegrationStatus(Model\PullRequest $pullRequest, string $state, string $description, string $context)
+    public function setIntegrationStatus(Model\PullRequest $pullRequest, string $state, string $description, string $context)
     {
         $this->assertAuthenticated();
 

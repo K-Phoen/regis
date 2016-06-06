@@ -6,10 +6,11 @@ namespace Regis\Bundle\WebhooksBundle\Worker;
 
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+
 use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
 use Regis\Application\Event;
 use Regis\Application\Inspector;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class WebhookEvent implements ConsumerInterface
 {
@@ -31,9 +32,9 @@ class WebhookEvent implements ConsumerInterface
 
             $this->dispatch(Event::INSPECTION_STARTED, new Event\InspectionStarted($pullRequest));
 
-            $this->inspector->inspect($pullRequest);
+            $reportSummary = $this->inspector->inspect($pullRequest);
 
-            $this->dispatch(Event::INSPECTION_FINISHED, new Event\InspectionFinished($pullRequest));
+            $this->dispatch(Event::INSPECTION_FINISHED, new Event\InspectionFinished($pullRequest, $reportSummary));
         }
     }
 

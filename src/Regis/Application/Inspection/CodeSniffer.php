@@ -47,7 +47,11 @@ class CodeSniffer implements Inspection
                 continue;
             }
 
-            yield new Violation($file->getNewName(), $position, $message['message']);
+            if ($message['type'] === 'ERROR') {
+                yield Violation::newError($file->getNewName(), $position, $message['message']);
+            } else {
+                yield Violation::newWarning($file->getNewName(), $position, $message['message']);
+            }
         }
     }
 

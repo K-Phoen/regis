@@ -37,7 +37,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         /** @var Event\PullRequestOpened|Event\PullRequestSynced $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
-        $this->createIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_PENDING, 'Inspection scheduled.');
+        $this->setIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_PENDING, 'Inspection scheduled.');
     }
 
     public function onInspectionStated(DomainEventWrapper $event)
@@ -45,19 +45,26 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         /** @var Event\InspectionStarted $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
-        $this->createIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_PENDING, 'Inspection started…');
+        $this->setIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_PENDING, 'Inspection started…');
     }
 
     public function onInspectionFinished(DomainEventWrapper $event)
     {
         /** @var Event\InspectionFinished $domainEvent */
         $domainEvent = $event->getDomainEvent();
+        $report = $domainEvent->getReportSummary();
 
-        $this->createIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_SUCCESS, 'Inspection finished.');
+        if ($report->errorsCount() > 0 || $report->warningsCount() > 0) {
+            list($status, $message) = [Client::INTEGRATION_FAILURE, sprintf('Inspection with %d error(s) and %d warning(s).', $report->errorsCount(), $report->warningsCount())];
+        } else {
+            list($status, $message) = [Client::INTEGRATION_SUCCESS, 'Inspection successfull.'];
+        }
+
+        $this->setIntegrationStatus($domainEvent->getPullRequest(), $status, $message);
     }
 
-    private function createIntegrationStatus(PullRequest $pullRequest, string $status, string $description)
+    private function setIntegrationStatus(PullRequest $pullRequest, string $status, string $description)
     {
-        $this->github->createIntegrationStatus($pullRequest, $status, $description, self::STATUS_CONTEXT);
+        $this->github->setIntegrationStatus($pullRequest, $status, $description, self::STATUS_CONTEXT);
     }
 }

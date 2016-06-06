@@ -27,15 +27,21 @@ class Inspector
         $gitRepository->update();
 
         $diff = $gitRepository->getDiff($pullRequest->getBase(), $pullRequest->getHead());
-        $this->inspectDiff($pullRequest, $diff);
+
+        return $this->inspectDiff($pullRequest, $diff);
     }
 
-    private function inspectDiff(Model\Github\PullRequest $pullRequest, Model\Git\Diff $diff)
+    private function inspectDiff(Model\Github\PullRequest $pullRequest, Model\Git\Diff $diff): ReportSummary
     {
+        $report = new ReportSummary();
+
         foreach ($this->inspections as $inspection) {
             foreach ($inspection->inspectDiff($diff) as $violation) {
+                $report->newViolation($violation);
                 $this->reporter->report($violation, $pullRequest);
             }
         }
+
+        return $report;
     }
 }
