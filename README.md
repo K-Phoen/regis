@@ -39,12 +39,14 @@ Regis expects a list of tuples repository/secret following the schema:
 
 ```yaml
 regis_webhooks:
-    # …
+  # …
 
-    repositories:
-        -
-            identifier: K-Phoen/foo      # for the repository https://github.com/K-Phoen/foo
-            secret: '%test_repo_secret%' # a shared secret that will be used to secure the communications between Regis and GitHub
+  repositories:
+    -
+      # for the repository https://github.com/K-Phoen/foo
+      identifier: K-Phoen/foo
+      # a shared secret that will be used to secure the communications between Regis and GitHub
+      secret: '%test_repo_secret%'
 ```
 
 Once a repository has been configured, the following command automatically
