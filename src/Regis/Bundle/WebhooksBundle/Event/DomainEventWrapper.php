@@ -3,7 +3,7 @@
 namespace Regis\Bundle\WebhooksBundle\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use Regis\Domain\Event as DomainEvent;
+use Regis\Application\Event as DomainEvent;
 
 class DomainEventWrapper extends Event
 {

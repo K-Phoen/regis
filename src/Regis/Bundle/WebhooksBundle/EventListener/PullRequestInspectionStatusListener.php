@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Regis\Bundle\WebhooksBundle\EventListener;
 
-use Regis\Domain\Model\Github\PullRequest;
+use Regis\Application\Model\Github\PullRequest;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
-use Regis\Domain\Event;
+use Regis\Application\Event;
 use Regis\Github\Client;
 
 class PullRequestInspectionStatusListener implements EventSubscriberInterface

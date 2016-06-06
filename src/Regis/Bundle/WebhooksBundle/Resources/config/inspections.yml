@@ -1,13 +1,13 @@
 services:
     regis.inspector:
-        class: Regis\Domain\Inspector
+        class: Regis\Application\Inspector
         arguments:
             - '@regis.vcs.git'
             - '@regis.violation_reporter.duplication_guard'
             - [ '@regis.inspection.code_sniffer' ]
 
     regis.inspection.code_sniffer:
-        class: Regis\Domain\Inspection\CodeSniffer
+        class: Regis\Application\Inspection\CodeSniffer
         arguments: [ '@regis.tools.code_sniffer' ]
         public: false
 
@@ -17,16 +17,16 @@ services:
         public: false
 
     regis.violation_reporter.github:
-        class: Regis\Domain\Reporter\Github
+        class: Regis\Application\Reporter\Github
         arguments: [ '@regis.github.client' ]
         public: false
 
     regis.violation_reporter.duplication_guard:
-        class: Regis\Domain\Reporter\DuplicationGuard
+        class: Regis\Application\Reporter\DuplicationGuard
         arguments: [ '@regis.violation_reporter.github', '@regis.violations_cache' ]
         public: false
 
     regis.violations_cache:
-        class: Regis\Domain\Inspection\ViolationsCache
+        class: Regis\Application\Inspection\ViolationsCache
         arguments: [ '@snc_redis.violations' ]
         public: false

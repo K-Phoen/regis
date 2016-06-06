@@ -6,8 +6,8 @@ namespace Regis\Github;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use Regis\Domain\Event;
-use Regis\Domain\Model\Github as Model;
+use Regis\Application\Event;
+use Regis\Application\Model\Github as Model;
 
 class EventTransformer
 {

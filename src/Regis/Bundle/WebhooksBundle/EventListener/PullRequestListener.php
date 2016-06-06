@@ -6,8 +6,8 @@ use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
-use Regis\Domain\Event;
-use Regis\Domain\Inspection\ViolationsCache;
+use Regis\Application\Event;
+use Regis\Application\Inspection\ViolationsCache;
 
 class PullRequestListener implements EventSubscriberInterface
 {

@@ -10,7 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
-use Regis\Domain\Event;
+use Regis\Application\Event;
 use Regis\Github\Exception\EventNotHandled;
 use Regis\Github\Exception\PayloadSignature;
 

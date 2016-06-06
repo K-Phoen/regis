@@ -6,7 +6,7 @@ namespace Regis\Vcs;
 
 use Gitonomy\Git as Gitonomy;
 
-use Regis\Domain\Model\Git as Model;
+use Regis\Application\Model\Git as Model;
 
 class Repository
 {

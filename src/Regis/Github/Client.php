@@ -4,9 +4,8 @@ declare(strict_types=1);
 
 namespace Regis\Github;
 
-use Github\HttpClient\HttpClientInterface;
 use Psr\Log\LoggerInterface;
-use Regis\Domain\Model\Github as Model;
+use Regis\Application\Model\Github as Model;
 
 class Client
 {

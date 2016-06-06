@@ -7,8 +7,8 @@ namespace Regis\Bundle\WebhooksBundle\Worker;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
-use Regis\Domain\Event;
-use Regis\Domain\Inspector;
+use Regis\Application\Event;
+use Regis\Application\Inspector;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class WebhookEvent implements ConsumerInterface
