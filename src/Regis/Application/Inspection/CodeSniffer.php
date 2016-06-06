@@ -43,7 +43,7 @@ class CodeSniffer implements Inspection
         foreach ($report['messages'] as $message) {
             try {
                 $position = $this->findPositionForLine($message['line'], $file);
-            } catch (\Exception $e) {
+            } catch (Exception\LineNotInDiff $e) {
                 continue;
             }
 
