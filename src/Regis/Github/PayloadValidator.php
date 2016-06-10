@@ -31,8 +31,13 @@ class PayloadValidator
             throw Exception\PayloadSignature::unknownRepository($repository);
         }
 
-        list($algorithm, $hash) = explode('=', $signature, 2);
+        $signatureParts = explode('=', $signature, 2);
 
+        if (count($signatureParts) !== 2) {
+            throw Exception\PayloadSignature::invalid();
+        }
+
+        list($algorithm, $hash) = $signatureParts;
         if (!in_array($algorithm, hash_algos(), true)) {
             throw Exception\PayloadSignature::unknownAlgorithm($algorithm);
         }
