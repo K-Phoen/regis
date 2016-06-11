@@ -54,7 +54,7 @@ configures a webhook used to make GitHub call Regis whenever an interesting even
 occurs in the repository:
 
 ```
-./bin/console regis:webhooks:create --owner=K-Phoen --repository=foo --url=http://my.public.regis.host
+./bin/console regis:webhooks:create --owner=K-Phoen --repository=foo --host=http://my.public.regis.host
 ```
 
 License
