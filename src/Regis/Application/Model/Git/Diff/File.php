@@ -72,6 +72,7 @@ class File
     {
         $changes = $this->getChanges();
 
+        $previousChangeCount = 0;
         /** @var Change $change */
         foreach ($changes as $change) {
             $rangeStart = $change->getRangeNewStart() - 1;
@@ -79,9 +80,11 @@ class File
             /** @var Line $diffLine */
             foreach ($change->getAddedLines() as $diffLine) {
                 if ($rangeStart + $diffLine->getPosition() === $line) {
-                    return $diffLine->getPosition();
+                    return $previousChangeCount + $diffLine->getPosition();
                 }
             }
+
+            $previousChangeCount = $change->getRangeNewCount() + 1;
         }
 
         throw LineNotInDiff::line($line);
