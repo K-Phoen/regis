@@ -6,6 +6,7 @@ namespace Regis\Application\Inspection;
 
 use Regis\CodeSniffer\CodeSniffer as CodeSnifferRunner;
 use Regis\Application\Inspection;
+use Regis\Application\Model\Exception\LineNotInDiff;
 use Regis\Application\Model\Git as Model;
 use Regis\Application\Model\Violation;
 use Regis\Application\Reporter;
@@ -30,11 +31,9 @@ class CodeSniffer implements Inspection
             $fileName = $file->getNewName();
             $report = $this->codeSniffer->execute($fileName, $file->getNewBlob()->getContent());
 
-            if (empty($report['files'][$fileName])) {
-                continue;
+            foreach ($report['files'] as $filename => $fileReport) {
+                yield from $this->buildViolations($file, $fileReport);
             }
-
-            yield from $this->buildViolations($file, $report['files'][$fileName]);
         }
     }
 
@@ -42,8 +41,8 @@ class CodeSniffer implements Inspection
     {
         foreach ($report['messages'] as $message) {
             try {
-                $position = $this->findPositionForLine($message['line'], $file);
-            } catch (Exception\LineNotInDiff $e) {
+                $position = $file->findPositionForLine($message['line']);
+            } catch (LineNotInDiff $e) {
                 continue;
             }
 
@@ -53,24 +52,5 @@ class CodeSniffer implements Inspection
                 yield Violation::newWarning($file->getNewName(), $position, $message['message']);
             }
         }
-    }
-
-    private function findPositionForLine(int $line, Model\Diff\File $file): int
-    {
-        $changes = $file->getChanges();
-
-        /** @var Model\Diff\Change $change */
-        foreach ($changes as $change) {
-            $rangeStart = $change->getRangeNewStart() - 1;
-
-            /** @var Model\Diff\Line $diffLine */
-            foreach ($change->getAddedLines() as $diffLine) {
-                if ($rangeStart + $diffLine->getPosition() === $line) {
-                    return $diffLine->getPosition();
-                }
-            }
-        }
-
-        throw Exception\LineNotInDiff::line($line);
     }
 }

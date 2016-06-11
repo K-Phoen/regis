@@ -39,7 +39,7 @@ class Repository
             return $this->convertChange($change);
         }, $file->getChanges());
 
-        return new Model\Diff\File($file->getOldName(), $file->getNewName(), $file->isBinary(), $blob, $changes);
+        return new Model\Diff\File($file->getOldName() ?: $file->getNewName(), $file->getNewName(), $file->isBinary(), $blob, $changes);
     }
 
     private function convertBlob(Gitonomy\Blob $blob): Model\Blob

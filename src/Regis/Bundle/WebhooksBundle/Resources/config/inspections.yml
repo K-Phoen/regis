@@ -4,16 +4,26 @@ services:
         arguments:
             - '@regis.vcs.git'
             - '@regis.violation_reporter.duplication_guard'
-            - [ '@regis.inspection.code_sniffer' ]
+            - [ '@regis.inspection.code_sniffer', '@regis.inspection.phpmd' ]
 
     regis.inspection.code_sniffer:
         class: Regis\Application\Inspection\CodeSniffer
         arguments: [ '@regis.tools.code_sniffer' ]
         public: false
 
+    regis.inspection.phpmd:
+        class: Regis\Application\Inspection\PhpMd
+        arguments: [ '@regis.tools.phpmd' ]
+        public: false
+
     regis.tools.code_sniffer:
         class: Regis\CodeSniffer\CodeSniffer
         arguments: [ '%phpcs_binary%', '%regis.config.inspections.phpcs%' ]
+        public: false
+
+    regis.tools.phpmd:
+        class: Regis\PhpMd\PhpMd
+        arguments: [ '%phpmd_binary%', '%regis.config.inspections.phpmd%' ]
         public: false
 
     regis.violation_reporter.github:

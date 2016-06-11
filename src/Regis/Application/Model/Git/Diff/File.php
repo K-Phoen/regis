@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Application\Model\Git\Diff;
 
+use Regis\Application\Model\Exception\LineNotInDiff;
 use Regis\Application\Model\Git\Blob;
 
 class File
@@ -65,5 +66,27 @@ class File
     public function getChanges(): array
     {
         return $this->changes;
+    }
+
+    public function findPositionForLine(int $line): int
+    {
+        $changes = $this->getChanges();
+
+        $previousChangeCount = 0;
+        /** @var Change $change */
+        foreach ($changes as $change) {
+            $rangeStart = $change->getRangeNewStart() - 1;
+
+            /** @var Line $diffLine */
+            foreach ($change->getAddedLines() as $diffLine) {
+                if ($rangeStart + $diffLine->getPosition() === $line) {
+                    return $previousChangeCount + $diffLine->getPosition();
+                }
+            }
+
+            $previousChangeCount = $change->getRangeNewCount() + 1;
+        }
+
+        throw LineNotInDiff::line($line);
     }
 }

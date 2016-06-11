@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Application\Inspection\Exception;
+namespace Regis\Application\Model\Exception;
 
 class LineNotInDiff extends \RuntimeException
 {
