@@ -31,4 +31,15 @@ class Diff
     {
         return $this->files;
     }
+
+    public function getAddedTextFiles(): \Traversable
+    {
+        foreach ($this->files as $file) {
+            if ($file->isBinary() || $file->isRename() || $file->isDeletion()) {
+                continue;
+            }
+
+            yield $file;
+        }
+    }
 }

@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace Regis\Application\Inspection;
 
-use Regis\Application\Model\Exception\LineNotInDiff;
 use Regis\Application\Inspection;
+use Regis\Application\Model\Exception\LineNotInDiff;
 use Regis\Application\Model\Git as Model;
 use Regis\Application\Model\Violation;
-use Regis\Application\Reporter;
 use Regis\PhpMd\PhpMd as PhpMdRunner;
 
 class PhpMd implements Inspection
@@ -23,11 +22,7 @@ class PhpMd implements Inspection
     public function inspectDiff(Model\Diff $diff): \Traversable
     {
         /** @var Model\Diff\File $file */
-        foreach ($diff->getFiles() as $file) {
-            if ($file->isBinary() || $file->isRename() || $file->isDeletion()) {
-                continue;
-            }
-
+        foreach ($diff->getAddedTextFiles() as $file) {
             $report = $this->phpMd->execute($file->getNewName(), $file->getNewBlob()->getContent());
 
             yield from $this->buildViolations($file, $report);

@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Regis\Application\Inspection;
 
-use Regis\CodeSniffer\CodeSniffer as CodeSnifferRunner;
 use Regis\Application\Inspection;
 use Regis\Application\Model\Exception\LineNotInDiff;
 use Regis\Application\Model\Git as Model;
 use Regis\Application\Model\Violation;
-use Regis\Application\Reporter;
+use Regis\CodeSniffer\CodeSniffer as CodeSnifferRunner;
 
 class CodeSniffer implements Inspection
 {
@@ -23,15 +22,10 @@ class CodeSniffer implements Inspection
     public function inspectDiff(Model\Diff $diff): \Traversable
     {
         /** @var Model\Diff\File $file */
-        foreach ($diff->getFiles() as $file) {
-            if ($file->isBinary() || $file->isRename() || $file->isDeletion()) {
-                continue;
-            }
+        foreach ($diff->getAddedTextFiles() as $file) {
+            $report = $this->codeSniffer->execute($file->getNewName(), $file->getNewBlob()->getContent());
 
-            $fileName = $file->getNewName();
-            $report = $this->codeSniffer->execute($fileName, $file->getNewBlob()->getContent());
-
-            foreach ($report['files'] as $filename => $fileReport) {
+            foreach ($report['files'] as $fileReport) {
                 yield from $this->buildViolations($file, $fileReport);
             }
         }
