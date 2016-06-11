@@ -21,7 +21,7 @@ class PhpMd
 
     public function execute(string $fileName, string $fileContent): \Traversable
     {
-        $tempFile = sprintf('%s/%s', $this->tempDir, uniqid('phpmd_', true).$fileName);
+        $tempFile = sprintf('%s/%s', $this->tempDir, uniqid('phpmd_', true).str_replace('/', '', $fileName));
 
         file_put_contents($tempFile, $fileContent);
 
