@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "94cd9cd0db3784f9c0657cfc2a2798d3",
-    "content-hash": "5f1ea4dfedfb7bb6032cd0351e04c156",
+    "hash": "35965559aab4467f92f3be30ca2e8a96",
+    "content-hash": "b792eaf9353bb91937bbfded90a09189",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2008,6 +2008,51 @@
                 "instantiate"
             ],
             "time": "2015-06-14 21:17:01"
+        },
+        {
+            "name": "m6web/redis-mock",
+            "version": "v2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/M6Web/RedisMock.git",
+                "reference": "4ce81d09bc47b6420735e0f88c7c50256b0a67e9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/M6Web/RedisMock/zipball/4ce81d09bc47b6420735e0f88c7c50256b0a67e9",
+                "reference": "4ce81d09bc47b6420735e0f88c7c50256b0a67e9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "require-dev": {
+                "atoum/atoum": "master-dev",
+                "predis/predis": "~0.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "M6Web\\Component\\RedisMock": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "M6Web",
+                    "email": "opensource@m6web.fr",
+                    "homepage": "http://tech.m6web.fr/"
+                }
+            ],
+            "description": "Library providing a PHP mock for Redis",
+            "keywords": [
+                "mock",
+                "redis"
+            ],
+            "time": "2015-12-07 09:23:48"
         },
         {
             "name": "myclabs/deep-copy",
