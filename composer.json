@@ -18,10 +18,14 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
 
+        "squizlabs/php_codesniffer": "^2.6",
+        "phpmd/phpmd": "^2.4",
+
         "knplabs/github-api": "^1.7",
         "gitonomy/gitlib": "^1.0",
-        "squizlabs/php_codesniffer": "^2.6",
+
         "php-amqplib/rabbitmq-bundle": "^1.10",
+
         "snc/redis-bundle": "2.x-dev",
         "predis/predis": "^1.1"
     },
