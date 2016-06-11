@@ -31,11 +31,9 @@ class CodeSniffer implements Inspection
             $fileName = $file->getNewName();
             $report = $this->codeSniffer->execute($fileName, $file->getNewBlob()->getContent());
 
-            if (empty($report['files'][$fileName])) {
-                continue;
+            foreach ($report['files'] as $filename => $fileReport) {
+                yield from $this->buildViolations($file, $fileReport);
             }
-
-            yield from $this->buildViolations($file, $report['files'][$fileName]);
         }
     }
 
