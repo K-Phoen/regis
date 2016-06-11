@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Application\Model\Git\Diff;
 
-use Regis\Application\Inspection\Exception\LineNotInDiff;
+use Regis\Application\Model\Exception\LineNotInDiff;
 use Regis\Application\Model\Git\Blob;
 
 class File
