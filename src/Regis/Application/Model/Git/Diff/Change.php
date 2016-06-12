@@ -50,13 +50,4 @@ class Change
     {
         return $this->lines;
     }
-
-    public function getAddedLines(): \Traversable
-    {
-        foreach ($this->lines as $line) {
-            if ($line->getChangeType() === self::LINE_ADD) {
-                yield $line;
-            }
-        }
-    }
 }

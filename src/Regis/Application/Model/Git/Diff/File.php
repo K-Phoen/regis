@@ -16,7 +16,7 @@ class File
     /** @var Change[]  */
     private $changes;
 
-    public function __construct(string $oldName, string $newName, bool $isBinary, Blob $newBlob, array $changes)
+    public function __construct($oldName, $newName, bool $isBinary, Blob $newBlob, array $changes)
     {
         $this->oldName = $oldName;
         $this->newName = $newName;
@@ -33,6 +33,11 @@ class File
     public function isDeletion(): bool
     {
         return null === $this->newName;
+    }
+
+    public function isCreation(): bool
+    {
+        return null === $this->oldName;
     }
 
     public function isModification(): bool
@@ -71,20 +76,29 @@ class File
     public function findPositionForLine(int $line): int
     {
         $changes = $this->getChanges();
+        $offset = 0;
 
-        $previousChangeCount = 0;
         /** @var Change $change */
         foreach ($changes as $change) {
             $rangeStart = $change->getRangeNewStart() - 1;
 
             /** @var Line $diffLine */
-            foreach ($change->getAddedLines() as $diffLine) {
+            foreach ($change->getLines() as $diffLine) {
+                if ($diffLine->getChangeType() === Change::LINE_REMOVE) {
+                    $offset += 1;
+                    continue;
+                }
+
+                if ($diffLine->getChangeType() === Change::LINE_CONTEXT) {
+                    continue;
+                }
+
                 if ($rangeStart + $diffLine->getPosition() === $line) {
-                    return $previousChangeCount + $diffLine->getPosition();
+                    return $offset + $diffLine->getPosition();
                 }
             }
 
-            $previousChangeCount = $change->getRangeNewCount() + 1;
+            $offset = $change->getRangeNewCount() + 1;
         }
 
         throw LineNotInDiff::line($line);
