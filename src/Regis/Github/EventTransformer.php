@@ -61,7 +61,7 @@ class EventTransformer
         $repository = new Model\Repository(
             $payload['repository']['owner']['login'],
             $payload['repository']['name'],
-            $payload['repository']['clone_url']
+            $payload['repository']['private'] ? $payload['repository']['ssh_url'] : $payload['repository']['clone_url']
         );
 
         return new Model\PullRequest(

@@ -89,6 +89,17 @@ class EventTransformerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('https://github.com/K-Phoen/test.git', $repo->getCloneUrl());
     }
 
+    public function testItChosesSshUrlForPrivateRepositories()
+    {
+        $event = $this->transformer->transform($this->pullRequestClosedOnPrivateRepoPayload());
+
+        $this->assertInstanceOf(Event\PullRequestClosed::class, $event);
+
+        $repo = $event->getPullRequest()->getRepository();
+
+        $this->assertEquals('git@github.com:K-Phoen/test.git', $repo->getCloneUrl());
+    }
+
     private function pullRequestOpenedPayload(): Request
     {
         return $this->requestWithContent('pull_request', <<<PAYLOAD
@@ -120,7 +131,9 @@ class EventTransformerTest extends \PHPUnit_Framework_TestCase
     "owner": {
       "login": "K-Phoen"
     },
-    "clone_url": "https://github.com/K-Phoen/test.git"
+    "private": false,
+    "clone_url": "https://github.com/K-Phoen/test.git",
+    "ssh_url": "git@github.com:K-Phoen/test.git"
   }
 }
 PAYLOAD
@@ -160,7 +173,9 @@ PAYLOAD
     "owner": {
       "login": "K-Phoen"
     },
-    "clone_url": "https://github.com/K-Phoen/test.git"
+    "private": false,
+    "clone_url": "https://github.com/K-Phoen/test.git",
+    "ssh_url": "git@github.com:K-Phoen/test.git"
   }
 }
 PAYLOAD
@@ -198,7 +213,49 @@ PAYLOAD
     "owner": {
       "login": "K-Phoen"
     },
-    "clone_url": "https://github.com/K-Phoen/test.git"
+    "private": false,
+    "clone_url": "https://github.com/K-Phoen/test.git",
+    "ssh_url": "git@github.com:K-Phoen/test.git"
+  }
+}
+PAYLOAD
+        );
+    }
+
+    private function pullRequestClosedOnPrivateRepoPayload(): Request
+    {
+        return $this->requestWithContent('pull_request', <<<PAYLOAD
+{
+  "action": "closed",
+  "number": 2,
+  "pull_request": {
+    "url": "https://api.github.com/repos/K-Phoen/test/pulls/2",
+    "id": 72605898,
+    "number": 2,
+    "state": "open",
+    "locked": false,
+    "title": "Moar style violations",
+    "head": {
+      "label": "K-Phoen:moar-style-violations",
+      "ref": "moar-style-violations",
+      "sha": "57dee1bee0cf795d2a1dcf8616320618e72807a8"
+    },
+    "base": {
+      "label": "K-Phoen:master",
+      "ref": "master",
+      "sha": "1d6206cb1f76682a9f272e0547721a2aadc58554"
+    }
+  },
+  "repository": {
+    "id": 60372801,
+    "name": "test",
+    "full_name": "K-Phoen/test",
+    "owner": {
+      "login": "K-Phoen"
+    },
+    "private": true,
+    "clone_url": "https://github.com/K-Phoen/test.git",
+    "ssh_url": "git@github.com:K-Phoen/test.git"
   }
 }
 PAYLOAD
