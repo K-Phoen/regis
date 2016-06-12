@@ -32,9 +32,14 @@ class WebhookEvent implements ConsumerInterface
 
             $this->dispatch(Event::INSPECTION_STARTED, new Event\InspectionStarted($pullRequest));
 
-            $reportSummary = $this->inspector->inspect($pullRequest);
+            try {
+                $reportSummary = $this->inspector->inspect($pullRequest);
+                $this->dispatch(Event::INSPECTION_FINISHED, new Event\InspectionFinished($pullRequest, $reportSummary));
+            } catch (\Exception $e) {
+                $this->dispatch(Event::INSPECTION_FAILED, new Event\InspectionFailed($pullRequest, $e));
+                throw $e;
+            }
 
-            $this->dispatch(Event::INSPECTION_FINISHED, new Event\InspectionFinished($pullRequest, $reportSummary));
         }
     }
 

@@ -27,8 +27,10 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         return [
             Event::PULL_REQUEST_OPENED => 'onPullRequestUpdated',
             Event::PULL_REQUEST_SYNCED => 'onPullRequestUpdated',
+
             Event::INSPECTION_STARTED => 'onInspectionStated',
             Event::INSPECTION_FINISHED => 'onInspectionFinished',
+            Event::INSPECTION_FAILED => 'onInspectionFailed',
         ];
     }
 
@@ -61,6 +63,14 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         }
 
         $this->setIntegrationStatus($domainEvent->getPullRequest(), $status, $message);
+    }
+
+    public function onInspectionFailed(DomainEventWrapper $event)
+    {
+        /** @var Event\InspectionFailed $domainEvent */
+        $domainEvent = $event->getDomainEvent();
+
+        $this->setIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_FAILURE, 'Inspection failed.');
     }
 
     private function setIntegrationStatus(PullRequest $pullRequest, string $status, string $description)
