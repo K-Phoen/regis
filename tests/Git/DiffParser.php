@@ -118,11 +118,14 @@ class DiffParser extends ParserBase
                 $position = 1;
                 while (true) {
                     if ($this->expects(' ')) {
-                        $lines[] = new Diff\Line(Diff\Change::LINE_CONTEXT, $position, $this->consumeTo("\n"));
+                        $lines[] = new Diff\Line(Diff\Change::LINE_CONTEXT, $position);
+                        $this->consumeTo("\n");
                     } elseif ($this->expects('+')) {
-                        $lines[] = new Diff\Line(Diff\Change::LINE_ADD, $position, $this->consumeTo("\n"));
+                        $lines[] = new Diff\Line(Diff\Change::LINE_ADD, $position);
+                        $this->consumeTo("\n");
                     } elseif ($this->expects('-')) {
-                        $lines[] = new Diff\Line(Diff\Change::LINE_REMOVE, $position, $this->consumeTo("\n"));
+                        $lines[] = new Diff\Line(Diff\Change::LINE_REMOVE, $position);
+                        $this->consumeTo("\n");
                     } elseif ($this->expects("\ No newline at end of file")) {
                         // Ignore this case...
                     } else {

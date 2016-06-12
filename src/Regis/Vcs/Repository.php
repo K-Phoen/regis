@@ -65,6 +65,6 @@ class Repository
 
     private function convertChangeLine(int $position, array $line): Model\Diff\Line
     {
-        return new Model\Diff\Line($line[0], $position, $line[1]);
+        return new Model\Diff\Line($line[0], $position);
     }
 }
