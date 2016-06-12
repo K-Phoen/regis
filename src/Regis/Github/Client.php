@@ -14,6 +14,9 @@ class Client
     const INTEGRATION_FAILURE = 'failure';
     const INTEGRATION_ERROR = 'error';
 
+    const READONLY_KEY = 'readonly_key';
+    const WRITE_KEY = 'write_key';
+
     private $client;
     private $apiToken;
     private $logger;
@@ -42,6 +45,22 @@ class Client
             'state' => $state,
             'context' => $context,
             'description' => $description,
+        ]);
+    }
+
+    public function addDeployKey(string $owner, string $repository, string $title, string $key, string $type)
+    {
+        $this->assertAuthenticated();
+
+        $this->logger->info('Adding new deploy key for repository {repository} -- {key_title}', [
+            'repository' => sprintf('%s/%s', $owner, $repository),
+            'key_title' => $title,
+        ]);
+
+        $this->client->api('repo')->keys()->create($owner, $repository, [
+            'title' => $title,
+            'key' => $key,
+            'read_only' => $type === self::READONLY_KEY,
         ]);
     }
 
