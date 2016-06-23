@@ -57,6 +57,16 @@ occurs in the repository:
 ./bin/console regis:webhooks:create --owner=K-Phoen --repository=foo --host=http://my.public.regis.host
 ```
 
+### Private repositories
+
+In order to be able to inspect private repositories, Regis needs its own SSH
+keys. They are usually stored in ./var/ssh
+You can then declare a key to github using the following command:
+
+```
+./bin/console regis:deploy-key:add --owner=K-Phoen --repository=regis-test --public-key=./var/ssh/id_rsa_test_regis.pub
+```
+
 License
 -------
 
