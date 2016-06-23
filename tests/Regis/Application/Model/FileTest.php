@@ -175,6 +175,29 @@ index 76fe5e2..e2499d5 100644
 \ No newline at end of file
 ';
 
+        $diff5 = 'diff --git a/src/Regis/Application/Reporter/DuplicationGuard.php b/src/Regis/Application/Reporter/DuplicationGuard.php
+index a5cf1fb..64c6816 100644
+--- a/src/Regis/Application/Reporter/DuplicationGuard.php
++++ b/src/Regis/Application/Reporter/DuplicationGuard.php
+@@ -21,12 +21,13 @@ public function __construct(Reporter $originalReporter, ViolationsCache $violati
+ 
+     public function report(Model\Violation $violation, Model\Github\PullRequest $pullRequest)
+     {
+-        if ($this->violationsCache->has($violation, $pullRequest)) {
++        if($this->violationsCache->has($violation, $pullRequest)) {
+             return;
+         }
+ 
+         $this->originalReporter->report($violation, $pullRequest);
+ 
+         $this->violationsCache->save($violation, $pullRequest);
++
+     }
+-}
+\ No newline at end of file
++}
+';
+
         return [
             [ $diff1, 42, 12 ],
             [ $diff2, 15, 4 ],
@@ -182,6 +205,7 @@ index 76fe5e2..e2499d5 100644
             [ $diff3, 33, 7 ],
             [ $diff4, 7, 4 ],
             [ $diff4, 90, 32 ],
+            [ $diff5, 24, 5 ],
         ];
     }
 

@@ -80,22 +80,19 @@ class File
 
         /** @var Change $change */
         foreach ($changes as $change) {
-            $rangeStart = $change->getRangeNewStart() - 1;
+            $currentLine = $change->getRangeNewStart();
 
             /** @var Line $diffLine */
             foreach ($change->getLines() as $diffLine) {
                 if ($diffLine->getChangeType() === Change::LINE_REMOVE) {
-                    $offset += 1;
                     continue;
                 }
 
-                if ($diffLine->getChangeType() === Change::LINE_CONTEXT) {
-                    continue;
-                }
-
-                if ($rangeStart + $diffLine->getPosition() === $line) {
+                if ($currentLine === $line) {
                     return $offset + $diffLine->getPosition();
                 }
+
+                $currentLine += 1;
             }
 
             $offset = $change->getRangeNewCount() + 1;
