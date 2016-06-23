@@ -13,6 +13,8 @@
 !var/sessions/.gitkeep
 /var/repositories/*
 !var/repositories/.gitkeep
+/var/ssh/*
+!var/ssh/.gitkeep
 !var/SymfonyRequirements.php
 /vendor/
 /web/bundles/
