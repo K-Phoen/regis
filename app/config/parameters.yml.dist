@@ -23,4 +23,6 @@ parameters:
 
     redis_host: redis
 
+    admin_password: ThisPasswordIsNotSoSecretChangeIt
+
     test_repo_secret: ~
