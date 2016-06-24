@@ -75,11 +75,10 @@ class File
 
     public function findPositionForLine(int $line): int
     {
-        $changes = $this->getChanges();
         $offset = 0;
 
         /** @var Change $change */
-        foreach ($changes as $change) {
+        foreach ($this->getChanges() as $change) {
             $currentLine = $change->getRangeNewStart();
 
             /** @var Line $diffLine */
@@ -92,7 +91,7 @@ class File
                     return $offset + $diffLine->getPosition();
                 }
 
-                $currentLine += 1;
+                $currentLine++;
             }
 
             $offset = $diffLine->getPosition() + 1; // We add 1 to skip the line starting by @@
