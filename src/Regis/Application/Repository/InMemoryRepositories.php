@@ -10,7 +10,14 @@ class InMemoryRepositories implements Repositories
 
     public function __construct(array $repositories)
     {
-        $this->repositories = $repositories;
+        foreach ($repositories as $identifier => $repository) {
+            $this->repositories[$identifier] = new Model\Repository($identifier, $repository['secret']);
+        }
+    }
+
+    public function save(Model\Repository $repository)
+    {
+        $this->repositories[$repository->getIdentifier()] = $repository;
     }
 
     public function findAll(): \Traversable
@@ -26,6 +33,6 @@ class InMemoryRepositories implements Repositories
             throw Exception\NotFound::forIdentifier($identifier);
         }
         
-        return new Model\Repository($identifier, $this->repositories[$identifier]['secret']);
+        return $this->repositories[$identifier];
     }
 }

@@ -2,3 +2,8 @@ repositories_list:
     path:      /repositories
     defaults:  { _controller: RegisBackendBundle:Repositories:list }
     methods:   GET
+
+repositories_new:
+    path:      /repositories/new
+    defaults:  { _controller: RegisBackendBundle:Repositories:new }
+    methods:   GET|POST

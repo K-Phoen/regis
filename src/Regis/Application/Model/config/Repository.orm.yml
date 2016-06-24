@@ -1,0 +1,12 @@
+Regis\Application\Model\Repository:
+    type: entity
+    table: repositories
+
+    id:
+        identifier:
+            type: string
+            generator: { strategy: NONE }
+
+    fields:
+        sharedSecret:
+            type: string

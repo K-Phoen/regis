@@ -3,10 +3,13 @@ FROM php:7.0-cli
 RUN apt-get update && apt-get install -y --no-install-recommends \
  git \
  ssh \
+ libpq-dev \
  && apt-get clean \
  && rm -rf /var/lib/apt/lists/*
 
 RUN docker-php-ext-install -j$(nproc) bcmath
+RUN docker-php-ext-install -j$(nproc) pdo_pgsql
+
 RUN mkdir -p /var/www/html
 
 WORKDIR /var/www/html

@@ -4,7 +4,7 @@
 <h1 class="page-header">Repositories</h1>
 
 <div class="table-responsive">
-    <table class="table table-striped">
+    <table class="table table-striped table-hover">
         <thead>
             <tr>
                 <th>Repository</th>
@@ -17,6 +17,12 @@
             </tr>
         {% endfor %}
         </tbody>
+
+        <tfoot>
+            <tr>
+                <td><a href="{{ path('repositories_new') }}" class="btn btn-primary">Add new</a></td>
+            </tr>
+        </tfoot>
     </table>
 </div>
 {% endblock %}
