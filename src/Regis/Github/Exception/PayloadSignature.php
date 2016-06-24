@@ -19,9 +19,9 @@ class PayloadSignature extends \RuntimeException
         return new static('Could not determine the repository associated to the payload.');
     }
 
-    public static function unknownRepository(string $repository): PayloadSignature
+    public static function unknownRepository(string $repository, \Exception $previous = null): PayloadSignature
     {
-        return new static(sprintf('Repository "%s" is not known.', $repository));
+        return new static(sprintf('Repository "%s" is not known.', $repository), 0, $previous);
     }
 
     public static function unknownAlgorithm(string $algorithm): PayloadSignature

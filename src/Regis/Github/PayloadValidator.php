@@ -6,13 +6,15 @@ namespace Regis\Github;
 
 use Symfony\Component\HttpFoundation\Request;
 
+use Regis\Application\Repository;
+
 class PayloadValidator
 {
-    private $repositories;
+    private $repositoriesRepo;
 
-    public function __construct(array $repositories)
+    public function __construct(Repository\Repositories $repositoriesRepo)
     {
-        $this->repositories = $repositories;
+        $this->repositoriesRepo = $repositoriesRepo;
     }
 
     public function validate(Request $request)
@@ -25,10 +27,12 @@ class PayloadValidator
 
         $rawPayload = $request->getContent();
         $payload = json_decode($rawPayload, true);
-        $repository = $this->extractRepository($payload);
+        $repositoryIdentifier = $this->extractRepositoryIdentifier($payload);
 
-        if (!array_key_exists($repository, $this->repositories)) {
-            throw Exception\PayloadSignature::unknownRepository($repository);
+        try {
+            $repository = $this->repositoriesRepo->find($repositoryIdentifier);
+        } catch (Repository\Exception\NotFound $e) {
+            throw Exception\PayloadSignature::unknownRepository($repositoryIdentifier, $e);
         }
 
         $signatureParts = explode('=', $signature, 2);
@@ -42,15 +46,14 @@ class PayloadValidator
             throw Exception\PayloadSignature::unknownAlgorithm($algorithm);
         }
 
-        $secret = $this->repositories[$repository]['secret'];
-        $expectedSignature = hash_hmac('sha1', $rawPayload, $secret);
+        $expectedSignature = hash_hmac('sha1', $rawPayload, $repository->getSharedSecret());
 
         if (!hash_equals($expectedSignature, $hash)) {
             throw Exception\PayloadSignature::invalid();
         }
     }
 
-    private function extractRepository(array $payload): string
+    private function extractRepositoryIdentifier(array $payload): string
     {
         if (empty($payload['repository']) || empty($payload['repository']['full_name'])) {
             throw Exception\PayloadSignature::couldNotDetermineRepository();

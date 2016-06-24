@@ -2,9 +2,11 @@
 
 namespace Tests\Regis\Github;
 
+use Symfony\Component\HttpFoundation\Request;
+
+use Regis\Application\Repository;
 use Regis\Github\Exception\PayloadSignature;
 use Regis\Github\PayloadValidator;
-use Symfony\Component\HttpFoundation\Request;
 
 class PayloadValidatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -19,7 +21,8 @@ class PayloadValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->payloadValidator = new PayloadValidator(self::REPOSITORIES);
+        $repositoriesRepo = new Repository\InMemoryRepositories(self::REPOSITORIES);
+        $this->payloadValidator = new PayloadValidator($repositoriesRepo);
     }
 
     public function testValidRequestsAreAccepted()

@@ -21,4 +21,4 @@ services:
 
     regis.github.payload_validator:
         class: Regis\Github\PayloadValidator
-        arguments: [ '%regis.config.repositories%' ]
+        arguments: [ '@regis.repository.repositories' ]
