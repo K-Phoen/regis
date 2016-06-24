@@ -1,0 +1,4 @@
+repositories_list:
+    path:      /repositories
+    defaults:  { _controller: RegisBackendBundle:Repositories:list }
+    methods:   GET

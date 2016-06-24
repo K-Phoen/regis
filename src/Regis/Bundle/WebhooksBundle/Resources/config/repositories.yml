@@ -1,4 +1,4 @@
 services:
     regis.repository.repositories:
-        class: Regis\Application\Repository\Repositories
+        class: Regis\Application\Repository\InMemoryRepositories
         arguments: [ '%regis.config.repositories%' ]

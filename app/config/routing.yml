@@ -1,2 +1,7 @@
 webhooks:
     resource: "@RegisWebhooksBundle/Resources/config/routing.yml"
+    prefix: webhook
+
+backend:
+    resource: "@RegisBackendBundle/Resources/config/routing.yml"
+    prefix: backend

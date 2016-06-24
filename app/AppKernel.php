@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Snc\RedisBundle\SncRedisBundle(),
 
             new Regis\Bundle\WebhooksBundle\RegisWebhooksBundle(),
+            new Regis\Bundle\BackendBundle\RegisBackendBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

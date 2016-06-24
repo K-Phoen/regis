@@ -1,0 +1,22 @@
+{% extends '@RegisBackend/layout.html.twig' %}
+
+{% block content %}
+<h1 class="page-header">Repositories</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Repository</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for repo in repositories %}
+            <tr>
+                <td>{{ repo.identifier }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

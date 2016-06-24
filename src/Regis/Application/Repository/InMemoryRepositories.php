@@ -13,6 +13,13 @@ class InMemoryRepositories implements Repositories
         $this->repositories = $repositories;
     }
 
+    public function findAll(): \Traversable
+    {
+        foreach ($this->repositories as $identifier => $repo) {
+            yield new Model\Repository($identifier, $repo['secret']);
+        }
+    }
+
     public function find(string $identifier): Model\Repository
     {
         if (!array_key_exists($identifier, $this->repositories)) {

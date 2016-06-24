@@ -17,6 +17,7 @@ class RegisWebhooksExtension extends Extension
         $loader->load('clients.yml');
         $loader->load('inspections.yml');
         $loader->load('listeners.yml');
+        $loader->load('repositories.yml');
         $loader->load('vcs.yml');
         $loader->load('workers.yml');
 
