@@ -10,6 +10,14 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 RUN docker-php-ext-install -j$(nproc) bcmath
 RUN docker-php-ext-install -j$(nproc) pdo_pgsql
 
+RUN apt-get update && apt-get install -y --no-install-recommends zlib1g-dev libicu-dev \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install -j$(nproc) intl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN docker-php-ext-install -j$(nproc) opcache
+
 RUN mkdir -p /var/www/html
 
 WORKDIR /var/www/html
