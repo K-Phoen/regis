@@ -95,7 +95,7 @@ class File
                 $currentLine += 1;
             }
 
-            $offset = $change->getRangeNewCount() + 1;
+            $offset = $diffLine->getPosition() + 1; // We add 1 to skip the line starting by @@
         }
 
         throw LineNotInDiff::line($line);

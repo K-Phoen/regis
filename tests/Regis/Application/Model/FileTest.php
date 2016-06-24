@@ -198,6 +198,38 @@ index a5cf1fb..64c6816 100644
 +}
 ';
 
+        $diff6 = 'diff --git a/src/Regis/Bundle/WebhooksBundle/Worker/WebhookEvent.php b/src/Regis/Bundle/WebhooksBundle/Worker/WebhookEvent.php
+index d62fdc2..cfad9e1 100644
+--- a/src/Regis/Bundle/WebhooksBundle/Worker/WebhookEvent.php
++++ b/src/Regis/Bundle/WebhooksBundle/Worker/WebhookEvent.php
+@@ -27,7 +27,7 @@ public function execute(AMQPMessage $msg)
+     {
+         $event = unserialize($msg->body);
+ 
+-        if ($event instanceof Event\PullRequestOpened || $event instanceof Event\PullRequestSynced) {
++        if($event instanceof Event\PullRequestOpened || $event instanceof Event\PullRequestSynced) {
+             $pullRequest = $event->getPullRequest();
+ 
+             $this->dispatch(Event::INSPECTION_STARTED, new Event\InspectionStarted($pullRequest));
+@@ -41,10 +41,14 @@ public function execute(AMQPMessage $msg)
+             }
+ 
+         }
++
++        return;
++
++        $lala = 42;
+     }
+ 
+     private function dispatch(string $eventName, Event $event)
+     {
+         $this->dispatcher->dispatch($eventName, new DomainEventWrapper($event));
+     }
+-}
+\ No newline at end of file
++}
+';
+
         return [
             [ $diff1, 42, 12 ],
             [ $diff2, 15, 4 ],
@@ -206,6 +238,8 @@ index a5cf1fb..64c6816 100644
             [ $diff4, 7, 4 ],
             [ $diff4, 90, 32 ],
             [ $diff5, 24, 5 ],
+            [ $diff6, 30, 5 ],
+            [ $diff6, 47, 16 ],
         ];
     }
 
