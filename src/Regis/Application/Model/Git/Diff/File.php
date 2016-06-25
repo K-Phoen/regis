@@ -65,6 +65,11 @@ class File
         return $this->newBlob;
     }
 
+    public function getNewContent(): string
+    {
+        return $this->newBlob->getContent();
+    }
+
     /**
      * @return Change[]
      */

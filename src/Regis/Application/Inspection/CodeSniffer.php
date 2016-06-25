@@ -23,7 +23,7 @@ class CodeSniffer implements Inspection
     {
         /** @var Model\Diff\File $file */
         foreach ($diff->getAddedTextFiles() as $file) {
-            $report = $this->codeSniffer->execute($file->getNewName(), $file->getNewBlob()->getContent());
+            $report = $this->codeSniffer->execute($file->getNewName(), $file->getNewContent());
 
             foreach ($report['files'] as $fileReport) {
                 yield from $this->buildViolations($file, $fileReport);
