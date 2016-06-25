@@ -6,7 +6,7 @@ use Regis\Application\Entity;
 
 interface Repositories
 {
-    public function save(Entity\Repository $inspections);
+    public function save(Entity\Repository $repository);
 
     public function findAll(): \Traversable;
     public function find(string $id): Entity\Repository;

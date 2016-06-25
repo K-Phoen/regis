@@ -15,9 +15,9 @@ class DoctrineRepositories implements Repositories
         $this->em = $em;
     }
 
-    public function save(Entity\Repository $inspections)
+    public function save(Entity\Repository $repository)
     {
-        $this->em->persist($inspections);
+        $this->em->persist($repository);
         $this->em->flush();
     }
 

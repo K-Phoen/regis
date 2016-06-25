@@ -15,9 +15,9 @@ class InMemoryRepositories implements Repositories
         }
     }
 
-    public function save(Entity\Repository $inspections)
+    public function save(Entity\Repository $repository)
     {
-        $this->repositories[$inspections->getIdentifier()] = $inspections;
+        $this->repositories[$repository->getIdentifier()] = $repository;
     }
 
     public function findAll(): \Traversable
