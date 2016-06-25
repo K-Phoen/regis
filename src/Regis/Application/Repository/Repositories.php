@@ -2,12 +2,12 @@
 
 namespace Regis\Application\Repository;
 
-use Regis\Application\Model;
+use Regis\Application\Entity;
 
 interface Repositories
 {
-    public function save(Model\Repository $repository);
+    public function save(Entity\Repository $repository);
 
     public function findAll(): \Traversable;
-    public function find(string $identifier): Model\Repository;
+    public function find(string $identifier): Entity\Repository;
 }

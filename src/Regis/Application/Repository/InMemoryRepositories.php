@@ -2,7 +2,7 @@
 
 namespace Regis\Application\Repository;
 
-use Regis\Application\Model;
+use Regis\Application\Entity;
 
 class InMemoryRepositories implements Repositories
 {
@@ -11,11 +11,11 @@ class InMemoryRepositories implements Repositories
     public function __construct(array $repositories)
     {
         foreach ($repositories as $identifier => $repository) {
-            $this->repositories[$identifier] = new Model\Repository($identifier, $repository['secret']);
+            $this->repositories[$identifier] = new Entity\Repository($identifier, $repository['secret']);
         }
     }
 
-    public function save(Model\Repository $repository)
+    public function save(Entity\Repository $repository)
     {
         $this->repositories[$repository->getIdentifier()] = $repository;
     }
@@ -23,11 +23,11 @@ class InMemoryRepositories implements Repositories
     public function findAll(): \Traversable
     {
         foreach ($this->repositories as $identifier => $repo) {
-            yield new Model\Repository($identifier, $repo['secret']);
+            yield new Entity\Repository($identifier, $repo['secret']);
         }
     }
 
-    public function find(string $identifier): Model\Repository
+    public function find(string $identifier): Entity\Repository
     {
         if (!array_key_exists($identifier, $this->repositories)) {
             throw Exception\NotFound::forIdentifier($identifier);

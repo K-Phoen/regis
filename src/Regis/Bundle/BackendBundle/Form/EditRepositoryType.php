@@ -9,12 +9,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 use Regis\Application\Entity;
 
-class NewRepositoryType extends AbstractType
+class EditRepositoryType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('identifier')
+            ->add('identifier', null, ['disabled' => true])
             ->add('sharedSecret')
             ->add('save', SubmitType::class)
         ;
@@ -24,12 +24,12 @@ class NewRepositoryType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class' => Entity\Repository::class,
-            'intent' => 'new_repository',
+            'intent' => 'nedit_repository',
         ));
     }
 
     public function getName()
     {
-        return 'new_repository_type';
+        return 'edit_repository_type';
     }
 }

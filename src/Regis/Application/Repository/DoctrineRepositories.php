@@ -3,7 +3,7 @@
 namespace Regis\Application\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Regis\Application\Model;
+use Regis\Application\Entity;
 
 class DoctrineRepositories implements Repositories
 {
@@ -15,7 +15,7 @@ class DoctrineRepositories implements Repositories
         $this->em = $em;
     }
 
-    public function save(Model\Repository $repository)
+    public function save(Entity\Repository $repository)
     {
         $this->em->persist($repository);
         $this->em->flush();
@@ -23,12 +23,12 @@ class DoctrineRepositories implements Repositories
 
     public function findAll(): \Traversable
     {
-        return new \ArrayIterator($this->em->getRepository(Model\Repository::class)->findAll());
+        return new \ArrayIterator($this->em->getRepository(Entity\Repository::class)->findAll());
     }
 
-    public function find(string $identifier): Model\Repository
+    public function find(string $identifier): Entity\Repository
     {
-        $repository = $this->em->getRepository(Model\Repository::class)->find($identifier);
+        $repository = $this->em->getRepository(Entity\Repository::class)->find($identifier);
 
         if ($repository === null) {
             throw Exception\NotFound::forIdentifier($identifier);

@@ -7,3 +7,9 @@ repositories_new:
     path:      /repositories/new
     defaults:  { _controller: RegisBackendBundle:Repositories:new }
     methods:   GET|POST
+
+repositories_edit:
+    path:      /repositories/{identifier}/edit
+    defaults:  { _controller: RegisBackendBundle:Repositories:edit }
+    requirements: { identifier: ".+/.+" }
+    methods:   GET|POST

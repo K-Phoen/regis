@@ -13,7 +13,7 @@
         <tbody>
         {% for repo in repositories %}
             <tr>
-                <td>{{ repo.identifier }}</td>
+                <td><a href="{{ path('repositories_edit', {identifier: repo.identifier}) }}">{{ repo.identifier }}</a></td>
             </tr>
         {% endfor %}
         </tbody>

@@ -1,4 +1,4 @@
-Regis\Application\Model\Repository:
+Regis\Application\Entity\Repository:
     type: entity
     table: repositories
 
