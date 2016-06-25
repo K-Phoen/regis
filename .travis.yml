@@ -9,11 +9,14 @@ matrix:
     fast_finish: true
 
 before_install:
-    - phpenv config-rm xdebug.ini || true
     - composer self-update
 
 install:
     - composer install --optimize-autoloader --no-interaction --no-scripts ${COMPOSER_FLAGS}
+    - composer require satooshi/php-coveralls
 
 script:
     - ./vendor/bin/phpunit
+
+after_script:
+    - php vendor/bin/coveralls -v
