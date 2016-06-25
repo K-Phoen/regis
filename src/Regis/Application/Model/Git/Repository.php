@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Application\Model\Github;
+namespace Regis\Application\Model\Git;
 
 class Repository
 {

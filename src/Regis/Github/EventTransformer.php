@@ -61,7 +61,7 @@ class EventTransformer
 
     private function transformPullRequest(array $payload): Model\Github\PullRequest
     {
-        $repository = new Model\Github\Repository(
+        $repository = new Model\Git\Repository(
             $payload['repository']['owner']['login'],
             $payload['repository']['name'],
             $payload['repository']['private'] ? $payload['repository']['ssh_url'] : $payload['repository']['clone_url']

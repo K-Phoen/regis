@@ -28,7 +28,7 @@ class ViolationsCacheTest extends \PHPUnit_Framework_TestCase
         $this->violationsCache = new ViolationsCache($this->redis);
 
         $revisions = new Model\Git\Revisions('head sha', 'base sha');
-        $repository = new Model\Github\Repository('K-Phoen', 'test', 'clone url');
+        $repository = new Model\Git\Repository('K-Phoen', 'test', 'clone url');
 
         $this->violation = new Model\Violation(Model\Violation::ERROR, 'file.php', 4, 'Test violation');
         $this->pullRequest = new Model\Github\PullRequest($repository, 2, $revisions);

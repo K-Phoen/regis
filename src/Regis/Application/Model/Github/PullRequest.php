@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Application\Model\Github;
 
-use Regis\Application\Model\Git\Revisions;
+use Regis\Application\Model\Git;
 
 class PullRequest
 {
@@ -15,13 +15,13 @@ class PullRequest
     public static function fromArray(array $data): PullRequest
     {
         return new static(
-            Repository::fromArray($data['repository']),
+            Git\Repository::fromArray($data['repository']),
             $data['number'],
-            Revisions::fromArray($data['revisions'])
+            Git\Revisions::fromArray($data['revisions'])
         );
     }
 
-    public function __construct(Repository $repository, int $number, Revisions $revisions)
+    public function __construct(Git\Repository $repository, int $number, Git\Revisions $revisions)
     {
         $this->repository = $repository;
         $this->number = $number;
@@ -37,7 +37,7 @@ class PullRequest
         ];
     }
 
-    public function getRepository(): Repository
+    public function getRepository(): Git\Repository
     {
         return $this->repository;
     }
@@ -57,7 +57,7 @@ class PullRequest
         return $this->revisions->getBase();
     }
 
-    public function getRevisions(): Revisions
+    public function getRevisions(): Git\Revisions
     {
         return $this->revisions;
     }

@@ -15,30 +15,29 @@ class Git
     private $logger;
 
     /** @var string */
-    private $gitBinary;
-
-    /** @var string */
     private $repositoriesDirectory;
+
+    private $gitonomyOptions = [];
 
     public function __construct(LoggerInterface $logger, string $gitBinary, string $repositoriesDirectory)
     {
         $this->logger = $logger;
         $this->gitBinary = $gitBinary;
         $this->repositoriesDirectory = $repositoriesDirectory;
+
+        $this->gitonomyOptions = [
+            'command' => $gitBinary,
+        ];
     }
 
-    public function getRepository(Model\Github\Repository $repository): Repository
+    public function getRepository(Model\Git\Repository $repository): Repository
     {
         $repositoryPath = $this->getRepositoryPath($repository);
 
         if (!is_dir($repositoryPath)) {
-            $gitRepo = Gitonomy\Admin::cloneTo($repositoryPath, $repository->getCloneUrl(), false, [
-                'command' => $this->gitBinary,
-            ]);
+            $gitRepo = Gitonomy\Admin::cloneTo($repositoryPath, $repository->getCloneUrl(), false, $this->gitonomyOptions);
         } else {
-            $gitRepo = new Gitonomy\Repository($this->getRepositoryPath($repository), [
-                'command' => $this->gitBinary,
-            ]);
+            $gitRepo = new Gitonomy\Repository($this->getRepositoryPath($repository), $this->gitonomyOptions);
         }
 
         $gitRepo->setLogger($this->logger);
@@ -46,7 +45,7 @@ class Git
         return new Repository($gitRepo);
     }
 
-    private function getRepositoryPath(Model\Github\Repository $repository): string
+    private function getRepositoryPath(Model\Git\Repository $repository): string
     {
         return sprintf('%s/%s/%s', $this->repositoriesDirectory, $repository->getOwner(), $repository->getName());
     }
