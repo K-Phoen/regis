@@ -6,25 +6,23 @@ namespace Regis\Application\Model\Git;
 
 class Diff
 {
-    private $base;
-    private $head;
+    private $revisions;
     private $files;
 
-    public function __construct(string $base, string $head, array $files)
+    public function __construct(Revisions $revisions, array $files)
     {
-        $this->base = $base;
-        $this->head  = $head;
+        $this->revisions = $revisions;
         $this->files = $files;
     }
 
     public function getBase(): string
     {
-        return $this->base;
+        return $this->revisions->getBase();
     }
 
     public function getHead(): string
     {
-        return $this->head;
+        return $this->revisions->getHead();
     }
 
     public function getFiles(): array

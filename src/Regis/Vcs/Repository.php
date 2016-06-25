@@ -23,11 +23,11 @@ class Repository
         $this->repository->run('fetch');
     }
 
-    public function getDiff(string $base, string $head): Model\Diff
+    public function getDiff(Model\Revisions $revisions): Model\Diff
     {
-        $gitDiff = $this->repository->getDiff(sprintf('%s..%s', $base, $head));
+        $gitDiff = $this->repository->getDiff(sprintf('%s..%s', $revisions->getBase(), $revisions->getHead()));
 
-        return new Model\Diff($base, $head, array_map(function(Gitonomy\Diff\File $file) {
+        return new Model\Diff($revisions, array_map(function(Gitonomy\Diff\File $file) {
             return $this->convertDiffFile($file);
         }, $gitDiff->getFiles()));
     }

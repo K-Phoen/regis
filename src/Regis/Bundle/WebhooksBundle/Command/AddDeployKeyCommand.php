@@ -67,6 +67,7 @@ class AddDeployKeyCommand extends ContainerAwareCommand
         $repo = $input->getOption('repository');
         $key = $input->getOption('public-key');
 
+        // TODO this should be done using the command bus
         if (!file_exists($key) || !is_readable($key)) {
             throw new \RuntimeException(sprintf('File "%s" does not exist or is not readable', $key));
         }

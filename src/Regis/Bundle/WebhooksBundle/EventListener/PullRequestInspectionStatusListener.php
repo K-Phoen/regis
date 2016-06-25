@@ -11,6 +11,9 @@ use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
 use Regis\Application\Event;
 use Regis\Github\Client;
 
+/**
+ * TODO this class should rely on the command bus
+ */
 class PullRequestInspectionStatusListener implements EventSubscriberInterface
 {
     const STATUS_CONTEXT = 'regis/pr';

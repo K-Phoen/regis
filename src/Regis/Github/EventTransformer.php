@@ -7,7 +7,7 @@ namespace Regis\Github;
 use Symfony\Component\HttpFoundation\Request;
 
 use Regis\Application\Event;
-use Regis\Application\Model\Github as Model;
+use Regis\Application\Model;
 
 /**
  * Transforms a payload sent by Github in a domain event.
@@ -59,18 +59,17 @@ class EventTransformer
         return new Event\PullRequestSynced($pullRequest, $payload['before'], $payload['after']);
     }
 
-    private function transformPullRequest(array $payload): Model\PullRequest
+    private function transformPullRequest(array $payload): Model\Github\PullRequest
     {
-        $repository = new Model\Repository(
+        $repository = new Model\Github\Repository(
             $payload['repository']['owner']['login'],
             $payload['repository']['name'],
             $payload['repository']['private'] ? $payload['repository']['ssh_url'] : $payload['repository']['clone_url']
         );
 
-        return new Model\PullRequest(
+        return new Model\Github\PullRequest(
             $repository, (int) $payload['number'],
-            $payload['pull_request']['head']['sha'],
-            $payload['pull_request']['base']['sha']
+            new Model\Git\Revisions($payload['pull_request']['base']['sha'], $payload['pull_request']['head']['sha'])
         );
     }
 }

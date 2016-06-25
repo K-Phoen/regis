@@ -23,10 +23,13 @@ class Inspector
 
     public function inspect(Model\Github\PullRequest $pullRequest)
     {
-        $gitRepository = $this->git->getRepository($pullRequest->getRepository());
+        $repository = $pullRequest->getRepository();
+        $revisions = $pullRequest->getRevisions();
+
+        $gitRepository = $this->git->getRepository($repository);
         $gitRepository->update();
 
-        $diff = $gitRepository->getDiff($pullRequest->getBase(), $pullRequest->getHead());
+        $diff = $gitRepository->getDiff($revisions);
 
         return $this->inspectDiff($pullRequest, $diff);
     }

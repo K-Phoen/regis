@@ -27,8 +27,11 @@ class ViolationsCacheTest extends \PHPUnit_Framework_TestCase
         $this->redis = $factory->getAdapter('Predis\Client', true);
         $this->violationsCache = new ViolationsCache($this->redis);
 
+        $revisions = new Model\Git\Revisions('head sha', 'base sha');
+        $repository = new Model\Github\Repository('K-Phoen', 'test', 'clone url');
+
         $this->violation = new Model\Violation(Model\Violation::ERROR, 'file.php', 4, 'Test violation');
-        $this->pullRequest = new Model\Github\PullRequest(new Model\Github\Repository('K-Phoen', 'test', 'clone url'), 2, 'head sha', 'base sha');
+        $this->pullRequest = new Model\Github\PullRequest($repository, 2, $revisions);
     }
 
     public function testWhenAViolationIsNotCached()

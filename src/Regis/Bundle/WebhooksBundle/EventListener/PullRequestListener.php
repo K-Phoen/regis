@@ -44,6 +44,7 @@ class PullRequestListener implements EventSubscriberInterface
         /** @var Event\PullRequestClosed $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
+        // TODO should be in a command
         $this->violationsCache->clear($domainEvent->getPullRequest());
     }
 }
