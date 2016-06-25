@@ -19,6 +19,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('old-name.php', $diffFile->getOldName());
         $this->assertNull($diffFile->getNewName());
         $this->assertSame($blob, $diffFile->getNewBlob());
+        $this->assertSame('blob content', $diffFile->getNewContent());
         $this->assertFalse($diffFile->isBinary());
     }
 
@@ -245,6 +246,11 @@ index d62fdc2..cfad9e1 100644
 
     private function getBlob(): Blob
     {
-        return $this->getMockBuilder(Blob::class)->disableOriginalConstructor()->getMock();
+        $blob = $this->getMockBuilder(Blob::class)->disableOriginalConstructor()->getMock();
+        $blob->expects($this->any())
+            ->method('getContent')
+            ->will($this->returnValue('blob content'));
+
+        return $blob;
     }
 }

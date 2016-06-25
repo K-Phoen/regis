@@ -6,7 +6,7 @@ namespace Regis\Application\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Regis\Application\Model\Github\PullRequest;
-use Regis\Application\Model\Uuid;
+use Regis\Uuid;
 
 class Inspection
 {
@@ -28,7 +28,7 @@ class Inspection
 
     public static function create(Repository $repository, PullRequest $pullRequest)
     {
-        $inspection = new static((string) Uuid::create());
+        $inspection = new static(Uuid::create());
         $inspection->pullRequestId = $pullRequest->getNumber();
         $inspection->repository = $repository;
         $inspection->createdAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
