@@ -1,4 +1,4 @@
-Regis ![PHP7 ready](https://img.shields.io/badge/PHP7-ready-green.svg) [![Build Status](https://travis-ci.org/K-Phoen/regis.svg?branch=master)](https://travis-ci.org/K-Phoen/regis)
+Regis ![PHP7 ready](https://img.shields.io/badge/PHP7-ready-green.svg) [![Build Status](https://travis-ci.org/K-Phoen/regis.svg?branch=master)](https://travis-ci.org/K-Phoen/regis) [![Coverage Status](https://coveralls.io/repos/github/K-Phoen/regis/badge.svg?branch=master)](https://coveralls.io/github/K-Phoen/regis?branch=master)
 =====
 
 Let Regis inspect your pull requests for style violations and other boring
