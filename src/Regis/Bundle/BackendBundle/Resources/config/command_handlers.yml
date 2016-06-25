@@ -19,7 +19,7 @@ services:
 
     regis.command_handler.inspections.schedule:
         class: Regis\Application\CommandHandler\Inspection\Schedule
-        arguments: [ '@old_sound_rabbit_mq.webhook_event_producer', '@regis.repository.repositories', '@regis.repository.inspections' ]
+        arguments: [ '@old_sound_rabbit_mq.webhook_github_pr_event_producer', '@regis.repository.repositories', '@regis.repository.inspections' ]
         tags:
             - { name: tactician.handler, command: Regis\Application\Command\Inspection\Schedule }
 

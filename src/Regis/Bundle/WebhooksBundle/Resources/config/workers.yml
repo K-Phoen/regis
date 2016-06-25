@@ -1,4 +1,4 @@
 services:
-    regis.worker.webhook_event:
-        class: Regis\Bundle\WebhooksBundle\Worker\InspectionRunner
+    regis.worker.webhook_github_pr_event:
+        class: Regis\Bundle\WebhooksBundle\Worker\GithubPrInspectionRunner
         arguments: [ '@tactician.commandbus', '@regis.repository.inspections' ]

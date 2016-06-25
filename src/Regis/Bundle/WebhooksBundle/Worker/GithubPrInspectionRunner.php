@@ -12,7 +12,7 @@ use Regis\Application\Command;
 use Regis\Application\Model\Github\PullRequest;
 use Regis\Application\Repository;
 
-class InspectionRunner implements ConsumerInterface
+class GithubPrInspectionRunner implements ConsumerInterface
 {
     private $commandBus;
     private $inspectionsRepo;

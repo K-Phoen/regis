@@ -34,6 +34,7 @@ class Schedule
         // and schedule it
         $this->producer->publish(json_encode([
             'inspection' => $inspection->getId(),
+            'revisions' => $pullRequest->getRevisions()->toArray(),
             'pull_request' => $pullRequest->toArray(),
         ]));
     }
