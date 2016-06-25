@@ -31,32 +31,6 @@ file is provided and can be launched using:
 docker-compose -f docker/docker-compose.yml up
 ```
 
-Configuration
--------------
-
-The repositories to inspect are configured in the `app/config/bundles/regis_webhooks.yml` file.
-Regis expects a list of tuples repository/secret following the schema:
-
-```yaml
-regis_webhooks:
-  # …
-
-  repositories:
-    -
-      # for the repository https://github.com/K-Phoen/foo
-      identifier: K-Phoen/foo
-      # a shared secret that will be used to secure the communications between Regis and GitHub
-      secret: '%test_repo_secret%'
-```
-
-Once a repository has been configured, the following command automatically
-configures a webhook used to make GitHub call Regis whenever an interesting event
-occurs in the repository:
-
-```
-./bin/console regis:webhooks:create --owner=K-Phoen --repository=foo --host=http://my.public.regis.host
-```
-
 ### Private repositories
 
 In order to be able to inspect private repositories, Regis needs its own SSH

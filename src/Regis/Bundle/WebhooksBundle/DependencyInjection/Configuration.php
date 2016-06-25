@@ -14,7 +14,6 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->root('regis_webhooks');
 
         $this->addInspectionsSection($rootNode);
-        $this->addRepositoriesSection($rootNode);
 
         return $treeBuilder;
     }
@@ -39,25 +38,6 @@ class Configuration implements ConfigurationInterface
                                     ->prototype('scalar')->end()
                                 ->end()
                             ->end()
-                        ->end()
-                    ->end()
-                ->end()
-            ->end()
-        ;
-    }
-
-    private function addRepositoriesSection(ArrayNodeDefinition $rootNode)
-    {
-        $rootNode
-            ->children()
-                ->arrayNode('repositories')
-                    ->isRequired()
-                    ->useAttributeAsKey('identifier')
-                    ->requiresAtLeastOneElement()
-                    ->prototype('array')
-                        ->children()
-                            ->scalarNode('identifier')->end()
-                            ->scalarNode('secret')->isRequired()->cannotBeEmpty()->end()
                         ->end()
                     ->end()
                 ->end()

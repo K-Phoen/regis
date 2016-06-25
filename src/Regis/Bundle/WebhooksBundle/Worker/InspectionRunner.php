@@ -29,7 +29,7 @@ class InspectionRunner implements ConsumerInterface
         $inspection = $this->inspectionsRepo->find($event['inspection']);
         $pullRequest = PullRequest::fromArray($event['pull_request']);
 
-        $command = new Command\Inspection\Start($inspection, $pullRequest);
+        $command = new Command\Inspection\Run($inspection, $pullRequest);
         $this->commandBus->handle($command);
     }
 }

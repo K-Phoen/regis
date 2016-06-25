@@ -14,7 +14,7 @@ use Regis\Application\Event;
 use Regis\Application\Inspector;
 use Regis\Application\Repository\Inspections;
 
-class Start
+class Run
 {
     private $inspector;
     private $dispatcher;
@@ -27,7 +27,7 @@ class Start
         $this->inspectionsRepo = $inspectionsRepo;
     }
 
-    public function handle(Command\Inspection\Start $command)
+    public function handle(Command\Inspection\Run $command)
     {
         $inspection = $command->getInspection();
         $pullRequest = $command->getPullRequest();

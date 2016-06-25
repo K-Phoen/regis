@@ -24,7 +24,7 @@ services:
             - { name: tactician.handler, command: Regis\Application\Command\Inspection\Schedule }
 
     regis.command_handler.inspections.start:
-        class: Regis\Application\CommandHandler\Inspection\Start
+        class: Regis\Application\CommandHandler\Inspection\Run
         arguments: [ '@event_dispatcher', '@regis.inspector', '@regis.repository.inspections' ]
         tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Inspection\Start }
+            - { name: tactician.handler, command: Regis\Application\Command\Inspection\Run }

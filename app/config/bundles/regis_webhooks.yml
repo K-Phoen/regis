@@ -4,11 +4,3 @@ regis_webhooks:
             options: [ '--standard=psr1,psr2' ]
         phpmd:
             rulesets: [ 'codesize', 'unusedcode', 'naming', 'controversial', 'design', 'cleancode' ]
-
-    repositories:
-        -
-            identifier: K-Phoen/test
-            secret: '%test_repo_secret%'
-        -
-            identifier: K-Phoen/regis
-            secret: '%test_repo_secret%'
