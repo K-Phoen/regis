@@ -23,7 +23,7 @@ class PhpMd implements Inspection
     {
         /** @var Model\Diff\File $file */
         foreach ($diff->getAddedTextFiles() as $file) {
-            $report = $this->phpMd->execute($file->getNewName(), $file->getNewBlob()->getContent());
+            $report = $this->phpMd->execute($file->getNewName(), $file->getNewContent());
 
             yield from $this->buildViolations($file, $report);
         }

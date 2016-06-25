@@ -2,26 +2,26 @@
 
 namespace Tests\Regis\Application\Inspection;
 
-use Regis\Application\Inspection\CodeSniffer;
+use Regis\Application\Inspection\PhpMd;
 use Regis\Application\Model;
-use Regis\CodeSniffer\CodeSniffer as CodeSnifferRunner;
+use Regis\PhpMd\PhpMd as PhpMdRunner;
 
-class CodeSnifferTest extends InspectionTestCase
+class PhpMdTest extends InspectionTestCase
 {
-    private $codeSniffer;
-    /** @var CodeSniffer */
+    private $phpMd;
+    /** @var PhpMd */
     private $inspection;
 
     public function setUp()
     {
-        $this->codeSniffer = $this->getMockBuilder(CodeSnifferRunner::class)->disableOriginalConstructor()->getMock();
+        $this->phpMd = $this->getMockBuilder(PhpMdRunner::class)->disableOriginalConstructor()->getMock();
 
-        $this->inspection = new CodeSniffer($this->codeSniffer);
+        $this->inspection = new PhpMd($this->phpMd);
     }
 
     public function testWithNoAddedFiles()
     {
-        $this->codeSniffer->expects($this->never())->method('execute');
+        $this->phpMd->expects($this->never())->method('execute');
 
         $violations = iterator_to_array($this->inspection->inspectDiff($this->diff()));
 
@@ -33,12 +33,10 @@ class CodeSnifferTest extends InspectionTestCase
         $file = $this->file('test.php');
         $diff = $this->diff([$file]);
 
-        $this->codeSniffer->expects($this->once())
+        $this->phpMd->expects($this->once())
             ->method('execute')
             ->with('test.php', $this->anything())
-            ->will($this->returnValue([
-                'files' => [],
-            ]));
+            ->will($this->returnValue(new \ArrayIterator()));
 
         $violations = iterator_to_array($this->inspection->inspectDiff($diff));
 
@@ -59,33 +57,27 @@ class CodeSnifferTest extends InspectionTestCase
                 return $line + 1;
             }));
 
-        $this->codeSniffer->expects($this->once())
+        $this->phpMd->expects($this->once())
             ->method('execute')
             ->with('test.php', $this->anything())
-            ->will($this->returnValue([
-                'files' => [
-                    [
-                        'messages' => [
-                            // the first one is configured not to be in the diff
-                            [
-                                'line' => 12,
-                                'type' => 'WARNING',
-                                'message' => 'some warning message',
-                            ],
-                            [
-                                'line' => 24,
-                                'type' => 'WARNING',
-                                'message' => 'some warning message',
-                            ],
-                            [
-                                'line' => 42,
-                                'type' => 'ERROR',
-                                'message' => 'some error message',
-                            ],
-                        ]
-                    ],
+            ->will($this->returnValue(new \ArrayIterator([
+                // the first one is configured not to be in the diff
+                [
+                    'beginLine' => 12,
+                    'priority' => 4,
+                    'description' => 'some warning message',
                 ],
-            ]));
+                [
+                    'beginLine' => 24,
+                    'priority' => 4,
+                    'description' => 'some warning message',
+                ],
+                [
+                    'beginLine' => 42,
+                    'priority' => 1,
+                    'description' => 'some error message',
+                ],
+            ])));
 
         $violations = iterator_to_array($this->inspection->inspectDiff($diff));
 
