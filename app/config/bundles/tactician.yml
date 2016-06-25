@@ -1,0 +1,16 @@
+services:
+    regis.tactician.middleware.logger.formatter:
+        class: League\Tactician\Logger\Formatter\ClassPropertiesFormatter
+
+    regis.tactician.middleware.logger:
+        class: League\Tactician\Logger\LoggerMiddleware
+        arguments: [ '@regis.tactician.middleware.logger.formatter', '@logger' ]
+        tags:
+            - { name: monolog.logger, channel: command_bus }
+
+tactician:
+    commandbus:
+        default:
+            middleware:
+                - regis.tactician.middleware.logger
+                - tactician.middleware.command_handler

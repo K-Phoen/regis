@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "b22681b72bdd3acebecc82c1bcb9ce5e",
-    "content-hash": "838a9b4be3e3d571b31eb66d120d1ea2",
+    "hash": "b28ecc87110bcd54dba2a2b2fb22d360",
+    "content-hash": "8d01b4a1f0d7b705ea3a2cb9029cf171",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1208,6 +1208,54 @@
                 "tactician"
             ],
             "time": "2016-04-21 08:00:01"
+        },
+        {
+            "name": "league/tactician-logger",
+            "version": "v0.9.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/tactician-logger.git",
+                "reference": "d1f4bd7b01e6125be7726d3aa1f3a5d91d86957f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/tactician-logger/zipball/d1f4bd7b01e6125be7726d3aa1f3a5d91d86957f",
+                "reference": "d1f4bd7b01e6125be7726d3aa1f3a5d91d86957f",
+                "shasum": ""
+            },
+            "require": {
+                "league/tactician": "^1.0",
+                "php": ">=5.5.0",
+                "psr/log": "~1.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "^0.9",
+                "phpunit/phpunit": "4.*",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "League\\Tactician\\Logger\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ross Tuck"
+                }
+            ],
+            "description": "Adds PSR-3 logging support to the Tactician command bus",
+            "homepage": "https://github.com/thephpleague/tactician-logger",
+            "keywords": [
+                "log",
+                "logging",
+                "tactician"
+            ],
+            "time": "2015-12-31 12:33:03"
         },
         {
             "name": "monolog/monolog",
