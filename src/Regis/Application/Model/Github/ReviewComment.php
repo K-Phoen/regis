@@ -14,10 +14,7 @@ class ReviewComment
 
     public static function fromViolation(Violation $violation): ReviewComment
     {
-        return new static(
-            $violation->getFile(), $violation->getPosition(),
-            $violation->getDescription()
-        );
+        return new static($violation->getFile(), $violation->getPosition(), $violation->getDescription());
     }
 
     public function __construct(string $file, int $position, string $content)
