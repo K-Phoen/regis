@@ -2,22 +2,23 @@
 
 namespace Regis\Bundle\WebhooksBundle\EventListener;
 
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use League\Tactician\CommandBus;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
+use Regis\Application\Command;
 use Regis\Application\Event;
 use Regis\Application\Inspection\ViolationsCache;
 
 class PullRequestListener implements EventSubscriberInterface
 {
-    private $producer;
+    private $commandBus;
     private $violationsCache;
 
-    public function __construct(ProducerInterface $producer, ViolationsCache $violationsCache)
+    public function __construct(CommandBus $commandBus, ViolationsCache $violationsCache)
     {
-        $this->producer = $producer;
         $this->violationsCache = $violationsCache;
+        $this->commandBus = $commandBus;
     }
 
     public static function getSubscribedEvents()
@@ -31,10 +32,11 @@ class PullRequestListener implements EventSubscriberInterface
 
     public function onPullRequestUpdated(DomainEventWrapper $event)
     {
-        /** @var Event $domainEvent */
+        /** @var Event\PullRequestOpened|Event\PullRequestSynced $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
-        $this->producer->publish(serialize($domainEvent));
+        $command = new Command\Inspection\Schedule($domainEvent->getPullRequest());
+        $this->commandBus->handle($command);
     }
 
     public function onPullRequestClosed(DomainEventWrapper $event)

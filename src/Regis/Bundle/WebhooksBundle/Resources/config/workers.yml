@@ -1,4 +1,4 @@
 services:
     regis.worker.webhook_event:
-        class: Regis\Bundle\WebhooksBundle\Worker\WebhookEvent
-        arguments: [ '@event_dispatcher', '@regis.inspector' ]
+        class: Regis\Bundle\WebhooksBundle\Worker\InspectionRunner
+        arguments: [ '@tactician.commandbus', '@regis.repository.inspections' ]

@@ -15,9 +15,9 @@ class InMemoryRepositories implements Repositories
         }
     }
 
-    public function save(Entity\Repository $repository)
+    public function save(Entity\Repository $inspections)
     {
-        $this->repositories[$repository->getIdentifier()] = $repository;
+        $this->repositories[$inspections->getIdentifier()] = $inspections;
     }
 
     public function findAll(): \Traversable
@@ -27,12 +27,12 @@ class InMemoryRepositories implements Repositories
         }
     }
 
-    public function find(string $identifier): Entity\Repository
+    public function find(string $id): Entity\Repository
     {
-        if (!array_key_exists($identifier, $this->repositories)) {
-            throw Exception\NotFound::forIdentifier($identifier);
+        if (!array_key_exists($id, $this->repositories)) {
+            throw Exception\NotFound::forIdentifier($id);
         }
         
-        return $this->repositories[$identifier];
+        return $this->repositories[$id];
     }
 }

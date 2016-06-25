@@ -2,24 +2,23 @@
 
 declare(strict_types=1);
 
-namespace Regis\Application\Event;
+namespace Regis\Application\Command\Inspection;
 
-use Regis\Application\Entity;
-use Regis\Application\Event;
+use Regis\Application\Entity\Inspection;
 use Regis\Application\Model\Github\PullRequest;
 
-class InspectionStarted implements Event
+class Start
 {
     private $inspection;
     private $pullRequest;
 
-    public function __construct(Entity\Inspection $inspection, PullRequest $pullRequest)
+    public function __construct(Inspection $inspection, PullRequest $pullRequest)
     {
         $this->inspection = $inspection;
         $this->pullRequest = $pullRequest;
     }
 
-    public function getInspection(): Entity\Inspection
+    public function getInspection(): Inspection
     {
         return $this->inspection;
     }
@@ -27,10 +26,5 @@ class InspectionStarted implements Event
     public function getPullRequest(): PullRequest
     {
         return $this->pullRequest;
-    }
-
-    public function getEventName(): string
-    {
-        return Event::INSPECTION_STARTED;
     }
 }

@@ -1,7 +1,7 @@
 services:
     regis.subscriber.pull_request:
         class: Regis\Bundle\WebhooksBundle\EventListener\PullRequestListener
-        arguments: [ '@old_sound_rabbit_mq.webhook_event_producer', '@regis.violations_cache' ]
+        arguments: [ '@tactician.commandbus', '@regis.violations_cache' ]
         tags:
             - { name: kernel.event_subscriber }
 

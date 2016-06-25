@@ -21,6 +21,10 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
 
+        "league/tactician-bundle": "~0.4",
+
+        "ramsey/uuid": "^3.4",
+
         "squizlabs/php_codesniffer": "^2.6",
         "phpmd/phpmd": "^2.4",
 

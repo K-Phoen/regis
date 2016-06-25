@@ -3,6 +3,18 @@ repositories_list:
     defaults:  { _controller: RegisBackendBundle:Repositories:list }
     methods:   GET
 
+repositories_detail:
+    path:      /repositories/{identifier}
+    defaults:  { _controller: RegisBackendBundle:Repositories:detail }
+    requirements: { identifier: "[^/]+/[^/]+" }
+    methods:   GET
+
+repositories_setup_webhook:
+    path:      /repositories/{identifier}/webhook/setup
+    defaults:  { _controller: RegisBackendBundle:Repositories:setupWebhook }
+    requirements: { identifier: "[^/]+/[^/]+" }
+    methods:   POST
+
 repositories_new:
     path:      /repositories/new
     defaults:  { _controller: RegisBackendBundle:Repositories:new }
@@ -11,5 +23,5 @@ repositories_new:
 repositories_edit:
     path:      /repositories/{identifier}/edit
     defaults:  { _controller: RegisBackendBundle:Repositories:edit }
-    requirements: { identifier: ".+/.+" }
+    requirements: { identifier: "[^/]+/[^/]+" }
     methods:   GET|POST

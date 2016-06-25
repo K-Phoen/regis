@@ -6,7 +6,9 @@ namespace Regis\Bundle\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
+use Regis\Application\Command;
 use Regis\Application\Entity;
 use Regis\Bundle\BackendBundle\Form;
 
@@ -21,6 +23,30 @@ class RepositoriesController extends Controller
         ]);
     }
 
+    public function detailAction(Entity\Repository $repository)
+    {
+        return $this->render('@RegisBackend/Repositories/detail.html.twig', [
+            'repository' => $repository
+        ]);
+    }
+
+    public function setupWebhookAction(Entity\Repository $repository)
+    {
+        $absoluteUrl = $this->get('router')->generate('webhook_github', [],  UrlGeneratorInterface::ABSOLUTE_URL);
+
+        $command = new Command\Webhook\Create(
+            $repository->getOwner(),
+            $repository->getName(),
+            $absoluteUrl
+        );
+
+        $this->get('tactician.commandbus')->handle($command);
+
+        $this->addFlash('info', 'Webhook setup.');
+
+        return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
+    }
+
     public function newAction(Request $request)
     {
         $form = $form = $this->createForm(Form\NewRepositoryType::class, null, [
@@ -30,9 +56,12 @@ class RepositoriesController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Entity\Repository $repository */
-            $repository = $form->getData();
-            $this->get('regis.repository.repositories')->save($repository);
+            $command = new Command\Repository\Create(
+                $form->get('identifier')->getData(),
+                $form->get('sharedSecret')->getData()
+            );
+
+            $this->get('tactician.commandbus')->handle($command);
 
             $this->addFlash('info', 'Repository added.');
 
@@ -46,16 +75,19 @@ class RepositoriesController extends Controller
 
     public function editAction(Request $request, Entity\Repository $repository)
     {
-        $form = $form = $this->createForm(Form\EditRepositoryType::class, $repository, [
+        $form = $form = $this->createForm(Form\EditRepositoryConfigurationType::class, $repository, [
             'action' => $this->generateUrl('repositories_edit', ['identifier' => $repository->getIdentifier()]),
         ]);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            /** @var Entity\Repository $repository */
-            $repository = $form->getData();
-            $this->get('regis.repository.repositories')->save($repository);
+            $command = new Command\Repository\UpdateConfiguration(
+                $repository,
+                $form->get('sharedSecret')->getData()
+            );
+
+            $this->get('tactician.commandbus')->handle($command);
 
             $this->addFlash('info', 'Repository updated.');
 

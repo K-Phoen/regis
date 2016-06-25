@@ -8,19 +8,27 @@
         <thead>
             <tr>
                 <th>Repository</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
         {% for repo in repositories %}
             <tr>
-                <td><a href="{{ path('repositories_edit', {identifier: repo.identifier}) }}">{{ repo.identifier }}</a></td>
+                <td><a href="{{ path('repositories_detail', {identifier: repo.identifier}) }}">{{ repo.identifier }}</a></td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a href="{{ path('repositories_edit', {identifier: repo.identifier}) }}" class="btn btn-default">
+                            <i class="glyphicon glyphicon-pencil"></i>
+                        </a>
+                    </div>
+                </td>
             </tr>
         {% endfor %}
         </tbody>
 
         <tfoot>
             <tr>
-                <td><a href="{{ path('repositories_new') }}" class="btn btn-primary">Add new</a></td>
+                <td colspan="2"><a href="{{ path('repositories_new') }}" class="btn btn-primary">Add new</a></td>
             </tr>
         </tfoot>
     </table>

@@ -1,0 +1,30 @@
+services:
+    regis.command_handler.repository.create:
+        class: Regis\Application\CommandHandler\Repository\Create
+        arguments: [ '@regis.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\Repository\Create }
+
+    regis.command_handler.repository.update_configuration:
+        class: Regis\Application\CommandHandler\Repository\UpdateConfiguration
+        arguments: [ '@regis.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\Repository\UpdateConfiguration }
+
+    regis.command_handler.webhooks.create:
+        class: Regis\Application\CommandHandler\Webhook\Create
+        arguments: [ '@regis.github.client', '@regis.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\Webhook\Create }
+
+    regis.command_handler.inspections.schedule:
+        class: Regis\Application\CommandHandler\Inspection\Schedule
+        arguments: [ '@old_sound_rabbit_mq.webhook_event_producer', '@regis.repository.repositories', '@regis.repository.inspections' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\Inspection\Schedule }
+
+    regis.command_handler.inspections.start:
+        class: Regis\Application\CommandHandler\Inspection\Start
+        arguments: [ '@event_dispatcher', '@regis.inspector', '@regis.repository.inspections' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\Inspection\Start }

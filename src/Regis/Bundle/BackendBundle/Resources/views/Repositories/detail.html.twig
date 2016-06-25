@@ -1,0 +1,87 @@
+{% extends '@RegisBackend/layout.html.twig' %}
+
+{% import _self as utils %}
+
+{% macro class_for_integration_status(status) %}
+    {% if status == 'failed' %}
+        danger
+    {% elseif status == 'started' %}
+        warning
+    {% elseif status == 'scheduled' %}
+        info
+    {% endif %}
+{% endmacro %}
+
+{% block content %}
+<h1 class="page-header">« {{ repository.identifier }} »</h1>
+
+<h2>Configuration</h2>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>Identifier</th>
+            <td><code>{{ repository.identifier }}</code></td>
+        </tr>
+        <tr>
+            <th>Shared secret</th>
+            <td><code>{{ repository.sharedSecret }}</code></td>
+        </tr>
+        <tr>
+            <th>Actions</th>
+            <td>
+                <form method="POST" action="{{ path('repositories_setup_webhook', {'identifier': repository.identifier}) }}">
+                    <input type="submit" class="btn btn-warning" value="Setup webhook" />
+                </form>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<h2>Inspections</h2>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Created at</th>
+                <th>Started at</th>
+                <th>Finished at</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for inspection in repository.inspections %}
+            <tr class="{{ utils.class_for_integration_status(inspection.status) }}">
+                <td>{{ inspection.id }}</td>
+                <td>{{ inspection.createdAt|date }}</td>
+                <td>
+                    {% if inspection.startedAt %}
+                        {{ inspection.startedAt|date }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    {% if inspection.finishedAt %}
+                        {{ inspection.finishedAt|date }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
+                    <code>{{ inspection.status }}</code>
+                </td>
+                <td>Retry</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">No inspection yet.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

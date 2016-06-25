@@ -9,6 +9,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Regis\Application\Event;
 use Regis\Application\Model\Github as Model;
 
+/**
+ * Transforms a payload sent by Github in a domain event.
+ */
 class EventTransformer
 {
     const TYPE_PULL_REQUEST = 'pull_request';

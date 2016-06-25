@@ -8,6 +8,8 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+use Regis\Application\Command;
+
 class CreateWebhookCommand extends ContainerAwareCommand
 {
     /**
@@ -61,23 +63,15 @@ class CreateWebhookCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $owner = $input->getOption('owner');
-        $repo = $input->getOption('repository');
         $host = rtrim($input->getOption('host'), '/');
         $absoluteUrl = $host.$this->getContainer()->get('router')->generate('webhook_github');
-        $config = $this->getRepositoryConfig($owner.'/'.$repo);
 
-        $this->getContainer()->get('regis.github.client')->createWebhook($owner, $repo, $absoluteUrl, $config['secret']);
-    }
+        $command = new Command\Webhook\Create(
+            $input->getOption('owner'),
+            $input->getOption('repository'),
+            $absoluteUrl
+        );
 
-    private function getRepositoryConfig(string $repository): array
-    {
-        $config = $this->getContainer()->getParameter('regis.config.repositories');
-
-        if (empty($config[$repository])) {
-            throw new \InvalidArgumentException(sprintf('Repository "%s" not found in the configuration.', $repository));
-        }
-
-        return $config[$repository];
+        $this->getContainer()->get('tactician.commandbus')->handle($command);
     }
 }

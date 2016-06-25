@@ -10,3 +10,8 @@ Regis\Application\Entity\Repository:
     fields:
         sharedSecret:
             type: string
+
+    oneToMany:
+        inspections:
+          targetEntity: Inspection
+          mappedBy: repository

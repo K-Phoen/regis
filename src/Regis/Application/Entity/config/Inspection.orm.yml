@@ -1,0 +1,37 @@
+Regis\Application\Entity\Inspection:
+    type: entity
+    table: inspections
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: NONE }
+
+    fields:
+        pullRequestId:
+            type: integer
+        createdAt:
+            type: datetimetz
+        startedAt:
+            type: datetimetz
+            nullable: true
+        finishedAt:
+            type: datetimetz
+            nullable: true
+        status:
+            type: string
+        failureTrace:
+            type: text
+
+    oneToMany:
+        analysises:
+          targetEntity: Analysis
+          mappedBy: inspection
+
+    manyToOne:
+        repository:
+          targetEntity: Repository
+          inversedBy: inspections
+          joinColumn:
+            name: repository_id
+            referencedColumnName: identifier

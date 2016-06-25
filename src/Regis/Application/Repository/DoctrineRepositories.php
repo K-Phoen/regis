@@ -15,9 +15,9 @@ class DoctrineRepositories implements Repositories
         $this->em = $em;
     }
 
-    public function save(Entity\Repository $repository)
+    public function save(Entity\Repository $inspections)
     {
-        $this->em->persist($repository);
+        $this->em->persist($inspections);
         $this->em->flush();
     }
 
@@ -26,12 +26,12 @@ class DoctrineRepositories implements Repositories
         return new \ArrayIterator($this->em->getRepository(Entity\Repository::class)->findAll());
     }
 
-    public function find(string $identifier): Entity\Repository
+    public function find(string $id): Entity\Repository
     {
-        $repository = $this->em->getRepository(Entity\Repository::class)->find($identifier);
+        $repository = $this->em->getRepository(Entity\Repository::class)->find($id);
 
         if ($repository === null) {
-            throw Exception\NotFound::forIdentifier($identifier);
+            throw Exception\NotFound::forIdentifier($id);
         }
         
         return $repository;

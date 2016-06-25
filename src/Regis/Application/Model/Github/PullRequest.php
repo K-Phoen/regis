@@ -11,12 +11,32 @@ class PullRequest
     private $head;
     private $base;
 
+    public static function fromArray(array $data): PullRequest
+    {
+        return new static(
+            Repository::fromArray($data['repository']),
+            $data['number'],
+            $data['head'],
+            $data['base']
+        );
+    }
+
     public function __construct(Repository $repository, int $number, string $head, string $base)
     {
         $this->repository = $repository;
         $this->number = $number;
         $this->head = $head;
         $this->base = $base;
+    }
+
+    public function toArray()
+    {
+        return [
+            'repository' => $this->repository->toArray(),
+            'number' => $this->number,
+            'head' => $this->head,
+            'base' => $this->base,
+        ];
     }
 
     public function getRepository(): Repository
@@ -39,8 +59,13 @@ class PullRequest
         return $this->base;
     }
 
+    public function getRepositoryIdentifier()
+    {
+        return $this->getRepository()->getIdentifier();
+    }
+
     public function __toString(): string
     {
-        return sprintf('%s#%d', $this->repository, $this->number);
+        return sprintf('%s#%d', $this->repository->getIdentifier(), $this->number);
     }
 }

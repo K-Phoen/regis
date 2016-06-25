@@ -65,6 +65,6 @@ doctrine:
             Regis:
                 type: yml
                 is_bundle: false
-                dir: %kernel.root_dir%/../src/Regis/Application/Model/config
-                prefix: Regis\Application\Model
+                dir: '%kernel.root_dir%/../src/Regis/Application/Entity/config'
+                prefix: Regis\Application\Entity
                 alias: Regis
