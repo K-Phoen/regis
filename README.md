@@ -18,7 +18,7 @@ Once the project is cloned, its dependencies can be installed using
 [Composer](https://getcomposer.org/):
 
 ```
-php composer.phar intall
+php composer.phar install
 ```
 
 You will be asked to configure a few parameters like the configuration options
