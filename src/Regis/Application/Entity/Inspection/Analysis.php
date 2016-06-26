@@ -44,7 +44,7 @@ class Analysis
     public function addViolation(Violation $violation)
     {
         $violation->setAnalysis($this);
-        $this->violations[] = $violation;
+        $this->violations->add($violation);
 
         if ($violation->isError()) {
             $this->status = self::STATUS_ERROR;

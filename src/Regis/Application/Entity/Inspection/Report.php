@@ -32,7 +32,7 @@ class Report
     public function addAnalysis(Analysis $analysis)
     {
         $analysis->setReport($this);
-        $this->analyses[] = $analysis;
+        $this->analyses->add($analysis);
 
         if ($analysis->hasErrors()) {
             $this->status = self::STATUS_ERROR;
@@ -103,7 +103,9 @@ class Report
     {
         /** @var Analysis $analysis */
         foreach ($this->analyses as $analysis) {
-            yield from $analysis->getViolations();
+            foreach ($analysis->getViolations() as $violation) {
+                yield $violation;
+            }
         }
     }
 }
