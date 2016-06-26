@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Application\CommandHandler\Github\Inspection;
 
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
 use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
 
@@ -20,7 +20,7 @@ class Run
     private $dispatcher;
     private $inspectionsRepo;
 
-    public function __construct(EventDispatcherInterface $dispatcher, Inspector $inspector, Inspections $inspectionsRepo)
+    public function __construct(EventDispatcher $dispatcher, Inspector $inspector, Inspections $inspectionsRepo)
     {
         $this->dispatcher = $dispatcher;
         $this->inspector = $inspector;
@@ -44,6 +44,7 @@ class Run
         } catch (\Exception $e) {
             $inspection->fail($e);
             $this->dispatch(Event::INSPECTION_FAILED, new Event\InspectionFailed($inspection, $pullRequest, $e));
+            // TODO why throwing the exception? Logging it + reporting it should be better.
             throw $e;
         } finally {
             $this->inspectionsRepo->save($inspection);
