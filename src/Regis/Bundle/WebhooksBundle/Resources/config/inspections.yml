@@ -3,7 +3,6 @@ services:
         class: Regis\Application\Inspector
         arguments:
             - '@regis.vcs.git'
-            - '@regis.violation_reporter.duplication_guard'
             - [ '@regis.inspection.code_sniffer', '@regis.inspection.phpmd' ]
 
     regis.inspection.code_sniffer:

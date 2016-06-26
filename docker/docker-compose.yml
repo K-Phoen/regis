@@ -10,6 +10,7 @@ services:
         image: 'postgres:9.5'
         volumes:
             - ./postgres/data:/var/lib/postgresql/data/regis_data:rw
+            - ./postgres/config:/docker-entrypoint-initdb.d:rw
         environment:
             - POSTGRES_DB=regis
             - POSTGRES_USER=regis

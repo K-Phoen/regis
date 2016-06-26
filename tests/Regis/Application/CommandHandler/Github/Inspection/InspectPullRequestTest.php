@@ -2,7 +2,6 @@
 
 namespace Tests\Regis\Application\CommandHandler\Github\Inspection;
 
-use Regis\Application\ReportSummary;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
 use Regis\Application\Command;
@@ -37,12 +36,11 @@ class InspectPullRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testWhenTheInspectionSucessfullyFinishes()
     {
-        $reportSummary = new ReportSummary();
+        $report = new Entity\Inspection\Report();
 
         $this->inspector->expects($this->once())
             ->method('inspect')
-            ->with($this->pullRequest)
-            ->will($this->returnValue($reportSummary));
+            ->will($this->returnValue($report));
 
         $this->inspectionsRepo->expects($this->exactly(2))
             ->method('save')
@@ -68,7 +66,6 @@ class InspectPullRequestTest extends \PHPUnit_Framework_TestCase
     {
         $this->inspector->expects($this->once())
             ->method('inspect')
-            ->with($this->pullRequest)
             ->will($this->throwException(new \RuntimeException('onoes')));
 
         $this->inspectionsRepo->expects($this->exactly(2))

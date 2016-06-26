@@ -1,0 +1,61 @@
+{% macro class_for_integration_status(status) %}
+    {% if status == 'failed' %}
+        danger
+    {% elseif status == 'started' %}
+        warning
+    {% elseif status == 'scheduled' %}
+        info
+    {% endif %}
+{% endmacro %}
+
+{% macro inspection_type(inspection) %}
+    {% spaceless %}
+    {% if inspection.type == 'github_pr' %}
+        PR
+    {% else %}
+        Unknown ({{ inspection.type }})
+    {% endif %}
+    {% endspaceless %}
+{% endmacro %}
+
+{% macro class_for_analysis_status(analysis) %}
+    {% if analysis.status == 'error' %}
+        danger
+    {% elseif analysis.status == 'warning' %}
+        warning
+    {% elseif analysis.status == 'ok' %}
+        info
+    {% endif %}
+{% endmacro %}
+
+{% macro analysis_type(analysis) %}
+    {% spaceless %}
+        {% if analysis.type == 'phpmd' %}
+            PHPMD
+        {% elseif analysis.type == 'phpcs' %}
+            CodeSniffer
+        {% else %}
+            Unknown ({{ analysis.type }})
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}
+
+{% macro analysis_status_label(analysis) %}
+    {% if analysis.status == 'error' %}
+        Errored: {{ analysis.errorsCount }} errors and {{ analysis.warningsCount }} warnings.
+    {% elseif analysis.status == 'warning' %}
+        Errored: {{ analysis.warningsCount }} warnings.
+    {% elseif analysis.status == 'ok' %}
+        All green!
+    {% endif %}
+{% endmacro %}
+
+{% macro report_status_label(report) %}
+    {% if report.status == 'error' %}
+        Errored: {{ report.errorsCount }} errors and {{ report.warningsCount }} warnings.
+    {% elseif report.status == 'warning' %}
+        Errored: {{ report.warningsCount }} warnings.
+    {% elseif report.status == 'ok' %}
+        All green!
+    {% endif %}
+{% endmacro %}

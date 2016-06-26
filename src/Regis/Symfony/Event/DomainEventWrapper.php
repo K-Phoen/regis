@@ -1,6 +1,6 @@
 <?php
 
-namespace Regis\Bundle\WebhooksBundle\Event;
+namespace Regis\Symfony\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Regis\Application\Event as DomainEvent;

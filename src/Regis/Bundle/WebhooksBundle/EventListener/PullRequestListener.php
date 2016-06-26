@@ -5,10 +5,10 @@ namespace Regis\Bundle\WebhooksBundle\EventListener;
 use League\Tactician\CommandBus;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
 use Regis\Application\Command;
 use Regis\Application\Event;
 use Regis\Application\Inspection\ViolationsCache;
+use Regis\Symfony\Event\DomainEventWrapper;
 
 class PullRequestListener implements EventSubscriberInterface
 {

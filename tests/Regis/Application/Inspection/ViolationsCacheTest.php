@@ -5,6 +5,7 @@ namespace Tests\Regis\Application\Inspection;
 use M6Web\Component\RedisMock\RedisMockFactory;
 use Predis\ClientInterface as RedisClient;
 use Regis\Application\Inspection\ViolationsCache;
+use Regis\Application\Entity;
 use Regis\Application\Model;
 
 class ViolationsCacheTest extends \PHPUnit_Framework_TestCase
@@ -15,7 +16,7 @@ class ViolationsCacheTest extends \PHPUnit_Framework_TestCase
     /** @var ViolationsCache */
     private $violationsCache;
 
-    /** @var Model\Violation */
+    /** @var Entity\Inspection\Violation */
     private $violation;
 
     /** @var Model\Github\PullRequest */
@@ -30,7 +31,7 @@ class ViolationsCacheTest extends \PHPUnit_Framework_TestCase
         $revisions = new Model\Git\Revisions('head sha', 'base sha');
         $repository = new Model\Git\Repository('K-Phoen', 'test', 'clone url');
 
-        $this->violation = new Model\Violation(Model\Violation::ERROR, 'file.php', 4, 'Test violation');
+        $this->violation = new Entity\Inspection\Violation(Entity\Inspection\Violation::ERROR, 'file.php', 42, 4, 'Test violation');
         $this->pullRequest = new Model\Github\PullRequest($repository, 2, $revisions);
     }
 

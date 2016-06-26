@@ -66,7 +66,7 @@ class CreateWebhookCommand extends ContainerAwareCommand
         $host = rtrim($input->getOption('host'), '/');
         $absoluteUrl = $host.$this->getContainer()->get('router')->generate('webhook_github');
 
-        $command = new Command\Webhook\Create(
+        $command = new Command\Github\Webhook\Create(
             $input->getOption('owner'),
             $input->getOption('repository'),
             $absoluteUrl

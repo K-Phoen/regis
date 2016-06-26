@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Regis\Application\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Regis\Application\Model\Git\Revisions;
 use Regis\Uuid;
 
@@ -19,8 +18,7 @@ abstract class Inspection
 
     private $id;
     private $repository;
-    /** @var ArrayCollection */
-    private $analysises;
+    private $report;
     private $status;
     private $createdAt;
     private $startedAt;
@@ -46,7 +44,22 @@ abstract class Inspection
     private function __construct(string $id)
     {
         $this->id = $id;
-        $this->analysises = new ArrayCollection();
+    }
+
+    public function setReport(Inspection\Report $report)
+    {
+        $report->setInspection($this);
+        $this->report = $report;
+    }
+
+    public function getReport(): Inspection\Report
+    {
+        return $this->report;
+    }
+
+    public function hasReport(): bool
+    {
+        return $this->report !== null;
     }
 
     public function start()
@@ -92,11 +105,6 @@ abstract class Inspection
         return $this->status;
     }
 
-    public function getanalysises(): \Traversable
-    {
-        return $this->analysises;
-    }
-
     /**
      * @return \DateTimeInterface|null
      */
@@ -119,12 +127,6 @@ abstract class Inspection
     public function getFinishedAt()
     {
         return $this->finishedAt;
-    }
-
-    public function addAnalysis(Analysis $analysis)
-    {
-        $analysis->setInspection($this);
-        $this->analysises->add($analysis);
     }
 
     public function getRepository(): Repository

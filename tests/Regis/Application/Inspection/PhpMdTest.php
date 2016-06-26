@@ -3,6 +3,7 @@
 namespace Tests\Regis\Application\Inspection;
 
 use Regis\Application\Inspection\PhpMd;
+use Regis\Application\Entity;
 use Regis\Application\Model;
 use Regis\PhpMd\PhpMd as PhpMdRunner;
 
@@ -83,20 +84,20 @@ class PhpMdTest extends InspectionTestCase
 
         $this->assertCount(2, $violations);
 
-        /** @var Model\Violation $firstViolation */
+        /** @var Entity\Inspection\Violation $firstViolation */
         $firstViolation = $violations[0];
-        $this->assertInstanceOf(Model\Violation::class, $firstViolation);
-        $this->assertEquals(Model\Violation::WARNING, $firstViolation->getSeverity());
+        $this->assertInstanceOf(Entity\Inspection\Violation::class, $firstViolation);
+        $this->assertEquals(Entity\Inspection\Violation::WARNING, $firstViolation->getSeverity());
         $this->assertTrue($firstViolation->isWarning());
         $this->assertFalse($firstViolation->isError());
         $this->assertEquals('test.php', $firstViolation->getFile());
         $this->assertEquals('some warning message', $firstViolation->getDescription());
         $this->assertEquals(24 + 1, $firstViolation->getPosition());
 
-        /** @var Model\Violation $secondViolation */
+        /** @var Entity\Inspection\Violation $secondViolation */
         $secondViolation = $violations[1];
-        $this->assertInstanceOf(Model\Violation::class, $secondViolation);
-        $this->assertEquals(Model\Violation::ERROR, $secondViolation->getSeverity());
+        $this->assertInstanceOf(Entity\Inspection\Violation::class, $secondViolation);
+        $this->assertEquals(Entity\Inspection\Violation::ERROR, $secondViolation->getSeverity());
         $this->assertFalse($secondViolation->isWarning());
         $this->assertTrue($secondViolation->isError());
         $this->assertEquals('test.php', $secondViolation->getFile());

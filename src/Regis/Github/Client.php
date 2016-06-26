@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Github;
 
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerInterface as Logger;
 use Regis\Application\Model\Github as Model;
 
 class Client
@@ -22,7 +22,7 @@ class Client
     private $logger;
     private $authenticated = false;
 
-    public function __construct(\Github\Client $client, string $apiToken, LoggerInterface $logger)
+    public function __construct(\Github\Client $client, string $apiToken, Logger $logger)
     {
         $this->client = $client;
         $this->apiToken = $apiToken;

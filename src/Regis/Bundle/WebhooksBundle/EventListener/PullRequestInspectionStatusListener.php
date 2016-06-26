@@ -7,9 +7,9 @@ namespace Regis\Bundle\WebhooksBundle\EventListener;
 use Regis\Application\Model\Github\PullRequest;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
 use Regis\Application\Event;
 use Regis\Github\Client;
+use Regis\Symfony\Event\DomainEventWrapper;
 
 /**
  * TODO this class should rely on the command bus
@@ -57,9 +57,9 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
     {
         /** @var Event\InspectionFinished $domainEvent */
         $domainEvent = $event->getDomainEvent();
-        $report = $domainEvent->getReportSummary();
+        $report = $domainEvent->getReport();
 
-        if ($report->errorsCount() > 0 || $report->warningsCount() > 0) {
+        if ($report->hasErrors() || $report->hasWarnings()) {
             list($status, $message) = [Client::INTEGRATION_FAILURE, sprintf('Inspection with %d error(s) and %d warning(s).', $report->errorsCount(), $report->warningsCount())];
         } else {
             list($status, $message) = [Client::INTEGRATION_SUCCESS, 'Inspection successfull.'];

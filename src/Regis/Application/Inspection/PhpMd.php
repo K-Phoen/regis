@@ -7,7 +7,7 @@ namespace Regis\Application\Inspection;
 use Regis\Application\Inspection;
 use Regis\Application\Model\Exception\LineNotInDiff;
 use Regis\Application\Model\Git as Model;
-use Regis\Application\Model\Violation;
+use Regis\Application\Entity\Inspection\Violation;
 use Regis\PhpMd\PhpMd as PhpMdRunner;
 
 class PhpMd implements Inspection
@@ -17,6 +17,11 @@ class PhpMd implements Inspection
     public function __construct(PhpMdRunner $phpMd)
     {
         $this->phpMd = $phpMd;
+    }
+
+    public function getType(): string
+    {
+        return 'phpmd';
     }
 
     public function inspectDiff(Model\Diff $diff): \Traversable
@@ -45,9 +50,9 @@ class PhpMd implements Inspection
         $position = $file->findPositionForLine($report['beginLine']);
 
         if (in_array($report['priority'], [1, 2], true)) {
-            return Violation::newError($file->getNewName(), $position, $report['description']);
+            return Violation::newError($file->getNewName(), $report['beginLine'], $position, $report['description']);
         }
 
-        return Violation::newWarning($file->getNewName(), $position, $report['description']);
+        return Violation::newWarning($file->getNewName(), $report['beginLine'], $position, $report['description']);
     }
 }

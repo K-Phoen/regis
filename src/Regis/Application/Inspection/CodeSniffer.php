@@ -7,7 +7,7 @@ namespace Regis\Application\Inspection;
 use Regis\Application\Inspection;
 use Regis\Application\Model\Exception\LineNotInDiff;
 use Regis\Application\Model\Git as Model;
-use Regis\Application\Model\Violation;
+use Regis\Application\Entity\Inspection\Violation;
 use Regis\CodeSniffer\CodeSniffer as CodeSnifferRunner;
 
 class CodeSniffer implements Inspection
@@ -17,6 +17,11 @@ class CodeSniffer implements Inspection
     public function __construct(CodeSnifferRunner $codeSniffer)
     {
         $this->codeSniffer = $codeSniffer;
+    }
+
+    public function getType(): string
+    {
+        return 'phpcs';
     }
 
     public function inspectDiff(Model\Diff $diff): \Traversable
@@ -41,9 +46,9 @@ class CodeSniffer implements Inspection
             }
 
             if ($message['type'] === 'ERROR') {
-                yield Violation::newError($file->getNewName(), $position, $message['message']);
+                yield Violation::newError($file->getNewName(), $message['line'], $position, $message['message']);
             } else {
-                yield Violation::newWarning($file->getNewName(), $position, $message['message']);
+                yield Violation::newWarning($file->getNewName(), $message['line'], $position, $message['message']);
             }
         }
     }

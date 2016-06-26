@@ -33,14 +33,15 @@ Regis\Application\Entity\Inspection:
         head:
             type: string
 
-    oneToMany:
-        analysises:
-          targetEntity: Analysis
+    oneToOne:
+        report:
+          targetEntity: Regis\Application\Entity\Inspection\Report
           mappedBy: inspection
+          cascade: [ 'persist', 'merge' ]
 
     manyToOne:
         repository:
-          targetEntity: Repository
+          targetEntity: Regis\Application\Entity\Repository
           inversedBy: inspections
           joinColumn:
             name: repository_id

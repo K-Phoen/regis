@@ -6,20 +6,19 @@ namespace Regis\Application\Event;
 
 use Regis\Application\Event;
 use Regis\Application\Entity;
-use Regis\Application\Model\Github\PullRequest;
-use Regis\Application\ReportSummary;
+use Regis\Application\Model;
 
 class InspectionFinished implements Event
 {
     private $inspection;
     private $pullRequest;
-    private $reportSummary;
+    private $report;
 
-    public function __construct(Entity\Inspection $inspection, PullRequest $pullRequest, ReportSummary $reportSummary)
+    public function __construct(Entity\Inspection $inspection, Model\Github\PullRequest $pullRequest, Entity\Inspection\Report $report)
     {
         $this->inspection = $inspection;
         $this->pullRequest = $pullRequest;
-        $this->reportSummary = $reportSummary;
+        $this->report = $report;
     }
 
     public function getInspection(): Entity\Inspection
@@ -27,14 +26,14 @@ class InspectionFinished implements Event
         return $this->inspection;
     }
 
-    public function getPullRequest(): PullRequest
+    public function getPullRequest(): Model\Github\PullRequest
     {
         return $this->pullRequest;
     }
 
-    public function getReportSummary(): ReportSummary
+    public function getReport(): Entity\Inspection\Report
     {
-        return $this->reportSummary;
+        return $this->report;
     }
 
     public function getEventName(): string

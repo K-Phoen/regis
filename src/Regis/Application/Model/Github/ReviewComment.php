@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Application\Model\Github;
 
-use Regis\Application\Model\Violation;
+use Regis\Application\Entity\Inspection\Violation;
 
 class ReviewComment
 {

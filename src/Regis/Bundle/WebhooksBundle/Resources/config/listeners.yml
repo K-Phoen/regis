@@ -10,3 +10,15 @@ services:
         arguments: [ '@regis.github.client' ]
         tags:
             - { name: kernel.event_subscriber }
+
+    regis.subscriber.pull_request_inspection_report:
+        class: Regis\Bundle\WebhooksBundle\EventListener\PullRequestInspectionReportListener
+        arguments: [ '@tactician.commandbus' ]
+        tags:
+            - { name: kernel.event_subscriber }
+
+    regis.subscriber.pull_request_report_as_comments:
+        class: Regis\Bundle\WebhooksBundle\EventListener\PullRequestReviewCommentsListener
+        arguments: [ '@tactician.commandbus' ]
+        tags:
+            - { name: kernel.event_subscriber }

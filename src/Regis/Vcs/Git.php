@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Regis\Vcs;
 
 use Gitonomy\Git as Gitonomy;
-use Psr\Log\LoggerInterface;
+use Psr\Log\LoggerInterface as Logger;
 
 use Regis\Application\Model;
 
 class Git
 {
-    /** @var LoggerInterface */
+    /** @var Logger */
     private $logger;
 
     /** @var string */
@@ -19,7 +19,7 @@ class Git
 
     private $gitonomyOptions = [];
 
-    public function __construct(LoggerInterface $logger, string $gitBinary, string $repositoriesDirectory)
+    public function __construct(Logger $logger, string $gitBinary, string $repositoriesDirectory)
     {
         $this->logger = $logger;
         $this->gitBinary = $gitBinary;

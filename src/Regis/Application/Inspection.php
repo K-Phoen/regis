@@ -6,5 +6,7 @@ namespace Regis\Application;
 
 interface Inspection
 {
+    function getType(): string;
+
     function inspectDiff(Model\Git\Diff $diff): \Traversable;
 }

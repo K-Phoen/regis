@@ -28,3 +28,15 @@ services:
         arguments: [ '@event_dispatcher', '@regis.inspector', '@regis.repository.inspections' ]
         tags:
             - { name: tactician.handler, command: Regis\Application\Command\Github\Inspection\InspectPullRequest }
+
+    regis.command_handler.inspections.save_report:
+        class: Regis\Application\CommandHandler\Github\Inspection\SavePullRequestReport
+        arguments: [ '@regis.repository.inspections' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\Github\Inspection\SavePullRequestReport }
+
+    regis.command_handler.inspections.send_pr_comments:
+        class: Regis\Application\CommandHandler\Github\Inspection\SendViolationsAsComments
+        arguments: [ '@regis.violation_reporter.duplication_guard' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\Github\Inspection\SendViolationsAsComments }

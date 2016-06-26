@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Regis\Application\Inspection;
 
 use Predis\ClientInterface;
+use Regis\Application\Entity;
 use Regis\Application\Model;
 
 class ViolationsCache
@@ -16,12 +17,12 @@ class ViolationsCache
         $this->redis = $redis;
     }
 
-    public function has(Model\Violation $violation, Model\Github\PullRequest $pullRequest): bool
+    public function has(Entity\Inspection\Violation $violation, Model\Github\PullRequest $pullRequest): bool
     {
         return (bool) $this->redis->sismember($this->getPullRequestKey($pullRequest), $this->getViolationKey($violation));
     }
 
-    public function save(Model\Violation $violation, Model\Github\PullRequest $pullRequest)
+    public function save(Entity\Inspection\Violation $violation, Model\Github\PullRequest $pullRequest)
     {
         $this->redis->sadd($this->getPullRequestKey($pullRequest), $this->getViolationKey($violation));
     }
@@ -36,7 +37,7 @@ class ViolationsCache
         return (string) $pullRequest;
     }
 
-    private function getViolationKey(Model\Violation $violation)
+    private function getViolationKey(Entity\Inspection\Violation $violation)
     {
         return md5((string) $violation);
     }

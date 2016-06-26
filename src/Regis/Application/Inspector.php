@@ -5,44 +5,43 @@ declare(strict_types=1);
 namespace Regis\Application;
 
 use Gitonomy\Git as Gitonomy;
+use Regis\Application\Model;
 use Regis\Vcs\Git;
 
 class Inspector
 {
     private $git;
-    private $reporter;
     /** @var Inspection[] */
     private $inspections;
 
-    public function __construct(Git $git, Reporter $reporter, array $inspections = [])
+    public function __construct(Git $git, array $inspections = [])
     {
         $this->git = $git;
-        $this->reporter = $reporter;
         $this->inspections = $inspections;
     }
 
-    public function inspect(Model\Github\PullRequest $pullRequest)
+    public function inspect(Model\Git\Repository $repository, Model\Git\Revisions $revisions): Entity\Inspection\Report
     {
-        $repository = $pullRequest->getRepository();
-        $revisions = $pullRequest->getRevisions();
-
         $gitRepository = $this->git->getRepository($repository);
         $gitRepository->update();
 
         $diff = $gitRepository->getDiff($revisions);
 
-        return $this->inspectDiff($pullRequest, $diff);
+        return $this->inspectDiff($diff);
     }
 
-    private function inspectDiff(Model\Github\PullRequest $pullRequest, Model\Git\Diff $diff): ReportSummary
+    private function inspectDiff(Model\Git\Diff $diff): Entity\Inspection\Report
     {
-        $report = new ReportSummary();
+        $report = new Entity\Inspection\Report();
 
         foreach ($this->inspections as $inspection) {
+            $analysis = new Entity\Inspection\Analysis($inspection->getType());
+
             foreach ($inspection->inspectDiff($diff) as $violation) {
-                $report->newViolation($violation);
-                $this->reporter->report($violation, $pullRequest);
+                $analysis->addViolation($violation);
             }
+
+            $report->addAnalysis($analysis);
         }
 
         return $report;

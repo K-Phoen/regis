@@ -1,0 +1,36 @@
+{% extends '@RegisBackend/layout.html.twig' %}
+
+{% import '@RegisBackend/utils.html.twig' as utils %}
+
+{% block content %}
+<h1 class="page-header">Report « {{ report.id }} »</h1>
+
+<h2>Analyses</h2>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Type</th>
+            <th>Result</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for analysis in report.analyses %}
+            <tr class="{{ utils.class_for_analysis_status(analysis) }}">
+                <td>{{ analysis.id }}</td>
+                <td><span class="label label-primary">{{ utils.analysis_type(analysis) }}</span></td>
+                <td>
+                    {{ utils.analysis_status_label(analysis) }}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">No analysis.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

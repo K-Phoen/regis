@@ -73,7 +73,7 @@ class RepositoriesController extends Controller
         ]);
     }
 
-    public function editAction(Request $request, Entity\Repository $repository)
+    public function editAction(Request $request, Entity\Github\Repository $repository)
     {
         $form = $form = $this->createForm(Form\EditRepositoryConfigurationType::class, $repository, [
             'action' => $this->generateUrl('repositories_edit', ['identifier' => $repository->getIdentifier()]),

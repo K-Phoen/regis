@@ -3,7 +3,7 @@
 namespace Tests\Regis\Application\Reporter;
 
 use Regis\Application\Model\Github\PullRequest;
-use Regis\Application\Model\Violation;
+use Regis\Application\Entity\Inspection\Violation;
 use Regis\Application\Reporter\Github as GithubReporter;
 use Regis\Github\Client as GithubClient;
 

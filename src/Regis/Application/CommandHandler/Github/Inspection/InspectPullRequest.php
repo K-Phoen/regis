@@ -6,13 +6,12 @@ namespace Regis\Application\CommandHandler\Github\Inspection;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
-use Regis\Bundle\WebhooksBundle\Event\DomainEventWrapper;
-
 use Regis\Application\Command;
 use Regis\Application\Entity;
 use Regis\Application\Event;
 use Regis\Application\Inspector;
 use Regis\Application\Repository\Inspections;
+use Regis\Symfony\Event\DomainEventWrapper;
 
 class InspectPullRequest
 {
@@ -38,9 +37,9 @@ class InspectPullRequest
         $this->dispatch(Event::INSPECTION_STARTED, new Event\InspectionStarted($inspection, $pullRequest));
 
         try {
-            $reportSummary = $this->inspector->inspect($pullRequest);
+            $report = $this->inspector->inspect($pullRequest->getRepository(), $pullRequest->getRevisions());
             $inspection->finish();
-            $this->dispatch(Event::INSPECTION_FINISHED, new Event\InspectionFinished($inspection, $pullRequest, $reportSummary));
+            $this->dispatch(Event::INSPECTION_FINISHED, new Event\InspectionFinished($inspection, $pullRequest, $report));
         } catch (\Exception $e) {
             $inspection->fail($e);
             $this->dispatch(Event::INSPECTION_FAILED, new Event\InspectionFailed($inspection, $pullRequest, $e));

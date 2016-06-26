@@ -1,26 +1,6 @@
 {% extends '@RegisBackend/layout.html.twig' %}
 
-{% import _self as utils %}
-
-{% macro class_for_integration_status(status) %}
-    {% if status == 'failed' %}
-        danger
-    {% elseif status == 'started' %}
-        warning
-    {% elseif status == 'scheduled' %}
-        info
-    {% endif %}
-{% endmacro %}
-
-{% macro inspection_type(inspection) %}
-    {% spaceless %}
-    {% if inspection.type == 'github_pr' %}
-        PR
-    {% else %}
-        Unknown ({{ inspection.type }})
-    {% endif %}
-    {% endspaceless %}
-{% endmacro %}
+{% import '@RegisBackend/utils.html.twig' as utils %}
 
 {% block content %}
 <h1 class="page-header">« {{ repository.identifier }} »</h1>
@@ -59,6 +39,7 @@
                 <th>Started at</th>
                 <th>Finished at</th>
                 <th>Status</th>
+                <th>Result</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -85,10 +66,21 @@
                     <code>{{ inspection.status }}</code>
                 </td>
                 <td>
+                    {% if inspection.hasReport %}
+                        {{ utils.report_status_label(inspection.report) }}
+                    {% else %}
+                        -
+                    {% endif %}
+                </td>
+                <td>
                     {% if inspection.status == 'failed' or inspection.status == 'finished' %}
-                    <form method="POST" action="{{ path('inspection_retry', {'id': inspection.id}) }}">
-                        <input type="submit" class="btn btn-warning btn-sm" value="Retry" />
-                    </form>
+                        <form method="POST" action="{{ path('inspection_retry', {'id': inspection.id}) }}">
+                            <input type="submit" class="btn btn-warning btn-sm" value="Retry" />
+                        </form>
+                    {% endif %}
+
+                    {% if inspection.hasReport %}
+                        <a href="{{ path('report_detail', {'id': inspection.report.id}) }}" class="btn btn-primary btn-sm">Report</a>
                     {% endif %}
                 </td>
             </tr>
