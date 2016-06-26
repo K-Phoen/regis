@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Bundle\WebhooksBundle\Worker;
+namespace Regis\Application\Worker;
 
 use League\Tactician\CommandBus;
 use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
@@ -29,7 +29,7 @@ class GithubPrInspectionRunner implements ConsumerInterface
 
     public function execute(AMQPMessage $msg)
     {
-        $event = json_decode($msg->body, true);
+        $event = json_decode($msg->getBody(), true);
         /** @var PullRequestInspection $inspection */
         $inspection = $this->inspectionsRepo->find($event['inspection']);
         $pullRequest = PullRequest::fromArray($event['pull_request']);
