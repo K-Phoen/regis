@@ -1,6 +1,14 @@
 Regis\Application\Entity\Repository:
     type: entity
     table: repositories
+    inheritanceType: SINGLE_TABLE
+
+    discriminatorColumn:
+        name: type
+        type: string
+
+    discriminatorMap:
+        github: Regis\Application\Entity\Github\Repository
 
     id:
         identifier:

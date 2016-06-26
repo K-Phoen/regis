@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Regis\Application\Command\Inspection;
+namespace Regis\Application\Command\Github\Inspection;
 
-use Regis\Application\Entity\Inspection;
+use Regis\Application\Entity\Github\PullRequestInspection;
 use Regis\Application\Model\Github\PullRequest;
 
 class Run
@@ -12,13 +12,13 @@ class Run
     private $inspection;
     private $pullRequest;
 
-    public function __construct(Inspection $inspection, PullRequest $pullRequest)
+    public function __construct(PullRequestInspection $inspection, PullRequest $pullRequest)
     {
         $this->inspection = $inspection;
         $this->pullRequest = $pullRequest;
     }
 
-    public function getInspection(): Inspection
+    public function getInspection(): PullRequestInspection
     {
         return $this->inspection;
     }

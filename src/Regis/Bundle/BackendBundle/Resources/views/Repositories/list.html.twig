@@ -1,5 +1,17 @@
 {% extends '@RegisBackend/layout.html.twig' %}
 
+{% import _self as utils %}
+
+{% macro repository_type(repo) %}
+    {% spaceless %}
+    {% if repo.type == 'github' %}
+        GitHub
+    {% else %}
+        Unknown ({{ repo.type }})
+    {% endif %}
+    {% endspaceless %}
+{% endmacro %}
+
 {% block content %}
 <h1 class="page-header">Repositories</h1>
 
@@ -14,7 +26,10 @@
         <tbody>
         {% for repo in repositories %}
             <tr>
-                <td><a href="{{ path('repositories_detail', {identifier: repo.identifier}) }}">{{ repo.identifier }}</a></td>
+                <td>
+                    <span class="label label-primary">{{ utils.repository_type(repo) }}</span>
+                    <a href="{{ path('repositories_detail', {identifier: repo.identifier}) }}">{{ repo.identifier }}</a>
+                </td>
                 <td>
                     <div class="btn-group" role="group">
                         <a href="{{ path('repositories_edit', {identifier: repo.identifier}) }}" class="btn btn-default">

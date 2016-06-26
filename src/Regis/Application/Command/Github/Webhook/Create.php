@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Application\Command\Webhook;
+namespace Regis\Application\Command\Github\Webhook;
 
 class Create
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\Application\CommandHandler\Repository;
+namespace Tests\Regis\Application\CommandHandler\Github\Repository;
 
 use Regis\Application\Repository\Repositories;
 use Regis\Application\Command;
@@ -10,19 +10,19 @@ use Regis\Application\Entity;
 class CreateTest extends \PHPUnit_Framework_TestCase
 {
     private $repositoriesRepo;
-    /** @var CommandHandler\Repository\Create */
+    /** @var CommandHandler\Github\Repository\Create */
     private $handler;
 
     public function setUp()
     {
         $this->repositoriesRepo = $this->getMockBuilder(Repositories::class)->getMock();
 
-        $this->handler = new CommandHandler\Repository\Create($this->repositoriesRepo);
+        $this->handler = new CommandHandler\Github\Repository\Create($this->repositoriesRepo);
     }
 
     public function testItBuildsAndSaveTheEntity()
     {
-        $command = new Command\Repository\Create('some identifier', 'shared secret');
+        $command = new Command\Github\Repository\Create('some identifier', 'shared secret');
 
         $this->repositoriesRepo->expects($this->once())
             ->method('save')

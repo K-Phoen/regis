@@ -19,3 +19,4 @@
 /vendor/
 /web/bundles/
 /docker/redis/data/
+/clover.xml

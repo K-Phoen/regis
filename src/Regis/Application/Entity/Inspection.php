@@ -5,11 +5,13 @@ declare(strict_types=1);
 namespace Regis\Application\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Regis\Application\Model\Github\PullRequest;
+use Regis\Application\Model\Git\Revisions;
 use Regis\Uuid;
 
-class Inspection
+abstract class Inspection
 {
+    const TYPE_GITHUB_PR = 'github_pr';
+
     const STATUS_SCHEDULED = 'scheduled';
     const STATUS_STARTED = 'started';
     const STATUS_FINISHED = 'finished';
@@ -19,25 +21,29 @@ class Inspection
     private $repository;
     /** @var ArrayCollection */
     private $analysises;
-    private $pullRequestId;
     private $status;
     private $createdAt;
     private $startedAt;
     private $finishedAt;
+    private $base;
+    private $head;
     private $failureTrace = '';
 
-    public static function create(Repository $repository, PullRequest $pullRequest)
+    abstract public function getType(): string;
+
+    protected static function createForRevisions(Repository $repository, Revisions $revisions)
     {
         $inspection = new static(Uuid::create());
-        $inspection->pullRequestId = $pullRequest->getNumber();
         $inspection->repository = $repository;
         $inspection->createdAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
         $inspection->status = self::STATUS_SCHEDULED;
+        $inspection->base = $revisions->getBase();
+        $inspection->head = $revisions->getHead();
 
         return $inspection;
     }
 
-    public function __construct(string $id)
+    private function __construct(string $id)
     {
         $this->id = $id;
         $this->analysises = new ArrayCollection();
@@ -126,8 +132,13 @@ class Inspection
         return $this->repository;
     }
 
-    public function getPullRequestId(): int
+    public function getHead(): string
     {
-        return $this->pullRequestId;
+        return $this->head;
+    }
+
+    public function getBase(): string
+    {
+        return $this->base;
     }
 }

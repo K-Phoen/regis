@@ -35,7 +35,7 @@ class PullRequestListener implements EventSubscriberInterface
         /** @var Event\PullRequestOpened|Event\PullRequestSynced $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
-        $command = new Command\Inspection\Schedule($domainEvent->getPullRequest());
+        $command = new Command\Github\Inspection\SchedulePullRequest($domainEvent->getPullRequest());
         $this->commandBus->handle($command);
     }
 

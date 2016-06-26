@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Regis\Application\Command\Inspection;
+namespace Regis\Application\Command\Github\Inspection;
 
 use Regis\Application\Model\Github\PullRequest;
 
-class Schedule
+class SchedulePullRequest
 {
     private $pullRequest;
 

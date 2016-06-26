@@ -9,9 +9,13 @@ use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 
 use Regis\Application\Command;
+use Regis\Application\Entity\Github\PullRequestInspection;
 use Regis\Application\Model\Github\PullRequest;
 use Regis\Application\Repository;
 
+/**
+ * @TODO test me
+ */
 class GithubPrInspectionRunner implements ConsumerInterface
 {
     private $commandBus;
@@ -26,10 +30,11 @@ class GithubPrInspectionRunner implements ConsumerInterface
     public function execute(AMQPMessage $msg)
     {
         $event = json_decode($msg->body, true);
+        /** @var PullRequestInspection $inspection */
         $inspection = $this->inspectionsRepo->find($event['inspection']);
         $pullRequest = PullRequest::fromArray($event['pull_request']);
 
-        $command = new Command\Inspection\Run($inspection, $pullRequest);
+        $command = new Command\Github\Inspection\Run($inspection, $pullRequest);
         $this->commandBus->handle($command);
     }
 }

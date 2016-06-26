@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Application\Command\Repository;
+namespace Regis\Application\Command\Github\Repository;
 
 class Create
 {

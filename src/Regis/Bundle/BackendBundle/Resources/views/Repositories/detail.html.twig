@@ -12,6 +12,16 @@
     {% endif %}
 {% endmacro %}
 
+{% macro inspection_type(inspection) %}
+    {% spaceless %}
+    {% if inspection.type == 'github_pr' %}
+        PR
+    {% else %}
+        Unknown ({{ inspection.type }})
+    {% endif %}
+    {% endspaceless %}
+{% endmacro %}
+
 {% block content %}
 <h1 class="page-header">« {{ repository.identifier }} »</h1>
 
@@ -55,7 +65,7 @@
         <tbody>
         {% for inspection in repository.inspections %}
             <tr class="{{ utils.class_for_integration_status(inspection.status) }}">
-                <td>{{ inspection.id }}</td>
+                <td><span class="label label-primary">{{ utils.inspection_type(inspection) }}</span> {{ inspection.id }}</td>
                 <td>{{ inspection.createdAt|date }}</td>
                 <td>
                     {% if inspection.startedAt %}

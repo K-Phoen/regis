@@ -11,7 +11,7 @@ class InMemoryRepositories implements Repositories
     public function __construct(array $repositories)
     {
         foreach ($repositories as $identifier => $repository) {
-            $this->repositories[$identifier] = new Entity\Repository($identifier, $repository['secret']);
+            $this->repositories[$identifier] = new Entity\Github\Repository($identifier, $repository['secret']);
         }
     }
 
@@ -22,8 +22,8 @@ class InMemoryRepositories implements Repositories
 
     public function findAll(): \Traversable
     {
-        foreach ($this->repositories as $identifier => $repo) {
-            yield new Entity\Repository($identifier, $repo['secret']);
+        foreach ($this->repositories as $repo) {
+            yield $repo;
         }
     }
 

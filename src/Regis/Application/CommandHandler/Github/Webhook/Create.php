@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Application\CommandHandler\Webhook;
+namespace Regis\Application\CommandHandler\Github\Webhook;
 
 use Regis\Github\Client as GithubClient;
 use Regis\Application\Command;
@@ -19,7 +19,7 @@ class Create
         $this->repositoriesRepo = $repositoriesRepo;
     }
 
-    public function handle(Command\Webhook\Create $command)
+    public function handle(Command\Github\Webhook\Create $command)
     {
         $repository = $this->repositoriesRepo->find($command->getOwner().'/'.$command->getRepo());
 

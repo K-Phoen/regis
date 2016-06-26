@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Regis\Application\CommandHandler\Repository;
+namespace Regis\Application\CommandHandler\Github\Repository;
 
 use Regis\Application\Command;
 use Regis\Application\Entity;
 use Regis\Application\Repository\Repositories;
 
-class UpdateConfiguration
+class Create
 {
     private $repositoriesRepo;
 
@@ -17,10 +17,11 @@ class UpdateConfiguration
         $this->repositoriesRepo = $repositoriesRepo;
     }
 
-    public function handle(Command\Repository\UpdateConfiguration $command)
+    public function handle(Command\Github\Repository\Create $command)
     {
-        $command->getRepository()->newSharedSecret($command->getNewSharedSecret());
-
-        $this->repositoriesRepo->save($command->getRepository());
+        $this->repositoriesRepo->save(new Entity\Github\Repository(
+            $command->getIdentifier(),
+            $command->getSharedSecret()
+        ));
     }
 }

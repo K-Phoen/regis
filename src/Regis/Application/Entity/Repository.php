@@ -6,12 +6,16 @@ namespace Regis\Application\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class Repository
+abstract class Repository
 {
+    const TYPE_GITHUB = 'github';
+
     private $identifier;
     private $sharedSecret;
     /** @var ArrayCollection */
     private $inspections;
+
+    abstract public function getType(): string;
 
     public function __construct(string $identifier = null, string $sharedSecret = null)
     {

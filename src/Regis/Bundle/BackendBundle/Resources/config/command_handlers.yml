@@ -1,30 +1,30 @@
 services:
     regis.command_handler.repository.create:
-        class: Regis\Application\CommandHandler\Repository\Create
+        class: Regis\Application\CommandHandler\Github\Repository\Create
         arguments: [ '@regis.repository.repositories' ]
         tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Repository\Create }
+            - { name: tactician.handler, command: Regis\Application\Command\Github\Repository\Create }
 
     regis.command_handler.repository.update_configuration:
-        class: Regis\Application\CommandHandler\Repository\UpdateConfiguration
+        class: Regis\Application\CommandHandler\Github\Repository\UpdateConfiguration
         arguments: [ '@regis.repository.repositories' ]
         tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Repository\UpdateConfiguration }
+            - { name: tactician.handler, command: Regis\Application\Command\Github\Repository\UpdateConfiguration }
 
     regis.command_handler.webhooks.create:
-        class: Regis\Application\CommandHandler\Webhook\Create
+        class: Regis\Application\CommandHandler\Github\Webhook\Create
         arguments: [ '@regis.github.client', '@regis.repository.repositories' ]
         tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Webhook\Create }
+            - { name: tactician.handler, command: Regis\Application\Command\Github\Webhook\Create }
 
     regis.command_handler.inspections.schedule:
-        class: Regis\Application\CommandHandler\Inspection\Schedule
+        class: Regis\Application\CommandHandler\Github\Inspection\SchedulePullRequest
         arguments: [ '@old_sound_rabbit_mq.webhook_github_pr_event_producer', '@regis.repository.repositories', '@regis.repository.inspections' ]
         tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Inspection\Schedule }
+            - { name: tactician.handler, command: Regis\Application\Command\Github\Inspection\SchedulePullRequest }
 
     regis.command_handler.inspections.start:
-        class: Regis\Application\CommandHandler\Inspection\Run
+        class: Regis\Application\CommandHandler\Github\Inspection\Run
         arguments: [ '@event_dispatcher', '@regis.inspector', '@regis.repository.inspections' ]
         tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Inspection\Run }
+            - { name: tactician.handler, command: Regis\Application\Command\Github\Inspection\Run }

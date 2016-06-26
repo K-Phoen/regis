@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Application\CommandHandler\Inspection;
+namespace Regis\Application\CommandHandler\Github\Inspection;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -27,7 +27,7 @@ class Run
         $this->inspectionsRepo = $inspectionsRepo;
     }
 
-    public function handle(Command\Inspection\Run $command)
+    public function handle(Command\Github\Inspection\Run $command)
     {
         $inspection = $command->getInspection();
         $pullRequest = $command->getPullRequest();
