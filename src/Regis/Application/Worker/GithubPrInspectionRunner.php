@@ -13,9 +13,6 @@ use Regis\Application\Entity\Github\PullRequestInspection;
 use Regis\Application\Model\Github\PullRequest;
 use Regis\Application\Repository;
 
-/**
- * @TODO test me
- */
 class GithubPrInspectionRunner implements ConsumerInterface
 {
     private $commandBus;
