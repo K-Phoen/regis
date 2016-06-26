@@ -25,3 +25,8 @@ repositories_edit:
     defaults:  { _controller: RegisBackendBundle:Repositories:edit }
     requirements: { identifier: "[^/]+/[^/]+" }
     methods:   GET|POST
+
+inspection_retry:
+    path:      /inspections/{id}/retry
+    defaults:  { _controller: RegisBackendBundle:Inspections:retry }
+    methods:   POST

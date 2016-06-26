@@ -141,4 +141,9 @@ abstract class Inspection
     {
         return $this->base;
     }
+
+    public function getRevisions(): Revisions
+    {
+        return new Revisions($this->base, $this->head);
+    }
 }

@@ -41,7 +41,7 @@
             <th>Actions</th>
             <td>
                 <form method="POST" action="{{ path('repositories_setup_webhook', {'identifier': repository.identifier}) }}">
-                    <input type="submit" class="btn btn-warning" value="Setup webhook" />
+                    <input type="submit" class="btn btn-warning btn-sm" value="Setup webhook" />
                 </form>
             </td>
         </tr>
@@ -84,7 +84,13 @@
                 <td>
                     <code>{{ inspection.status }}</code>
                 </td>
-                <td>Retry</td>
+                <td>
+                    {% if inspection.status == 'failed' or inspection.status == 'finished' %}
+                    <form method="POST" action="{{ path('inspection_retry', {'id': inspection.id}) }}">
+                        <input type="submit" class="btn btn-warning btn-sm" value="Retry" />
+                    </form>
+                    {% endif %}
+                </td>
             </tr>
         {% else %}
             <tr>
