@@ -34,7 +34,7 @@ class RepositoriesController extends Controller
     {
         $absoluteUrl = $this->get('router')->generate('webhook_github', [],  UrlGeneratorInterface::ABSOLUTE_URL);
 
-        $command = new Command\Webhook\Create(
+        $command = new Command\Github\Webhook\Create(
             $repository->getOwner(),
             $repository->getName(),
             $absoluteUrl
@@ -56,7 +56,7 @@ class RepositoriesController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $command = new Command\Repository\Create(
+            $command = new Command\Github\Repository\Create(
                 $form->get('identifier')->getData(),
                 $form->get('sharedSecret')->getData()
             );
@@ -82,7 +82,7 @@ class RepositoriesController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $command = new Command\Repository\UpdateConfiguration(
+            $command = new Command\Github\Repository\UpdateConfiguration(
                 $repository,
                 $form->get('sharedSecret')->getData()
             );
