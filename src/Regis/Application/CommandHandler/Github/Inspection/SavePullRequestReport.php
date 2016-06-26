@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace Regis\Application\CommandHandler\Github\Inspection;
 
 use Regis\Application\Command;
-use Regis\Application\Entity;
-use Regis\Application\Model;
 use Regis\Application\Repository;
 
 class SavePullRequestReport

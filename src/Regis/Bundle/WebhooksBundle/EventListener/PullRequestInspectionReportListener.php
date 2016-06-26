@@ -34,7 +34,6 @@ class PullRequestInspectionReportListener implements EventSubscriberInterface
 
         $this->commandBus->handle(new Command\Github\Inspection\SavePullRequestReport(
             $domainEvent->getInspection(),
-            $domainEvent->getPullRequest(),
             $domainEvent->getReport()
         ));
     }
