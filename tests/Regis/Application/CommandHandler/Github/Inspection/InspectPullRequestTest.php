@@ -13,14 +13,14 @@ use Regis\Application\Inspector;
 use Regis\Application\Model;
 use Regis\Application\Repository;
 
-class RunTest extends \PHPUnit_Framework_TestCase
+class InspectPullRequestTest extends \PHPUnit_Framework_TestCase
 {
     private $dispatcher;
     private $inspector;
     private $inspection;
     private $pullRequest;
     private $inspectionsRepo;
-    /** @var CommandHandler\Github\Inspection\Run */
+    /** @var CommandHandler\Github\Inspection\InspectPullRequest */
     private $handler;
 
     public function setUp()
@@ -32,7 +32,7 @@ class RunTest extends \PHPUnit_Framework_TestCase
         $this->inspection = $this->getMockBuilder(Entity\Github\PullRequestInspection::class)->disableOriginalConstructor()->getMock();
         $this->pullRequest = $this->getMockBuilder(Model\Github\PullRequest::class)->disableOriginalConstructor()->getMock();
 
-        $this->handler = new CommandHandler\Github\Inspection\Run($this->dispatcher, $this->inspector, $this->inspectionsRepo);
+        $this->handler = new CommandHandler\Github\Inspection\InspectPullRequest($this->dispatcher, $this->inspector, $this->inspectionsRepo);
     }
 
     public function testWhenTheInspectionSucessfullyFinishes()
@@ -58,11 +58,11 @@ class RunTest extends \PHPUnit_Framework_TestCase
                 [Event::INSPECTION_FINISHED, $this->anything()]
             );
 
-        $this->handler->handle(new Command\Github\Inspection\Run($this->inspection, $this->pullRequest));
+        $this->handler->handle(new Command\Github\Inspection\InspectPullRequest($this->inspection, $this->pullRequest));
     }
 
     /**
-     * @expectedException RuntimeException
+     * @expectedException \RuntimeException
      */
     public function testWhenTheInspectionFails()
     {
@@ -85,6 +85,6 @@ class RunTest extends \PHPUnit_Framework_TestCase
                 [Event::INSPECTION_FAILED, $this->anything()]
             );
 
-        $this->handler->handle(new Command\Github\Inspection\Run($this->inspection, $this->pullRequest));
+        $this->handler->handle(new Command\Github\Inspection\InspectPullRequest($this->inspection, $this->pullRequest));
     }
 }

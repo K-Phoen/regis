@@ -7,7 +7,7 @@ namespace Regis\Application\Command\Github\Inspection;
 use Regis\Application\Entity\Github\PullRequestInspection;
 use Regis\Application\Model\Github\PullRequest;
 
-class Run
+class InspectPullRequest
 {
     private $inspection;
     private $pullRequest;

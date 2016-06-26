@@ -38,7 +38,7 @@ class GithubPrInspectionRunnerTest extends \PHPUnit_Framework_TestCase
 
         $this->commandBus->expects($this->once())
             ->method('handle')
-            ->with($this->isInstanceOf(Command\Github\Inspection\Run::class));
+            ->with($this->isInstanceOf(Command\Github\Inspection\InspectPullRequest::class));
 
         $this->worker->execute($message);
     }

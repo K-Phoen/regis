@@ -31,7 +31,7 @@ class GithubPrInspectionRunner implements ConsumerInterface
         $inspection = $this->inspectionsRepo->find($event['inspection']);
         $pullRequest = PullRequest::fromArray($event['pull_request']);
 
-        $command = new Command\Github\Inspection\Run($inspection, $pullRequest);
+        $command = new Command\Github\Inspection\InspectPullRequest($inspection, $pullRequest);
         $this->commandBus->handle($command);
     }
 }
