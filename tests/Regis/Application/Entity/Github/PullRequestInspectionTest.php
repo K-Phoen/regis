@@ -49,4 +49,80 @@ class PullRequestInspectionTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($inspection->getStartedAt());
         $this->assertNull($inspection->getFinishedAt());
     }
+
+    public function testStart()
+    {
+        $inspection = PullRequestInspection::create($this->repository, $this->pullRequest);
+
+        $this->assertNull($inspection->getStartedAt());
+        $this->assertSame(Inspection::STATUS_SCHEDULED, $inspection->getStatus());
+
+        $inspection->start();
+
+        $this->assertNotNull($inspection->getStartedAt());
+        $this->assertSame(Inspection::STATUS_STARTED, $inspection->getStatus());
+    }
+
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessage This inspection is already started
+     */
+    public function testStartCanBeCalledOnlyOnce()
+    {
+        $inspection = PullRequestInspection::create($this->repository, $this->pullRequest);
+
+        $inspection->start();
+        $inspection->start();
+    }
+
+    public function testFinish()
+    {
+        $inspection = PullRequestInspection::create($this->repository, $this->pullRequest);
+
+        $this->assertNull($inspection->getFinishedAt());
+        $this->assertSame(Inspection::STATUS_SCHEDULED, $inspection->getStatus());
+
+        $inspection->finish();
+
+        $this->assertNotNull($inspection->getFinishedAt());
+        $this->assertSame(Inspection::STATUS_FINISHED, $inspection->getStatus());
+    }
+
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessage This inspection is already finished
+     */
+    public function testFinishCanBeCalledOnlyOnce()
+    {
+        $inspection = PullRequestInspection::create($this->repository, $this->pullRequest);
+
+        $inspection->finish();
+        $inspection->finish();
+    }
+
+    public function testFail()
+    {
+        $inspection = PullRequestInspection::create($this->repository, $this->pullRequest);
+
+        $this->assertNull($inspection->getFinishedAt());
+        $this->assertSame(Inspection::STATUS_SCHEDULED, $inspection->getStatus());
+
+        $inspection->fail(new \Exception());
+
+        $this->assertNotNull($inspection->getFinishedAt());
+        $this->assertSame(Inspection::STATUS_FAILED, $inspection->getStatus());
+        $this->assertNotEmpty($inspection->getFailureTrace());
+    }
+
+    /**
+     * @expectedException \LogicException
+     * @expectedExceptionMessage This inspection is already finished
+     */
+    public function testFailhCanBeCalledOnlyOnce()
+    {
+        $inspection = PullRequestInspection::create($this->repository, $this->pullRequest);
+
+        $inspection->fail(new \Exception());
+        $inspection->fail(new \Exception());
+    }
 }
