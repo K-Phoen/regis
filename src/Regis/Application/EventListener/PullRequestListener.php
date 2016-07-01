@@ -1,6 +1,8 @@
 <?php
 
-namespace Regis\Bundle\WebhooksBundle\EventListener;
+declare(strict_types=1);
+
+namespace Regis\Application\EventListener;
 
 use League\Tactician\CommandBus;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;

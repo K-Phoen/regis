@@ -1,24 +1,24 @@
 services:
     regis.subscriber.pull_request:
-        class: Regis\Bundle\WebhooksBundle\EventListener\PullRequestListener
+        class: Regis\Application\EventListener\PullRequestListener
         arguments: [ '@tactician.commandbus', '@regis.violations_cache' ]
         tags:
             - { name: kernel.event_subscriber }
 
     regis.subscriber.pull_request_inspection_status:
-        class: Regis\Bundle\WebhooksBundle\EventListener\PullRequestInspectionStatusListener
+        class: Regis\Application\EventListener\PullRequestInspectionStatusListener
         arguments: [ '@regis.github.client' ]
         tags:
             - { name: kernel.event_subscriber }
 
     regis.subscriber.pull_request_inspection_report:
-        class: Regis\Bundle\WebhooksBundle\EventListener\PullRequestInspectionReportListener
+        class: Regis\Application\EventListener\PullRequestInspectionReportListener
         arguments: [ '@tactician.commandbus' ]
         tags:
             - { name: kernel.event_subscriber }
 
     regis.subscriber.pull_request_report_as_comments:
-        class: Regis\Bundle\WebhooksBundle\EventListener\PullRequestReviewCommentsListener
+        class: Regis\Application\EventListener\PullRequestReviewCommentsListener
         arguments: [ '@tactician.commandbus' ]
         tags:
             - { name: kernel.event_subscriber }

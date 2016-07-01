@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Bundle\WebhooksBundle\EventListener;
+namespace Regis\Application\EventListener;
 
 use Regis\Application\Model\Github\PullRequest;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
