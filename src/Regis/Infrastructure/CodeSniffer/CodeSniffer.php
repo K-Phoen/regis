@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Regis\Infrastructure\CodeSniffer;
 
 use Symfony\Component\Process\Process;
+use Regis\Application\Inspection\CodeSnifferRunner;
 
-class CodeSniffer
+class CodeSniffer implements CodeSnifferRunner
 {
     private $phpcsBin;
     private $codeSnifferConfig;

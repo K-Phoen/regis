@@ -3,9 +3,9 @@
 namespace Tests\Regis\Application\Inspection;
 
 use Regis\Application\Inspection\CodeSniffer;
+use Regis\Application\Inspection\CodeSnifferRunner;
 use Regis\Domain\Entity;
 use Regis\Domain\Model;
-use Regis\Infrastructure\CodeSniffer\CodeSniffer as CodeSnifferRunner;
 
 class CodeSnifferTest extends InspectionTestCase
 {
