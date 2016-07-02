@@ -8,6 +8,14 @@ use Regis\Domain\Model\Github as Model;
 
 interface Client
 {
+    const INTEGRATION_PENDING = 'pending';
+    const INTEGRATION_SUCCESS = 'success';
+    const INTEGRATION_FAILURE = 'failure';
+    const INTEGRATION_ERROR = 'error';
+
+    const READONLY_KEY = 'readonly_key';
+    const WRITE_KEY = 'write_key';
+
     function setIntegrationStatus(Model\PullRequest $pullRequest, string $state, string $description, string $context);
     function addDeployKey(string $owner, string $repository, string $title, string $key, string $type);
     function createWebhook(string $owner, string $repository, string $url, $secret = null);

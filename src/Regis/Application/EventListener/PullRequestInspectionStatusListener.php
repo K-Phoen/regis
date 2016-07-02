@@ -7,8 +7,8 @@ namespace Regis\Application\EventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\Application\Event;
+use Regis\Application\Github\Client;
 use Regis\Domain\Model\Github\PullRequest;
-use Regis\Github\Client;
 
 /**
  * TODO this class should rely on the command bus
@@ -27,10 +27,11 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
+            // @TODO There should be a domain event for "inspection scheduled"
             Event::PULL_REQUEST_OPENED => 'onPullRequestUpdated',
             Event::PULL_REQUEST_SYNCED => 'onPullRequestUpdated',
 
-            Event::INSPECTION_STARTED => 'onInspectionStated',
+            Event::INSPECTION_STARTED => 'onInspectionStarted',
             Event::INSPECTION_FINISHED => 'onInspectionFinished',
             Event::INSPECTION_FAILED => 'onInspectionFailed',
         ];
@@ -44,7 +45,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         $this->setIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_PENDING, 'Inspection scheduled.');
     }
 
-    public function onInspectionStated(Event\DomainEventWrapper $event)
+    public function onInspectionStarted(Event\DomainEventWrapper $event)
     {
         /** @var Event\InspectionStarted $domainEvent */
         $domainEvent = $event->getDomainEvent();
@@ -61,7 +62,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         if ($report->hasErrors() || $report->hasWarnings()) {
             list($status, $message) = [Client::INTEGRATION_FAILURE, sprintf('Inspection with %d error(s) and %d warning(s).', $report->errorsCount(), $report->warningsCount())];
         } else {
-            list($status, $message) = [Client::INTEGRATION_SUCCESS, 'Inspection successfull.'];
+            list($status, $message) = [Client::INTEGRATION_SUCCESS, 'Inspection successful.'];
         }
 
         $this->setIntegrationStatus($domainEvent->getPullRequest(), $status, $message);
@@ -72,7 +73,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         /** @var Event\InspectionFailed $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
-        $this->setIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_FAILURE, 'Inspection failed.');
+        $this->setIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_ERROR, 'Inspection failed.');
     }
 
     private function setIntegrationStatus(PullRequest $pullRequest, string $status, string $description)

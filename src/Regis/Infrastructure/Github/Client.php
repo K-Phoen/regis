@@ -10,14 +10,6 @@ use Regis\Domain\Model\Github as Model;
 
 class Client implements GithubClient
 {
-    const INTEGRATION_PENDING = 'pending';
-    const INTEGRATION_SUCCESS = 'success';
-    const INTEGRATION_FAILURE = 'failure';
-    const INTEGRATION_ERROR = 'error';
-
-    const READONLY_KEY = 'readonly_key';
-    const WRITE_KEY = 'write_key';
-
     private $client;
     private $apiToken;
     private $logger;
