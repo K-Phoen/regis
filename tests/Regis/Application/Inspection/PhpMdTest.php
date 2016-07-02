@@ -3,9 +3,9 @@
 namespace Tests\Regis\Application\Inspection;
 
 use Regis\Application\Inspection\PhpMd;
+use Regis\Application\Inspection\PhpMdRunner;
 use Regis\Domain\Entity;
 use Regis\Domain\Model;
-use Regis\Infrastructure\PhpMd\PhpMd as PhpMdRunner;
 
 class PhpMdTest extends InspectionTestCase
 {
@@ -15,7 +15,7 @@ class PhpMdTest extends InspectionTestCase
 
     public function setUp()
     {
-        $this->phpMd = $this->getMockBuilder(PhpMdRunner::class)->disableOriginalConstructor()->getMock();
+        $this->phpMd = $this->getMockBuilder(PhpMdRunner::class)->getMock();
 
         $this->inspection = new PhpMd($this->phpMd);
     }

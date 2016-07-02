@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace Regis\Infrastructure\PhpMd;
 
 use Symfony\Component\Process\Process;
+use Regis\Application\Inspection\PhpMdRunner;
 
-class PhpMd
+class PhpMd implements PhpMdRunner
 {
     private $phpmdBin;
     private $config;
