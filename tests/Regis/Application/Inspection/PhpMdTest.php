@@ -20,6 +20,11 @@ class PhpMdTest extends InspectionTestCase
         $this->inspection = new PhpMd($this->phpMd);
     }
 
+    public function testItHasAType()
+    {
+        $this->assertEquals('phpmd', $this->inspection->getType());
+    }
+
     public function testWithNoAddedFiles()
     {
         $this->phpMd->expects($this->never())->method('execute');

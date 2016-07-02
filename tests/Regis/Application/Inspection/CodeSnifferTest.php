@@ -20,6 +20,11 @@ class CodeSnifferTest extends InspectionTestCase
         $this->inspection = new CodeSniffer($this->codeSniffer);
     }
 
+    public function testItHasAType()
+    {
+        $this->assertEquals('phpcs', $this->inspection->getType());
+    }
+
     public function testWithNoAddedFiles()
     {
         $this->codeSniffer->expects($this->never())->method('execute');
