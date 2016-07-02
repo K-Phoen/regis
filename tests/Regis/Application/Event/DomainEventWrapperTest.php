@@ -1,9 +1,8 @@
 <?php
 
-namespace Tests\Regis\Symfony;
+namespace Tests\Regis\Application\Event;
 
 use Regis\Application\Event;
-use Regis\Symfony\Event\DomainEventWrapper;
 
 class DomainEventWrapperTest extends \PHPUnit_Framework_TestCase
 {
@@ -11,7 +10,7 @@ class DomainEventWrapperTest extends \PHPUnit_Framework_TestCase
     {
         $domainEvent = $this->getMockBuilder(Event::class)->getMock();
 
-        $symfonyEvent = new DomainEventWrapper($domainEvent);
+        $symfonyEvent = new Event\DomainEventWrapper($domainEvent);
 
         $this->assertSame($domainEvent, $symfonyEvent->getDomainEvent());
     }

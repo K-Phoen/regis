@@ -10,7 +10,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Regis\Application\Command;
 use Regis\Application\Event;
 use Regis\Application\Inspection\ViolationsCache;
-use Regis\Symfony\Event\DomainEventWrapper;
 
 class PullRequestListener implements EventSubscriberInterface
 {
@@ -32,7 +31,7 @@ class PullRequestListener implements EventSubscriberInterface
         ];
     }
 
-    public function onPullRequestUpdated(DomainEventWrapper $event)
+    public function onPullRequestUpdated(Event\DomainEventWrapper $event)
     {
         /** @var Event\PullRequestOpened|Event\PullRequestSynced $domainEvent */
         $domainEvent = $event->getDomainEvent();
@@ -41,7 +40,7 @@ class PullRequestListener implements EventSubscriberInterface
         $this->commandBus->handle($command);
     }
 
-    public function onPullRequestClosed(DomainEventWrapper $event)
+    public function onPullRequestClosed(Event\DomainEventWrapper $event)
     {
         /** @var Event\PullRequestClosed $domainEvent */
         $domainEvent = $event->getDomainEvent();

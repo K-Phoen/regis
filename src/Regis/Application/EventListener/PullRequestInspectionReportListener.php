@@ -9,7 +9,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\Application\Command;
 use Regis\Application\Event;
-use Regis\Symfony\Event\DomainEventWrapper;
 
 class PullRequestInspectionReportListener implements EventSubscriberInterface
 {
@@ -27,7 +26,7 @@ class PullRequestInspectionReportListener implements EventSubscriberInterface
         ];
     }
 
-    public function onInspectionFinished(DomainEventWrapper $event)
+    public function onInspectionFinished(Event\DomainEventWrapper $event)
     {
         /** @var Event\InspectionFinished $domainEvent */
         $domainEvent = $event->getDomainEvent();

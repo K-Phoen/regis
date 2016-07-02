@@ -11,7 +11,6 @@ use Regis\Application\Entity;
 use Regis\Application\Event;
 use Regis\Application\Inspector;
 use Regis\Application\Repository\Inspections;
-use Regis\Symfony\Event\DomainEventWrapper;
 
 class InspectPullRequest
 {
@@ -52,6 +51,6 @@ class InspectPullRequest
 
     private function dispatch(string $eventName, Event $event)
     {
-        $this->dispatcher->dispatch($eventName, new DomainEventWrapper($event));
+        $this->dispatcher->dispatch($eventName, new Event\DomainEventWrapper($event));
     }
 }

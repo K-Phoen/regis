@@ -9,7 +9,6 @@ use Regis\Application\Entity\Inspection;
 use Regis\Application\Event;
 use Regis\Application\EventListener\PullRequestInspectionReportListener;
 use Regis\Application\Model\Github\PullRequest;
-use Regis\Symfony\Event\DomainEventWrapper;
 
 class PullRequestInspectionReportListenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -36,7 +35,7 @@ class PullRequestInspectionReportListenerTest extends \PHPUnit_Framework_TestCas
         $pr = $this->getMockBuilder(PullRequest::class)->disableOriginalConstructor()->getMock();
         $report = $this->getMockBuilder(Inspection\Report::class)->disableOriginalConstructor()->getMock();
         $domainEvent = new Event\InspectionFinished($inspection, $pr, $report);
-        $event = new DomainEventWrapper($domainEvent);
+        $event = new Event\DomainEventWrapper($domainEvent);
 
         $this->bus->expects($this->once())
             ->method('handle')

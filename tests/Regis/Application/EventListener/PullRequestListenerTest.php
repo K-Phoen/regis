@@ -9,7 +9,6 @@ use Regis\Application\Event;
 use Regis\Application\EventListener\PullRequestListener;
 use Regis\Application\Inspection\ViolationsCache;
 use Regis\Application\Model\Github\PullRequest;
-use Regis\Symfony\Event\DomainEventWrapper;
 
 class PullRequestistenerTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,7 +37,7 @@ class PullRequestistenerTest extends \PHPUnit_Framework_TestCase
     {
         $pr = $this->getMockBuilder(PullRequest::class)->disableOriginalConstructor()->getMock();
         $domainEvent = new Event\PullRequestOpened($pr);
-        $event = new DomainEventWrapper($domainEvent);
+        $event = new Event\DomainEventWrapper($domainEvent);
 
         $this->bus->expects($this->once())
             ->method('handle')
@@ -53,7 +52,7 @@ class PullRequestistenerTest extends \PHPUnit_Framework_TestCase
     {
         $pr = $this->getMockBuilder(PullRequest::class)->disableOriginalConstructor()->getMock();
         $domainEvent = new Event\PullRequestClosed($pr);
-        $event = new DomainEventWrapper($domainEvent);
+        $event = new Event\DomainEventWrapper($domainEvent);
 
         $this->violationsCache->expects($this->once())
             ->method('clear')

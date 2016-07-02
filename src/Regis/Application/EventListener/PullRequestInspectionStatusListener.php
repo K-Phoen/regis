@@ -9,7 +9,6 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\Application\Event;
 use Regis\Github\Client;
-use Regis\Symfony\Event\DomainEventWrapper;
 
 /**
  * TODO this class should rely on the command bus
@@ -37,7 +36,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         ];
     }
 
-    public function onPullRequestUpdated(DomainEventWrapper $event)
+    public function onPullRequestUpdated(Event\DomainEventWrapper $event)
     {
         /** @var Event\PullRequestOpened|Event\PullRequestSynced $domainEvent */
         $domainEvent = $event->getDomainEvent();
@@ -45,7 +44,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         $this->setIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_PENDING, 'Inspection scheduled.');
     }
 
-    public function onInspectionStated(DomainEventWrapper $event)
+    public function onInspectionStated(Event\DomainEventWrapper $event)
     {
         /** @var Event\InspectionStarted $domainEvent */
         $domainEvent = $event->getDomainEvent();
@@ -53,7 +52,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         $this->setIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_PENDING, 'Inspection started…');
     }
 
-    public function onInspectionFinished(DomainEventWrapper $event)
+    public function onInspectionFinished(Event\DomainEventWrapper $event)
     {
         /** @var Event\InspectionFinished $domainEvent */
         $domainEvent = $event->getDomainEvent();
@@ -68,7 +67,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         $this->setIntegrationStatus($domainEvent->getPullRequest(), $status, $message);
     }
 
-    public function onInspectionFailed(DomainEventWrapper $event)
+    public function onInspectionFailed(Event\DomainEventWrapper $event)
     {
         /** @var Event\InspectionFailed $domainEvent */
         $domainEvent = $event->getDomainEvent();

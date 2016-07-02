@@ -12,7 +12,6 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 use Regis\Application\Event;
 use Regis\Github\Exception\EventNotHandled;
 use Regis\Github\Exception\PayloadSignature;
-use Regis\Symfony\Event\DomainEventWrapper;
 
 class WebhooksController extends Controller
 {
@@ -41,7 +40,7 @@ class WebhooksController extends Controller
             return new Response();
         }
 
-        $this->get('event_dispatcher')->dispatch($event->getEventName(), new DomainEventWrapper($event));
+        $this->get('event_dispatcher')->dispatch($event->getEventName(), new Event\DomainEventWrapper($event));
 
         return new Response('', Response::HTTP_ACCEPTED);
     }

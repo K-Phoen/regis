@@ -1,6 +1,6 @@
 <?php
 
-namespace Regis\Symfony\Event;
+namespace Regis\Application\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Regis\Application\Event as DomainEvent;
