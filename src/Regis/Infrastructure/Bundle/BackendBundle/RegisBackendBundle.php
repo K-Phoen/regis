@@ -1,6 +1,6 @@
 <?php
 
-namespace Regis\Bundle\BackendBundle;
+namespace Regis\Infrastructure\Bundle\BackendBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

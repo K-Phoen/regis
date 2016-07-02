@@ -20,8 +20,8 @@ class AppKernel extends Kernel
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
 
-            new Regis\Bundle\WebhooksBundle\RegisWebhooksBundle(),
-            new Regis\Bundle\BackendBundle\RegisBackendBundle(),
+            new Regis\Infrastructure\Bundle\WebhooksBundle\RegisWebhooksBundle(),
+            new Regis\Infrastructure\Bundle\BackendBundle\RegisBackendBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

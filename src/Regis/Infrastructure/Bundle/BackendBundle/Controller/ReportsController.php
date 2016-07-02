@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Bundle\BackendBundle\Controller;
+namespace Regis\Infrastructure\Bundle\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 

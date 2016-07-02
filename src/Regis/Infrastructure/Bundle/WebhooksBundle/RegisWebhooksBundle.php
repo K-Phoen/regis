@@ -1,6 +1,6 @@
 <?php
 
-namespace Regis\Bundle\WebhooksBundle;
+namespace Regis\Infrastructure\Bundle\WebhooksBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

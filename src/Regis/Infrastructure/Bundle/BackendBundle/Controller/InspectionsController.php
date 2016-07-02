@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Regis\Bundle\BackendBundle\Controller;
+namespace Regis\Infrastructure\Bundle\BackendBundle\Controller;
 
-use Regis\Application\Model\Git\Repository;
-use Regis\Application\Model\Github\PullRequest;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Regis\Application\Command;
 use Regis\Application\Entity;
+use Regis\Application\Model\Git\Repository;
+use Regis\Application\Model\Github\PullRequest;
 
 class InspectionsController extends Controller
 {

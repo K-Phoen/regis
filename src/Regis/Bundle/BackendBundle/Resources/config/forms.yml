@@ -1,5 +1,0 @@
-services:
-    regis.forms.type.new_repository:
-        class: Regis\Bundle\BackendBundle\Form\NewRepositoryType
-        tags:
-            - { name: form.type }

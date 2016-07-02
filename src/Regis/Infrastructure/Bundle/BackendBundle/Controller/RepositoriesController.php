@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Bundle\BackendBundle\Controller;
+namespace Regis\Infrastructure\Bundle\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use Regis\Application\Command;
 use Regis\Application\Entity;
-use Regis\Bundle\BackendBundle\Form;
+use Regis\Infrastructure\Bundle\BackendBundle\Form;
 
 class RepositoriesController extends Controller
 {

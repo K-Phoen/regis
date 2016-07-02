@@ -1,6 +1,6 @@
 <?php
 
-namespace Regis\Bundle\WebhooksBundle\DependencyInjection;
+namespace Regis\Infrastructure\Bundle\WebhooksBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;

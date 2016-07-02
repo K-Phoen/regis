@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Bundle\WebhooksBundle\Controller;
+namespace Regis\Infrastructure\Bundle\WebhooksBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;

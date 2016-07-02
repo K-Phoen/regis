@@ -1,6 +1,6 @@
 <?php
 
-namespace Regis\Bundle\WebhooksBundle\Command;
+namespace Regis\Infrastructure\Bundle\WebhooksBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
@@ -8,9 +8,9 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-use Regis\Application\Command;
+use Regis\Github\Client as Github;
 
-class CreateWebhookCommand extends ContainerAwareCommand
+class AddDeployKeyCommand extends ContainerAwareCommand
 {
     /**
      * {@inheritdoc}
@@ -18,8 +18,8 @@ class CreateWebhookCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('regis:webhooks:create')
-            ->setDescription('Create a webhook using GitHub API')
+            ->setName('regis:deploy-key:add')
+            ->setDescription('Add a read-only deploy key to a repository.')
             ->addOption(
                 'owner', 'o',
                 InputOption::VALUE_REQUIRED,
@@ -28,12 +28,12 @@ class CreateWebhookCommand extends ContainerAwareCommand
             ->addOption(
                 'repository', 'r',
                 InputOption::VALUE_REQUIRED,
-                'The repository on which the hook will be created.'
+                'The repository on which the key will be added.'
             )
             ->addOption(
-                'host', null,
+                'public-key', null,
                 InputOption::VALUE_REQUIRED,
-                'Public host for the webhook.'
+                'Public key to add.'
             )
         ;
     }
@@ -53,8 +53,8 @@ class CreateWebhookCommand extends ContainerAwareCommand
             $input->setOption('repository', $io->ask('On which repository should the webhook be added?'));
         }
 
-        if (!$input->getOption('host')) {
-            $input->setOption('host', $io->ask('What is the public host to use to join this application?'));
+        if (!$input->getOption('public-key')) {
+            $input->setOption('public-key', $io->ask('Path of the public key to use'));
         }
     }
 
@@ -63,15 +63,15 @@ class CreateWebhookCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $host = rtrim($input->getOption('host'), '/');
-        $absoluteUrl = $host.$this->getContainer()->get('router')->generate('webhook_github');
+        $owner = $input->getOption('owner');
+        $repo = $input->getOption('repository');
+        $key = $input->getOption('public-key');
 
-        $command = new Command\Github\Webhook\Create(
-            $input->getOption('owner'),
-            $input->getOption('repository'),
-            $absoluteUrl
-        );
+        // TODO this should be done using the command bus
+        if (!file_exists($key) || !is_readable($key)) {
+            throw new \RuntimeException(sprintf('File "%s" does not exist or is not readable', $key));
+        }
 
-        $this->getContainer()->get('tactician.commandbus')->handle($command);
+        $this->getContainer()->get('regis.github.client')->addDeployKey($owner, $repo, 'Regis - Private repositories', file_get_contents($key), Github::READONLY_KEY);
     }
 }
