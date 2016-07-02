@@ -7,7 +7,7 @@ namespace Regis\Application\Reporter;
 use Regis\Application\Reporter;
 use Regis\Domain\Entity;
 use Regis\Domain\Model;
-use Regis\Github\Client;
+use Regis\Infrastructure\Github\Client;
 
 class Github implements Reporter
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Regis\Github;
+namespace Tests\Regis\Application\Github;
 
 use Symfony\Component\HttpFoundation\Request;
 
 use Regis\Application\Event;
-use Regis\Github\EventTransformer;
+use Regis\Application\Github\EventTransformer;
 
 class EventTransformerTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,7 +18,7 @@ class EventTransformerTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Regis\Github\Exception\EventNotHandled
+     * @expectedException \Regis\Application\Github\Exception\EventNotHandled
      * @expectedExceptionMessage Event of type "unknown_event_type" not handled.
      */
     public function testUnknownEventsAreRejected()

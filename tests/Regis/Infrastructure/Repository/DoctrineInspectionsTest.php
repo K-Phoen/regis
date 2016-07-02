@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\Application\Repository;
+namespace Tests\Regis\Infrastructure\Repository;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;

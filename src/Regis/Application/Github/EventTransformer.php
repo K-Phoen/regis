@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Github;
+namespace Regis\Application\Github;
 
 use Symfony\Component\HttpFoundation\Request;
 

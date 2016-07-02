@@ -6,7 +6,7 @@ use Regis\Application\Inspection;
 use Regis\Application\Inspector;
 use Regis\Domain\Entity\Inspection\Violation;
 use Regis\Domain\Model;
-use Regis\Vcs;
+use Regis\Infrastructure\Vcs;
 
 class InspectorTest extends \PHPUnit_Framework_TestCase
 {

@@ -8,7 +8,7 @@ use Regis\Application\Inspection;
 use Regis\Domain\Model\Exception\LineNotInDiff;
 use Regis\Domain\Model\Git as Model;
 use Regis\Domain\Entity\Inspection\Violation;
-use Regis\PhpMd\PhpMd as PhpMdRunner;
+use Regis\Infrastructure\PhpMd\PhpMd as PhpMdRunner;
 
 class PhpMd implements Inspection
 {

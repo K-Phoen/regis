@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Regis\PhpMd;
+namespace Tests\Regis\Infrastructure\PhpMd;
 
-use Regis\CodeSniffer\CodeSniffer;
+use Regis\Infrastructure\CodeSniffer\CodeSniffer;
 
 class CodeSnifferTest extends \PHPUnit_Framework_TestCase
 {

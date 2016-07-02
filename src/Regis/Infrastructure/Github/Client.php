@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Github;
+namespace Regis\Infrastructure\Github;
 
 use Psr\Log\LoggerInterface as Logger;
 use Regis\Domain\Model\Github as Model;

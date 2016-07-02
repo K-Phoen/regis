@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Regis\Github;
+namespace Tests\Regis\Application\Github;
 
 use Symfony\Component\HttpFoundation\Request;
 
 use Regis\Infrastructure\Repository;
-use Regis\Github\Exception\PayloadSignature;
-use Regis\Github\PayloadValidator;
+use Regis\Application\Github\Exception\PayloadSignature;
+use Regis\Application\Github\PayloadValidator;
 
 class PayloadValidatorTest extends \PHPUnit_Framework_TestCase
 {

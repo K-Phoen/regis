@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\PhpMd;
+namespace Regis\Infrastructure\PhpMd;
 
 use Symfony\Component\Process\Process;
 

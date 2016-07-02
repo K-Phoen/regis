@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\CodeSniffer;
+namespace Regis\Infrastructure\CodeSniffer;
 
 use Symfony\Component\Process\Process;
 

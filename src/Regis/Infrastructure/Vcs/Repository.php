@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Vcs;
+namespace Regis\Infrastructure\Vcs;
 
 use Gitonomy\Git as Gitonomy;
 

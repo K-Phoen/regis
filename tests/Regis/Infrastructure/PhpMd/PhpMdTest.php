@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Regis\PhpMd;
+namespace Tests\Infrastructure\Regis\PhpMd;
 
-use Regis\PhpMd\PhpMd;
+use Regis\Infrastructure\PhpMd\PhpMd;
 
 class PhpMdTest extends \PHPUnit_Framework_TestCase
 {
