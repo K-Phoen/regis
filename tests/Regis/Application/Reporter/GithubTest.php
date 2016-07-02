@@ -3,9 +3,9 @@
 namespace Tests\Regis\Application\Reporter;
 
 use Regis\Application\Reporter\Github as GithubReporter;
+use Regis\Application\Github\Client as GithubClient;
 use Regis\Domain\Model\Github\PullRequest;
 use Regis\Domain\Entity\Inspection\Violation;
-use Regis\Infrastructure\Github\Client as GithubClient;
 
 class GithubTest extends \PHPUnit_Framework_TestCase
 {

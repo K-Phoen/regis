@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace Regis\Infrastructure\Github;
 
 use Psr\Log\LoggerInterface as Logger;
+use Regis\Application\Github\Client as GithubClient;
 use Regis\Domain\Model\Github as Model;
 
-class Client
+class Client implements GithubClient
 {
     const INTEGRATION_PENDING = 'pending';
     const INTEGRATION_SUCCESS = 'success';

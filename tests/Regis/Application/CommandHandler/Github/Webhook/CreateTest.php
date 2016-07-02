@@ -4,9 +4,9 @@ namespace Tests\Regis\Application\CommandHandler\Webhook;
 
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
+use Regis\Application\Github\Client as GithubClient;
 use Regis\Domain\Entity;
 use Regis\Domain\Repository\Repositories;
-use Regis\Infrastructure\Github\Client as GithubClient;
 
 class CreateTest extends \PHPUnit_Framework_TestCase
 {

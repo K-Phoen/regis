@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Regis\Application\CommandHandler\Github\Webhook;
 
 use Regis\Application\Command;
+use Regis\Application\Github\Client as GithubClient;
 use Regis\Domain\Repository\Repositories;
-use Regis\Infrastructure\Github\Client as GithubClient;
 
 class Create
 {
