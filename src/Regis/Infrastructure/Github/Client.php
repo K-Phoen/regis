@@ -41,7 +41,7 @@ class Client
             'description' => $description,
         ]);
 
-        $this->client->api('repo')->statuses()->create($repository->getOwner(), $repository->getName(), $pullRequest->getHead(), [
+        $this->client->repo()->statuses()->create($repository->getOwner(), $repository->getName(), $pullRequest->getHead(), [
             'state' => $state,
             'context' => $context,
             'description' => $description,
@@ -57,7 +57,7 @@ class Client
             'key_title' => $title,
         ]);
 
-        $this->client->api('repo')->keys()->create($owner, $repository, [
+        $this->client->repo()->keys()->create($owner, $repository, [
             'title' => $title,
             'key' => $key,
             'read_only' => $type === self::READONLY_KEY,
@@ -73,7 +73,7 @@ class Client
             'url' => $url,
         ]);
 
-        $this->client->api('repo')->hooks()->create($owner, $repository, [
+        $this->client->repo()->hooks()->create($owner, $repository, [
             'name' => 'web',
             'config' => [
                 'url' => $url,
@@ -99,7 +99,7 @@ class Client
             'comment' => $comment->getContent(),
         ]);
 
-        $this->client->api('pull_request')->comments()->create($repository->getOwner(), $repository->getName(), $pullRequest->getNumber(), [
+        $this->client->pullRequest()->comments()->create($repository->getOwner(), $repository->getName(), $pullRequest->getNumber(), [
             'commit_id' => $pullRequest->getHead(),
             'path' => $comment->getFile(),
             'position' => $comment->getPosition(),
