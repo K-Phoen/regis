@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Regis\Domain\Repository;
+namespace Tests\Regis\Infrastructure\Repository;
 
-use Regis\Application\Repository\InMemoryRepositories;
+use Regis\Infrastructure\Repository\InMemoryRepositories;
 use Regis\Domain\Entity;
 
 class InMemoryRepositoriesTest extends \PHPUnit_Framework_TestCase

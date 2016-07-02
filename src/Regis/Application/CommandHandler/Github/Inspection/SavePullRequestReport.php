@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Regis\Application\CommandHandler\Github\Inspection;
 
 use Regis\Application\Command;
-use Regis\Application\Repository;
+use Regis\Domain\Repository;
 
 class SavePullRequestReport
 {
     private $inspectionsRepository;
 
-    public function __construct(Repository\DoctrineInspections $inspectionsRepository)
+    public function __construct(Repository\Inspections $inspectionsRepository)
     {
         $this->inspectionsRepository = $inspectionsRepository;
     }

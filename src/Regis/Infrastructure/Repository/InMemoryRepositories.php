@@ -1,6 +1,6 @@
 <?php
 
-namespace Regis\Application\Repository;
+namespace Regis\Infrastructure\Repository;
 
 use Regis\Domain\Entity;
 use Regis\Domain\Repository;

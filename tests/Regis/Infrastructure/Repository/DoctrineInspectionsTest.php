@@ -5,7 +5,7 @@ namespace Tests\Regis\Application\Repository;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-use Regis\Application\Repository\DoctrineInspections;
+use Regis\Infrastructure\Repository\DoctrineInspections;
 use Regis\Domain\Entity;
 
 class DoctrineInspectionsTest extends \PHPUnit_Framework_TestCase

@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Regis\Application\Repository;
+namespace Tests\Regis\Infrastructure\Repository;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-use Regis\Application\Repository\DoctrineRepositories;
+use Regis\Infrastructure\Repository\DoctrineRepositories;
 use Regis\Domain\Entity;
 
 class DoctrineRepositoriesTest extends \PHPUnit_Framework_TestCase

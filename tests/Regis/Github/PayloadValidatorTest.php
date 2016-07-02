@@ -4,7 +4,7 @@ namespace Tests\Regis\Github;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use Regis\Application\Repository;
+use Regis\Infrastructure\Repository;
 use Regis\Github\Exception\PayloadSignature;
 use Regis\Github\PayloadValidator;
 

@@ -1,8 +1,8 @@
 services:
     regis.repository.repositories:
-        class: Regis\Application\Repository\DoctrineRepositories
+        class: Regis\Infrastructure\Repository\DoctrineRepositories
         arguments: [ '@doctrine.orm.entity_manager' ]
 
     regis.repository.inspections:
-        class: Regis\Application\Repository\DoctrineInspections
+        class: Regis\Infrastructure\Repository\DoctrineInspections
         arguments: [ '@doctrine.orm.entity_manager' ]

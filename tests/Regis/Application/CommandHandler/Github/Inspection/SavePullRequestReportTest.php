@@ -4,9 +4,9 @@ namespace Tests\Regis\Application\CommandHandler\Github\Inspection;
 
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
-use Regis\Application\Repository;
 use Regis\Domain\Entity\Github\PullRequestInspection;
 use Regis\Domain\Entity\Inspection\Report;
+use Regis\Domain\Repository;
 
 class SavePullRequestReportTest extends \PHPUnit_Framework_TestCase
 {
@@ -16,7 +16,7 @@ class SavePullRequestReportTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->inspectionsRepository = $this->getMockBuilder(Repository\DoctrineInspections::class)->disableOriginalConstructor()->getMock();
+        $this->inspectionsRepository = $this->getMockBuilder(Repository\Inspections::class)->disableOriginalConstructor()->getMock();
         $this->handler = new CommandHandler\Github\Inspection\SavePullRequestReport($this->inspectionsRepository);
     }
 
