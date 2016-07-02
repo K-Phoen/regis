@@ -4,9 +4,9 @@ namespace Tests\Regis\Application\CommandHandler\Github\Inspection;
 
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
-use Regis\Application\Entity\Github\PullRequestInspection;
-use Regis\Application\Entity\Inspection\Report;
 use Regis\Application\Repository;
+use Regis\Domain\Entity\Github\PullRequestInspection;
+use Regis\Domain\Entity\Inspection\Report;
 
 class SavePullRequestReportTest extends \PHPUnit_Framework_TestCase
 {

@@ -2,7 +2,7 @@
 
 namespace Tests\Regis\Application\Inspection;
 
-use Regis\Application\Model;
+use Regis\Domain\Model;
 
 abstract class InspectionTestCase extends \PHPUnit_Framework_TestCase
 {

@@ -2,7 +2,7 @@
 
 namespace Regis\Application\Repository;
 
-use Regis\Application\Entity;
+use Regis\Domain\Entity;
 
 class InMemoryRepositories implements Repositories
 {

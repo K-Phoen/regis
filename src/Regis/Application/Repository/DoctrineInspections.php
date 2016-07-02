@@ -3,7 +3,7 @@
 namespace Regis\Application\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Regis\Application\Entity;
+use Regis\Domain\Entity;
 
 class DoctrineInspections implements Inspections
 {

@@ -13,8 +13,8 @@ namespace Tests\Git;
 
 use Gitonomy\Git\Parser\ParserBase;
 
-use Regis\Application\Model\Git\Blob;
-use Regis\Application\Model\Git\Diff;
+use Regis\Domain\Model\Git\Blob;
+use Regis\Domain\Model\Git\Diff;
 
 class DiffParser extends ParserBase
 {

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Application\Command\Github\Inspection;
 
-use Regis\Application\Entity;
+use Regis\Domain\Entity;
 
 class SavePullRequestReport
 {

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Regis\Application\Inspection;
 
 use Predis\ClientInterface;
-use Regis\Application\Entity;
-use Regis\Application\Model;
+use Regis\Domain\Entity;
+use Regis\Domain\Model;
 
 class ViolationsCache
 {

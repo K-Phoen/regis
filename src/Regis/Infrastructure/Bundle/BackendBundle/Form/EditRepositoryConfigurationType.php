@@ -8,7 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-use Regis\Application\Entity;
+use Regis\Domain\Entity;
 
 class EditRepositoryConfigurationType extends AbstractType implements DataMapperInterface
 {

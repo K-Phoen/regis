@@ -1,0 +1,2 @@
+Regis\Domain\Entity\Github\Repository:
+    type: entity

@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Regis\Application\Reporter;
 
 use Regis\Application\Inspection\ViolationsCache;
-use Regis\Application\Entity;
-use Regis\Application\Model;
 use Regis\Application\Reporter;
+use Regis\Domain\Entity;
+use Regis\Domain\Model;
 
 class DuplicationGuard implements Reporter
 {

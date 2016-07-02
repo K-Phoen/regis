@@ -3,9 +3,9 @@
 namespace Tests\Regis\Application\Reporter;
 
 use Regis\Application\Inspection\ViolationsCache;
-use Regis\Application\Entity\Inspection\Violation;
-use Regis\Application\Model\Github\PullRequest;
 use Regis\Application\Reporter;
+use Regis\Domain\Entity\Inspection\Violation;
+use Regis\Domain\Model\Github\PullRequest;
 
 class DuplicationGuardTest extends \PHPUnit_Framework_TestCase
 {

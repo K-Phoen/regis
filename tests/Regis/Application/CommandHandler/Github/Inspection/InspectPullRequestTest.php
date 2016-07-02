@@ -6,11 +6,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatche
 
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
-use Regis\Application\Entity;
 use Regis\Application\Event;
 use Regis\Application\Inspector;
-use Regis\Application\Model;
 use Regis\Application\Repository;
+use Regis\Domain\Entity;
+use Regis\Domain\Model;
 
 class InspectPullRequestTest extends \PHPUnit_Framework_TestCase
 {

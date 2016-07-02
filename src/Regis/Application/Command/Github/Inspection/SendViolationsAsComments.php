@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Regis\Application\Command\Github\Inspection;
 
-use Regis\Application\Entity;
-use Regis\Application\Model;
+use Regis\Domain\Entity;
+use Regis\Domain\Model;
 
 class SendViolationsAsComments
 {

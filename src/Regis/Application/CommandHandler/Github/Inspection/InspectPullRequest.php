@@ -7,10 +7,10 @@ namespace Regis\Application\CommandHandler\Github\Inspection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
 use Regis\Application\Command;
-use Regis\Application\Entity;
 use Regis\Application\Event;
 use Regis\Application\Inspector;
 use Regis\Application\Repository\Inspections;
+use Regis\Domain\Entity;
 
 class InspectPullRequest
 {

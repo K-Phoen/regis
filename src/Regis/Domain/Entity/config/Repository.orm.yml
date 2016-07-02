@@ -1,0 +1,25 @@
+Regis\Domain\Entity\Repository:
+    type: entity
+    table: repositories
+    inheritanceType: SINGLE_TABLE
+
+    discriminatorColumn:
+        name: type
+        type: string
+
+    discriminatorMap:
+        github: Regis\Domain\Entity\Github\Repository
+
+    id:
+        identifier:
+            type: string
+            generator: { strategy: NONE }
+
+    fields:
+        sharedSecret:
+            type: string
+
+    oneToMany:
+        inspections:
+          targetEntity: Regis\Domain\Entity\Inspection
+          mappedBy: repository

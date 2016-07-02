@@ -7,9 +7,9 @@ namespace Regis\Infrastructure\Bundle\BackendBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 use Regis\Application\Command;
-use Regis\Application\Entity;
-use Regis\Application\Model\Git\Repository;
-use Regis\Application\Model\Github\PullRequest;
+use Regis\Domain\Entity;
+use Regis\Domain\Model\Git\Repository;
+use Regis\Domain\Model\Github\PullRequest;
 
 class InspectionsController extends Controller
 {

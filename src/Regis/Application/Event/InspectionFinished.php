@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Regis\Application\Event;
 
 use Regis\Application\Event;
-use Regis\Application\Entity;
-use Regis\Application\Model;
+use Regis\Domain\Entity;
+use Regis\Domain\Model;
 
 class InspectionFinished implements Event
 {

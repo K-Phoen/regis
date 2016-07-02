@@ -4,11 +4,11 @@ namespace Tests\Regis\Application\EventListener;
 
 use League\Tactician\CommandBus;
 use Regis\Application\Command;
-use Regis\Application\Entity\Github\PullRequestInspection;
-use Regis\Application\Entity\Inspection;
 use Regis\Application\Event;
 use Regis\Application\EventListener\PullRequestReviewCommentsListener;
-use Regis\Application\Model\Github\PullRequest;
+use Regis\Domain\Entity\Github\PullRequestInspection;
+use Regis\Domain\Entity\Inspection;
+use Regis\Domain\Model\Github\PullRequest;
 
 class PullRequestReviewCommentsListenerTest extends \PHPUnit_Framework_TestCase
 {

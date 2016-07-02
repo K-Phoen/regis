@@ -2,8 +2,8 @@
 
 namespace Tests\Regis\Application\Repository;
 
-use Regis\Application\Entity;
 use Regis\Application\Repository\InMemoryRepositories;
+use Regis\Domain\Entity;
 
 class InMemoryRepositoriesTest extends \PHPUnit_Framework_TestCase
 {

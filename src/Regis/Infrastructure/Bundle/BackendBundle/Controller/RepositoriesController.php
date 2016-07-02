@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use Regis\Application\Command;
-use Regis\Application\Entity;
+use Regis\Domain\Entity;
 use Regis\Infrastructure\Bundle\BackendBundle\Form;
 
 class RepositoriesController extends Controller

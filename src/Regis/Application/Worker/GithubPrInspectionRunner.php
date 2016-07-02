@@ -9,9 +9,9 @@ use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 
 use Regis\Application\Command;
-use Regis\Application\Entity\Github\PullRequestInspection;
-use Regis\Application\Model\Github\PullRequest;
 use Regis\Application\Repository;
+use Regis\Domain\Entity\Github\PullRequestInspection;
+use Regis\Domain\Model\Github\PullRequest;
 
 class GithubPrInspectionRunner implements ConsumerInterface
 {

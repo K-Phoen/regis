@@ -5,8 +5,8 @@ namespace Tests\Regis\Application\Inspection;
 use M6Web\Component\RedisMock\RedisMockFactory;
 use Predis\ClientInterface as RedisClient;
 use Regis\Application\Inspection\ViolationsCache;
-use Regis\Application\Entity;
-use Regis\Application\Model;
+use Regis\Domain\Entity;
+use Regis\Domain\Model;
 
 class ViolationsCacheTest extends \PHPUnit_Framework_TestCase
 {

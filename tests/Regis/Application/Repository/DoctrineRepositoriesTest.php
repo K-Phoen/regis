@@ -4,8 +4,9 @@ namespace Tests\Regis\Application\Repository;
 
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Regis\Application\Entity;
+
 use Regis\Application\Repository\DoctrineRepositories;
+use Regis\Domain\Entity;
 
 class DoctrineRepositoriesTest extends \PHPUnit_Framework_TestCase
 {

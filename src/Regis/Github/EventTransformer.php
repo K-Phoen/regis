@@ -7,7 +7,7 @@ namespace Regis\Github;
 use Symfony\Component\HttpFoundation\Request;
 
 use Regis\Application\Event;
-use Regis\Application\Model;
+use Regis\Domain\Model;
 
 /**
  * Transforms a payload sent by Github in a domain event.

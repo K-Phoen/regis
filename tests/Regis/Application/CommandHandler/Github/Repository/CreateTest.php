@@ -5,7 +5,7 @@ namespace Tests\Regis\Application\CommandHandler\Github\Repository;
 use Regis\Application\Repository\Repositories;
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
-use Regis\Application\Entity;
+use Regis\Domain\Entity;
 
 class CreateTest extends \PHPUnit_Framework_TestCase
 {

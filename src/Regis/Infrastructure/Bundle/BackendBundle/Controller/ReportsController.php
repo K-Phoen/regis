@@ -6,7 +6,7 @@ namespace Regis\Infrastructure\Bundle\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Regis\Application\Entity;
+use Regis\Domain\Entity;
 
 class ReportsController extends Controller
 {

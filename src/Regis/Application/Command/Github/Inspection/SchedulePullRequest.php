@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Application\Command\Github\Inspection;
 
-use Regis\Application\Model\Github\PullRequest;
+use Regis\Domain\Model\Github\PullRequest;
 
 class SchedulePullRequest
 {

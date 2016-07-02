@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Regis\Application\Event;
 
-use Regis\Application\Entity;
 use Regis\Application\Event;
-use Regis\Application\Model\Github\PullRequest;
+use Regis\Domain\Entity;
+use Regis\Domain\Model\Github\PullRequest;
 
 class InspectionFailed implements Event
 {

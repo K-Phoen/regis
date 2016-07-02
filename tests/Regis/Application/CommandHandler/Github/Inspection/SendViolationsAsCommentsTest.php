@@ -4,11 +4,11 @@ namespace Tests\Regis\Application\CommandHandler\Github\Inspection;
 
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
-use Regis\Application\Entity\Github\PullRequestInspection;
-use Regis\Application\Entity\Inspection\Report;
-use Regis\Application\Entity\Inspection\Violation;
-use Regis\Application\Model\Github\PullRequest;
 use Regis\Application\Reporter;
+use Regis\Domain\Entity\Github\PullRequestInspection;
+use Regis\Domain\Entity\Inspection\Report;
+use Regis\Domain\Entity\Inspection\Violation;
+use Regis\Domain\Model\Github\PullRequest;
 
 class SendViolationsAsCommentsTest extends \PHPUnit_Framework_TestCase
 {

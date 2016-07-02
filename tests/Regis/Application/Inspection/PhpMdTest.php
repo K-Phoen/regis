@@ -3,8 +3,8 @@
 namespace Tests\Regis\Application\Inspection;
 
 use Regis\Application\Inspection\PhpMd;
-use Regis\Application\Entity;
-use Regis\Application\Model;
+use Regis\Domain\Entity;
+use Regis\Domain\Model;
 use Regis\PhpMd\PhpMd as PhpMdRunner;
 
 class PhpMdTest extends InspectionTestCase

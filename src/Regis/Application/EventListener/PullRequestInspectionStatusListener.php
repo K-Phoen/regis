@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Regis\Application\EventListener;
 
-use Regis\Application\Model\Github\PullRequest;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\Application\Event;
+use Regis\Domain\Model\Github\PullRequest;
 use Regis\Github\Client;
 
 /**

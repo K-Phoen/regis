@@ -7,7 +7,7 @@ namespace Regis\Vcs;
 use Gitonomy\Git as Gitonomy;
 use Psr\Log\LoggerInterface as Logger;
 
-use Regis\Application\Model;
+use Regis\Domain\Model;
 
 class Git
 {

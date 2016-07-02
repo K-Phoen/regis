@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Regis\Application\Event;
 
 use Regis\Application\Event;
-use Regis\Application\Model\Github\PullRequest;
+use Regis\Domain\Model\Github\PullRequest;
 
 class PullRequestClosed implements Event
 {

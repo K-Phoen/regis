@@ -1,0 +1,28 @@
+Regis\Domain\Entity\Inspection\Analysis:
+    type: entity
+    table: analyses
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: UUID }
+
+    fields:
+        type:
+            type: string
+        status:
+            type: string
+
+    oneToMany:
+        violations:
+          targetEntity: Regis\Domain\Entity\Inspection\Violation
+          mappedBy: analysis
+          cascade: [ 'persist', 'merge' ]
+
+    manyToOne:
+        report:
+          targetEntity: Regis\Domain\Entity\Inspection\Report
+          inversedBy: analyses
+          joinColumn:
+            name: report_id
+            referencedColumnName: id

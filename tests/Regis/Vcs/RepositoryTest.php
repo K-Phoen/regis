@@ -4,7 +4,7 @@ namespace Tests\Regis\Vcs;
 
 use Gitonomy\Git as Gitonomy;
 
-use Regis\Application\Model\Git as Model;
+use Regis\Domain\Model\Git as Model;
 use Regis\Vcs\Repository;
 
 class RepositoryTest extends \PHPUnit_Framework_TestCase
