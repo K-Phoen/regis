@@ -3,9 +3,11 @@
 namespace Regis\Application\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Regis\Domain\Entity;
 
-class DoctrineRepositories implements Repositories
+use Regis\Domain\Entity;
+use Regis\Domain\Repository;
+
+class DoctrineRepositories implements Repository\Repositories
 {
     /** @var EntityManagerInterface */
     private $em;
@@ -31,7 +33,7 @@ class DoctrineRepositories implements Repositories
         $repository = $this->em->getRepository(Entity\Repository::class)->find($id);
 
         if ($repository === null) {
-            throw Exception\NotFound::forIdentifier($id);
+            throw Repository\Exception\NotFound::forIdentifier($id);
         }
         
         return $repository;

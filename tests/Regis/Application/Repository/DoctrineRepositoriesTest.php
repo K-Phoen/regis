@@ -68,7 +68,7 @@ class DoctrineRepositoriesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Regis\Application\Repository\Exception\NotFound
+     * @expectedException \Regis\Domain\Repository\Exception\NotFound
      */
     public function testFindWhenTheRepositoryDoesNotExist()
     {

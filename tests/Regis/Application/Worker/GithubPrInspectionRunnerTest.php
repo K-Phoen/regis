@@ -6,9 +6,9 @@ use League\Tactician\CommandBus;
 use PhpAmqpLib\Message\AMQPMessage;
 
 use Regis\Application\Command;
-use Regis\Application\Repository;
 use Regis\Application\Worker\GithubPrInspectionRunner;
 use Regis\Domain\Entity\Github\PullRequestInspection;
+use Regis\Domain\Repository;
 
 class GithubPrInspectionRunnerTest extends \PHPUnit_Framework_TestCase
 {

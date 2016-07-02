@@ -3,8 +3,9 @@
 namespace Regis\Application\Repository;
 
 use Regis\Domain\Entity;
+use Regis\Domain\Repository;
 
-class InMemoryRepositories implements Repositories
+class InMemoryRepositories implements Repository\Repositories
 {
     private $repositories = [];
 
@@ -30,7 +31,7 @@ class InMemoryRepositories implements Repositories
     public function find(string $id): Entity\Repository
     {
         if (!array_key_exists($id, $this->repositories)) {
-            throw Exception\NotFound::forIdentifier($id);
+            throw Repository\Exception\NotFound::forIdentifier($id);
         }
         
         return $this->repositories[$id];

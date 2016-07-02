@@ -3,9 +3,11 @@
 namespace Regis\Application\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Regis\Domain\Entity;
 
-class DoctrineInspections implements Inspections
+use Regis\Domain\Entity;
+use Regis\Domain\Repository;
+
+class DoctrineInspections implements Repository\Inspections
 {
     /** @var EntityManagerInterface */
     private $em;
@@ -26,7 +28,7 @@ class DoctrineInspections implements Inspections
         $inspection = $this->em->getRepository(Entity\Inspection::class)->find($id);
 
         if ($inspection === null) {
-            throw Exception\NotFound::forIdentifier($id);
+            throw Repository\Exception\NotFound::forIdentifier($id);
         }
         
         return $inspection;

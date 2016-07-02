@@ -7,8 +7,8 @@ namespace Regis\Application\CommandHandler\Github\Inspection;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 
 use Regis\Application\Command;
-use Regis\Application\Repository;
 use Regis\Domain\Entity;
+use Regis\Domain\Repository;
 
 class SchedulePullRequest
 {

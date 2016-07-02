@@ -6,9 +6,9 @@ use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
-use Regis\Application\Repository;
 use Regis\Domain\Entity;
 use Regis\Domain\Model;
+use Regis\Domain\Repository;
 
 class SchedulePullRequestTest extends \PHPUnit_Framework_TestCase
 {

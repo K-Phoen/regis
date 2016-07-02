@@ -9,8 +9,8 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatche
 use Regis\Application\Command;
 use Regis\Application\Event;
 use Regis\Application\Inspector;
-use Regis\Application\Repository\Inspections;
 use Regis\Domain\Entity;
+use Regis\Domain\Repository;
 
 class InspectPullRequest
 {
@@ -18,7 +18,7 @@ class InspectPullRequest
     private $dispatcher;
     private $inspectionsRepo;
 
-    public function __construct(EventDispatcher $dispatcher, Inspector $inspector, Inspections $inspectionsRepo)
+    public function __construct(EventDispatcher $dispatcher, Inspector $inspector, Repository\Inspections $inspectionsRepo)
     {
         $this->dispatcher = $dispatcher;
         $this->inspector = $inspector;

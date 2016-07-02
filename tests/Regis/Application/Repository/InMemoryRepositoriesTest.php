@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\Application\Repository;
+namespace Tests\Regis\Domain\Repository;
 
 use Regis\Application\Repository\InMemoryRepositories;
 use Regis\Domain\Entity;
@@ -20,7 +20,7 @@ class InMemoryRepositoriesTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \Regis\Application\Repository\Exception\NotFound
+     * @expectedException \Regis\Domain\Repository\Exception\NotFound
      */
     public function testFindThrowAnExceptionIfTheEntityDoesNotExist()
     {

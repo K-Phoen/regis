@@ -8,9 +8,9 @@ use Regis\Application\Command;
 use Regis\Application\CommandHandler;
 use Regis\Application\Event;
 use Regis\Application\Inspector;
-use Regis\Application\Repository;
 use Regis\Domain\Entity;
 use Regis\Domain\Model;
+use Regis\Domain\Repository;
 
 class InspectPullRequestTest extends \PHPUnit_Framework_TestCase
 {

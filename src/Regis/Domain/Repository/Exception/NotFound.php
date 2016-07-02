@@ -1,6 +1,6 @@
 <?php
 
-namespace Regis\Application\Repository\Exception;
+namespace Regis\Domain\Repository\Exception;
 
 class NotFound extends \RuntimeException
 {

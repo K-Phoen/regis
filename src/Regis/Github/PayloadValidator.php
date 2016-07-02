@@ -6,7 +6,7 @@ namespace Regis\Github;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use Regis\Application\Repository;
+use Regis\Domain\Repository;
 
 class PayloadValidator
 {
