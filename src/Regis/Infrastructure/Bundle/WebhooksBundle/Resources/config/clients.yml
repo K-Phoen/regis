@@ -11,14 +11,14 @@ services:
         public: false
 
     regis.github.client:
-        class: Regis\Github\Client
+        class: Regis\Infrastructure\Github\Client
         arguments: [ '@regis.github.github', '%github_api_token%', '@logger' ]
         tags:
             - { name: monolog.logger, channel: github }
 
     regis.github.event_transformer:
-        class: Regis\Github\EventTransformer
+        class: Regis\Application\Github\EventTransformer
 
     regis.github.payload_validator:
-        class: Regis\Github\PayloadValidator
+        class: Regis\Application\Github\PayloadValidator
         arguments: [ '@regis.repository.repositories' ]

@@ -29,7 +29,7 @@ services:
     worker:
         build:
             context: .
-            dockerfile: ./Dockerfile-worker
+            dockerfile: Dockerfile-web
         depends_on:
             - rabbit
             - redis

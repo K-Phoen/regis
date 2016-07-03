@@ -16,12 +16,12 @@ services:
         public: false
 
     regis.tools.code_sniffer:
-        class: Regis\CodeSniffer\CodeSniffer
+        class: Regis\Infrastructure\CodeSniffer\CodeSniffer
         arguments: [ '%phpcs_binary%', '%regis.config.inspections.phpcs%' ]
         public: false
 
     regis.tools.phpmd:
-        class: Regis\PhpMd\PhpMd
+        class: Regis\Infrastructure\PhpMd\PhpMd
         arguments: [ '%phpmd_binary%', '%regis.config.inspections.phpmd%' ]
         public: false
 
