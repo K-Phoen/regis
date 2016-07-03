@@ -25,7 +25,7 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
     {
         $gitonomyRepository = new Gitonomy\Repository(APP_ROOT_DIR);
         $repository = new Repository($gitonomyRepository);
-        $revisions = new Model\Revisions('5445fc28ee3b6c01194f7df770bb79783a16af45', '17ed7410514072f74352fd0a91586d7684eef886');
+        $revisions = new Model\Revisions('HEAD', 'HEAD^');
 
         $this->assertInstanceOf(Model\Diff::class, $repository->getDiff($revisions));
     }
