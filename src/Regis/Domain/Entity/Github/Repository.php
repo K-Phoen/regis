@@ -12,4 +12,9 @@ class Repository extends BaseRepository
     {
         return self::TYPE_GITHUB;
     }
+
+    public function getOwnerUsername(): string
+    {
+        return explode('/', $this->getIdentifier())[0];
+    }
 }

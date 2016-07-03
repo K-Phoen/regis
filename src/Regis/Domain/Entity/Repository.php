@@ -14,11 +14,13 @@ abstract class Repository
     private $sharedSecret;
     /** @var ArrayCollection */
     private $inspections;
+    private $owner;
 
     abstract public function getType(): string;
 
-    public function __construct(string $identifier = null, string $sharedSecret = null)
+    public function __construct(User $owner, string $identifier = null, string $sharedSecret = null)
     {
+        $this->owner = $owner;
         $this->identifier = $identifier;
         $this->sharedSecret = $sharedSecret;
         $this->inspections = new ArrayCollection();
@@ -34,9 +36,9 @@ abstract class Repository
         return $this->identifier;
     }
 
-    public function getOwner(): string
+    public function getOwner(): User
     {
-        return explode('/', $this->identifier)[0];
+        return $this->owner;
     }
 
     public function getName(): string

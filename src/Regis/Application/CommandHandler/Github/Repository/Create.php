@@ -20,6 +20,7 @@ class Create
     public function handle(Command\Github\Repository\Create $command)
     {
         $this->repositoriesRepo->save(new Entity\Github\Repository(
+            $command->getOwner(),
             $command->getIdentifier(),
             $command->getSharedSecret()
         ));

@@ -26,7 +26,7 @@ class CreateTest extends \PHPUnit_Framework_TestCase
     public function testItCallsGithub()
     {
         $command = new Command\Github\Webhook\Create('K-Phoen', 'test', 'http://callback.url');
-        $repository = $this->getMockBuilder(Entity\Repository::class)->getMock();
+        $repository = $this->getMockBuilder(Entity\Repository::class)->disableOriginalConstructor()->getMock();
         $repository->expects($this->once())
             ->method('getSharedSecret')
             ->will($this->returnValue('shared secret'));

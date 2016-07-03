@@ -22,12 +22,14 @@ class CreateTest extends \PHPUnit_Framework_TestCase
 
     public function testItBuildsAndSaveTheEntity()
     {
-        $command = new Command\Github\Repository\Create('some identifier', 'shared secret');
+        $user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+        $command = new Command\Github\Repository\Create($user, 'some identifier', 'shared secret');
 
         $this->repositoriesRepo->expects($this->once())
             ->method('save')
-            ->with($this->callback(function(Entity\Repository $repository) {
-                return $repository->getIdentifier() === 'some identifier' &&
+            ->with($this->callback(function(Entity\Repository $repository) use ($user) {
+                return $repository->getOwner() === $user &&
+                       $repository->getIdentifier() === 'some identifier' &&
                        $repository->getSharedSecret() === 'shared secret';
             }));
 

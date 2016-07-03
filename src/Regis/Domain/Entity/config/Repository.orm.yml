@@ -19,6 +19,14 @@ Regis\Domain\Entity\Repository:
         sharedSecret:
             type: string
 
+    manyToOne:
+        owner:
+          targetEntity: Regis\Domain\Entity\User
+          inversedBy: repositories
+          joinColumn:
+            name: owner_id
+            referencedColumnName: id
+
     oneToMany:
         inspections:
           targetEntity: Regis\Domain\Entity\Inspection

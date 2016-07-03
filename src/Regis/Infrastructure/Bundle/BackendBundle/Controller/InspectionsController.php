@@ -15,10 +15,11 @@ class InspectionsController extends Controller
 {
     public function retryAction(Entity\Github\PullRequestInspection $inspection)
     {
+        /** @var Entity\Github\Repository $repository */
         $repository = $inspection->getRepository();
 
         $command = new Command\Github\Inspection\SchedulePullRequest(new PullRequest(
-            new Repository($repository->getOwner(), $repository->getName(), 'we don\'t have the clone URL, lets hope it is already cloned by now.'),
+            new Repository($repository->getOwnerUsername(), $repository->getName(), 'we don\'t have the clone URL, lets hope it is already cloned by now.'),
             $inspection->getPullRequestNumber(),
             $inspection->getRevisions()
         ));

@@ -17,7 +17,7 @@ class UpdateConfigurationTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->repositoriesRepo = $this->getMockBuilder(Repositories::class)->getMock();
-        $this->repository = $this->getMockBuilder(Entity\Github\Repository::class)->getMock();
+        $this->repository = $this->getMockBuilder(Entity\Github\Repository::class)->disableOriginalConstructor()->getMock();
 
         $this->handler = new CommandHandler\Github\Repository\UpdateConfiguration($this->repositoriesRepo);
     }

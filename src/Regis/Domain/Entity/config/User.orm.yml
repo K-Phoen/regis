@@ -15,3 +15,8 @@ Regis\Domain\Entity\User:
             type: string
         roles:
             type: simple_array
+
+    oneToMany:
+        repositories:
+          targetEntity: Regis\Domain\Entity\Repository
+          mappedBy: owner

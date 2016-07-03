@@ -11,8 +11,9 @@ class InMemoryRepositories implements Repository\Repositories
 
     public function __construct(array $repositories)
     {
-        foreach ($repositories as $identifier => $repository) {
-            $this->repositories[$identifier] = new Entity\Github\Repository($identifier, $repository['secret']);
+        /** @var Entity\Repository $repository */
+        foreach ($repositories as $repository) {
+            $this->repositories[$repository->getIdentifier()] = $repository;
         }
     }
 

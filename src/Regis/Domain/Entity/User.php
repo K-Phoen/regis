@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Domain\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Regis\Domain\Uuid;
 
@@ -16,6 +17,7 @@ class User implements UserInterface
     private $username;
     private $roles = [];
     private $password;
+    private $repositories;
 
     public static function createAdmin(string $username, string $password): User
     {
@@ -31,11 +33,18 @@ class User implements UserInterface
         $this->username = $username;
 
         $this->changePassword($password);
+
+        $this->repositories = new ArrayCollection();
     }
 
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getRepositories(): \Traversable
+    {
+        return $this->repositories;
     }
 
     /**

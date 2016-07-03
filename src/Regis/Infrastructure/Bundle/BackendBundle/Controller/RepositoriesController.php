@@ -57,6 +57,7 @@ class RepositoriesController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $command = new Command\Github\Repository\Create(
+                $this->get('security.token_storage')->getToken()->getUser(),
                 $form->get('identifier')->getData(),
                 $form->get('sharedSecret')->getData()
             );

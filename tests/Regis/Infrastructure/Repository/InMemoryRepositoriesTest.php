@@ -7,12 +7,17 @@ use Regis\Domain\Entity;
 
 class InMemoryRepositoriesTest extends \PHPUnit_Framework_TestCase
 {
+    private $owner;
+
+    public function setUp()
+    {
+        $this->owner = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+    }
+
     public function testFindAllAGeneratorToTheRepositories()
     {
         $repo = new InMemoryRepositories([
-            'some identifier' => [
-                'secret' => 'shared secret',
-            ]
+            new Entity\Github\Repository($this->owner, 'k-phoen/test', 'some_awesome_secret'),
         ]);
 
         $this->assertInstanceOf(\Generator::class, $result = $repo->findAll());
@@ -25,9 +30,7 @@ class InMemoryRepositoriesTest extends \PHPUnit_Framework_TestCase
     public function testFindThrowAnExceptionIfTheEntityDoesNotExist()
     {
         $repo = new InMemoryRepositories([
-            'some identifier' => [
-                'secret' => 'shared secret',
-            ]
+            new Entity\Github\Repository($this->owner, 'some identifier', 'shared secret'),
         ]);
 
         $repo->find('some identifier that does not exist');
@@ -36,9 +39,7 @@ class InMemoryRepositoriesTest extends \PHPUnit_Framework_TestCase
     public function testFindReturnsTheEntityIfItExists()
     {
         $repo = new InMemoryRepositories([
-            'some identifier' => [
-                'secret' => 'shared secret',
-            ]
+            new Entity\Github\Repository($this->owner, 'some identifier', 'shared secret'),
         ]);
 
         $entity = $repo->find('some identifier');
@@ -52,7 +53,7 @@ class InMemoryRepositoriesTest extends \PHPUnit_Framework_TestCase
     {
         $repo = new InMemoryRepositories([]);
 
-        $entity = new Entity\Github\Repository('some identifier', 'shared secret');
+        $entity = new Entity\Github\Repository($this->owner, 'some identifier', 'shared secret');
         $repo->save($entity);
 
         $this->assertSame($entity, $repo->find('some identifier'));

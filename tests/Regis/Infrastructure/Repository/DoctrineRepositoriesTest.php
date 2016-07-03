@@ -32,7 +32,7 @@ class DoctrineRepositoriesTest extends \PHPUnit_Framework_TestCase
 
     public function testSaveRepository()
     {
-        $repository = $this->getMockBuilder(Entity\Repository::class)->getMock();
+        $repository = $this->getMockBuilder(Entity\Repository::class)->disableOriginalConstructor()->getMock();
 
         $this->em->expects($this->once())
             ->method('persist')
@@ -45,7 +45,7 @@ class DoctrineRepositoriesTest extends \PHPUnit_Framework_TestCase
 
     public function testFindAll()
     {
-        $repository = $this->getMockBuilder(Entity\Repository::class)->getMock();
+        $repository = $this->getMockBuilder(Entity\Repository::class)->disableOriginalConstructor()->getMock();
         $allRepositories = [$repository];
 
         $this->doctrineRepository->expects($this->once())
@@ -57,7 +57,7 @@ class DoctrineRepositoriesTest extends \PHPUnit_Framework_TestCase
 
     public function testFindWhenTheRepositoryExists()
     {
-        $repository = $this->getMockBuilder(Entity\Repository::class)->getMock();
+        $repository = $this->getMockBuilder(Entity\Repository::class)->disableOriginalConstructor()->getMock();
 
         $this->doctrineRepository->expects($this->once())
             ->method('find')

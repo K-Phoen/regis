@@ -4,24 +4,24 @@ namespace Tests\Regis\Application\Github;
 
 use Symfony\Component\HttpFoundation\Request;
 
-use Regis\Infrastructure\Repository;
 use Regis\Application\Github\Exception\PayloadSignature;
 use Regis\Application\Github\PayloadValidator;
+use Regis\Domain\Entity;
+use Regis\Infrastructure\Repository;
 
 class PayloadValidatorTest extends \PHPUnit_Framework_TestCase
 {
-    const REPOSITORIES = [
-        'k-phoen/test' => [
-            'secret' => 'some_awesome_secret',
-        ]
-    ];
-
     /** @var PayloadValidator */
     private $payloadValidator;
 
     public function setUp()
     {
-        $repositoriesRepo = new Repository\InMemoryRepositories(self::REPOSITORIES);
+        $admin = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+
+        $repositoriesRepo = new Repository\InMemoryRepositories([
+            new Entity\Github\Repository($admin, 'k-phoen/test', 'some_awesome_secret'),
+        ]);
+
         $this->payloadValidator = new PayloadValidator($repositoriesRepo);
     }
 
@@ -86,7 +86,7 @@ class PayloadValidatorTest extends \PHPUnit_Framework_TestCase
     private function validRequest(): Request
     {
         $payload = $this->knownRepositoryPayload();
-        $signature = hash_hmac('sha1', $payload, self::REPOSITORIES['k-phoen/test']['secret']);
+        $signature = hash_hmac('sha1', $payload, 'some_awesome_secret');
 
         return $this->requestWithContent($payload, 'sha1='.$signature);
     }
