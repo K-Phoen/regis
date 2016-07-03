@@ -40,3 +40,9 @@ services:
         arguments: [ '@regis.violation_reporter.duplication_guard' ]
         tags:
             - { name: tactician.handler, command: Regis\Application\Command\Github\Inspection\SendViolationsAsComments }
+
+    regis.command_handler.users.create_admin:
+        class: Regis\Application\CommandHandler\User\CreateAdmin
+        arguments: [ '@regis.repository.users', '@security.password_encoder' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\User\CreateAdmin }

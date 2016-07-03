@@ -6,3 +6,7 @@ services:
     regis.repository.inspections:
         class: Regis\Infrastructure\Repository\DoctrineInspections
         arguments: [ '@doctrine.orm.entity_manager' ]
+
+    regis.repository.users:
+        class: Regis\Infrastructure\Repository\DoctrineUsers
+        arguments: [ '@doctrine.orm.entity_manager' ]

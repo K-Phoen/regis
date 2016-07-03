@@ -1,0 +1,17 @@
+Regis\Domain\Entity\User:
+    type: entity
+    table: users
+
+    id:
+        id:
+            type: string
+            generator: { strategy: NONE }
+
+    fields:
+        username:
+            type: string
+            unique: true
+        password:
+            type: string
+        roles:
+            type: simple_array
