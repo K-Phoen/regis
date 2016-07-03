@@ -29,7 +29,8 @@ class User implements UserInterface
     {
         $this->id = Uuid::create();
         $this->username = $username;
-        $this->password = $password;
+
+        $this->changePassword($password);
     }
 
     public function getId(): string
