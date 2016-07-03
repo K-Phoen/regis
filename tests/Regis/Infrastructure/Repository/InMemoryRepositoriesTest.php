@@ -14,14 +14,18 @@ class InMemoryRepositoriesTest extends \PHPUnit_Framework_TestCase
         $this->owner = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
     }
 
-    public function testFindAllAGeneratorToTheRepositories()
+    public function testFindForUser()
     {
+        $otherOwner = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+
         $repo = new InMemoryRepositories([
-            new Entity\Github\Repository($this->owner, 'k-phoen/test', 'some_awesome_secret'),
+            $expectedRepo = new Entity\Github\Repository($this->owner, 'k-phoen/test', 'some_awesome_secret'),
+            new Entity\Github\Repository($otherOwner, 'k-phoen/test', 'some_awesome_secret'),
         ]);
 
-        $this->assertInstanceOf(\Generator::class, $result = $repo->findAll());
-        $this->assertCount(1, iterator_to_array($result));
+        $this->assertInstanceOf(\Generator::class, $result = $repo->findForUser($this->owner));
+        $this->assertCount(1, $data = iterator_to_array($result));
+        $this->assertEquals([$expectedRepo], $data);
     }
 
     /**

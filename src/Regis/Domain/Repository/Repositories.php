@@ -8,6 +8,6 @@ interface Repositories
 {
     public function save(Entity\Repository $repository);
 
-    public function findAll(): \Traversable;
+    public function findForUser(Entity\User $user): \Traversable;
     public function find(string $id): Entity\Repository;
 }

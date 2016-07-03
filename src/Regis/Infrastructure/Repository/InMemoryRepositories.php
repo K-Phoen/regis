@@ -22,9 +22,13 @@ class InMemoryRepositories implements Repository\Repositories
         $this->repositories[$repository->getIdentifier()] = $repository;
     }
 
-    public function findAll(): \Traversable
+    public function findForUser(Entity\User $user): \Traversable
     {
         foreach ($this->repositories as $repo) {
+            if ($repo->getOwner() != $user) {
+                continue;
+            }
+
             yield $repo;
         }
     }

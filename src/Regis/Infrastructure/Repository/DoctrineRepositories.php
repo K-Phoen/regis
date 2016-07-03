@@ -23,9 +23,11 @@ class DoctrineRepositories implements Repository\Repositories
         $this->em->flush();
     }
 
-    public function findAll(): \Traversable
+    public function findForUser(Entity\User $user): \Traversable
     {
-        return new \ArrayIterator($this->em->getRepository(Entity\Repository::class)->findAll());
+        return new \ArrayIterator($this->em->getRepository(Entity\Repository::class)->findBy([
+            'owner' => $user,
+        ]));
     }
 
     public function find(string $id): Entity\Repository

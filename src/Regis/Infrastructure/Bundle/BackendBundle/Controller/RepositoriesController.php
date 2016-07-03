@@ -16,7 +16,7 @@ class RepositoriesController extends Controller
 {
     public function listAction()
     {
-        $repositories = $this->get('regis.repository.repositories')->findAll();
+        $repositories = $this->get('regis.repository.repositories')->findForUser($this->getUser());
 
         return $this->render('@RegisBackend/Repositories/list.html.twig', [
             'repositories' => $repositories
@@ -57,7 +57,7 @@ class RepositoriesController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $command = new Command\Github\Repository\Create(
-                $this->get('security.token_storage')->getToken()->getUser(),
+                $this->getUser(),
                 $form->get('identifier')->getData(),
                 $form->get('sharedSecret')->getData()
             );

@@ -43,16 +43,18 @@ class DoctrineRepositoriesTest extends \PHPUnit_Framework_TestCase
         $this->repositoriesRepo->save($repository);
     }
 
-    public function testFindAll()
+    public function testFindForUser()
     {
+        $user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
         $repository = $this->getMockBuilder(Entity\Repository::class)->disableOriginalConstructor()->getMock();
         $allRepositories = [$repository];
 
         $this->doctrineRepository->expects($this->once())
-            ->method('findAll')
+            ->method('findBy')
+            ->with(['owner' => $user])
             ->will($this->returnValue($allRepositories));
 
-        $this->assertEquals($allRepositories, iterator_to_array($this->repositoriesRepo->findAll()));
+        $this->assertEquals($allRepositories, iterator_to_array($this->repositoriesRepo->findForUser($user)));
     }
 
     public function testFindWhenTheRepositoryExists()
