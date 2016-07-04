@@ -2,9 +2,13 @@ language: php
 
 sudo: false
 
+git:
+    # dirty hack to make this test work tests/Regis/Infrastructure/Vcs/RepositoryTest::testGetDiff
+    depth: 5000
+
 cache:
-  directories:
-    - $HOME/.composer/cache
+    directories:
+        - $HOME/.composer/cache
 
 php:
     - 7.0
