@@ -20,6 +20,9 @@ class AppKernel extends Kernel
             new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
 
+            new KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle(),
+
+            new Regis\Infrastructure\Bundle\AuthBundle\RegisAuthBundle(),
             new Regis\Infrastructure\Bundle\WebhooksBundle\RegisWebhooksBundle(),
             new Regis\Infrastructure\Bundle\BackendBundle\RegisBackendBundle(),
         ];

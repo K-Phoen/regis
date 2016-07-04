@@ -33,5 +33,5 @@ inspection_retry:
 
 report_detail:
     path:      /reports/{id}
-    defaults:  { _controller: RegisBackendBundle:Reports:detail }
+    defaults:  { _controller: RegisBackendBundle:Auth:detail }
     methods:   GET

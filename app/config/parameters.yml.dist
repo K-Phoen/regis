@@ -5,6 +5,9 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
 
+    github_oauth_client_id: ~
+    github_oauth_client_secret: ~
+
     # Create one there https://github.com/settings/tokens and give it full
     # access over private repositories (`repo` scope)
     github_api_token: ~

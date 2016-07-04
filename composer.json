@@ -35,7 +35,10 @@
         "php-amqplib/rabbitmq-bundle": "^1.10",
 
         "snc/redis-bundle": "2.x-dev",
-        "predis/predis": "^1.1"
+        "predis/predis": "^1.1",
+
+        "knpuniversity/oauth2-client-bundle": "^1.2",
+        "league/oauth2-github": "^0.2"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

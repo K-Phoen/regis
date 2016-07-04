@@ -15,6 +15,9 @@ class User implements UserInterface
 {
     private $id;
     private $username;
+    private $email;
+    private $githubId;
+    private $githubAccessToken;
     private $roles = [];
     private $password;
     private $repositories;
@@ -22,24 +25,76 @@ class User implements UserInterface
     public static function createAdmin(string $username, string $password): User
     {
         $user = new static($username, $password);
+        $user->changePassword($password);
         $user->roles = ['ROLE_ADMIN'];
 
         return $user;
     }
 
-    private function __construct(string $username, string $password)
+    public static function createUser(string $username, string $email, int $githubId, string $githubAccessToken): User
+    {
+        $user = new static($username);
+        $user->githubId = $githubId;
+        $user->changeEmail($email);
+        $user->changeAccessToken($githubAccessToken);
+        $user->roles = ['ROLE_USER'];
+
+        return $user;
+    }
+
+    private function __construct(string $username, string $password = null)
     {
         $this->id = Uuid::create();
         $this->username = $username;
 
-        $this->changePassword($password);
-
         $this->repositories = new ArrayCollection();
+    }
+
+    public function changePassword(string $password)
+    {
+        if (empty($password)) {
+            throw new \InvalidArgumentException('The new password can not be empty');
+        }
+
+        $this->password = $password;
+    }
+
+    public function changeEmail(string $email)
+    {
+        if (empty($email)) {
+            throw new \InvalidArgumentException('The new email can not be empty');
+        }
+
+        $this->email = $email;
+    }
+
+    public function changeAccessToken(string $accessToken)
+    {
+        if (empty($accessToken)) {
+            throw new \InvalidArgumentException('The new access token can not be empty');
+        }
+
+        $this->accessToken = $accessToken;
     }
 
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getGithubId(): int
+    {
+        return $this->githubId;
+    }
+
+    public function getGithubAccessToken(): string
+    {
+        return $this->githubAccessToken;
     }
 
     public function getRepositories(): \Traversable
@@ -61,15 +116,6 @@ class User implements UserInterface
     public function getPassword()
     {
         return $this->password;
-    }
-
-    public function changePassword(string $password)
-    {
-        if (empty($password)) {
-            throw new \InvalidArgumentException('The new password can not be empty');
-        }
-
-        $this->password = $password;
     }
 
     /**

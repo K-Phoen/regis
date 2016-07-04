@@ -1,3 +1,6 @@
+auth:
+    resource: "@RegisAuthBundle/Resources/config/routing.yml"
+
 webhooks:
     resource: "@RegisWebhooksBundle/Resources/config/routing.yml"
     prefix: webhook

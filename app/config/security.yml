@@ -9,6 +9,11 @@ security:
                 class: Regis\Domain\Entity\User
                 property: username
 
+    role_hierarchy:
+        ROLE_ADMIN: ROLE_USER
+        ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+
+
     encoders:
           Regis\Domain\Entity\User: bcrypt
 
@@ -18,15 +23,23 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
 
-        backend:
-            pattern: ^/backend
-            http_basic: ~
-            provider: regis_db_provider
-            anonymous: ~
-
         webhooks:
             pattern: ^/webhook
             security: false
 
+        main:
+            pattern: ^/
+            provider: regis_db_provider
+            anonymous: ~
+            remember_me:
+                secret: '%secret%'
+                always_remember_me: true
+            guard:
+                authenticators: [ regis.auth.github_authenticator ]
+            logout:
+                path: /logout
+                target: /login
+
     access_control:
-        - { path: ^/backend, roles: ROLE_ADMIN }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: ROLE_USER }

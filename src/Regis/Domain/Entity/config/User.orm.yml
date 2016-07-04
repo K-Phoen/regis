@@ -13,6 +13,16 @@ Regis\Domain\Entity\User:
             unique: true
         password:
             type: string
+            nullable: true
+        email:
+            type: string
+            nullable: true
+        githubId:
+            type: integer
+            nullable: true
+        githubAccessToken:
+            type: integer
+            nullable: true
         roles:
             type: simple_array
 

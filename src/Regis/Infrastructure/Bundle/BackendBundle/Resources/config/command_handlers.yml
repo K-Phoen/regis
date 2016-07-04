@@ -46,3 +46,9 @@ services:
         arguments: [ '@regis.repository.users', '@security.password_encoder' ]
         tags:
             - { name: tactician.handler, command: Regis\Application\Command\User\CreateAdmin }
+
+    regis.command_handler.users.create_or_update_user:
+        class: Regis\Application\CommandHandler\User\CreateOrUpdateUser
+        arguments: [ '@regis.repository.users' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\User\CreateOrUpdateUser }
