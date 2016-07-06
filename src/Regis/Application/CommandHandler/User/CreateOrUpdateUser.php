@@ -22,7 +22,7 @@ class CreateOrUpdateUser
         try {
             $user = $this->usersRepo->findByGithubId($command->getGithubId());
             $user->changeEmail($command->getEmail());
-            $user->changeAccessToken($command->getEmail());
+            $user->changeGithubAccessToken($command->getAccessToken());
         } catch (Repository\Exception\NotFound $e) {
             $user = User::createUser($command->getUsername(), $command->getEmail(), $command->getGithubId(), $command->getAccessToken());
         }

@@ -36,7 +36,7 @@ class User implements UserInterface
         $user = new static($username);
         $user->githubId = $githubId;
         $user->changeEmail($email);
-        $user->changeAccessToken($githubAccessToken);
+        $user->changeGithubAccessToken($githubAccessToken);
         $user->roles = ['ROLE_USER'];
 
         return $user;
@@ -68,13 +68,13 @@ class User implements UserInterface
         $this->email = $email;
     }
 
-    public function changeAccessToken(string $accessToken)
+    public function changeGithubAccessToken(string $accessToken)
     {
         if (empty($accessToken)) {
             throw new \InvalidArgumentException('The new access token can not be empty');
         }
 
-        $this->accessToken = $accessToken;
+        $this->githubAccessToken = $accessToken;
     }
 
     public function getId(): string

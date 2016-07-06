@@ -7,7 +7,7 @@ namespace Regis\Application\EventListener;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\Application\Event;
-use Regis\Application\Github\Client;
+use Regis\Application\Github\ClientFactory;
 use Regis\Domain\Model\Github\PullRequest;
 
 /**
@@ -17,11 +17,11 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
 {
     const STATUS_CONTEXT = 'regis/pr';
 
-    private $github;
+    private $githubFactory;
 
-    public function __construct(Client $github)
+    public function __construct(ClientFactory $githubFactory)
     {
-        $this->github = $github;
+        $this->githubFactory = $githubFactory;
     }
 
     public static function getSubscribedEvents()

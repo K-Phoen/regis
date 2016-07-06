@@ -21,7 +21,7 @@ Regis\Domain\Entity\User:
             type: integer
             nullable: true
         githubAccessToken:
-            type: integer
+            type: string
             nullable: true
         roles:
             type: simple_array
