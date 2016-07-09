@@ -10,8 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 use Regis\Application\Event;
-use Regis\Github\Exception\EventNotHandled;
-use Regis\Github\Exception\PayloadSignature;
+use Regis\Application\Github\Exception\EventNotHandled;
+use Regis\Application\Github\Exception\PayloadSignature;
 
 class WebhooksController extends Controller
 {
