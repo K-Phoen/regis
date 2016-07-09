@@ -5,28 +5,31 @@ namespace Tests\Regis\Application\CommandHandler\Webhook;
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
 use Regis\Application\Github\Client as GithubClient;
+use Regis\Application\Github\ClientFactory as GithubClientFactory;
 use Regis\Domain\Entity;
 use Regis\Domain\Repository\Repositories;
 
 class CreateTest extends \PHPUnit_Framework_TestCase
 {
-    private $githubClient;
+    private $githubClientFactory;
     private $repositoriesRepo;
     /** @var CommandHandler\Github\Webhook\Create */
     private $handler;
 
     public function setUp()
     {
-        $this->githubClient = $this->getMockBuilder(GithubClient::class)->disableOriginalConstructor()->getMock();
+        $this->githubClientFactory = $this->getMockBuilder(GithubClientFactory::class)->disableOriginalConstructor()->getMock();
         $this->repositoriesRepo = $this->getMockBuilder(Repositories::class)->getMock();
 
-        $this->handler = new CommandHandler\Github\Webhook\Create($this->githubClient, $this->repositoriesRepo);
+        $this->handler = new CommandHandler\Github\Webhook\Create($this->githubClientFactory, $this->repositoriesRepo);
     }
 
     public function testItCallsGithub()
     {
         $command = new Command\Github\Webhook\Create('K-Phoen', 'test', 'http://callback.url');
-        $repository = $this->getMockBuilder(Entity\Repository::class)->disableOriginalConstructor()->getMock();
+        $client = $this->getMockBuilder(GithubClient::class)->getMock();
+
+        $repository = $this->getMockBuilder(Entity\Github\Repository::class)->disableOriginalConstructor()->getMock();
         $repository->expects($this->once())
             ->method('getSharedSecret')
             ->will($this->returnValue('shared secret'));
@@ -36,7 +39,12 @@ class CreateTest extends \PHPUnit_Framework_TestCase
             ->with('K-Phoen/test')
             ->will($this->returnValue($repository));
 
-        $this->githubClient->expects($this->once())
+        $this->githubClientFactory->expects($this->once())
+            ->method('createForRepository')
+            ->with($repository)
+            ->will($this->returnValue($client));
+
+        $client->expects($this->once())
             ->method('createWebhook')
             ->with('K-Phoen', 'test', 'http://callback.url', 'shared secret');
 

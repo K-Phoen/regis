@@ -6,6 +6,7 @@ namespace Regis\Application\CommandHandler\Github\Webhook;
 
 use Regis\Application\Command;
 use Regis\Application\Github\ClientFactory as GithubClientFactory;
+use Regis\Domain\Entity;
 use Regis\Domain\Repository\Repositories;
 
 class Create
@@ -21,8 +22,9 @@ class Create
 
     public function handle(Command\Github\Webhook\Create $command)
     {
+        /** @var Entity\Github\Repository $repository */
         $repository = $this->repositoriesRepo->find($command->getOwner().'/'.$command->getRepo());
-        $githubClient = $this->githubClientFactory->createForUser($repository->getOwner());
+        $githubClient = $this->githubClientFactory->createForRepository($repository);
 
         $githubClient->createWebhook(
             $command->getOwner(),

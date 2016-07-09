@@ -9,4 +9,5 @@ use Regis\Domain\Entity;
 interface ClientFactory
 {
     function createForUser(Entity\User $user): Client;
+    function createForRepository(Entity\Github\Repository $repository): Client;
 }
