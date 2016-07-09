@@ -8,6 +8,7 @@ use Regis\Application\Reporter;
 use Regis\Domain\Entity\Github\PullRequestInspection;
 use Regis\Domain\Entity\Inspection\Report;
 use Regis\Domain\Entity\Inspection\Violation;
+use Regis\Domain\Entity\Repository;
 use Regis\Domain\Model\Github\PullRequest;
 
 class SendViolationsAsCommentsTest extends \PHPUnit_Framework_TestCase
@@ -24,6 +25,7 @@ class SendViolationsAsCommentsTest extends \PHPUnit_Framework_TestCase
 
     public function testViolationsAreTransferedToTheReporter()
     {
+        $repository = $this->getMockBuilder(Repository::class)->disableOriginalConstructor()->getMock();
         $pullRequest = $this->getMockBuilder(PullRequest::class)->disableOriginalConstructor()->getMock();
         $inspection = $this->getMockBuilder(PullRequestInspection::class)->disableOriginalConstructor()->getMock();
         $report = $this->getMockBuilder(Report::class)->disableOriginalConstructor()->getMock();
@@ -34,6 +36,9 @@ class SendViolationsAsCommentsTest extends \PHPUnit_Framework_TestCase
         $inspection->expects($this->once())
             ->method('getReport')
             ->will($this->returnValue($report));
+        $inspection->expects($this->once())
+            ->method('getRepository')
+            ->will($this->returnValue($repository));
         $report->expects($this->once())
             ->method('getViolations')
             ->will($this->returnValue(new \ArrayIterator([$violation1, $violation2])));
@@ -41,8 +46,8 @@ class SendViolationsAsCommentsTest extends \PHPUnit_Framework_TestCase
         $this->reporter->expects($this->exactly(2))
             ->method('report')
             ->withConsecutive(
-                [$violation1, $pullRequest],
-                [$violation1, $pullRequest]
+                [$repository, $violation1, $pullRequest],
+                [$repository, $violation1, $pullRequest]
             );
 
         $command = new Command\Github\Inspection\SendViolationsAsComments($inspection, $pullRequest);

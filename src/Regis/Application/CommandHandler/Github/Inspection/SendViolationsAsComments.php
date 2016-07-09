@@ -19,9 +19,10 @@ class SendViolationsAsComments
     public function handle(Command\Github\Inspection\SendViolationsAsComments $command)
     {
         $inspection = $command->getInspection();
+        $repository = $inspection->getRepository();
 
         foreach ($inspection->getReport()->getViolations() as $violation) {
-            $this->reporter->report($violation, $command->getPullRequest());
+            $this->reporter->report($repository, $violation, $command->getPullRequest());
         }
     }
 }

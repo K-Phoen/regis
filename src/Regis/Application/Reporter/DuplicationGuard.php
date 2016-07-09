@@ -20,13 +20,13 @@ class DuplicationGuard implements Reporter
         $this->violationsCache = $violationsCache;
     }
 
-    public function report(Entity\Inspection\Violation $violation, Model\Github\PullRequest $pullRequest)
+    public function report(Entity\Repository $repository, Entity\Inspection\Violation $violation, Model\Github\PullRequest $pullRequest)
     {
         if ($this->violationsCache->has($violation, $pullRequest)) {
             return;
         }
 
-        $this->originalReporter->report($violation, $pullRequest);
+        $this->originalReporter->report($repository, $violation, $pullRequest);
 
         $this->violationsCache->save($violation, $pullRequest);
     }
