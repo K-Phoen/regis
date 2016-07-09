@@ -5,6 +5,7 @@ namespace Tests\Regis\Application\Reporter;
 use Regis\Application\Inspection\ViolationsCache;
 use Regis\Application\Reporter;
 use Regis\Domain\Entity\Inspection\Violation;
+use Regis\Domain\Entity\Repository;
 use Regis\Domain\Model\Github\PullRequest;
 
 class DuplicationGuardTest extends \PHPUnit_Framework_TestCase
@@ -28,6 +29,7 @@ class DuplicationGuardTest extends \PHPUnit_Framework_TestCase
 
     public function testCachedViolationsAreNotReported()
     {
+        $repository = $this->createMock(Repository::class);
         $violation = $this->createMock(Violation::class);
         $pullRequest = $this->createMock(PullRequest::class);
 
@@ -37,11 +39,12 @@ class DuplicationGuardTest extends \PHPUnit_Framework_TestCase
 
         $this->reporter->expects($this->never())->method('report');
 
-        $this->duplicationGuard->report($violation, $pullRequest);
+        $this->duplicationGuard->report($repository, $violation, $pullRequest);
     }
 
     public function testNotCachedViolationsAreReported()
     {
+        $repository = $this->createMock(Repository::class);
         $violation = $this->createMock(Violation::class);
         $pullRequest = $this->createMock(PullRequest::class);
 
@@ -51,12 +54,12 @@ class DuplicationGuardTest extends \PHPUnit_Framework_TestCase
 
         $this->reporter->expects($this->once())
             ->method('report')
-            ->with($violation, $pullRequest);
+            ->with($repository, $violation, $pullRequest);
 
         $this->violationsCache->expects($this->once())
             ->method('save')
             ->with($violation, $pullRequest);
 
-        $this->duplicationGuard->report($violation, $pullRequest);
+        $this->duplicationGuard->report($repository, $violation, $pullRequest);
     }
 }

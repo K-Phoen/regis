@@ -13,7 +13,7 @@ services:
 
     regis.command_handler.webhooks.create:
         class: Regis\Application\CommandHandler\Github\Webhook\Create
-        arguments: [ '@regis.github.client', '@regis.repository.repositories' ]
+        arguments: [ '@regis.github.client_factory', '@regis.repository.repositories' ]
         tags:
             - { name: tactician.handler, command: Regis\Application\Command\Github\Webhook\Create }
 

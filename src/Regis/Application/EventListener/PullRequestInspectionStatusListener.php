@@ -8,7 +8,10 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\Application\Event;
 use Regis\Application\Github\Client;
+use Regis\Application\Github\ClientFactory;
+use Regis\Domain\Entity;
 use Regis\Domain\Model\Github\PullRequest;
+use Regis\Domain\Repository\Repositories;
 
 /**
  * TODO this class should rely on the command bus
@@ -17,17 +20,19 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
 {
     const STATUS_CONTEXT = 'regis/pr';
 
-    private $github;
+    private $githubFactory;
+    private $repositoriesRepo;
 
-    public function __construct(Client $github)
+    public function __construct(ClientFactory $githubFactory, Repositories $repositoriesRepo)
     {
-        $this->github = $github;
+        $this->githubFactory = $githubFactory;
+        $this->repositoriesRepo = $repositoriesRepo;
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            // @TODO There should be a domain event for "inspection scheduled"
+            // @TODO There should be a domain event for "PR inspection scheduled"
             Event::PULL_REQUEST_OPENED => 'onPullRequestUpdated',
             Event::PULL_REQUEST_SYNCED => 'onPullRequestUpdated',
 
@@ -78,6 +83,10 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
 
     private function setIntegrationStatus(PullRequest $pullRequest, string $status, string $description)
     {
-        $this->github->setIntegrationStatus($pullRequest, $status, $description, self::STATUS_CONTEXT);
+        /** @var Entity\Github\Repository $repository */
+        $repository = $this->repositoriesRepo->find($pullRequest->getRepositoryIdentifier());
+        $client = $this->githubFactory->createForRepository($repository);
+
+        $client->setIntegrationStatus($pullRequest, $status, $description, self::STATUS_CONTEXT);
     }
 }

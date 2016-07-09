@@ -4,22 +4,24 @@ declare(strict_types=1);
 
 namespace Regis\Application\Reporter;
 
-use Regis\Application\Github\Client as GithubClient;
+use Regis\Application\Github\ClientFactory as GithubClientFactory;
 use Regis\Application\Reporter;
 use Regis\Domain\Entity;
 use Regis\Domain\Model;
 
 class Github implements Reporter
 {
-    private $client;
+    private $clientFactory;
 
-    public function __construct(GithubClient $client)
+    public function __construct(GithubClientFactory $clientFactory)
     {
-        $this->client = $client;
+        $this->clientFactory = $clientFactory;
     }
 
-    public function report(Entity\Inspection\Violation $violation, Model\Github\PullRequest $pullRequest)
+    public function report(Entity\Repository $repository, Entity\Inspection\Violation $violation, Model\Github\PullRequest $pullRequest)
     {
-        $this->client->sendComment($pullRequest, Model\Github\ReviewComment::fromViolation($violation));
+        /** @var Entity\Github\Repository $repository */
+        $client = $this->clientFactory->createForRepository($repository);
+        $client->sendComment($pullRequest, Model\Github\ReviewComment::fromViolation($violation));
     }
 }

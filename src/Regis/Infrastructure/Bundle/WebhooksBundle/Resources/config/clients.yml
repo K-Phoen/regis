@@ -11,8 +11,11 @@ services:
         public: false
 
     regis.github.client:
-        class: Regis\Infrastructure\Github\Client
-        arguments: [ '@regis.github.github', '%github_api_token%', '@logger' ]
+        class: DateTime
+
+    regis.github.client_factory:
+        class: Regis\Infrastructure\Github\ClientFactory
+        arguments: [ '@regis.github.github', '@logger' ]
         tags:
             - { name: monolog.logger, channel: github }
 

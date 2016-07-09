@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\Application\CommandHandler\Github\User;
+namespace Tests\Regis\Application\CommandHandler\User;
 
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 

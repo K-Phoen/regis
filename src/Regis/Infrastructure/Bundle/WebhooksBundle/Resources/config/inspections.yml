@@ -27,7 +27,7 @@ services:
 
     regis.violation_reporter.github:
         class: Regis\Application\Reporter\Github
-        arguments: [ '@regis.github.client' ]
+        arguments: [ '@regis.github.client_factory' ]
         public: false
 
     regis.violation_reporter.duplication_guard:
