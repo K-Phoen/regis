@@ -17,6 +17,12 @@ services:
         tags:
             - { name: tactician.handler, command: Regis\Application\Command\Github\Webhook\Create }
 
+    regis.command_handler.deploy_key.add:
+        class: Regis\Application\CommandHandler\Github\DeployKey\Add
+        arguments: [ '@regis.github.client_factory', '@regis.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\Github\DeployKey\Add }
+
     regis.command_handler.inspections.schedule:
         class: Regis\Application\CommandHandler\Github\Inspection\SchedulePullRequest
         arguments: [ '@old_sound_rabbit_mq.webhook_github_pr_event_producer', '@regis.repository.repositories', '@regis.repository.inspections' ]

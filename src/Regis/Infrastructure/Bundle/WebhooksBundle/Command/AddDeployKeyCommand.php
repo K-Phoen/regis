@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-use Regis\Github\Client as Github;
+use Regis\Application\Command;
 
 class AddDeployKeyCommand extends ContainerAwareCommand
 {
@@ -67,11 +67,13 @@ class AddDeployKeyCommand extends ContainerAwareCommand
         $repo = $input->getOption('repository');
         $key = $input->getOption('public-key');
 
-        // TODO this should be done using the command bus
         if (!file_exists($key) || !is_readable($key)) {
             throw new \RuntimeException(sprintf('File "%s" does not exist or is not readable', $key));
         }
 
-        $this->getContainer()->get('regis.github.client')->addDeployKey($owner, $repo, 'Regis - Private repositories', file_get_contents($key), Github::READONLY_KEY);
+        $command = new Command\Github\DeployKey\Add(
+            $owner, $repo, file_get_contents($key)
+        );
+        $this->getContainer()->get('tactician.commandbus')->handle($command);
     }
 }
