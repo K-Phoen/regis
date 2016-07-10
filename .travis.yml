@@ -24,7 +24,7 @@ install:
     - composer require satooshi/php-coveralls '^1.0'
 
 script:
-    - ./vendor/bin/phpunit
+    - make tests
 
 after_script:
     - php vendor/bin/coveralls -v
