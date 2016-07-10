@@ -1,0 +1,4 @@
+home:
+    path:      /
+    defaults:  { _controller: RegisAppBundle:App:home }
+    methods:   GET

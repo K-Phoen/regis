@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Regis\Infrastructure\Bundle\AuthBundle\RegisAuthBundle(),
             new Regis\Infrastructure\Bundle\WebhooksBundle\RegisWebhooksBundle(),
             new Regis\Infrastructure\Bundle\BackendBundle\RegisBackendBundle(),
+            new Regis\Infrastructure\Bundle\AppBundle\RegisAppBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
