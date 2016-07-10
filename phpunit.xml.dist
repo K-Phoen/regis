@@ -6,6 +6,10 @@
         </testsuite>
     </testsuites>
 
+    <php>
+        <server name="KERNEL_DIR" value="./app/" />
+    </php>
+
     <logging>
         <log type="coverage-clover" target="clover.xml"/>
     </logging>
