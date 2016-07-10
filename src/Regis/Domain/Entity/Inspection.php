@@ -29,7 +29,7 @@ abstract class Inspection
 
     abstract public function getType(): string;
 
-    protected static function createForRevisions(Repository $repository, Revisions $revisions)
+    protected static function createForRevisions(Repository $repository, Revisions $revisions): self
     {
         $inspection = new static(Uuid::create());
         $inspection->repository = $repository;
