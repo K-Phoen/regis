@@ -5,7 +5,6 @@ namespace Tests\Functional\BackendBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\BrowserKit\Cookie;
-use Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken;
 use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
 
 class RepositoriesControllerTest extends WebTestCase
