@@ -17,8 +17,19 @@ repositories_setup_webhook:
 
 repositories_new:
     path:      /repositories/new
-    defaults:  { _controller: RegisBackendBundle:Repositories:new }
-    methods:   GET|POST
+    defaults:  { _controller: RegisBackendBundle:RepositoryCreator:new }
+    methods:   GET
+
+repositories_create:
+    path:      /repositories/create
+    defaults:  { _controller: RegisBackendBundle:RepositoryCreator:create }
+    methods:   POST
+
+repositories_remote_list:
+    path:      /repositories/remote
+    defaults:  { _controller: RegisBackendBundle:RepositoryCreator:remoteRepositoriesList }
+    methods:   GET
+    options:   { expose: true }
 
 repositories_edit:
     path:      /repositories/{identifier}/edit

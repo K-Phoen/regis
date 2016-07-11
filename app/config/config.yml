@@ -22,7 +22,9 @@ framework:
     form:            ~
     csrf_protection: ~
     validation:      { enable_annotations: true }
-    #serializer:      { enable_annotations: true }
+    serializer:
+        enable_annotations: false
+        cache: serializer.mapping.cache.apc
     templating:
         engines: ['twig']
     default_locale:  "%locale%"

@@ -22,6 +22,8 @@ class AppKernel extends Kernel
 
             new KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle(),
 
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+
             new Regis\Infrastructure\Bundle\AuthBundle\RegisAuthBundle(),
             new Regis\Infrastructure\Bundle\WebhooksBundle\RegisWebhooksBundle(),
             new Regis\Infrastructure\Bundle\BackendBundle\RegisBackendBundle(),

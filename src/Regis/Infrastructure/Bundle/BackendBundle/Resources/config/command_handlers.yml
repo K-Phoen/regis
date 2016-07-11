@@ -1,7 +1,7 @@
 services:
     regis.command_handler.repository.create:
         class: Regis\Application\CommandHandler\Github\Repository\Create
-        arguments: [ '@regis.repository.repositories' ]
+        arguments: [ '@regis.repository.repositories', '@regis.random.generator' ]
         tags:
             - { name: tactician.handler, command: Regis\Application\Command\Github\Repository\Create }
 

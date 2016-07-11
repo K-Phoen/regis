@@ -25,6 +25,11 @@ class ClientFactory implements GithubClientFactory
     {
         $user = $repository->getOwner();
 
-        return new Client($this->client, $user->getGithubAccessToken(), $this->logger);
+        return $this->createForUser($user);
+    }
+
+    public function createForUser(Entity\User $user): GithubClient
+    {
+        return new Client($this->client, $user, $this->logger);
     }
 }

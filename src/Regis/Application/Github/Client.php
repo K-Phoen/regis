@@ -20,4 +20,5 @@ interface Client
     function addDeployKey(string $owner, string $repository, string $title, string $key, string $type);
     function createWebhook(string $owner, string $repository, string $url, $secret = null);
     function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment);
+    function listRepositories(): \Traversable;
 }

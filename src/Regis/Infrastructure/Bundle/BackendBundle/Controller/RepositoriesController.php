@@ -39,12 +39,12 @@ class RepositoriesController extends Controller
         ]);
     }
 
-    public function setupWebhookAction(Entity\Repository $repository)
+    public function setupWebhookAction(Entity\Github\Repository $repository)
     {
         $absoluteUrl = $this->get('router')->generate('webhook_github', [],  UrlGeneratorInterface::ABSOLUTE_URL);
 
         $command = new Command\Github\Webhook\Create(
-            $repository->getOwner(),
+            $repository->getOwnerUsername(),
             $repository->getName(),
             $absoluteUrl
         );
@@ -54,33 +54,6 @@ class RepositoriesController extends Controller
         $this->addFlash('info', 'Webhook setup.');
 
         return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
-    }
-
-    public function newAction(Request $request)
-    {
-        $form = $form = $this->createForm(Form\NewRepositoryType::class, null, [
-            'action' => $this->generateUrl('repositories_new'),
-        ]);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $command = new Command\Github\Repository\Create(
-                $this->getUser(),
-                $form->get('identifier')->getData(),
-                $form->get('sharedSecret')->getData()
-            );
-
-            $this->get('tactician.commandbus')->handle($command);
-
-            $this->addFlash('info', 'Repository added.');
-
-            return $this->redirectToRoute('repositories_list');
-        }
-
-        return $this->render('@RegisBackend/Repositories/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
     }
 
     public function editAction(Request $request, Entity\Github\Repository $repository)

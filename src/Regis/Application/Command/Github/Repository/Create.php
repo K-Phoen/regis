@@ -12,11 +12,10 @@ class Create
     private $identifier;
     private $sharedSecret;
 
-    public function __construct(User $owner, string $identifier, string $sharedSecret)
+    public function __construct(User $owner, string $identifier, string $sharedSecret = null)
     {
         $this->owner = $owner;
         $this->identifier = $identifier;
-        $this->sharedSecret = $sharedSecret;
     }
 
     public function getOwner(): User
@@ -29,7 +28,7 @@ class Create
         return $this->identifier;
     }
 
-    public function getSharedSecret(): string
+    public function getSharedSecret()
     {
         return $this->sharedSecret;
     }
