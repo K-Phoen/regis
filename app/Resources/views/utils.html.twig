@@ -59,3 +59,13 @@
         All green!
     {% endif %}
 {% endmacro %}
+
+{% macro repository_type(repo) %}
+    {% spaceless %}
+        {% if repo.type == 'github' %}
+            GitHub
+        {% else %}
+            Unknown ({{ repo.type }})
+        {% endif %}
+    {% endspaceless %}
+{% endmacro %}

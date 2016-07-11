@@ -23,6 +23,15 @@ class RepositoriesController extends Controller
         ]);
     }
 
+    public function lastRepositoriesAction()
+    {
+        $repositories = $this->get('regis.repository.repositories')->findForUser($this->getUser());
+
+        return $this->render('@RegisBackend/Repositories/_last_repositories.html.twig', [
+            'repositories' => $repositories
+        ]);
+    }
+
     public function detailAction(Entity\Repository $repository)
     {
         return $this->render('@RegisBackend/Repositories/detail.html.twig', [

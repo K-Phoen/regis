@@ -1,16 +1,6 @@
 {% extends '::layout.html.twig' %}
 
-{% import _self as utils %}
-
-{% macro repository_type(repo) %}
-    {% spaceless %}
-    {% if repo.type == 'github' %}
-        GitHub
-    {% else %}
-        Unknown ({{ repo.type }})
-    {% endif %}
-    {% endspaceless %}
-{% endmacro %}
+{% import '::utils.html.twig' as utils %}
 
 {% block content %}
 <h1 class="page-header">Repositories</h1>
