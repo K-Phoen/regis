@@ -108,7 +108,7 @@ class DiffParser extends ParserBase
                 $rangeOldStart = $vars[1];
                 $rangeOldCount = $vars[2];
                 $rangeNewStart = $vars[3];
-                $rangeNewCount = isset($vars[4]) ? $vars[4] : $vars[2]; // @todo Ici, t'as pris un gros raccourci mon loulou
+                $rangeNewCount = $vars[4] ?? $vars[2]; // @todo Ici, t'as pris un gros raccourci mon loulou
                 $this->consume(' @@');
                 $this->consumeTo("\n");
                 $this->consumeNewLine();

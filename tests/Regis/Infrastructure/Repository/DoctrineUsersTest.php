@@ -2,7 +2,6 @@
 
 namespace Tests\Regis\Infrastructure\Repository;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Regis\Domain\Entity;

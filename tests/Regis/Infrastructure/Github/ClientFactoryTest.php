@@ -8,8 +8,6 @@ use Psr\Log\LoggerInterface;
 
 use Regis\Domain\Entity\Github\Repository;
 use Regis\Domain\Entity\User;
-use Regis\Domain\Model\Github\PullRequest;
-use Regis\Domain\Model\Github\ReviewComment;
 use Regis\Infrastructure\Github\ClientFactory;
 
 class ClientFactoryTest extends \PHPUnit_Framework_TestCase
