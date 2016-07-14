@@ -27,7 +27,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ path('repositories_new') }}">Add repository</a></li>
+                <li><a href="{{ path('repositories_new') }}"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span> Add repository</a></li>
                 {% if is_granted('ROLE_USER') %}
                 <li><a href="{{ path('logout') }}">Logout</a></li>
                 {% endif %}
