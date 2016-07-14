@@ -3,6 +3,15 @@
 {% block content %}
 <h1 class="page-header">New repository</h1>
 
+<form class="form-inline">
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+            <input type="text" class="form-control" id="repository-search" placeholder="Search…">
+        </div>
+    </div>
+</form>
+
 <ul id="repositories-list">
     <li>Loading...</li>
 </ul>

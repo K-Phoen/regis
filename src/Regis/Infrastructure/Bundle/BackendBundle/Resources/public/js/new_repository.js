@@ -1,4 +1,6 @@
 (function($) {
+    var repositories = [];
+
     function displayRepositoriesList(repositories) {
         var list = $('#repositories-list');
 
@@ -17,6 +19,8 @@
     function loadRemoteRepositoriesList() {
         $.ajax(Routing.generate('repositories_remote_list'))
             .done(function(result) {
+                repositories = result.repositories;
+
                 displayRepositoriesList(result.repositories);
             });
     }
@@ -31,8 +35,43 @@
         });
     }
 
+    function search(terms, repositories) {
+        var matches = [];
+
+        terms = terms.toLowerCase();
+
+        $(repositories).each(function (i, repo) {
+            var repoIdentifier = repo.identifier.toLowerCase();
+
+            if (repoIdentifier.indexOf(terms) !== -1) {
+                matches.push(repo);
+            }
+        });
+
+        displayRepositoriesList(matches);
+    }
+
+    function initSearch() {
+        var searchField = $('#repository-search');
+
+        searchField.parents('form').on('submit', function(e) {
+            e.preventDefault();
+        });
+
+        searchField.on('keyup', function() {
+            var searchTerms = searchField.val();
+
+            if (searchTerms.length === 0) {
+                displayRepositoriesList(repositories);
+            } else {
+                search(searchTerms, repositories);
+            }
+        });
+    }
+
     $(function() {
         initAddRepositoryButtons();
+        initSearch();
         loadRemoteRepositoriesList();
     });
 })(jQuery);
