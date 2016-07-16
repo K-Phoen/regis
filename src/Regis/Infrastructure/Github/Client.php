@@ -30,7 +30,6 @@ class Client implements GithubClient
         $this->logger->info('Fetching repositories list for user {username}', [
             'username' => $this->user->getUsername(),
         ]);
-
         $api = $this->client->currentUser();
         $paginator = new \Github\ResultPager($this->client);
 
