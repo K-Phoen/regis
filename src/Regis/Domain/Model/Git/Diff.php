@@ -8,11 +8,13 @@ class Diff
 {
     private $revisions;
     private $files;
+    private $rawDiff;
 
-    public function __construct(Revisions $revisions, array $files)
+    public function __construct(Revisions $revisions, array $files, string $rawDiff)
     {
         $this->revisions = $revisions;
         $this->files = $files;
+        $this->rawDiff = $rawDiff;
     }
 
     public function getBase(): string
@@ -28,6 +30,11 @@ class Diff
     public function getFiles(): array
     {
         return $this->files;
+    }
+
+    public function getRawDiff(): string
+    {
+        return $this->rawDiff;
     }
 
     public function getAddedTextFiles(): \Traversable

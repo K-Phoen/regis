@@ -29,7 +29,7 @@ class Repository
 
         return new Model\Diff($revisions, array_map(function(Gitonomy\Diff\File $file) {
             return $this->convertDiffFile($file);
-        }, $gitDiff->getFiles()));
+        }, $gitDiff->getFiles()), $gitDiff->getRawDiff());
     }
 
     private function convertDiffFile(Gitonomy\Diff\File $file): Model\Diff\File

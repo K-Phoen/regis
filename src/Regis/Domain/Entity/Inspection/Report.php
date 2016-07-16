@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Regis\Domain\Entity\Inspection;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Regis\Application\Git\DiffParser;
 use Regis\Domain\Entity\Inspection;
+use Regis\Domain\Model\Git\Diff;
 
 class Report
 {
@@ -17,11 +19,13 @@ class Report
     /** @var ArrayCollection */
     private $analyses;
     private $status = self::STATUS_OK;
+    private $rawDiff;
     private $inspection;
 
-    public function __construct()
+    public function __construct(string $rawDiff)
     {
         $this->analyses = new ArrayCollection();
+        $this->rawDiff = $rawDiff;
     }
 
     public function getId(): string
@@ -107,5 +111,20 @@ class Report
                 yield $violation;
             }
         }
+    }
+
+    public function getRawDiff(): string
+    {
+        return stream_get_contents($this->rawDiff);
+    }
+
+    public function getDiff(): Diff
+    {
+        $rawDiff = $this->getRawDiff();
+
+        $parser = new DiffParser();
+        $files = $parser->parse($rawDiff);
+
+        return new Diff($this->getInspection()->getRevisions(), $files, $rawDiff);
     }
 }

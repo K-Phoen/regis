@@ -33,7 +33,7 @@ class Inspector
 
     private function inspectDiff(Model\Git\Diff $diff): Entity\Inspection\Report
     {
-        $report = new Entity\Inspection\Report();
+        $report = new Entity\Inspection\Report($diff->getRawDiff());
 
         foreach ($this->inspections as $inspection) {
             $analysis = new Entity\Inspection\Analysis($inspection->getType());
