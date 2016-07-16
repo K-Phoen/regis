@@ -10,9 +10,6 @@ services:
         arguments: [ '@regis.github.cached_http_client' ]
         public: false
 
-    regis.github.client:
-        class: DateTime
-
     regis.github.client_factory:
         class: Regis\Infrastructure\Github\ClientFactory
         arguments: [ '@regis.github.github', '@logger' ]

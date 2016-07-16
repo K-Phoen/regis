@@ -6,9 +6,6 @@ namespace Regis\Infrastructure\Bundle\AuthBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Regis\Application\Command;
-use Regis\Domain\Entity;
-
 class AuthController extends Controller
 {
     public function loginAction()

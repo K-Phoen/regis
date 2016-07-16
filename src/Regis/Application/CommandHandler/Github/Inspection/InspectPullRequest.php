@@ -9,7 +9,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatche
 use Regis\Application\Command;
 use Regis\Application\Event;
 use Regis\Application\Inspector;
-use Regis\Domain\Entity;
 use Regis\Domain\Repository;
 
 class InspectPullRequest

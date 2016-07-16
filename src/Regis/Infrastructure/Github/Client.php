@@ -6,20 +6,40 @@ namespace Regis\Infrastructure\Github;
 
 use Psr\Log\LoggerInterface as Logger;
 use Regis\Application\Github\Client as GithubClient;
+use Regis\Domain\Entity\User;
 use Regis\Domain\Model\Github as Model;
 
 class Client implements GithubClient
 {
     private $client;
-    private $apiToken;
+    private $user;
     private $logger;
     private $authenticated = false;
 
-    public function __construct(\Github\Client $client, string $apiToken, Logger $logger)
+    public function __construct(\Github\Client $client, User $user, Logger $logger)
     {
         $this->client = $client;
-        $this->apiToken = $apiToken;
+        $this->user = $user;
         $this->logger = $logger;
+    }
+
+    public function listRepositories(): \Traversable
+    {
+        $this->assertAuthenticated();
+
+        $this->logger->info('Fetching repositories list for user {username}', [
+            'username' => $this->user->getUsername(),
+        ]);
+        $api = $this->client->currentUser();
+        $paginator = new \Github\ResultPager($this->client);
+
+        foreach ($paginator->fetchAll($api, 'repositories') as $repositoryData) {
+            yield new Model\Repository(
+                $repositoryData['full_name'],
+                $repositoryData['html_url'],
+                $repositoryData['private'] ? $repositoryData['clone_url'] : $repositoryData['ssh_url']
+            );
+        }
     }
 
     public function setIntegrationStatus(Model\PullRequest $pullRequest, string $state, string $description, string $context)
@@ -103,7 +123,7 @@ class Client implements GithubClient
     private function assertAuthenticated()
     {
         if (!$this->authenticated) {
-            $this->client->authenticate($this->apiToken, '', \Github\Client::AUTH_URL_TOKEN);
+            $this->client->authenticate($this->user->getGithubAccessToken(), '', \Github\Client::AUTH_URL_TOKEN);
             $this->authenticated = true;
         }
     }
