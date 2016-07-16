@@ -127,4 +127,12 @@ class Report
 
         return new Diff($this->getInspection()->getRevisions(), $files, $rawDiff);
     }
+
+    public function getViolationsAtLine(string $file, int $line): \Traversable
+    {
+        /** @var Analysis $analysis */
+        foreach ($this->analyses as $analysis) {
+            yield from $analysis->getViolationsAtLine($file, $line);
+        }
+    }
 }
