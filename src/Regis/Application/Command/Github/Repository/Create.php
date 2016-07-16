@@ -16,6 +16,7 @@ class Create
     {
         $this->owner = $owner;
         $this->identifier = $identifier;
+        $this->sharedSecret = $sharedSecret;
     }
 
     public function getOwner(): User
