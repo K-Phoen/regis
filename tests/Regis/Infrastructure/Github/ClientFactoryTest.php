@@ -8,6 +8,7 @@ use Psr\Log\LoggerInterface;
 
 use Regis\Domain\Entity\Github\Repository;
 use Regis\Domain\Entity\User;
+use Regis\Infrastructure\Github\Client;
 use Regis\Infrastructure\Github\ClientFactory;
 
 class ClientFactoryTest extends \PHPUnit_Framework_TestCase
@@ -34,10 +35,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
             ->method('getOwner')
             ->will($this->returnValue($owner));
 
-        $owner->expects($this->once())
-            ->method('getGithubAccessToken')
-            ->will($this->returnValue('access token'));
+        $client = $this->clientFactory->createForRepository($repository);
 
-        $this->clientFactory->createForRepository($repository);
+        $this->assertInstanceOf(Client::class, $client);
     }
 }
