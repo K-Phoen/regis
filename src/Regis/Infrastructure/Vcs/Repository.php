@@ -17,7 +17,7 @@ class Repository
     {
         $this->repository = $repository;
     }
-    
+
     public function update()
     {
         $this->repository->run('fetch');
@@ -53,7 +53,7 @@ class Repository
         foreach ($change->getLines() as $i => $line) {
             $lines[] = $this->convertChangeLine($i + 1, $line);
         }
-            
+
         return new Model\Diff\Change(
             (int) $change->getRangeOldStart(),
             (int) $change->getRangeOldCount(),
