@@ -9,13 +9,16 @@
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
-namespace Regis\Application\Git;
+namespace Regis\Domain\Git;
 
 use Gitonomy\Git\Parser\ParserBase;
 
 use Regis\Domain\Model\Git\Blob;
 use Regis\Domain\Model\Git\Diff;
 
+/**
+ * TODO write tests, rewrite
+ */
 class DiffParser extends ParserBase
 {
     private $files = [];

@@ -2,9 +2,9 @@
 
 namespace Tests\Regis\Domain\Model;
 
+use Regis\Domain\Git\DiffParser;
 use Regis\Domain\Model\Git\Blob;
 use Regis\Domain\Model\Git\Diff\File;
-use Tests\Git\DiffParser;
 
 class FileTest extends \PHPUnit_Framework_TestCase
 {

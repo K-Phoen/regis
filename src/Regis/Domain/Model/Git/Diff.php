@@ -4,11 +4,20 @@ declare(strict_types=1);
 
 namespace Regis\Domain\Model\Git;
 
+use Regis\Domain\Git\DiffParser;
+
 class Diff
 {
     private $revisions;
     private $files;
     private $rawDiff;
+
+    public static function fromRawDiff(Revisions $revisions, string $rawDiff): Diff
+    {
+        $files = (new DiffParser())->parse($rawDiff);
+
+        return new static($revisions, $files, $rawDiff);
+    }
 
     public function __construct(Revisions $revisions, array $files, string $rawDiff)
     {

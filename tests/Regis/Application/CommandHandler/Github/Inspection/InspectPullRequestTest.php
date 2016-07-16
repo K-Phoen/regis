@@ -36,7 +36,7 @@ class InspectPullRequestTest extends \PHPUnit_Framework_TestCase
 
     public function testWhenTheInspectionSucessfullyFinishes()
     {
-        $report = new Entity\Inspection\Report();
+        $report = new Entity\Inspection\Report('raw diff');
 
         $this->inspector->expects($this->once())
             ->method('inspect')
