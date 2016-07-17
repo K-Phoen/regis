@@ -9,13 +9,16 @@
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
-namespace Tests\Git;
+namespace Regis\Domain\Git;
 
 use Gitonomy\Git\Parser\ParserBase;
 
 use Regis\Domain\Model\Git\Blob;
 use Regis\Domain\Model\Git\Diff;
 
+/**
+ * TODO write tests, rewrite
+ */
 class DiffParser extends ParserBase
 {
     private $files = [];
@@ -116,16 +119,16 @@ class DiffParser extends ParserBase
                 // 6. Lines
                 $lines = [];
                 $position = 1;
+                $currentLine = $rangeNewStart;
                 while (true) {
                     if ($this->expects(' ')) {
-                        $lines[] = new Diff\Line(Diff\Change::LINE_CONTEXT, $position);
-                        $this->consumeTo("\n");
+                        $lines[] = new Diff\Line(Diff\Change::LINE_CONTEXT, $position, $currentLine, $this->consumeTo("\n"));
+                        $currentLine++;
                     } elseif ($this->expects('+')) {
-                        $lines[] = new Diff\Line(Diff\Change::LINE_ADD, $position);
-                        $this->consumeTo("\n");
+                        $lines[] = new Diff\Line(Diff\Change::LINE_ADD, $position, $currentLine, $this->consumeTo("\n"));
+                        $currentLine++;
                     } elseif ($this->expects('-')) {
-                        $lines[] = new Diff\Line(Diff\Change::LINE_REMOVE, $position);
-                        $this->consumeTo("\n");
+                        $lines[] = new Diff\Line(Diff\Change::LINE_REMOVE, $position, $currentLine, $this->consumeTo("\n"));
                     } elseif ($this->expects("\ No newline at end of file")) {
                         // Ignore this case...
                     } else {

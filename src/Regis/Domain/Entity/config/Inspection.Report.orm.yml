@@ -10,6 +10,8 @@ Regis\Domain\Entity\Inspection\Report:
     fields:
         status:
             type: string
+        rawDiff:
+            type: blob
 
     oneToMany:
         analyses:

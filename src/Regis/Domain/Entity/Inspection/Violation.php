@@ -83,7 +83,7 @@ class Violation
 
     public function getLine(): int
     {
-        return $this->position;
+        return $this->line;
     }
 
     public function __toString(): string

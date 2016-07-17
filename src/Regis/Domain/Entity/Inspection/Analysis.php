@@ -19,10 +19,41 @@ class Analysis
     private $type;
     private $status = self::STATUS_OK;
 
+    private $violationsMap;
+
     public function __construct(string $type)
     {
         $this->violations = new ArrayCollection();
         $this->type = $type;
+    }
+
+    public function getViolationsAtLine(string $file, int $line): array
+    {
+        if ($this->violationsMap === null) {
+            $this->buildViolationsMap();
+        }
+
+        if (!isset($this->violationsMap[sprintf('%s:%d', $file, $line)])) {
+            return [];
+        }
+
+        return $this->violationsMap[sprintf('%s:%d', $file, $line)];
+    }
+
+    private function buildViolationsMap()
+    {
+        $this->violationsMap = [];
+
+        /** @var Violation $violation */
+        foreach ($this->getViolations() as $violation) {
+            $key = sprintf('%s:%d', $violation->getFile(), $violation->getLine());
+
+            if (!isset($this->violationsMap[$key])) {
+                $this->violationsMap[$key] = [];
+            }
+
+            $this->violationsMap[$key][] = $violation;
+        }
     }
 
     public function getId(): string
@@ -42,6 +73,8 @@ class Analysis
 
     public function addViolation(Violation $violation)
     {
+        $this->violationsMap = null;
+
         $violation->setAnalysis($this);
         $this->violations->add($violation);
 

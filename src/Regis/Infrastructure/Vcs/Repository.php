@@ -27,44 +27,6 @@ class Repository
     {
         $gitDiff = $this->repository->getDiff(sprintf('%s..%s', $revisions->getBase(), $revisions->getHead()));
 
-        return new Model\Diff($revisions, array_map(function(Gitonomy\Diff\File $file) {
-            return $this->convertDiffFile($file);
-        }, $gitDiff->getFiles()));
-    }
-
-    private function convertDiffFile(Gitonomy\Diff\File $file): Model\Diff\File
-    {
-        $blob = $this->convertBlob($file->getNewBlob());
-        $changes = array_map(function(Gitonomy\Diff\FileChange $change) {
-            return $this->convertChange($change);
-        }, $file->getChanges());
-
-        return new Model\Diff\File($file->getOldName() ?: $file->getNewName(), $file->getNewName(), $file->isBinary(), $blob, $changes);
-    }
-
-    private function convertBlob(Gitonomy\Blob $blob): Model\Blob
-    {
-        return new Model\Blob($blob->getHash(), $blob->getContent(), $blob->getMimetype());
-    }
-
-    private function convertChange(Gitonomy\Diff\FileChange $change): Model\Diff\Change
-    {
-        $lines = [];
-        foreach ($change->getLines() as $i => $line) {
-            $lines[] = $this->convertChangeLine($i + 1, $line);
-        }
-
-        return new Model\Diff\Change(
-            (int) $change->getRangeOldStart(),
-            (int) $change->getRangeOldCount(),
-            (int) $change->getRangeNewStart(),
-            (int) $change->getRangeNewCount(),
-            $lines
-        );
-    }
-
-    private function convertChangeLine(int $position, array $line): Model\Diff\Line
-    {
-        return new Model\Diff\Line($line[0], $position);
+        return Model\Diff::fromRawDiff($revisions, $gitDiff->getRawDiff());
     }
 }

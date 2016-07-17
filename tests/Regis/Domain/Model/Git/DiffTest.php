@@ -16,17 +16,18 @@ class DiffTest extends \PHPUnit_Framework_TestCase
             ->method('getHead')
             ->will($this->returnValue('head sha'));
 
-        $diff = new Git\Diff($revisions, []);
+        $diff = new Git\Diff($revisions, [], 'raw diff');
 
         $this->assertEquals('base sha', $diff->getBase());
         $this->assertEquals('head sha', $diff->getHead());
+        $this->assertEquals('raw diff', $diff->getRawDiff());
     }
 
     public function testGetAddedTextFilesExcludesBinaryFiles()
     {
         $binaryFile = $this->binaryFile();
         $textFile = $this->textFile();
-        $diff = new Git\Diff($this->revisions(), [$binaryFile, $textFile]);
+        $diff = new Git\Diff($this->revisions(), [$binaryFile, $textFile], 'raw diff');
 
         $this->assertEquals([$textFile], iterator_to_array($diff->getAddedTextFiles()));
         $this->assertEquals([$binaryFile, $textFile], $diff->getFiles());
@@ -36,7 +37,7 @@ class DiffTest extends \PHPUnit_Framework_TestCase
     {
         $renamedFile = $this->renamedFile();
         $textFile = $this->textFile();
-        $diff = new Git\Diff($this->revisions(), [$renamedFile, $textFile]);
+        $diff = new Git\Diff($this->revisions(), [$renamedFile, $textFile], 'raw diff');
 
         $this->assertEquals([$textFile], iterator_to_array($diff->getAddedTextFiles()));
         $this->assertEquals([$renamedFile, $textFile], $diff->getFiles());
@@ -46,7 +47,7 @@ class DiffTest extends \PHPUnit_Framework_TestCase
     {
         $deletedFile = $this->deletedFile();
         $textFile = $this->textFile();
-        $diff = new Git\Diff($this->revisions(), [$deletedFile, $textFile]);
+        $diff = new Git\Diff($this->revisions(), [$deletedFile, $textFile], 'raw diff');
 
         $this->assertEquals([$textFile], iterator_to_array($diff->getAddedTextFiles()));
         $this->assertEquals([$deletedFile, $textFile], $diff->getFiles());

@@ -13,7 +13,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
         $warningAnalysis = $this->analysisMock(Analysis::STATUS_WARNING);
         $warningAnalysis2 = $this->analysisMock(Analysis::STATUS_WARNING);
         $errorAnalysis = $this->analysisMock(Analysis::STATUS_ERROR);
-        $report = new Report();
+        $report = new Report('raw diff');
 
         $this->assertEquals(Report::STATUS_OK, $report->getStatus());
 
@@ -35,7 +35,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
         $okAnalysis = $this->analysisMock(Analysis::STATUS_OK);
         $warningAnalysis = $this->analysisMock(Analysis::STATUS_WARNING);
         $errorAnalysis = $this->analysisMock(Analysis::STATUS_ERROR);
-        $report = new Report();
+        $report = new Report('raw diff');
 
         $this->assertFalse($report->hasErrors());
         $this->assertFalse($report->hasWarnings());
@@ -57,7 +57,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     {
         $analysis = $this->analysisMock(Analysis::STATUS_ERROR, $warnings = 5, $errors = 5);
         $analysis2= $this->analysisMock(Analysis::STATUS_ERROR, $warnings = 3, $errors = 2);
-        $report = new Report();
+        $report = new Report('raw diff');
 
         $this->assertEquals(0, $report->errorsCount());
         $this->assertEquals(0, $report->warningsCount());

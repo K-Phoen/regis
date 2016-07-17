@@ -1,0 +1,35 @@
+table.diff {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: separate;
+  box-sizing: border-box;
+}
+
+table.diff td {
+  line-height: 1.5em;
+}
+
+table.diff tr.diff-type-addition {
+  background-color: #dbffdb;
+  border-color: #c1e9c1;
+}
+
+table.diff tr.diff-type-deletion {
+  background-color: #ffdddd;
+  border-color: #f1c0c0;
+}
+
+table.diff td.blob-line::before {
+  content: attr(data-line-number);
+}
+
+table.diff .blob-change-type, table.diff .blob-raw-code {
+  overflow: visible;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  word-wrap: normal;
+  white-space: pre;
+}
+
+table.diff .blob-change-type::before {
+  content: attr(data-change-symbol);
+}
