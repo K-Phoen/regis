@@ -16,7 +16,10 @@
 
     <filter>
         <whitelist>
-          <directory>./src/</directory>
+            <directory>./src/</directory>
+            <exclude>
+                <directory>./src/Regis/Infrastructure/Bundle/AppBundle/DataFixtures/</directory>
+            </exclude>
         </whitelist>
     </filter>
 </phpunit>
