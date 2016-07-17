@@ -3,13 +3,13 @@
 namespace Regis\Infrastructure\Bundle\AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Regis\Domain\Entity;
 use Regis\Domain\Model\Github\PullRequest;
 
-class LoadInspectionData extends AbstractFixture implements FixtureInterface
+class LoadInspectionData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -30,5 +30,10 @@ class LoadInspectionData extends AbstractFixture implements FixtureInterface
         $manager->flush();
 
         $this->addReference('inspection/github-test-pr-42', $inspection);
+    }
+
+    public function getOrder()
+    {
+        return 3;
     }
 }

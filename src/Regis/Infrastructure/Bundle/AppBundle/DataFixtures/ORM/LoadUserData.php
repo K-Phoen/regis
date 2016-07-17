@@ -3,12 +3,12 @@
 namespace Regis\Infrastructure\Bundle\AppBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
-use Doctrine\Common\DataFixtures\FixtureInterface;
+use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 use Regis\Domain\Entity\User;
 
-class LoadUserData extends AbstractFixture implements FixtureInterface
+class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -21,5 +21,10 @@ class LoadUserData extends AbstractFixture implements FixtureInterface
         $manager->flush();
 
         $this->addReference('user/user', $user);
+    }
+
+    public function getOrder()
+    {
+        return 1;
     }
 }
