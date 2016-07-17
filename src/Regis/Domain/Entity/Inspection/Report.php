@@ -120,12 +120,7 @@ class Report
 
     public function getDiff(): Diff
     {
-        $rawDiff = $this->getRawDiff();
-
-        $parser = new DiffParser();
-        $files = $parser->parse($rawDiff);
-
-        return new Diff($this->getInspection()->getRevisions(), $files, $rawDiff);
+        return Diff::fromRawDiff($this->getInspection()->getRevisions(), $this->getRawDiff());
     }
 
     public function getViolationsAtLine(string $file, int $line): \Traversable
