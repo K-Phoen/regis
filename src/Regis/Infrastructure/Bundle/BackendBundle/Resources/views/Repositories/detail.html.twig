@@ -23,6 +23,10 @@
             <td><code>{{ repository.sharedSecret }}</code></td>
         </tr>
         <tr>
+            <th>GitHub Webhook URL</th>
+            <td><code>{{ url('webhook_github') }}</code></td>
+        </tr>
+        <tr>
             <th>Actions</th>
             <td>
                 <form method="POST" action="{{ path('repositories_setup_webhook', {'identifier': repository.identifier}) }}">
