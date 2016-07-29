@@ -33,7 +33,7 @@ class Client implements GithubClient
         $api = $this->client->currentUser();
         $paginator = new \Github\ResultPager($this->client);
 
-        foreach ($paginator->fetchAll($api, 'repositories') as $repositoryData) {
+        foreach ($paginator->fetchAll($api, 'repositories', ['all']) as $repositoryData) {
             yield new Model\Repository(
                 $repositoryData['full_name'],
                 $repositoryData['html_url'],
