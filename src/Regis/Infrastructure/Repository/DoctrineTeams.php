@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Regis\Infrastructure\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
@@ -7,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Regis\Domain\Entity;
 use Regis\Domain\Repository;
 
-class DoctrineRepositories implements Repository\Repositories
+class DoctrineTeams implements Repository\Teams
 {
     /** @var EntityManagerInterface */
     private $em;
@@ -17,30 +19,30 @@ class DoctrineRepositories implements Repository\Repositories
         $this->em = $em;
     }
 
-    public function save(Entity\Repository $team)
+    public function save(Entity\Team $team)
     {
         $this->em->persist($team);
         $this->em->flush();
     }
 
     /**
-     * TODO handle teams
+     * TODO handle simple memberships
      */
     public function findForUser(Entity\User $user): \Traversable
     {
-        return new \ArrayIterator($this->em->getRepository(Entity\Repository::class)->findBy([
+        return new \ArrayIterator($this->em->getRepository(Entity\Team::class)->findBy([
             'owner' => $user,
         ]));
     }
 
-    public function find(string $id): Entity\Repository
+    public function find(string $id): Entity\Team
     {
-        $repository = $this->em->getRepository(Entity\Repository::class)->find($id);
+        $team = $this->em->getRepository(Entity\Team::class)->find($id);
 
-        if ($repository === null) {
+        if ($team === null) {
             throw Repository\Exception\NotFound::forIdentifier($id);
         }
         
-        return $repository;
+        return $team;
     }
 }

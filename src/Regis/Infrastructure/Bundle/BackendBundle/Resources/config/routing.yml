@@ -46,3 +46,18 @@ report_detail:
     path:      /reports/{id}
     defaults:  { _controller: RegisBackendBundle:Reports:detail }
     methods:   GET
+
+teams_list:
+    path:      /teams
+    defaults:  { _controller: RegisBackendBundle:Teams:list }
+    methods:   GET
+
+teams_new:
+    path:      /teams/new
+    defaults:  { _controller: RegisBackendBundle:Teams:create }
+    methods:   GET
+
+teams_create:
+    path:      /teams/create
+    defaults:  { _controller: RegisBackendBundle:Teams:create }
+    methods:   POST

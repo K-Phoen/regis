@@ -17,9 +17,9 @@ class InMemoryRepositories implements Repository\Repositories
         }
     }
 
-    public function save(Entity\Repository $repository)
+    public function save(Entity\Repository $team)
     {
-        $this->repositories[$repository->getIdentifier()] = $repository;
+        $this->repositories[$team->getIdentifier()] = $team;
     }
 
     public function findForUser(Entity\User $user): \Traversable

@@ -10,3 +10,7 @@ services:
     regis.repository.users:
         class: Regis\Infrastructure\Repository\DoctrineUsers
         arguments: [ '@doctrine.orm.entity_manager' ]
+
+    regis.repository.teams:
+        class: Regis\Infrastructure\Repository\DoctrineTeams
+        arguments: [ '@doctrine.orm.entity_manager' ]

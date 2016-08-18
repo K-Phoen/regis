@@ -21,6 +21,8 @@ class User implements UserInterface
     private $roles = [];
     private $password;
     private $repositories;
+    private $ownedTeams;
+    private $teams;
 
     public static function createAdmin(string $username, string $password): User
     {
@@ -100,6 +102,16 @@ class User implements UserInterface
     public function getRepositories(): \Traversable
     {
         return $this->repositories;
+    }
+
+    public function getOwnedTeams(): \Traversable
+    {
+        return $this->ownedTeams;
+    }
+
+    public function getTeams(): \Traversable
+    {
+        return $this->teams;
     }
 
     /**

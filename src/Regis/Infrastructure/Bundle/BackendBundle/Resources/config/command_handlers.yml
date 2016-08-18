@@ -58,3 +58,9 @@ services:
         arguments: [ '@regis.repository.users' ]
         tags:
             - { name: tactician.handler, command: Regis\Application\Command\User\CreateOrUpdateUser }
+
+    regis.command_handler.teams.create:
+        class: Regis\Application\CommandHandler\Team\Create
+        arguments: [ '@regis.repository.teams' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\Team\Create }
