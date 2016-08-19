@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Regis\Infrastructure\Bundle\AuthBundle\Security;
 
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;

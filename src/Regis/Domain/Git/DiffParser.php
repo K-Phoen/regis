@@ -1,4 +1,7 @@
 <?php
+
+declare(strict_types=1);
+
 /**
  * This file was part of Gitonomy and has been modified to suit our needs.
  *
@@ -108,10 +111,10 @@ class DiffParser extends ParserBase
             $changes = [];
             while ($this->expects('@@ ')) {
                 $vars = $this->consumeRegexp('/-(\d+)(?:,(\d+))? \+(\d+)(?:,(\d+))?/');
-                $rangeOldStart = $vars[1];
-                $rangeOldCount = $vars[2];
-                $rangeNewStart = $vars[3];
-                $rangeNewCount = $vars[4] ?? $vars[2]; // @todo Ici, t'as pris un gros raccourci mon loulou
+                $rangeOldStart = (int) $vars[1];
+                $rangeOldCount = (int) $vars[2];
+                $rangeNewStart = (int) $vars[3];
+                $rangeNewCount = (int) $vars[4] ?? $vars[2]; // @todo Ici, t'as pris un gros raccourci mon loulou
                 $this->consume(' @@');
                 $this->consumeTo("\n");
                 $this->consumeNewLine();

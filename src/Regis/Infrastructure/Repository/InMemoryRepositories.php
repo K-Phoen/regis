@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Regis\Infrastructure\Repository;
 
 use Regis\Domain\Entity;

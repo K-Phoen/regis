@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Regis\Infrastructure\Bundle\BackendBundle\Command;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;

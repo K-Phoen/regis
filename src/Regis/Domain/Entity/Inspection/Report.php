@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Regis\Domain\Entity\Inspection;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Regis\Application\Git\DiffParser;
 use Regis\Domain\Entity\Inspection;
 use Regis\Domain\Model\Git\Diff;
 

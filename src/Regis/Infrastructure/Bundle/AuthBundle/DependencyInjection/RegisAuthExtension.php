@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Regis\Infrastructure\Bundle\AuthBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
