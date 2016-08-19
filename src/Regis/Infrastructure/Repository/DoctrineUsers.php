@@ -25,6 +25,20 @@ class DoctrineUsers implements Repository\Users
         $this->em->flush();
     }
 
+    /**
+     * TODO improve!
+     */
+    public function search(string $terms): \Traversable
+    {
+        $repo = $this->em->getRepository(Entity\User::class);
+
+        return new \ArrayIterator($repo->createQueryBuilder('u')
+            ->where('u.username LIKE :terms OR u.email LIKE :terms')
+            ->setParameter('terms', '%'.$terms.'%')
+            ->getQuery()
+            ->getResult());
+    }
+
     public function findByGithubId(int $id): Entity\User
     {
         $user = $this->em->getRepository(Entity\User::class)->findOneBy(['githubId' => $id]);
@@ -36,7 +50,7 @@ class DoctrineUsers implements Repository\Users
         return $user;
     }
 
-    public function findById(int $id): Entity\User
+    public function findById(string $id): Entity\User
     {
         $user = $this->em->getRepository(Entity\User::class)->find($id);
 

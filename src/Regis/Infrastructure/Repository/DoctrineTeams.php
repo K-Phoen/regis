@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Infrastructure\Repository;
 
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Regis\Domain\Entity;
@@ -22,7 +23,12 @@ class DoctrineTeams implements Repository\Teams
     public function save(Entity\Team $team)
     {
         $this->em->persist($team);
-        $this->em->flush();
+
+        try {
+            $this->em->flush();
+        } catch (UniqueConstraintViolationException $e) {
+            throw new Repository\Exception\UniqueConstraintViolation($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     /**

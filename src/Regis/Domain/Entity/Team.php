@@ -55,4 +55,9 @@ class Team
     {
         return $this->members;
     }
+
+    public function addMember(User $newMember)
+    {
+        $this->members->add($newMember);
+    }
 }

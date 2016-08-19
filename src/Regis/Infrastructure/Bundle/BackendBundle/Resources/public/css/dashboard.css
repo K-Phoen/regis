@@ -131,3 +131,31 @@ ul#repositories-list .add-repository {
 ul#repositories-list li:hover {
   background-color: #f5f5f5;
 }
+
+/*
+ * Add member to a team form
+ */
+
+ul#users-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul#users-list li {
+  display: table-row;
+  line-height: 2.5rem;
+  padding: 5px;
+}
+
+ul#users-list .name, ul#users-list li:hover > .add-user {
+  display: table-cell;
+}
+
+ul#users-list .add-user  {
+  display: none;
+  margin-left: 1rem;
+}
+
+ul#users-list li:hover {
+  background-color: #f5f5f5;
+}

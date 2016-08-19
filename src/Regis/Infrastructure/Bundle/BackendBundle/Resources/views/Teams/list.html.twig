@@ -24,7 +24,7 @@
                 </td>
                 <td>
                     <div class="btn-group" role="group">
-                        <a href="">Add member</a>
+                        <a href="{{ path('teams_members_new', {'id': team.id}) }}">Add member</a>
                         {% if not team.isOwner(app.user) %}
                             <a href="">Leave</a>
                         {% endif %}

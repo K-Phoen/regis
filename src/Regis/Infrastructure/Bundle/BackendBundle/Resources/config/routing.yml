@@ -61,3 +61,19 @@ teams_create:
     path:      /teams/create
     defaults:  { _controller: RegisBackendBundle:Teams:create }
     methods:   POST
+
+teams_members_new:
+    path:      /teams/{id}/members/add
+    defaults:  { _controller: RegisBackendBundle:TeamAddMember:addMember }
+    methods:   GET
+
+teams_members_create:
+    path:      /teams/{id}/members/create
+    defaults:  { _controller: RegisBackendBundle:TeamAddMember:submitMembership }
+    methods:   POST
+
+teams_user_search:
+    path:      /teams/users
+    defaults:  { _controller: RegisBackendBundle:TeamAddMember:userSearch }
+    methods:   GET
+    options:   { expose: true }
