@@ -3,6 +3,7 @@
 namespace Tests\Regis\Infrastructure\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
+use RulerZ\RulerZ;
 
 use Regis\Domain\Entity;
 use Regis\Infrastructure\Repository\DoctrineUsers;
@@ -11,17 +12,20 @@ class DoctrineUsersTest extends \PHPUnit_Framework_TestCase
 {
     /** @var EntityManagerInterface */
     private $em;
+    /** @var RulerZ */
+    private $rulerz;
     /** @var DoctrineUsers */
     private $usersRepo;
 
     public function setUp()
     {
         $this->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
+        $this->rulerz = $this->getMockBuilder(RulerZ::class)->disableOriginalConstructor()->getMock();
 
-        $this->usersRepo = new DoctrineUsers($this->em);
+        $this->usersRepo = new DoctrineUsers($this->em, $this->rulerz);
     }
 
-    public function testSaveInspection()
+    public function testSaveUser()
     {
         $user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
 

@@ -59,15 +59,4 @@ class DoctrineUsers implements Repository\Users
 
         return $user;
     }
-
-    public function findByUsername(string $username): Entity\User
-    {
-        $user = $this->em->getRepository(Entity\User::class)->findOneBy(['username' => $username]);
-
-        if ($user === null) {
-            throw Repository\Exception\NotFound::forIdentifier($username);
-        }
-
-        return $user;
-    }
 }
