@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: bundles/knpu_oauth2_client.yml }
+    - { resource: bundles/kphoen_rulerz.yml }
     - { resource: bundles/regis_webhooks.yml }
     - { resource: bundles/old_sound_rabbit_mq.yml }
     - { resource: bundles/snc_redis.yml }

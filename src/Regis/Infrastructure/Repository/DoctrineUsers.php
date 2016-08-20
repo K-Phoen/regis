@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Regis\Infrastructure\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
+use RulerZ\RulerZ;
+use RulerZ\Spec\Specification;
 
 use Regis\Domain\Entity;
 use Regis\Domain\Repository;
@@ -13,10 +15,13 @@ class DoctrineUsers implements Repository\Users
 {
     /** @var EntityManagerInterface */
     private $em;
+    /** @var RulerZ */
+    private $rulerz;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, RulerZ $rulerz)
     {
         $this->em = $em;
+        $this->rulerz = $rulerz;
     }
 
     public function save(Entity\User $user)
@@ -25,18 +30,12 @@ class DoctrineUsers implements Repository\Users
         $this->em->flush();
     }
 
-    /**
-     * TODO improve!
-     */
-    public function search(string $terms): \Traversable
+    public function matching(Specification $spec): \Traversable
     {
         $repo = $this->em->getRepository(Entity\User::class);
+        $qb = $repo->createQueryBuilder('u');
 
-        return new \ArrayIterator($repo->createQueryBuilder('u')
-            ->where('u.username LIKE :terms OR u.email LIKE :terms')
-            ->setParameter('terms', '%'.$terms.'%')
-            ->getQuery()
-            ->getResult());
+        return $this->rulerz->filterSpec($qb, $spec);
     }
 
     public function findByGithubId(int $id): Entity\User
@@ -44,7 +43,7 @@ class DoctrineUsers implements Repository\Users
         $user = $this->em->getRepository(Entity\User::class)->findOneBy(['githubId' => $id]);
 
         if ($user === null) {
-            throw Repository\Exception\NotFound::forIdentifier($id);
+            throw Repository\Exception\NotFound::forIdentifier((string) $id);
         }
 
         return $user;

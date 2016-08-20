@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 use Regis\Application\Command;
+use Regis\Application\Spec;
 use Regis\Domain\Entity;
 
 class TeamAddMemberController extends Controller
@@ -42,8 +43,7 @@ class TeamAddMemberController extends Controller
         if (empty($q)) {
             $results = [];
         } else {
-            // use rulerz to retrieve users matching the search, but not already member of the given team
-            $results = $this->get('regis.repository.users')->search($q);
+            $results = $this->get('regis.repository.users')->matching(new Spec\User\Matches($q));
             // TODO eurk
             $results = array_map(function(Entity\User $user) {
                 return [
