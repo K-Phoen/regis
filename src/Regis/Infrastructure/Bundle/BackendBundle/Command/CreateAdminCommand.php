@@ -28,6 +28,11 @@ class CreateAdminCommand extends ContainerAwareCommand
                 'Its username.'
             )
             ->addOption(
+                'email', 'm',
+                InputOption::VALUE_REQUIRED,
+                'Its email.'
+            )
+            ->addOption(
                 'password', 'p',
                 InputOption::VALUE_REQUIRED,
                 'Its password.'
@@ -46,6 +51,10 @@ class CreateAdminCommand extends ContainerAwareCommand
             $input->setOption('username', $io->ask('Username'));
         }
 
+        if (!$input->getOption('email')) {
+            $input->setOption('email', $io->ask('Email'));
+        }
+
         if (!$input->getOption('password')) {
             $input->setOption('password', $io->askHidden('Password'));
         }
@@ -58,7 +67,8 @@ class CreateAdminCommand extends ContainerAwareCommand
     {
         $command = new Command\User\CreateAdmin(
             $input->getOption('username'),
-            $input->getOption('password')
+            $input->getOption('password'),
+            $input->getOption('email')
         );
 
         $this->getContainer()->get('tactician.commandbus')->handle($command);

@@ -24,9 +24,10 @@ class User implements UserInterface
     private $ownedTeams;
     private $teams;
 
-    public static function createAdmin(string $username, string $password): User
+    public static function createAdmin(string $username, string $password, string $email): User
     {
         $user = new static($username, $password);
+        $user->changeEmail($email);
         $user->changePassword($password);
         $user->roles = ['ROLE_ADMIN'];
 

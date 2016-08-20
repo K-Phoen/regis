@@ -26,7 +26,7 @@ class CreateAdminTest extends \PHPUnit_Framework_TestCase
 
     public function testItCreatesAnAdmin()
     {
-        $command = new Command\User\CreateAdmin('admin', 'password');
+        $command = new Command\User\CreateAdmin('admin', 'password', 'email');
 
         $this->passwordEncoder->expects($this->once())
             ->method('encodePassword')
@@ -37,7 +37,8 @@ class CreateAdminTest extends \PHPUnit_Framework_TestCase
             ->method('save')
             ->with($this->callback(function(Entity\User $user) {
                 return in_array('ROLE_ADMIN', $user->getRoles())
-                    && $user->getPassword() === 'encoded password';
+                    && $user->getPassword() === 'encoded password'
+                    && $user->getEmail() === 'email';
             }));
 
         $this->handler->handle($command);
