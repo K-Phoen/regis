@@ -19,6 +19,11 @@ Regis\Domain\Entity\Repository:
         sharedSecret:
             type: string
 
+    manyToMany:
+        teams:
+          targetEntity: Regis\Domain\Entity\Team
+          mappedBy: repositories
+
     manyToOne:
         owner:
           targetEntity: Regis\Domain\Entity\User

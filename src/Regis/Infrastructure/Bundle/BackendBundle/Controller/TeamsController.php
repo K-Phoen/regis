@@ -8,13 +8,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use Regis\Application\Command;
+use Regis\Application\Spec;
 use Regis\Infrastructure\Bundle\BackendBundle\Form;
 
 class TeamsController extends Controller
 {
     public function listAction()
     {
-        $teams = $this->get('regis.repository.teams')->findForUser($this->getUser());
+        $teams = $this->get('regis.repository.teams')->matching(new Spec\Team\AccessibleBy($this->getUser()));
 
         return $this->render('@RegisBackend/Teams/list.html.twig', [
             'teams' => $teams

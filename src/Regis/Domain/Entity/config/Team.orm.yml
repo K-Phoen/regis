@@ -22,6 +22,7 @@ Regis\Domain\Entity\Team:
     manyToMany:
         repositories:
           targetEntity: Regis\Domain\Entity\Repository
+          inversedBy: teams
           joinTable:
             name: repositories_teams
             inverseJoinColumns:

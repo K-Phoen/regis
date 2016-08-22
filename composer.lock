@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "8bf5638232e27fa2aaf09a89a170b1d4",
-    "content-hash": "44dd4f0300c052bcbaddf2eedb73e61c",
+    "hash": "ac32f591d1f960ee5c19f96e39ef3d9f",
+    "content-hash": "3f31ef26f526653528b9164f706b63bd",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -2300,16 +2300,16 @@
         },
         {
             "name": "kphoen/rulerz",
-            "version": "0.19.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/K-Phoen/rulerz.git",
-                "reference": "41236e2d1936ed4adfa126957e13017f728d4eca"
+                "reference": "24820b6e9575afcd56f79e5de388b334b3aa2c0b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/K-Phoen/rulerz/zipball/41236e2d1936ed4adfa126957e13017f728d4eca",
-                "reference": "41236e2d1936ed4adfa126957e13017f728d4eca",
+                "url": "https://api.github.com/repos/K-Phoen/rulerz/zipball/24820b6e9575afcd56f79e5de388b334b3aa2c0b",
+                "reference": "24820b6e9575afcd56f79e5de388b334b3aa2c0b",
                 "shasum": ""
             },
             "require": {
@@ -2366,11 +2366,11 @@
                 "doctrine",
                 "specification"
             ],
-            "time": "2016-03-18 08:34:34"
+            "time": "2016-08-22 18:26:09"
         },
         {
             "name": "kphoen/rulerz-bundle",
-            "version": "0.12.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/K-Phoen/RulerZBundle.git",
@@ -5739,10 +5739,19 @@
             "time": "2015-08-24 13:29:44"
         }
     ],
-    "aliases": [],
+    "aliases": [
+        {
+            "alias": "0.20.0",
+            "alias_normalized": "0.20.0.0",
+            "version": "9999999-dev",
+            "package": "kphoen/rulerz"
+        }
+    ],
     "minimum-stability": "stable",
     "stability-flags": {
-        "snc/redis-bundle": 20
+        "snc/redis-bundle": 20,
+        "kphoen/rulerz": 20,
+        "kphoen/rulerz-bundle": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

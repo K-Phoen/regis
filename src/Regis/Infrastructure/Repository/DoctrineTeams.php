@@ -6,6 +6,9 @@ namespace Regis\Infrastructure\Repository;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\QueryBuilder;
+use RulerZ\RulerZ;
+use RulerZ\Spec\Specification;
 
 use Regis\Domain\Entity;
 use Regis\Domain\Repository;
@@ -14,10 +17,13 @@ class DoctrineTeams implements Repository\Teams
 {
     /** @var EntityManagerInterface */
     private $em;
+    /** @var RulerZ */
+    private $rulerz;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, RulerZ $rulerz)
     {
         $this->em = $em;
+        $this->rulerz = $rulerz;
     }
 
     public function save(Entity\Team $team)
@@ -31,24 +37,27 @@ class DoctrineTeams implements Repository\Teams
         }
     }
 
-    /**
-     * TODO handle simple memberships
-     */
-    public function findForUser(Entity\User $user): \Traversable
+    public function matching(Specification $spec): \Traversable
     {
-        return new \ArrayIterator($this->em->getRepository(Entity\Team::class)->findBy([
-            'owner' => $user,
-        ]));
+        /** @var QueryBuilder $qb */
+        $qb = $this->repo()->createQueryBuilder('t');
+
+        return $this->rulerz->filterSpec($qb, $spec);
     }
 
     public function find(string $id): Entity\Team
     {
-        $team = $this->em->getRepository(Entity\Team::class)->find($id);
+        $team = $this->repo()->find($id);
 
         if ($team === null) {
             throw Repository\Exception\NotFound::forIdentifier($id);
         }
         
         return $team;
+    }
+
+    private function repo()
+    {
+        return $this->em->getRepository(Entity\Team::class);
     }
 }

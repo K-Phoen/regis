@@ -16,6 +16,7 @@ class TeamAddMemberController extends Controller
 {
     /**
      * TODO improve UI
+     * TODO check authorizations
      */
     public function addMemberAction(Entity\Team $team)
     {
@@ -24,6 +25,9 @@ class TeamAddMemberController extends Controller
         ]);
     }
 
+    /**
+     * TODO check authorizations
+     */
     public function submitMembershipAction(Request $request, Entity\Team $team)
     {
         $command = new Command\Team\AddMember($team, $request->request->get('new_member_id'));

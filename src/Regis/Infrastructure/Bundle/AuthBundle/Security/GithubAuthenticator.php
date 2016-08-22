@@ -51,7 +51,7 @@ class GithubAuthenticator extends SocialAuthenticator
 
         $command = new Command\User\CreateOrUpdateUser(
             $githubUser->getNickname(),
-            $githubUser->getId(),
+            (int) $githubUser->getId(),
             $githubUser->getEmail(),
             $credentials->getToken()
         );
