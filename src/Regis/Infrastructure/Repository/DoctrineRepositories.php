@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Regis\Infrastructure\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use RulerZ\RulerZ;
 use RulerZ\Spec\Specification;
@@ -31,24 +32,6 @@ class DoctrineRepositories implements Repository\Repositories
         $this->em->flush();
     }
 
-    /**
-     * TODO handle teams
-     */
-    public function findForUser(Entity\User $user): \Traversable
-    {
-        /** @var QueryBuilder $qb */
-        $qb = $this->repo()->createQueryBuilder('r');
-
-        $qb
-            ->innerJoin('r.teams', 't')
-            ->innerJoin('t.members', 'm')
-            ->andWhere('r.owner = :user_id')
-            ->orWhere('m.id = :user_id')
-            ->setParameter('user_id', $user->getId());
-
-        return new \ArrayIterator($qb->getQuery()->execute());
-    }
-
     public function matching(Specification $spec): \Traversable
     {
         /** @var QueryBuilder $qb */
@@ -68,7 +51,7 @@ class DoctrineRepositories implements Repository\Repositories
         return $repository;
     }
 
-    private function repo()
+    private function repo(): EntityRepository
     {
         return $this->em->getRepository(Entity\Repository::class);
     }

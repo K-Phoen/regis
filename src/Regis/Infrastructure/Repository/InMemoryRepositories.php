@@ -4,35 +4,35 @@ declare(strict_types=1);
 
 namespace Regis\Infrastructure\Repository;
 
+use RulerZ\RulerZ;
+use RulerZ\Spec\Specification;
+
 use Regis\Domain\Entity;
 use Regis\Domain\Repository;
 
 class InMemoryRepositories implements Repository\Repositories
 {
     private $repositories = [];
+    private $rulerz;
 
-    public function __construct(array $repositories)
+    public function __construct(RulerZ $rulerz, array $repositories)
     {
+        $this->rulerz = $rulerz;
+
         /** @var Entity\Repository $repository */
         foreach ($repositories as $repository) {
             $this->repositories[$repository->getIdentifier()] = $repository;
         }
     }
 
+    public function matching(Specification $spec): \Traversable
+    {
+        return $this->rulerz->filterSpec($this->repositories, $spec);
+    }
+
     public function save(Entity\Repository $team)
     {
         $this->repositories[$team->getIdentifier()] = $team;
-    }
-
-    public function findForUser(Entity\User $user): \Traversable
-    {
-        foreach ($this->repositories as $repo) {
-            if ($repo->getOwner() != $user) {
-                continue;
-            }
-
-            yield $repo;
-        }
     }
 
     public function find(string $id): Entity\Repository

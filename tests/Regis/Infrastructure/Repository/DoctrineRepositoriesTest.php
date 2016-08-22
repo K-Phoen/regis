@@ -2,32 +2,38 @@
 
 namespace Tests\Regis\Infrastructure\Repository;
 
-use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use RulerZ\RulerZ;
 
 use Regis\Infrastructure\Repository\DoctrineRepositories;
 use Regis\Domain\Entity;
+use RulerZ\Spec\Specification;
 
 class DoctrineRepositoriesTest extends \PHPUnit_Framework_TestCase
 {
     /** @var EntityManagerInterface */
     private $em;
-    /** @var ObjectRepository */
+    /** @var EntityRepository */
     private $doctrineRepository;
     /** @var DoctrineRepositories */
     private $repositoriesRepo;
+    /** @var RulerZ */
+    private $rulerz;
 
     public function setUp()
     {
         $this->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
-        $this->doctrineRepository =$this->getMockBuilder(ObjectRepository::class)->getMock();
+        $this->doctrineRepository =$this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
+        $this->rulerz = $this->getMockBuilder(RulerZ::class)->disableOriginalConstructor()->getMock();
 
         $this->em->expects($this->any())
             ->method('getRepository')
             ->with(Entity\Repository::class)
             ->will($this->returnValue($this->doctrineRepository));
 
-        $this->repositoriesRepo = new DoctrineRepositories($this->em);
+        $this->repositoriesRepo = new DoctrineRepositories($this->em, $this->rulerz);
     }
 
     public function testSaveRepository()
@@ -42,19 +48,22 @@ class DoctrineRepositoriesTest extends \PHPUnit_Framework_TestCase
 
         $this->repositoriesRepo->save($repository);
     }
-
-    public function testFindForUser()
+    public function testMatching()
     {
-        $user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
-        $repository = $this->getMockBuilder(Entity\Repository::class)->disableOriginalConstructor()->getMock();
-        $allRepositories = [$repository];
+        $qb = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
+        $spec = $this->getMockBuilder(Specification::class)->getMock();
+        $results = new \ArrayIterator();
 
         $this->doctrineRepository->expects($this->once())
-            ->method('findBy')
-            ->with(['owner' => $user])
-            ->will($this->returnValue($allRepositories));
+            ->method('createQueryBuilder')
+            ->will($this->returnValue($qb));
 
-        $this->assertEquals($allRepositories, iterator_to_array($this->repositoriesRepo->findForUser($user)));
+        $this->rulerz->expects($this->once())
+            ->method('filterSpec')
+            ->with($qb, $spec)
+            ->will($this->returnValue($results));
+
+        $this->assertSame($results, $this->repositoriesRepo->matching($spec));
     }
 
     public function testFindWhenTheRepositoryExists()
