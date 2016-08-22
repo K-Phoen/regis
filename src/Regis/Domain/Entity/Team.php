@@ -60,4 +60,9 @@ class Team
     {
         $this->members->add($newMember);
     }
+
+    public function addRepository(Repository $repository)
+    {
+        $this->repositories->add($repository);
+    }
 }

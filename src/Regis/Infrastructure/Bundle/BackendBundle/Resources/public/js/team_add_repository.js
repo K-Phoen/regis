@@ -2,25 +2,25 @@
     var resultsLlist,
         previousSearch;
 
-    function displayUsersList(users) {
+    function displayRepositoriesList(repositories) {
         resultsLlist.empty();
 
-        $(users).each(function(i, user) {
+        $(repositories).each(function(i, repo) {
             resultsLlist.append(
                 '<li>' +
-                    user.username + ' — ' + user.email +
-                    '<button type="button" data-identifier="'+user.id+'" class="add-user btn btn-primary btn-xs">Add</button>' +
+                    repo.identifier +
+                    '<button type="button" data-identifier="'+repo.identifier+'" class="add-repository btn btn-primary btn-xs">Add</button>' +
                 '</li>'
             );
         });
     }
 
-    function initAddUserButtons() {
-        var form = $('#team-add-member');
+    function initAddRepositoryButtons() {
+        var form = $('#team-add-repository');
 
-        $('#users-list').on('click', '.add-user', function() {
+        $('#repositories-list').on('click', '.add-repository', function() {
             $(this).prop('disabled', true);
-            $('input[name=new_member_id]', form).val($(this).data('identifier'));
+            $('input[name=new_repository_id]', form).val($(this).data('identifier'));
             form.submit();
         });
     }
@@ -29,14 +29,14 @@
         previousSearch && previousSearch.abort();
 
         resultsLlist.html('<li>Loading...</li>');
-        previousSearch = $.ajax(Routing.generate('teams_user_search', {'q': terms}))
+        previousSearch = $.ajax(Routing.generate('teams_repository_search', {'q': terms}))
             .done(function(result) {
-                displayUsersList(result.users);
+                displayRepositoriesList(result.repositories);
             });
     }
 
     function initSearch() {
-        var searchField = $('#user-search');
+        var searchField = $('#repository-search');
 
         searchField.parents('form').on('submit', function(e) {
             e.preventDefault();
@@ -46,7 +46,7 @@
             var searchTerms = searchField.val();
 
             if (searchTerms.length === 0) {
-                displayUsersList([]);
+                displayRepositoriesList([]);
                 return;
             }
 
@@ -55,9 +55,9 @@
     }
 
     $(function() {
-        resultsLlist = $('#users-list');
+        resultsLlist = $('#repositories-list');
 
-        initAddUserButtons();
+        initAddRepositoryButtons();
         initSearch();
     });
 })(jQuery);

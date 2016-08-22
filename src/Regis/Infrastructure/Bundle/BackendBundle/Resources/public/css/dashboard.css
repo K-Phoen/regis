@@ -133,29 +133,29 @@ ul#repositories-list li:hover {
 }
 
 /*
- * Add member to a team form
+ * Add member/repository to a team form
  */
 
-ul#users-list {
+ul#users-list, ul#repositories-list {
   list-style-type: none;
   padding: 0;
 }
 
-ul#users-list li {
+ul#users-list li, ul#repositories-list li {
   display: table-row;
   line-height: 2.5rem;
   padding: 5px;
 }
 
-ul#users-list .name, ul#users-list li:hover > .add-user {
+ul#users-list .name, ul#users-list li:hover > .add-user, ul#repositories-list .name, ul#repositories-list li:hover > .add-repository {
   display: table-cell;
 }
 
-ul#users-list .add-user  {
+ul#users-list .add-user, ul#repositories-list .add-repository  {
   display: none;
   margin-left: 1rem;
 }
 
-ul#users-list li:hover {
+ul#users-list li:hover, ul#repositories-list li:hover {
   background-color: #f5f5f5;
 }

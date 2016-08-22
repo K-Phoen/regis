@@ -77,3 +77,19 @@ teams_user_search:
     defaults:  { _controller: RegisBackendBundle:TeamAddMember:userSearch }
     methods:   GET
     options:   { expose: true }
+
+teams_repositories_new:
+    path:      /teams/{id}/repositories/add
+    defaults:  { _controller: RegisBackendBundle:TeamAddRepository:addRepository }
+    methods:   GET
+
+teams_repositories_create:
+    path:      /teams/{id}/repositories/create
+    defaults:  { _controller: RegisBackendBundle:TeamAddRepository:submitRepository }
+    methods:   POST
+
+teams_repository_search:
+    path:      /teams/repositories
+    defaults:  { _controller: RegisBackendBundle:TeamAddRepository:repositorySearch }
+    methods:   GET
+    options:   { expose: true }
