@@ -2304,12 +2304,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/K-Phoen/rulerz.git",
-                "reference": "24820b6e9575afcd56f79e5de388b334b3aa2c0b"
+                "reference": "7d9e02f861382d1db09791aed5d77b5d7c8e13d2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/K-Phoen/rulerz/zipball/24820b6e9575afcd56f79e5de388b334b3aa2c0b",
-                "reference": "24820b6e9575afcd56f79e5de388b334b3aa2c0b",
+                "url": "https://api.github.com/repos/K-Phoen/rulerz/zipball/7d9e02f861382d1db09791aed5d77b5d7c8e13d2",
+                "reference": "7d9e02f861382d1db09791aed5d77b5d7c8e13d2",
                 "shasum": ""
             },
             "require": {
@@ -2366,7 +2366,7 @@
                 "doctrine",
                 "specification"
             ],
-            "time": "2016-08-22 18:26:09"
+            "time": "2016-08-22 19:25:21"
         },
         {
             "name": "kphoen/rulerz-bundle",
