@@ -90,12 +90,18 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function getGithubId(): int
+    /**
+     * @return int|null
+     */
+    public function getGithubId()
     {
         return $this->githubId;
     }
 
-    public function getGithubAccessToken(): string
+    /**
+     * @return string|null
+     */
+    public function getGithubAccessToken()
     {
         return $this->githubAccessToken;
     }
