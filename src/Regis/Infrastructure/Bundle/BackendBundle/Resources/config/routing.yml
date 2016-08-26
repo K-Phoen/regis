@@ -93,6 +93,11 @@ teams_repositories_create:
     defaults:  { _controller: RegisBackendBundle:TeamAddRepository:submitRepository }
     methods:   POST
 
+teams_repositories_remove:
+    path:      /teams/{id}/repositories/remove
+    defaults:  { _controller: RegisBackendBundle:TeamAddRepository:removeRepository }
+    methods:   POST
+
 teams_repository_search:
     path:      /teams/repositories
     defaults:  { _controller: RegisBackendBundle:TeamAddRepository:repositorySearch }

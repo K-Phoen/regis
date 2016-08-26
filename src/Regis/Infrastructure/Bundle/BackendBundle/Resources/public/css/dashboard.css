@@ -164,21 +164,21 @@ ul#users-list li:hover, ul#repositories-list li:hover {
  * Remove member/repository to a team form
  */
 
-ul#members-list li {
+ul#members-list li, ul#team-repo-list li {
   display: table-row;
   line-height: 2.5rem;
   padding: 5px;
 }
 
-ul#members-list .name, ul#members-list li:hover > .remove-user {
+ul#members-list .name, ul#members-list li:hover > .remove-user, ul#team-repo-list .name, ul#team-repo-list li:hover > .remove-repo {
   display: table-cell;
 }
 
-ul#members-list .remove-user {
+ul#members-list .remove-user, ul#team-repo-list .remove-repo {
   display: none;
   margin-left: 1rem;
 }
 
-ul#members-list li:hover {
+ul#members-list li:hover, ul#team-repo-list li:hover {
   background-color: #f5f5f5;
 }

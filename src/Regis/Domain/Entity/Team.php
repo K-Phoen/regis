@@ -70,4 +70,9 @@ class Team
     {
         $this->repositories->add($repository);
     }
+
+    public function removeRepository(Repository $repository)
+    {
+        $this->repositories->removeElement($repository);
+    }
 }

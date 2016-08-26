@@ -82,3 +82,9 @@ services:
         arguments: [ '@regis.repository.teams', '@regis.repository.repositories' ]
         tags:
             - { name: tactician.handler, command: Regis\Application\Command\Team\AddRepository }
+
+    regis.command_handler.teams.remove_repository:
+        class: Regis\Application\CommandHandler\Team\RemoveRepository
+        arguments: [ '@regis.repository.teams', '@regis.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\Team\RemoveRepository }
