@@ -27,13 +27,20 @@
         <div class="col-sm-6">
             <h3>Current members</h3>
 
-            <ul>
+            <ul id="members-list">
                 {% for member in team.members %}
-                    <li>{{ member.username }} – {{ member.email }}</li>
+                    <li>
+                        <span class="name">{{ member.username }} – {{ member.email }}</span>
+                        <button type="button" data-identifier="{{ member.id }}" class="remove-user btn btn-danger btn-xs">Remove</button>
+                    </li>
                 {% else %}
                     <li>No member.</li>
                 {% endfor %}
             </ul>
+
+            <form style="display: none" id="team-remove-member" action="{{ path('teams_members_remove', {'id': team.id}) }}" method="POST">
+                <input type="hidden" name="member_id"  />
+            </form>
         </div>
     </div>
 </div>
@@ -46,4 +53,5 @@
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
     <script src="{{ asset('bundles/regisbackend/js/team_add_member.js') }}"></script>
+    <script src="{{ asset('bundles/regisbackend/js/team_remove_member.js') }}"></script>
 {% endblock %}

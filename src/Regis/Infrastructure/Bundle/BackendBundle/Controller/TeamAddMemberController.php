@@ -38,6 +38,19 @@ class TeamAddMemberController extends Controller
         return $this->redirectToRoute('teams_list');
     }
 
+    /**
+     * TODO check authorizations
+     */
+    public function removeMembershipAction(Request $request, Entity\Team $team)
+    {
+        $command = new Command\Team\RemoveMember($team, $request->request->get('member_id'));
+
+        $this->get('tactician.commandbus')->handle($command);
+        $this->addFlash('info', 'Done.');
+
+        return $this->redirectToRoute('teams_list');
+    }
+
     public function userSearchAction(Request $request)
     {
         $q = $request->query->get('q');

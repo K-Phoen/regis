@@ -61,6 +61,11 @@ class Team
         $this->members->add($newMember);
     }
 
+    public function removeMember(User $member)
+    {
+        $this->members->removeElement($member);
+    }
+
     public function addRepository(Repository $repository)
     {
         $this->repositories->add($repository);

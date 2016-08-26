@@ -71,6 +71,12 @@ services:
         tags:
             - { name: tactician.handler, command: Regis\Application\Command\Team\AddMember }
 
+    regis.command_handler.teams.remove_member:
+        class: Regis\Application\CommandHandler\Team\RemoveMember
+        arguments: [ '@regis.repository.teams', '@regis.repository.users' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\Team\RemoveMember }
+
     regis.command_handler.teams.add_repository:
         class: Regis\Application\CommandHandler\Team\AddRepository
         arguments: [ '@regis.repository.teams', '@regis.repository.repositories' ]
