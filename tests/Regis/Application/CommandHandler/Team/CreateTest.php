@@ -2,8 +2,6 @@
 
 namespace Tests\Regis\Application\CommandHandler\Team;
 
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
 use Regis\Domain\Entity;
