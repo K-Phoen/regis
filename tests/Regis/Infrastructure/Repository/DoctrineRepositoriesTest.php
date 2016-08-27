@@ -48,6 +48,7 @@ class DoctrineRepositoriesTest extends \PHPUnit_Framework_TestCase
 
         $this->repositoriesRepo->save($repository);
     }
+
     public function testMatching()
     {
         $qb = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
