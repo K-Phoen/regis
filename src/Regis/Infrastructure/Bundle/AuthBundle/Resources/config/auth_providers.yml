@@ -2,3 +2,12 @@ services:
     regis.auth.github_authenticator:
         class: Regis\Infrastructure\Bundle\AuthBundle\Security\GithubAuthenticator
         arguments: [ '@knpu.oauth2.registry', '@regis.repository.users', '@tactician.commandbus', '@router' ]
+
+    regis.security.context:
+        class: Regis\Infrastructure\Bundle\AuthBundle\Security\Context
+        arguments: [ '@security.token_storage' ]
+
+    regis.security.listener.access_denied:
+        class: Regis\Infrastructure\Bundle\AuthBundle\Security\AccessDeniedListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 200 }
