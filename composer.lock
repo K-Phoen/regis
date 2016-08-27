@@ -2374,12 +2374,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/K-Phoen/RulerZBundle.git",
-                "reference": "e57da1ca5806c31bfd0bb93089bc71cbf7324ad1"
+                "reference": "3d07954ab14016a4c6a62ab072694537556220a4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/K-Phoen/RulerZBundle/zipball/e57da1ca5806c31bfd0bb93089bc71cbf7324ad1",
-                "reference": "e57da1ca5806c31bfd0bb93089bc71cbf7324ad1",
+                "url": "https://api.github.com/repos/K-Phoen/RulerZBundle/zipball/3d07954ab14016a4c6a62ab072694537556220a4",
+                "reference": "3d07954ab14016a4c6a62ab072694537556220a4",
                 "shasum": ""
             },
             "require": {
@@ -2417,7 +2417,7 @@
                 "rulerz",
                 "specification"
             ],
-            "time": "2016-06-11 19:36:50"
+            "time": "2016-08-27 15:52:51"
         },
         {
             "name": "league/oauth2-client",
