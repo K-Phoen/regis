@@ -13,6 +13,9 @@ cache:
 php:
     - 7.0
 
+env:
+    - SYMFONY_DEPRECATIONS_HELPER=disabled
+
 matrix:
     fast_finish: true
 
