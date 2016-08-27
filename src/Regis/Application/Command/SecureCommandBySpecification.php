@@ -10,11 +10,6 @@ use Regis\Domain\Entity;
 
 interface SecureCommandBySpecification
 {
-    /**
-     * @param Entity\User $user
-     *
-     * @return Specification
-     */
     function executionAuthorizedFor(Entity\User $user): Specification;
 
     function getTargetToSecure();

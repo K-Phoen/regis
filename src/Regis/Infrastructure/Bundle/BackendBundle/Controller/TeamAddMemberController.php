@@ -25,9 +25,6 @@ class TeamAddMemberController extends Controller
         ]);
     }
 
-    /**
-     * TODO check authorizations
-     */
     public function submitMembershipAction(Request $request, Entity\Team $team)
     {
         $command = new Command\Team\AddMember($team, $request->request->get('new_member_id'));
@@ -38,9 +35,6 @@ class TeamAddMemberController extends Controller
         return $this->redirectToRoute('teams_list');
     }
 
-    /**
-     * TODO check authorizations
-     */
     public function removeMembershipAction(Request $request, Entity\Team $team)
     {
         $command = new Command\Team\RemoveMember($team, $request->request->get('member_id'));
@@ -55,8 +49,7 @@ class TeamAddMemberController extends Controller
     {
         $q = $request->query->get('q');
 
-        // TODO should be in a command
-        // TODO verify authorizations
+        // TODO should be in a command?
         if (empty($q)) {
             $results = [];
         } else {
