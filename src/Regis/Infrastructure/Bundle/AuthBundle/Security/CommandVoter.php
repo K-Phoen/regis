@@ -35,7 +35,7 @@ class CommandVoter extends Voter
         }
 
         if (!$this->commandIsSecure($commandClassName)) {
-            return false;
+            return true;
         }
 
         return $this->executionAuthorized($commandClassName, $token->getUser(), $subject);
