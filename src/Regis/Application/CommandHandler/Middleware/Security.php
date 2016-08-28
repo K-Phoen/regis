@@ -5,10 +5,9 @@ declare(strict_types = 1);
 namespace Regis\Application\CommandHandler\Middleware;
 
 use League\Tactician\Middleware;
-use Regis\Application\Command\SecureCommandBySpecification;
 use RulerZ\RulerZ;
-use RulerZ\Spec\Specification;
 
+use Regis\Application\Command\SecureCommandBySpecification;
 use Regis\Application\Command\SecureCommand;
 use Regis\Application\Security\Context as SecurityContext;
 use Regis\Application\Security\Exception\AccessDenied;
@@ -26,11 +25,16 @@ class Security implements Middleware
 
     public function execute($command, callable $next)
     {
-        if (($command instanceof SecureCommand || $command instanceof SecureCommandBySpecification) && !$this->executionAuthorized($command)) {
+        if ($this->commandIsSecure($command) && !$this->executionAuthorized($command)) {
             throw AccessDenied::forCommand($command);
         }
 
         $next($command);
+    }
+
+    private function commandIsSecure($command): bool
+    {
+        return $command instanceof SecureCommand || $command instanceof SecureCommandBySpecification;
     }
 
     /**
