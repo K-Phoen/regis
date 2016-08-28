@@ -7,14 +7,14 @@ use RulerZ\Spec\Specification;
 use Regis\Application\Command;
 use Regis\Domain\Entity;
 
-class AddMemberTest extends \PHPUnit_Framework_TestCase
+class LeaveTest extends \PHPUnit_Framework_TestCase
 {
     public function testCommandIsSecured()
     {
         $user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
         $team = $this->getMockBuilder(Entity\Team::class)->disableOriginalConstructor()->getMock();
 
-        $command = new Command\Team\AddMember($team, 'new-member-id');
+        $command = new Command\Team\Leave($team, $user);
 
         $this->assertInstanceOf(Command\SecureCommandBySpecification::class, $command);
         $this->assertInstanceOf(Specification::class, $command::executionAuthorizedFor($user));
