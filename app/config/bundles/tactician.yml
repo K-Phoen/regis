@@ -8,9 +8,16 @@ services:
         tags:
             - { name: monolog.logger, channel: command_bus }
 
+    regis.tactician.middleware.security:
+        class: Regis\Application\CommandHandler\Middleware\Security
+        arguments: [ '@rulerz', '@regis.security.context' ]
+        tags:
+            - { name: monolog.logger, channel: command_bus }
+
 tactician:
     commandbus:
         default:
             middleware:
                 - regis.tactician.middleware.logger
+                - regis.tactician.middleware.security
                 - tactician.middleware.command_handler

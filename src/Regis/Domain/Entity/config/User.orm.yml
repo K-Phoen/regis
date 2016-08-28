@@ -30,3 +30,12 @@ Regis\Domain\Entity\User:
         repositories:
           targetEntity: Regis\Domain\Entity\Repository
           mappedBy: owner
+
+        ownedTeams:
+          targetEntity: Regis\Domain\Entity\Team
+          mappedBy: owner
+
+    manyToMany:
+        teams:
+          targetEntity: Regis\Domain\Entity\Team
+          mappedBy: members

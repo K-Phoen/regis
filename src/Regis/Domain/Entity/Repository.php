@@ -14,6 +14,8 @@ abstract class Repository
     private $sharedSecret;
     /** @var ArrayCollection */
     private $inspections;
+    /** @var ArrayCollection */
+    private $teams;
     private $owner;
 
     abstract public function getType(): string;
@@ -24,6 +26,7 @@ abstract class Repository
         $this->identifier = $identifier;
         $this->sharedSecret = $sharedSecret;
         $this->inspections = new ArrayCollection();
+        $this->teams = new ArrayCollection();
     }
 
     public function newSharedSecret(string $sharedSecret)
@@ -54,5 +57,10 @@ abstract class Repository
     public function getInspections(): \Traversable
     {
         return $this->inspections;
+    }
+
+    public function getTeams(): \Traversable
+    {
+        return $this->teams;
     }
 }

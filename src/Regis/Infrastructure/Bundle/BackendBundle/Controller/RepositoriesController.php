@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use Regis\Application\Command;
+use Regis\Application\Spec;
 use Regis\Domain\Entity;
 use Regis\Infrastructure\Bundle\BackendBundle\Form;
 
@@ -16,7 +17,7 @@ class RepositoriesController extends Controller
 {
     public function listAction()
     {
-        $repositories = $this->get('regis.repository.repositories')->findForUser($this->getUser());
+        $repositories = $this->get('regis.repository.repositories')->matching(new Spec\Repository\AccessibleBy($this->getUser()));
 
         return $this->render('@RegisBackend/Repositories/list.html.twig', [
             'repositories' => $repositories
@@ -25,7 +26,7 @@ class RepositoriesController extends Controller
 
     public function lastRepositoriesAction()
     {
-        $repositories = $this->get('regis.repository.repositories')->findForUser($this->getUser());
+        $repositories = $this->get('regis.repository.repositories')->matching(new Spec\Repository\AccessibleBy($this->getUser()));
 
         return $this->render('@RegisBackend/Repositories/_last_repositories.html.twig', [
             'repositories' => $repositories

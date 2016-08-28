@@ -1,0 +1,55 @@
+{% extends '::layout.html.twig' %}
+
+{% import '::utils.html.twig' as utils %}
+
+{% block content %}
+<h1 class="page-header">Teams</h1>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Team</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for team in teams %}
+            <tr>
+                <td>
+                    {% if team.isOwner(app.user) %}
+                        <span class="label label-primary">Owner</span>
+                    {% endif %}
+                    {{ team.name }}
+                </td>
+                <td>
+                    <div class="btn-group" role="group">
+                        {% if is_granted('COMMAND_TEAM::ADD_MEMBER', team) %}
+                            <a href="{{ path('teams_members_new', {'id': team.id}) }}">Add member</a>
+                        {% endif %}
+                        {% if is_granted('COMMAND_TEAM::ADD_REPOSITORY', team) %}
+                            <a href="{{ path('teams_repositories_new', {'id': team.id}) }}">Add repository</a>
+                        {% endif %}
+                        {% if is_granted('COMMAND_TEAM::LEAVE', team) %}
+                            <form action="{{ path('teams_leave', {'id': team.id}) }}" method="POST">
+                                <input class="btn btn-sm btn-danger" type="submit" value="Leave" />
+                            </form>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">No team yet.</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+        <tfoot>
+            <tr>
+                <td colspan="2"><a href="{{ path('teams_new') }}" class="btn btn-primary">Add new</a></td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+{% endblock %}

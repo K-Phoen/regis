@@ -28,6 +28,10 @@
                     </div>
                 </td>
             </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">No repository yet, <a href="{{ path('repositories_new') }}" class="btn btn-sm btn-primary">add one!</a></td>
+            </tr>
         {% endfor %}
         </tbody>
 

@@ -2,6 +2,8 @@
 
 namespace Tests\Regis\Application\Github;
 
+use RulerZ\Compiler as RulerZCompiler;
+use RulerZ\RulerZ;
 use Symfony\Component\HttpFoundation\Request;
 
 use Regis\Application\Github\Exception\PayloadSignature;
@@ -17,8 +19,9 @@ class PayloadValidatorTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $admin = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+        $rulerz = new RulerZ(new RulerZCompiler\Compiler(new RulerZCompiler\EvalEvaluator()));
 
-        $repositoriesRepo = new Repository\InMemoryRepositories([
+        $repositoriesRepo = new Repository\InMemoryRepositories($rulerz, [
             new Entity\Github\Repository($admin, 'k-phoen/test', 'some_awesome_secret'),
         ]);
 

@@ -7,13 +7,15 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
 
+use Regis\Application\Spec;
+
 abstract class WebTestCase extends BaseTestCase
 {
     protected function logIn(Client $client, string $username)
     {
         $container = $client->getContainer();
         $session = $container->get('session');
-        $user = $container->get('regis.repository.users')->findByUsername($username);
+        $user = current($container->get('regis.repository.users')->matching(new Spec\User\Named($username)));
 
         $firewall = 'main';
         $token = new PostAuthenticationGuardToken($user, 'github', $user->getRoles());

@@ -42,7 +42,10 @@
 
         "friendsofsymfony/jsrouting-bundle": "^1.6",
 
-        "ircmaxell/random-lib": "^1.1"
+        "ircmaxell/random-lib": "^1.1",
+
+        "kphoen/rulerz": "dev-master as 0.20.0",
+        "kphoen/rulerz-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

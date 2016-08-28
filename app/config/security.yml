@@ -30,6 +30,7 @@ security:
         main:
             pattern: ^/
             provider: regis_db_provider
+            switch_user: true
             anonymous: ~
             remember_me:
                 secret: '%secret%'

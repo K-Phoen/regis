@@ -1,0 +1,57 @@
+{% extends '::layout.html.twig' %}
+
+{% block content %}
+<h1 class="page-header">Add repository to team « {{ team.name }} »</h1>
+
+<div class="container-fluid">
+    <div class="row">
+
+        <div class="col-sm-6">
+            <form class="form-inline">
+                <div class="form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+                        <input type="text" class="form-control" id="repository-search" placeholder="Search…">
+                    </div>
+                </div>
+            </form>
+
+            <ul id="repositories-list">
+            </ul>
+
+            <form style="display: none" id="team-add-repository" action="{{ path('teams_repositories_create', {'id': team.id}) }}" method="POST">
+                <input type="hidden" name="new_repository_id"  />
+            </form>
+        </div>
+
+        <div class="col-sm-6">
+            <h3>Current repositories</h3>
+
+            <ul id="team-repo-list">
+                {% for repo in team.repositories %}
+                    <li>
+                        <span class="name">{{ repo.identifier }}</span>
+                        <button type="button" data-identifier="{{ repo.identifier }}" class="remove-repo btn btn-danger btn-xs">Remove</button>
+                    </li>
+                {% else %}
+                    <li>No repository.</li>
+                {% endfor %}
+            </ul>
+
+            <form style="display: none" id="team-remove-repository" action="{{ path('teams_repositories_remove', {'id': team.id}) }}" method="POST">
+                <input type="hidden" name="repository_id"  />
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+    <script src="{{ asset('bundles/regisbackend/js/team_add_repository.js') }}"></script>
+    <script src="{{ asset('bundles/regisbackend/js/team_remove_repository.js') }}"></script>
+{% endblock %}

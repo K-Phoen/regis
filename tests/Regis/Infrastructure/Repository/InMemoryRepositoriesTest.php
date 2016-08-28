@@ -4,28 +4,33 @@ namespace Tests\Regis\Infrastructure\Repository;
 
 use Regis\Infrastructure\Repository\InMemoryRepositories;
 use Regis\Domain\Entity;
+use RulerZ\RulerZ;
+use RulerZ\Spec\Specification;
 
 class InMemoryRepositoriesTest extends \PHPUnit_Framework_TestCase
 {
     private $owner;
+    private $rulerz;
 
     public function setUp()
     {
+        $this->rulerz = $this->getMockBuilder(RulerZ::class)->disableOriginalConstructor()->getMock();
         $this->owner = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
     }
 
-    public function testFindForUser()
+    public function testMatching()
     {
-        $otherOwner = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+        $spec = $this->getMockBuilder(Specification::class)->getMock();
 
-        $repo = new InMemoryRepositories([
-            $expectedRepo = new Entity\Github\Repository($this->owner, 'k-phoen/test', 'some_awesome_secret'),
-            new Entity\Github\Repository($otherOwner, 'k-phoen/test', 'some_awesome_secret'),
-        ]);
+        $repo = new InMemoryRepositories($this->rulerz, $originalData = [/* not relevant here */]);
+        $results = new \ArrayIterator(['not relevant']);
 
-        $this->assertInstanceOf(\Generator::class, $result = $repo->findForUser($this->owner));
-        $this->assertCount(1, $data = iterator_to_array($result));
-        $this->assertEquals([$expectedRepo], $data);
+        $this->rulerz->expects($this->once())
+            ->method('filterSpec')
+            ->with($originalData, $spec)
+            ->will($this->returnValue($results));
+
+        $this->assertSame($results, $repo->matching($spec));
     }
 
     /**
@@ -33,7 +38,7 @@ class InMemoryRepositoriesTest extends \PHPUnit_Framework_TestCase
      */
     public function testFindThrowAnExceptionIfTheEntityDoesNotExist()
     {
-        $repo = new InMemoryRepositories([
+        $repo = new InMemoryRepositories($this->rulerz, [
             new Entity\Github\Repository($this->owner, 'some identifier', 'shared secret'),
         ]);
 
@@ -42,7 +47,7 @@ class InMemoryRepositoriesTest extends \PHPUnit_Framework_TestCase
 
     public function testFindReturnsTheEntityIfItExists()
     {
-        $repo = new InMemoryRepositories([
+        $repo = new InMemoryRepositories($this->rulerz, [
             new Entity\Github\Repository($this->owner, 'some identifier', 'shared secret'),
         ]);
 
@@ -55,7 +60,7 @@ class InMemoryRepositoriesTest extends \PHPUnit_Framework_TestCase
 
     public function testARepositoryCanBeSaved()
     {
-        $repo = new InMemoryRepositories([]);
+        $repo = new InMemoryRepositories($this->rulerz, []);
 
         $entity = new Entity\Github\Repository($this->owner, 'some identifier', 'shared secret');
         $repo->save($entity);

@@ -14,31 +14,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RepositoryCreatorController extends Controller
 {
-    public function newAction(Request $request)
+    public function newAction()
     {
-        $form = $form = $this->createForm(Form\NewRepositoryType::class, null, [
-            'action' => $this->generateUrl('repositories_new'),
-        ]);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $command = new Command\Github\Repository\Create(
-                $this->getUser(),
-                $form->get('identifier')->getData(),
-                $form->get('sharedSecret')->getData()
-            );
-
-            $this->get('tactician.commandbus')->handle($command);
-
-            $this->addFlash('info', 'Repository added.');
-
-            return $this->redirectToRoute('repositories_list');
-        }
-
-        return $this->render('@RegisBackend/Repositories/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
+        return $this->render('@RegisBackend/Repositories/new.html.twig');
     }
 
     public function remoteRepositoriesListAction()

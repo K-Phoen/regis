@@ -1,7 +1,7 @@
 services:
     regis.repository.repositories:
         class: Regis\Infrastructure\Repository\DoctrineRepositories
-        arguments: [ '@doctrine.orm.entity_manager' ]
+        arguments: [ '@doctrine.orm.entity_manager', '@rulerz' ]
 
     regis.repository.inspections:
         class: Regis\Infrastructure\Repository\DoctrineInspections
@@ -9,4 +9,8 @@ services:
 
     regis.repository.users:
         class: Regis\Infrastructure\Repository\DoctrineUsers
-        arguments: [ '@doctrine.orm.entity_manager' ]
+        arguments: [ '@doctrine.orm.entity_manager', '@rulerz' ]
+
+    regis.repository.teams:
+        class: Regis\Infrastructure\Repository\DoctrineTeams
+        arguments: [ '@doctrine.orm.entity_manager', '@rulerz' ]

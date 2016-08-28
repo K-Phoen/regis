@@ -26,7 +26,7 @@ class CreateAdmin
 
     public function handle(Command\User\CreateAdmin $command)
     {
-        $user = User::createAdmin($command->getUsername(), $command->getPassword());
+        $user = User::createAdmin($command->getUsername(), $command->getPassword(), $command->getEmail());
         $encodedPassword = $this->passwordEncoder->encodePassword($user, $command->getPassword());
 
         $user->changePassword($encodedPassword);

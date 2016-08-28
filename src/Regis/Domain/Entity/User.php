@@ -21,10 +21,13 @@ class User implements UserInterface
     private $roles = [];
     private $password;
     private $repositories;
+    private $ownedTeams;
+    private $teams;
 
-    public static function createAdmin(string $username, string $password): User
+    public static function createAdmin(string $username, string $password, string $email): User
     {
         $user = new static($username, $password);
+        $user->changeEmail($email);
         $user->changePassword($password);
         $user->roles = ['ROLE_ADMIN'];
 
@@ -87,12 +90,18 @@ class User implements UserInterface
         return $this->email;
     }
 
-    public function getGithubId(): int
+    /**
+     * @return int|null
+     */
+    public function getGithubId()
     {
         return $this->githubId;
     }
 
-    public function getGithubAccessToken(): string
+    /**
+     * @return string|null
+     */
+    public function getGithubAccessToken()
     {
         return $this->githubAccessToken;
     }
@@ -100,6 +109,16 @@ class User implements UserInterface
     public function getRepositories(): \Traversable
     {
         return $this->repositories;
+    }
+
+    public function getOwnedTeams(): \Traversable
+    {
+        return $this->ownedTeams;
+    }
+
+    public function getTeams(): \Traversable
+    {
+        return $this->teams;
     }
 
     /**
