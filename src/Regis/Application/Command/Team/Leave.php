@@ -10,15 +10,15 @@ use Regis\Application\Command;
 use Regis\Application\Spec\Team;
 use Regis\Domain\Entity;
 
-class AddMember implements Command\SecureCommandBySpecification
+class Leave implements Command\SecureCommandBySpecification
 {
     private $team;
-    private $newMemberId;
+    private $user;
 
-    public function __construct(Entity\Team $team, string $newMemberId)
+    public function __construct(Entity\Team $team, Entity\User $user)
     {
         $this->team = $team;
-        $this->newMemberId = $newMemberId;
+        $this->user = $user;
     }
 
     public function getTeam(): Entity\Team
@@ -26,14 +26,14 @@ class AddMember implements Command\SecureCommandBySpecification
         return $this->team;
     }
 
-    public function getNewMemberId(): string
+    public function getUser(): Entity\User
     {
-        return $this->newMemberId;
+        return $this->user;
     }
 
     public static function executionAuthorizedFor(Entity\User $user): Specification
     {
-        return new Team\IsOwner($user);
+        return (new Team\IsOwner($user))->not();
     }
 
     public function getTargetToSecure()

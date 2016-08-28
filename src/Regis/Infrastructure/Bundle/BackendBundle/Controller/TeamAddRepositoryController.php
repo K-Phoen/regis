@@ -16,7 +16,6 @@ class TeamAddRepositoryController extends Controller
 {
     /**
      * TODO improve UI
-     * TODO check authorizations
      */
     public function addRepositoryAction(Entity\Team $team)
     {

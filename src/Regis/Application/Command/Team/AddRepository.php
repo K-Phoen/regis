@@ -31,7 +31,7 @@ class AddRepository implements Command\SecureCommandBySpecification
         return $this->newRepositoryId;
     }
 
-    public function executionAuthorizedFor(Entity\User $user): Specification
+    public static function executionAuthorizedFor(Entity\User $user): Specification
     {
         return new Team\IsOwner($user);
     }

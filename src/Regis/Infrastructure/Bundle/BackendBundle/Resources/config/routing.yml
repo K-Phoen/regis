@@ -77,6 +77,11 @@ teams_members_remove:
     defaults:  { _controller: RegisBackendBundle:TeamAddMember:removeMembership }
     methods:   POST
 
+teams_leave:
+    path:      /teams/{id}/leave
+    defaults:  { _controller: RegisBackendBundle:TeamAddMember:leave }
+    methods:   POST
+
 teams_user_search:
     path:      /teams/users
     defaults:  { _controller: RegisBackendBundle:TeamAddMember:userSearch }

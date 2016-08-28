@@ -16,7 +16,6 @@ class TeamAddMemberController extends Controller
 {
     /**
      * TODO improve UI
-     * TODO check authorizations
      */
     public function addMemberAction(Entity\Team $team)
     {
@@ -38,6 +37,16 @@ class TeamAddMemberController extends Controller
     public function removeMembershipAction(Request $request, Entity\Team $team)
     {
         $command = new Command\Team\RemoveMember($team, $request->request->get('member_id'));
+
+        $this->get('tactician.commandbus')->handle($command);
+        $this->addFlash('info', 'Done.');
+
+        return $this->redirectToRoute('teams_list');
+    }
+
+    public function leaveAction(Entity\Team $team)
+    {
+        $command = new Command\Team\Leave($team, $this->getUser());
 
         $this->get('tactician.commandbus')->handle($command);
         $this->addFlash('info', 'Done.');

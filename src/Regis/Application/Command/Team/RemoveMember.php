@@ -31,7 +31,7 @@ class RemoveMember implements Command\SecureCommandBySpecification
         return $this->memberId;
     }
 
-    public function executionAuthorizedFor(Entity\User $user): Specification
+    public static function executionAuthorizedFor(Entity\User $user): Specification
     {
         return new Team\IsOwner($user);
     }

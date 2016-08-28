@@ -9,6 +9,7 @@ use Regis\Application\Command;
 use Regis\Application\CommandHandler\Middleware;
 use Regis\Application\Security\Context;
 use RulerZ\Spec\Specification;
+use Tests\Stub\CommandSecureBySpecification;
 
 class SecurityTest extends \PHPUnit_Framework_TestCase
 {
@@ -82,21 +83,13 @@ class SecurityTest extends \PHPUnit_Framework_TestCase
     public function testASecureCommandBySpecificationWhenTheAuthorizationIsGiven()
     {
         $target = new \stdClass();
-        $command = $this->getMockBuilder(Command\SecureCommandBySpecification::class)->getMock();
         $spec = $this->getMockBuilder(Specification::class)->getMock();
+        $command = new CommandSecureBySpecification($spec, $target);
         $nextCalled = false;
 
         $next = function($command) use (&$nextCalled) {
             $nextCalled = true;
         };
-
-        $command->expects($this->once())
-            ->method('executionAuthorizedFor')
-            ->with($this->user)
-            ->will($this->returnValue($spec));
-        $command->expects($this->once())
-            ->method('getTargetToSecure')
-            ->will($this->returnValue($target));
 
         $this->rulerz->expects($this->once())
             ->method('satisfiesSpec')
@@ -114,18 +107,10 @@ class SecurityTest extends \PHPUnit_Framework_TestCase
     public function testASecureCommandBySpecificationWhenTheAuthorizationIsNotGiven()
     {
         $target = new \stdClass();
-        $command = $this->getMockBuilder(Command\SecureCommandBySpecification::class)->getMock();
         $spec = $this->getMockBuilder(Specification::class)->getMock();
+        $command = new CommandSecureBySpecification($spec, $target);
 
         $next = function($command) use (&$nextCalled) {};
-
-        $command->expects($this->once())
-            ->method('executionAuthorizedFor')
-            ->with($this->user)
-            ->will($this->returnValue($spec));
-        $command->expects($this->once())
-            ->method('getTargetToSecure')
-            ->will($this->returnValue($target));
 
         $this->rulerz->expects($this->once())
             ->method('satisfiesSpec')

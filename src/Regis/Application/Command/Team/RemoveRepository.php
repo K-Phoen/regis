@@ -31,7 +31,7 @@ class RemoveRepository implements Command\SecureCommandBySpecification
         return $this->repositoryId;
     }
 
-    public function executionAuthorizedFor(Entity\User $user): Specification
+    public static function executionAuthorizedFor(Entity\User $user): Specification
     {
         return new Team\IsOwner($user);
     }

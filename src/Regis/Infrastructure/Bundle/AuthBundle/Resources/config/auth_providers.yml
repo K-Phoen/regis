@@ -11,3 +11,10 @@ services:
         class: Regis\Infrastructure\Bundle\AuthBundle\Security\AccessDeniedListener
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 200 }
+
+    regis.security.voter.command:
+        class: Regis\Infrastructure\Bundle\AuthBundle\Security\CommandVoter
+        arguments: [ '@rulerz' ]
+        public: false
+        tags:
+            - { name: security.voter }

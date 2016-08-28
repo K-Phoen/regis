@@ -24,13 +24,23 @@
                 </td>
                 <td>
                     <div class="btn-group" role="group">
-                        <a href="{{ path('teams_members_new', {'id': team.id}) }}">Add member</a>
-                        <a href="{{ path('teams_repositories_new', {'id': team.id}) }}">Add repository</a>
-                        {% if not team.isOwner(app.user) %}
-                            <a href="">Leave</a>
+                        {% if is_granted('COMMAND_TEAM::ADD_MEMBER', team) %}
+                            <a href="{{ path('teams_members_new', {'id': team.id}) }}">Add member</a>
+                        {% endif %}
+                        {% if is_granted('COMMAND_TEAM::ADD_REPOSITORY', team) %}
+                            <a href="{{ path('teams_repositories_new', {'id': team.id}) }}">Add repository</a>
+                        {% endif %}
+                        {% if is_granted('COMMAND_TEAM::LEAVE', team) %}
+                            <form action="{{ path('teams_leave', {'id': team.id}) }}" method="POST">
+                                <input class="btn btn-sm btn-danger" type="submit" value="Leave" />
+                            </form>
                         {% endif %}
                     </div>
                 </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="2">No team yet.</td>
             </tr>
         {% endfor %}
         </tbody>
