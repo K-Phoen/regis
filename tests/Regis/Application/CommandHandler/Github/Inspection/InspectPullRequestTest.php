@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\CommandHandler\Github\Inspection;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
 use Regis\Application\Command;
@@ -19,6 +20,7 @@ class InspectPullRequestTest extends \PHPUnit_Framework_TestCase
     private $inspection;
     private $pullRequest;
     private $inspectionsRepo;
+    private $logger;
     /** @var CommandHandler\Github\Inspection\InspectPullRequest */
     private $handler;
 
@@ -27,11 +29,12 @@ class InspectPullRequestTest extends \PHPUnit_Framework_TestCase
         $this->dispatcher = $this->getMockBuilder(EventDispatcher::class)->getMock();
         $this->inspector = $this->getMockBuilder(Inspector::class)->disableOriginalConstructor()->getMock();
         $this->inspectionsRepo = $this->getMockBuilder(Repository\Inspections::class)->getMock();
+        $this->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
 
         $this->inspection = $this->getMockBuilder(Entity\Github\PullRequestInspection::class)->disableOriginalConstructor()->getMock();
         $this->pullRequest = $this->getMockBuilder(Model\Github\PullRequest::class)->disableOriginalConstructor()->getMock();
 
-        $this->handler = new CommandHandler\Github\Inspection\InspectPullRequest($this->dispatcher, $this->inspector, $this->inspectionsRepo);
+        $this->handler = new CommandHandler\Github\Inspection\InspectPullRequest($this->dispatcher, $this->inspector, $this->inspectionsRepo, $this->logger);
     }
 
     public function testWhenTheInspectionSucessfullyFinishes()
@@ -59,9 +62,6 @@ class InspectPullRequestTest extends \PHPUnit_Framework_TestCase
         $this->handler->handle(new Command\Github\Inspection\InspectPullRequest($this->inspection, $this->pullRequest));
     }
 
-    /**
-     * @expectedException \RuntimeException
-     */
     public function testWhenTheInspectionFails()
     {
         $this->inspector->expects($this->once())
@@ -81,6 +81,8 @@ class InspectPullRequestTest extends \PHPUnit_Framework_TestCase
                 [Event::INSPECTION_STARTED, $this->anything()],
                 [Event::INSPECTION_FAILED, $this->anything()]
             );
+
+        $this->logger->expects($this->once())->method('warning');
 
         $this->handler->handle(new Command\Github\Inspection\InspectPullRequest($this->inspection, $this->pullRequest));
     }

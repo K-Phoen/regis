@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Application\CommandHandler\Github\Inspection;
 
+use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
 use Regis\Application\Command;
@@ -16,12 +17,14 @@ class InspectPullRequest
     private $inspector;
     private $dispatcher;
     private $inspectionsRepo;
+    private $logger;
 
-    public function __construct(EventDispatcher $dispatcher, Inspector $inspector, Repository\Inspections $inspectionsRepo)
+    public function __construct(EventDispatcher $dispatcher, Inspector $inspector, Repository\Inspections $inspectionsRepo, LoggerInterface $logger)
     {
         $this->dispatcher = $dispatcher;
         $this->inspector = $inspector;
         $this->inspectionsRepo = $inspectionsRepo;
+        $this->logger = $logger;
     }
 
     public function handle(Command\Github\Inspection\InspectPullRequest $command)
@@ -41,8 +44,13 @@ class InspectPullRequest
         } catch (\Exception $e) {
             $inspection->fail($e);
             $this->dispatch(Event::INSPECTION_FAILED, new Event\InspectionFailed($inspection, $pullRequest, $e));
-            // TODO why throwing the exception? Logging it + reporting it should be better.
-            throw $e;
+
+            $this->logger->warning('Inspection {inspection_id} failed', [
+                'inspection_id' => $inspection->getId(),
+                'error_class' => get_class($e),
+                'error_message' => $e->getMessage(),
+                'error_backtrace' => $e->getTraceAsString(),
+            ]);
         } finally {
             $this->inspectionsRepo->save($inspection);
         }
