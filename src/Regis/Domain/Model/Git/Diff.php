@@ -26,6 +26,11 @@ class Diff
         $this->rawDiff = $rawDiff;
     }
 
+    public function getRevisions(): Revisions
+    {
+        return $this->revisions;
+    }
+
     public function getBase(): string
     {
         return $this->revisions->getBase();

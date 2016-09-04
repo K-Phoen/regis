@@ -10,7 +10,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
 {
     public function testDeletionsAreDetected()
     {
-        $diffFile = new File('old-name.php', null, false, $blob = $this->getBlob(), []);
+        $diffFile = new File('old-name.php', null, 'old index', 'new index', false, $blob = $this->getBlob(), []);
 
         $this->assertTrue($diffFile->isDeletion());
         $this->assertFalse($diffFile->isRename());
@@ -25,7 +25,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
     public function testRenamesAreDetected()
     {
-        $diffFile = new File('old-name.php', 'new-name.php', false, $this->getBlob(), []);
+        $diffFile = new File('old-name.php', 'new-name.php', 'old index', 'new index', false, $this->getBlob(), []);
 
         $this->assertFalse($diffFile->isDeletion());
         $this->assertTrue($diffFile->isRename());
@@ -35,7 +35,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
 
     public function testACreationIsNotARename()
     {
-        $diffFile = new File(null, 'new-name.php', false, $this->getBlob(), []);
+        $diffFile = new File(null, 'new-name.php', 'old index', 'new index', false, $this->getBlob(), []);
 
         $this->assertFalse($diffFile->isDeletion());
         $this->assertFalse($diffFile->isRename());
@@ -48,7 +48,7 @@ class FileTest extends \PHPUnit_Framework_TestCase
      */
     public function testFindPositionForLineFailsIfTheLineIsNotInTheDiff()
     {
-        $diffFile = new File(null, 'new-name.php', false, $this->getBlob(), []);
+        $diffFile = new File(null, 'new-name.php', 'old index', 'new index', false, $this->getBlob(), []);
 
         $diffFile->findPositionForLine(42);
     }

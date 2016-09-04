@@ -145,7 +145,7 @@ class DiffParser extends ParserBase
                 $changes[] = new Diff\Change($rangeOldStart, $rangeOldCount, $rangeNewStart, $rangeNewCount, $lines);
             }
 
-            $this->files[] = new Diff\File($oldName, $newName, $isBinary, $this->getEmptyBlob(), $changes);
+            $this->files[] = new Diff\File($oldName, $newName, $oldIndex, $newIndex, $isBinary, $this->getEmptyBlob(), $changes);
         }
     }
 

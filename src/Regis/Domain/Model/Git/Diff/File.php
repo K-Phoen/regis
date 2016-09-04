@@ -11,18 +11,30 @@ class File
 {
     private $oldName;
     private $newName;
+    private $oldIndex;
+    private $newIndex;
     private $isBinary;
     private $newBlob;
     /** @var Change[]  */
     private $changes;
 
-    public function __construct($oldName, $newName, bool $isBinary, Blob $newBlob, array $changes)
+    public function __construct($oldName, $newName, $oldIndex, $newIndex, bool $isBinary, Blob $newBlob, array $changes)
     {
         $this->oldName = $oldName;
         $this->newName = $newName;
+        $this->oldIndex = $oldIndex;
+        $this->newIndex = $newIndex;
         $this->isBinary = $isBinary;
         $this->newBlob  = $newBlob;
         $this->changes = $changes;
+    }
+
+    public function replaceNewContent(Blob $blob): File
+    {
+        $clone = clone $this;
+        $clone->newBlob = $blob;
+
+        return $clone;
     }
 
     public function isRename(): bool
@@ -53,6 +65,11 @@ class File
     public function getNewName()
     {
         return $this->newName;
+    }
+
+    public function getNewIndex()
+    {
+        return $this->newIndex;
     }
 
     public function isBinary()
