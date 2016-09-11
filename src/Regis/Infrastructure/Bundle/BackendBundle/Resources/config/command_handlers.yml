@@ -31,7 +31,7 @@ services:
 
     regis.command_handler.inspections.start:
         class: Regis\Application\CommandHandler\Github\Inspection\InspectPullRequest
-        arguments: [ '@event_dispatcher', '@regis.inspector', '@regis.repository.inspections' ]
+        arguments: [ '@event_dispatcher', '@regis.inspector', '@regis.repository.inspections', '@logger' ]
         tags:
             - { name: tactician.handler, command: Regis\Application\Command\Github\Inspection\InspectPullRequest }
 
