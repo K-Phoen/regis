@@ -10,6 +10,8 @@ doctrine:
 framework:
   serializer:
       cache: serializer.mapping.cache.apc
+  session:
+      handler_id: snc_redis.session.handler
 
 monolog:
     handlers:

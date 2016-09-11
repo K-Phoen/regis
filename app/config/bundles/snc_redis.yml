@@ -4,3 +4,11 @@ snc_redis:
             type: predis
             alias: violations
             dsn: redis://%redis_host%
+        sessions:
+            type: predis
+            alias: sessions
+            dsn: redis://%redis_host%
+
+    session:
+        client: sessions
+        prefix: sessions
