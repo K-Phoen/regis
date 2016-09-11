@@ -21,3 +21,5 @@ RUN docker-php-ext-install -j$(nproc) opcache
 RUN pecl install -o -f redis \
     &&  rm -rf /tmp/pear \
     &&  echo "extension=redis.so" > /usr/local/etc/php/conf.d/redis.ini
+
+RUN a2enmod rewrite
