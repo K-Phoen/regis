@@ -55,7 +55,10 @@
         <tbody>
         {% for inspection in repository.inspections %}
             <tr class="{{ utils.class_for_integration_status(inspection.status) }}">
-                <td><span class="label label-primary">{{ utils.inspection_type(inspection) }}</span> {{ inspection.id }}</td>
+                <td>
+                    <span class="label label-primary">{{ utils.inspection_type(inspection) }}</span>
+                    <a href="{{ path('inspection_detail', {'id': inspection.id}) }}">{{ inspection.id }}</a>
+                </td>
                 <td>{{ inspection.createdAt|date }}</td>
                 <td>
                     {% if inspection.startedAt %}
@@ -88,9 +91,7 @@
                         </form>
                     {% endif %}
 
-                    {% if inspection.hasReport %}
-                        <a href="{{ path('report_detail', {'id': inspection.report.id}) }}" class="btn btn-primary btn-sm">Report</a>
-                    {% endif %}
+                    <a href="{{ path('inspection_detail', {'id': inspection.id}) }}" class="btn btn-primary btn-sm">Details</a>
                 </td>
             </tr>
         {% else %}

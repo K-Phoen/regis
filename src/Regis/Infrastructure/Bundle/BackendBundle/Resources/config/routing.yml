@@ -42,9 +42,9 @@ inspection_retry:
     defaults:  { _controller: RegisBackendBundle:Inspections:retry }
     methods:   POST
 
-report_detail:
-    path:      /reports/{id}
-    defaults:  { _controller: RegisBackendBundle:Reports:detail }
+inspection_detail:
+    path:      /inspections/{id}
+    defaults:  { _controller: RegisBackendBundle:Inspections:detail }
     methods:   GET
 
 teams_list:

@@ -1,28 +1,4 @@
-{% extends '::layout.html.twig' %}
-
 {% import '::utils.html.twig' as utils %}
-
-{% block content %}
-<h1 class="page-header">Report « {{ report.id }} »</h1>
-
-<h2>Summary</h2>
-
-<div class="table-responsive">
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>Base</th>
-                <th>Head</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>{{ report.inspection.base }}</td>
-                <td>{{ report.inspection.head }}</td>
-            </tr>
-        </tbody>
-    </table>
-</div>
 
 <div class="table-responsive">
     <table class="table table-striped table-hover">
@@ -52,7 +28,6 @@
 <h2>Report</h2>
 
 {% for file in report.diff.files %}
-
     <table class="diff">
         <thead>
             <tr>
@@ -95,4 +70,3 @@
         </tbody>
     </table>
 {% endfor %}
-{% endblock %}

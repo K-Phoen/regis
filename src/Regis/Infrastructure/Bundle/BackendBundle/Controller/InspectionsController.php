@@ -30,4 +30,11 @@ class InspectionsController extends Controller
 
         return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
     }
+
+    public function detailAction(Entity\Github\PullRequestInspection $inspection)
+    {
+        return $this->render('@RegisBackend/Inspections/detail.html.twig', [
+            'inspection' => $inspection,
+        ]);
+    }
 }
