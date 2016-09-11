@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Regis\Application\EventListener;
 
+use Regis\Application\Github\IntegrationStatus;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface as UrlGenerator;
 
 use Regis\Application\Event;
 use Regis\Application\Github\Client;
@@ -18,15 +20,15 @@ use Regis\Domain\Repository\Repositories;
  */
 class PullRequestInspectionStatusListener implements EventSubscriberInterface
 {
-    const STATUS_CONTEXT = 'regis/pr';
-
     private $githubFactory;
     private $repositoriesRepo;
+    private $urlGenerator;
 
-    public function __construct(ClientFactory $githubFactory, Repositories $repositoriesRepo)
+    public function __construct(ClientFactory $githubFactory, Repositories $repositoriesRepo, UrlGenerator $urlGenerator)
     {
         $this->githubFactory = $githubFactory;
         $this->repositoriesRepo = $repositoriesRepo;
+        $this->urlGenerator = $urlGenerator;
     }
 
     public static function getSubscribedEvents()
@@ -47,7 +49,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         /** @var Event\PullRequestOpened|Event\PullRequestSynced $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
-        $this->setIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_PENDING, 'Inspection scheduled.');
+        $this->setIntegrationStatus($domainEvent->getPullRequest(), new IntegrationStatus(Client::INTEGRATION_PENDING, 'Inspection scheduled.'));
     }
 
     public function onInspectionStarted(Event\DomainEventWrapper $event)
@@ -55,7 +57,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         /** @var Event\InspectionStarted $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
-        $this->setIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_PENDING, 'Inspection started…');
+        $this->setIntegrationStatus($domainEvent->getPullRequest(), new IntegrationStatus(Client::INTEGRATION_PENDING, 'Inspection started…', $this->getInspectionUrl($domainEvent->getInspection())));
     }
 
     public function onInspectionFinished(Event\DomainEventWrapper $event)
@@ -70,7 +72,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
             list($status, $message) = [Client::INTEGRATION_SUCCESS, 'Inspection successful.'];
         }
 
-        $this->setIntegrationStatus($domainEvent->getPullRequest(), $status, $message);
+        $this->setIntegrationStatus($domainEvent->getPullRequest(), new IntegrationStatus($status, $message, $this->getInspectionUrl($domainEvent->getInspection())));
     }
 
     public function onInspectionFailed(Event\DomainEventWrapper $event)
@@ -78,15 +80,20 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         /** @var Event\InspectionFailed $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
-        $this->setIntegrationStatus($domainEvent->getPullRequest(), Client::INTEGRATION_ERROR, 'Inspection failed.');
+        $this->setIntegrationStatus($domainEvent->getPullRequest(), new IntegrationStatus(Client::INTEGRATION_ERROR, 'Inspection failed.', $this->getInspectionUrl($domainEvent->getInspection())));
     }
 
-    private function setIntegrationStatus(PullRequest $pullRequest, string $status, string $description)
+    private function setIntegrationStatus(PullRequest $pullRequest, IntegrationStatus $status)
     {
         /** @var Entity\Github\Repository $repository */
         $repository = $this->repositoriesRepo->find($pullRequest->getRepositoryIdentifier());
         $client = $this->githubFactory->createForRepository($repository);
 
-        $client->setIntegrationStatus($pullRequest, $status, $description, self::STATUS_CONTEXT);
+        $client->setIntegrationStatus($pullRequest, $status);
+    }
+
+    private function getInspectionUrl(Entity\Inspection $inspection)
+    {
+        return $this->urlGenerator->generate('inspection_detail', ['id' => $inspection->getId()], UrlGenerator::ABSOLUTE_URL);
     }
 }

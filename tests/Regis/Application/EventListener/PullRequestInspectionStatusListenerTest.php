@@ -2,6 +2,8 @@
 
 namespace Tests\Regis\Application\EventListener;
 
+use Regis\Application\Github\IntegrationStatus;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface as UrlGenerator;
 use Regis\Application\Event;
 use Regis\Application\EventListener\PullRequestInspectionStatusListener;
 use Regis\Application\Github\Client;
@@ -18,6 +20,8 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
     private $ghClientFactory;
     /** @var Client */
     private $ghClient;
+    /** @var UrlGenerator */
+    private $urlGenerator;
     /** @var Repository\Repositories */
     private $repoRepository;
     /** @var Entity\Github\Repository */
@@ -34,6 +38,11 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
         $this->repoRepository = $this->getMockBuilder(Repository\Repositories::class)->getMock();
         $this->pr = $this->getMockBuilder(PullRequest::class)->disableOriginalConstructor()->getMock();
         $this->repository = $this->getMockBuilder(Entity\Github\Repository::class)->disableOriginalConstructor()->getMock();
+        $this->urlGenerator = $this->getMockBuilder(UrlGenerator::class)->getMock();
+
+        $this->urlGenerator->expects($this->any())
+            ->method('generate')
+            ->will($this->returnValue('something not null'));
 
         $this->pr->expects($this->any())
             ->method('getRepositoryIdentifier')
@@ -49,7 +58,7 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
             ->with($this->repository)
             ->will($this->returnValue($this->ghClient));
 
-        $this->listener = new PullRequestInspectionStatusListener($this->ghClientFactory, $this->repoRepository);
+        $this->listener = new PullRequestInspectionStatusListener($this->ghClientFactory, $this->repoRepository, $this->urlGenerator);
     }
 
     public function testItListensToTheRightEvents()
@@ -71,7 +80,11 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, Client::INTEGRATION_PENDING, $this->stringContains('scheduled'), $this->anything());
+            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+                return $status->getState() === Client::INTEGRATION_PENDING
+                    && strpos($status->getDescription(), 'scheduled') !== false
+                    && $status->getTargetUrl() === null;
+            }));
 
         $this->listener->onPullRequestUpdated($event);
     }
@@ -83,7 +96,11 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, Client::INTEGRATION_PENDING, $this->stringContains('scheduled'), $this->anything());
+            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+                return $status->getState() === Client::INTEGRATION_PENDING
+                && strpos($status->getDescription(), 'scheduled') !== false
+                && $status->getTargetUrl() === null;
+            }));
 
         $this->listener->onPullRequestUpdated($event);
     }
@@ -96,7 +113,11 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, Client::INTEGRATION_PENDING, $this->stringContains('started'), $this->anything());
+            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+                return $status->getState() === Client::INTEGRATION_PENDING
+                && strpos($status->getDescription(), 'started') !== false
+                && $status->getTargetUrl() !== null;
+            }));
 
         $this->listener->onInspectionStarted($event);
     }
@@ -109,7 +130,11 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, Client::INTEGRATION_ERROR, $this->stringContains('failed'), $this->anything());
+            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+                return $status->getState() === Client::INTEGRATION_ERROR
+                && strpos($status->getDescription(), 'failed') !== false
+                && $status->getTargetUrl() !== null;
+            }));
 
         $this->listener->onInspectionFailed($event);
     }
@@ -127,7 +152,11 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, Client::INTEGRATION_FAILURE, $this->stringContains('error(s)'), $this->anything());
+            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+                return $status->getState() === Client::INTEGRATION_FAILURE
+                && strpos($status->getDescription(), 'error(s)') !== false
+                && $status->getTargetUrl() !== null;
+            }));
 
         $this->listener->onInspectionFinished($event);
     }
@@ -145,7 +174,11 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, Client::INTEGRATION_FAILURE, $this->stringContains('error(s)'), $this->anything());
+            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+                return $status->getState() === Client::INTEGRATION_FAILURE
+                && strpos($status->getDescription(), 'error(s)') !== false
+                && $status->getTargetUrl() !== null;
+            }));
 
         $this->listener->onInspectionFinished($event);
     }
@@ -166,7 +199,11 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, Client::INTEGRATION_SUCCESS, $this->stringContains('successful'), $this->anything());
+            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+                return $status->getState() === Client::INTEGRATION_SUCCESS
+                && strpos($status->getDescription(), 'successful') !== false
+                && $status->getTargetUrl() !== null;
+            }));
 
         $this->listener->onInspectionFinished($event);
     }

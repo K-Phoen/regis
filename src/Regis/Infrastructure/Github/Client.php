@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Regis\Infrastructure\Github;
 
 use Psr\Log\LoggerInterface as Logger;
+use Regis\Application\Github\IntegrationStatus;
+
 use Regis\Application\Github\Client as GithubClient;
 use Regis\Domain\Entity\User;
 use Regis\Domain\Model\Github as Model;
@@ -42,7 +44,7 @@ class Client implements GithubClient
         }
     }
 
-    public function setIntegrationStatus(Model\PullRequest $pullRequest, string $state, string $description, string $context)
+    public function setIntegrationStatus(Model\PullRequest $pullRequest, IntegrationStatus $status)
     {
         $this->assertAuthenticated();
 
@@ -51,14 +53,20 @@ class Client implements GithubClient
         $this->logger->info('Creating integration status for PR {pull_request}', [
             'pull_request' => $pullRequest,
             'head' => $pullRequest->getHead(),
-            'description' => $description,
+            'description' => $status->getDescription(),
         ]);
 
-        $this->client->repo()->statuses()->create($repository->getOwner(), $repository->getName(), $pullRequest->getHead(), [
-            'state' => $state,
-            'context' => $context,
-            'description' => $description,
-        ]);
+        $parameters = [
+            'state' => $status->getState(),
+            'description' => $status->getDescription(),
+            'context' => IntegrationStatus::STATUS_CONTEXT,
+        ];
+
+        if ($status->getTargetUrl()) {
+            $parameters['target_url'] = $status->getTargetUrl();
+        }
+
+        $this->client->repo()->statuses()->create($repository->getOwner(), $repository->getName(), $pullRequest->getHead(), $parameters);
     }
 
     public function addDeployKey(string $owner, string $repository, string $title, string $key, string $type)

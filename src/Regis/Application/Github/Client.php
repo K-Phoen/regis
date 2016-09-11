@@ -16,7 +16,7 @@ interface Client
     const READONLY_KEY = 'readonly_key';
     const WRITE_KEY = 'write_key';
 
-    function setIntegrationStatus(Model\PullRequest $pullRequest, string $state, string $description, string $context);
+    function setIntegrationStatus(Model\PullRequest $pullRequest, IntegrationStatus $status);
     function addDeployKey(string $owner, string $repository, string $title, string $key, string $type);
     function createWebhook(string $owner, string $repository, string $url, $secret = null);
     function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment);

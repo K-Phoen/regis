@@ -8,6 +8,7 @@ use Github\HttpClient\HttpClient;
 use Guzzle\Http\Message\Response;
 use Psr\Log\LoggerInterface;
 
+use Regis\Application\Github\IntegrationStatus;
 use Regis\Domain\Entity\User;
 use Regis\Domain\Model\Github\PullRequest;
 use Regis\Domain\Model\Github\Repository;
@@ -81,12 +82,13 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testSetIntegrationStatus()
     {
+        $status = new IntegrationStatus('some state', 'some description');
         $pr = $this->getMockBuilder(PullRequest::class)->disableOriginalConstructor()->getMock();
 
         $this->vendorClient->expects($this->once())->method('authenticate');
         $this->statusesApi->expects($this->once())->method('create');
 
-        $this->client->setIntegrationStatus($pr, 'state', 'description', 'context');
+        $this->client->setIntegrationStatus($pr, $status);
     }
 
     public function testAddDeployKey()
