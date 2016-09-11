@@ -25,7 +25,9 @@ framework:
     validation:      { enable_annotations: true }
     serializer:
         enable_annotations: false
-        cache: serializer.mapping.cache.apc
+    cache:
+        pools:
+            serializer: ~
     templating:
         engines: ['twig']
     default_locale:  "%locale%"
