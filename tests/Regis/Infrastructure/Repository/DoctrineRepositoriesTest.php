@@ -2,9 +2,12 @@
 
 namespace Tests\Regis\Infrastructure\Repository;
 
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use Regis\Domain\Repository\Repositories;
 use RulerZ\RulerZ;
 
 use Regis\Infrastructure\Repository\DoctrineRepositories;
@@ -70,13 +73,59 @@ class DoctrineRepositoriesTest extends \PHPUnit_Framework_TestCase
     public function testFindWhenTheRepositoryExists()
     {
         $repository = $this->getMockBuilder(Entity\Repository::class)->disableOriginalConstructor()->getMock();
+        $qb = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
+        $query = $this->getMockBuilder(AbstractQuery::class)->disableOriginalConstructor()->getMock();
 
-        $this->doctrineRepository->expects($this->once())
-            ->method('find')
-            ->with('some identifier')
+        $qb->expects($this->once())
+            ->method('where')
+            ->will($this->returnSelf());
+
+        $qb->expects($this->once())
+            ->method('getQuery')
+            ->will($this->returnValue($query));
+
+        $query->expects($this->once())
+            ->method('getOneOrNullResult')
             ->will($this->returnValue($repository));
 
+        $this->doctrineRepository->expects($this->once())
+            ->method('createQueryBuilder')
+            ->will($this->returnValue($qb));
+
         $this->assertSame($repository, $this->repositoriesRepo->find('some identifier'));
+    }
+
+    public function testFindWithRelations()
+    {
+        $repository = $this->getMockBuilder(Entity\Repository::class)->disableOriginalConstructor()->getMock();
+        $qb = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
+        $query = $this->getMockBuilder(AbstractQuery::class)->disableOriginalConstructor()->getMock();
+
+        $qb->expects($this->once())
+            ->method('where')
+            ->will($this->returnSelf());
+
+        $qb->expects($this->once())
+            ->method('addSelect') // the relations
+            ->will($this->returnSelf());
+
+        $qb->expects($this->any())
+            ->method('leftJoin') // same: the relations
+            ->will($this->returnSelf());
+
+        $qb->expects($this->once())
+            ->method('getQuery')
+            ->will($this->returnValue($query));
+
+        $query->expects($this->once())
+            ->method('getOneOrNullResult')
+            ->will($this->returnValue($repository));
+
+        $this->doctrineRepository->expects($this->once())
+            ->method('createQueryBuilder')
+            ->will($this->returnValue($qb));
+
+        $this->assertSame($repository, $this->repositoriesRepo->find('some identifier', Repositories::MODE_FETCH_RELATIONS));
     }
 
     /**
@@ -84,10 +133,24 @@ class DoctrineRepositoriesTest extends \PHPUnit_Framework_TestCase
      */
     public function testFindWhenTheRepositoryDoesNotExist()
     {
-        $this->doctrineRepository->expects($this->once())
-            ->method('find')
-            ->with('some identifier')
+        $qb = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
+        $query = $this->getMockBuilder(AbstractQuery::class)->disableOriginalConstructor()->getMock();
+
+        $qb->expects($this->once())
+            ->method('where')
+            ->will($this->returnSelf());
+
+        $qb->expects($this->once())
+            ->method('getQuery')
+            ->will($this->returnValue($query));
+
+        $query->expects($this->once())
+            ->method('getOneOrNullResult')
             ->will($this->returnValue(null));
+
+        $this->doctrineRepository->expects($this->once())
+            ->method('createQueryBuilder')
+            ->will($this->returnValue($qb));
 
         $this->repositoriesRepo->find('some identifier');
     }

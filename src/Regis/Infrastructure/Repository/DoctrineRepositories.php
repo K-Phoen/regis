@@ -35,14 +35,31 @@ class DoctrineRepositories implements Repository\Repositories
     public function matching(Specification $spec): \Traversable
     {
         /** @var QueryBuilder $qb */
-        $qb = $this->repo()->createQueryBuilder('t');
+        $qb = $this->repo()->createQueryBuilder('r');
 
         return $this->rulerz->filterSpec($qb, $spec);
     }
 
-    public function find(string $id): Entity\Repository
+    public function find(string $id, $mode = self::MODE_FETCH_NOTHING): Entity\Repository
     {
-        $repository = $this->repo()->find($id);
+        /** @var QueryBuilder $qb */
+        $qb = $this->repo()->createQueryBuilder('r');
+
+        $qb
+            ->where('r.identifier = :identifier')
+            ->setParameter('identifier', $id);
+
+        if ($mode === self::MODE_FETCH_RELATIONS) {
+            $qb
+                ->addSelect(['i', 'report', 'a', 'v'])
+                ->leftJoin('r.inspections', 'i')
+                ->leftJoin('i.report', 'report')
+                ->leftJoin('report.analyses', 'a')
+                ->leftJoin('a.violations', 'v')
+                ->orderBy('i.createdAt', 'DESC');
+        }
+
+        $repository = $qb->getQuery()->getOneOrNullResult();
 
         if ($repository === null) {
             throw Repository\Exception\NotFound::forIdentifier($id);

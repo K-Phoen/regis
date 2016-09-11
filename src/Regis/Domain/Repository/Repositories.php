@@ -10,6 +10,9 @@ use Regis\Domain\Entity;
 
 interface Repositories
 {
+    const MODE_FETCH_NOTHING = 0;
+    const MODE_FETCH_RELATIONS = 1;
+
     public function save(Entity\Repository $team);
 
     public function matching(Specification $spec): \Traversable;
@@ -17,5 +20,5 @@ interface Repositories
     /**
      * @throws \Regis\Domain\Repository\Exception\NotFound
      */
-    public function find(string $id): Entity\Repository;
+    public function find(string $id, $mode = self::MODE_FETCH_NOTHING): Entity\Repository;
 }

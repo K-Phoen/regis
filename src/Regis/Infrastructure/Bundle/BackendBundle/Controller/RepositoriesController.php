@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Infrastructure\Bundle\BackendBundle\Controller;
 
+use Regis\Domain\Repository\Repositories;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -33,8 +34,11 @@ class RepositoriesController extends Controller
         ]);
     }
 
-    public function detailAction(Entity\Repository $repository)
+    public function detailAction($identifier)
     {
+        // TODO check access rights
+        $repository = $this->get('regis.repository.repositories')->find($identifier, Repositories::MODE_FETCH_RELATIONS);
+
         return $this->render('@RegisBackend/Repositories/detail.html.twig', [
             'repository' => $repository
         ]);
@@ -42,6 +46,8 @@ class RepositoriesController extends Controller
 
     public function setupWebhookAction(Entity\Github\Repository $repository)
     {
+        // TODO check access rights
+
         $absoluteUrl = $this->get('router')->generate('webhook_github', [],  UrlGeneratorInterface::ABSOLUTE_URL);
 
         $command = new Command\Github\Webhook\Create(
@@ -59,6 +65,7 @@ class RepositoriesController extends Controller
 
     public function editAction(Request $request, Entity\Github\Repository $repository)
     {
+        // TODO check access rights
         $form = $form = $this->createForm(Form\EditRepositoryConfigurationType::class, $repository, [
             'action' => $this->generateUrl('repositories_edit', ['identifier' => $repository->getIdentifier()]),
         ]);
