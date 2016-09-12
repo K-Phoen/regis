@@ -29,7 +29,7 @@ class Security implements Middleware
             throw AccessDenied::forCommand($command);
         }
 
-        $next($command);
+        return $next($command);
     }
 
     private function commandIsSecure($command): bool

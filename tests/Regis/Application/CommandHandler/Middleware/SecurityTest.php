@@ -38,11 +38,14 @@ class SecurityTest extends \PHPUnit_Framework_TestCase
 
         $next = function($command) use (&$nextCalled) {
             $nextCalled = true;
+
+            return 'return value';
         };
 
-        $this->middleware->execute($command, $next);
+        $return = $this->middleware->execute($command, $next);
 
         $this->assertTrue($nextCalled);
+        $this->assertSame('return value', $return);
     }
 
     public function testASecureCommandWhenTheAuthorizationIsGiven()
