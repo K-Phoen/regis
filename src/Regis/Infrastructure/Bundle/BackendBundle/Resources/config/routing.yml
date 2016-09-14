@@ -15,6 +15,18 @@ repositories_setup_webhook:
     requirements: { identifier: "[^/]+/[^/]+" }
     methods:   POST
 
+repositories_disable_inspections:
+    path:      /repositories/{identifier}/inspections/disable
+    defaults:  { _controller: RegisBackendBundle:Repositories:disableInspections }
+    requirements: { identifier: "[^/]+/[^/]+" }
+    methods:   POST
+
+repositories_enable_inspections:
+    path:      /repositories/{identifier}/inspections/enable
+    defaults:  { _controller: RegisBackendBundle:Repositories:enableInspections }
+    requirements: { identifier: "[^/]+/[^/]+" }
+    methods:   POST
+
 repositories_new:
     path:      /repositories/new
     defaults:  { _controller: RegisBackendBundle:RepositoryCreator:new }

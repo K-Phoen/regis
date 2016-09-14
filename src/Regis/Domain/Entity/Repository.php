@@ -69,4 +69,14 @@ abstract class Repository
     {
         return $this->isInspectionEnabled;
     }
+
+    public function disableInspection()
+    {
+        $this->isInspectionEnabled = false;
+    }
+
+    public function enableInspection()
+    {
+        $this->isInspectionEnabled = true;
+    }
 }

@@ -29,9 +29,20 @@
         <tr>
             <th>Actions</th>
             <td>
-                <form method="POST" action="{{ path('repositories_setup_webhook', {'identifier': repository.identifier}) }}">
+                <form method="POST" action="{{ path('repositories_setup_webhook', {'identifier': repository.identifier}) }}" class="force-inline">
                     <input type="submit" class="btn btn-warning btn-sm" value="Setup webhook" />
                 </form>
+                {% if is_granted('COMMAND_REPOSITORY::ENABLE_INSPECTIONS', repository) or is_granted('COMMAND_REPOSITORY::DISABLE_INSPECTIONS', repository) %}
+                    {% if repository.inspectionEnabled %}
+                        <form method="POST" action="{{ path('repositories_disable_inspections', {'identifier': repository.identifier}) }}" class="force-inline">
+                            <input type="submit" class="btn btn-warning btn-sm" value="Disable inspections" />
+                        </form>
+                    {% else %}
+                        <form method="POST" action="{{ path('repositories_enable_inspections', {'identifier': repository.identifier}) }}" class="force-inline">
+                            <input type="submit" class="btn btn-primary btn-sm" value="Enable inspections" />
+                        </form>
+                    {% endif %}
+                {% endif %}
             </td>
         </tr>
     </table>

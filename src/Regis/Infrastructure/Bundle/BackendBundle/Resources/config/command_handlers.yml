@@ -5,6 +5,18 @@ services:
         tags:
             - { name: tactician.handler, command: Regis\Application\Command\Github\Repository\Create }
 
+    regis.command_handler.repository.disable_inspections:
+        class: Regis\Application\CommandHandler\Repository\DisableInspections
+        arguments: [ '@regis.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\Repository\DisableInspections }
+
+    regis.command_handler.repository.enable_inspections:
+        class: Regis\Application\CommandHandler\Repository\EnableInspections
+        arguments: [ '@regis.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\Application\Command\Repository\EnableInspections }
+
     regis.command_handler.repository.update_configuration:
         class: Regis\Application\CommandHandler\Github\Repository\UpdateConfiguration
         arguments: [ '@regis.repository.repositories' ]

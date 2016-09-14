@@ -63,6 +63,27 @@ class RepositoriesController extends Controller
         return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
     }
 
+    public function disableInspectionsAction(Entity\Github\Repository $repository)
+    {
+        $command = new Command\Repository\DisableInspections($repository);
+
+        $this->get('tactician.commandbus')->handle($command);
+
+        $this->addFlash('info', 'Inspections disabled.');
+        return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
+    }
+
+    public function enableInspectionsAction(Entity\Github\Repository $repository)
+    {
+        $command = new Command\Repository\EnableInspections($repository);
+
+        $this->get('tactician.commandbus')->handle($command);
+
+        $this->addFlash('info', 'Inspections enabled.');
+
+        return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
+    }
+
     public function editAction(Request $request, Entity\Github\Repository $repository)
     {
         // TODO check access rights
