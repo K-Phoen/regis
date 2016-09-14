@@ -97,7 +97,7 @@
                 </td>
                 <td>
                     {% if inspection.status == 'failed' or inspection.status == 'finished' %}
-                        <form method="POST" action="{{ path('inspection_retry', {'id': inspection.id}) }}">
+                        <form method="POST" action="{{ path('inspection_retry', {'id': inspection.id}) }}" class="force-inline">
                             <input type="submit" class="btn btn-warning btn-sm" value="Retry" />
                         </form>
                     {% endif %}
