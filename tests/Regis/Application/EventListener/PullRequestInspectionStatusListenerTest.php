@@ -40,6 +40,10 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
         $this->repository = $this->getMockBuilder(Entity\Github\Repository::class)->disableOriginalConstructor()->getMock();
         $this->urlGenerator = $this->getMockBuilder(UrlGenerator::class)->getMock();
 
+        $this->repository->expects($this->any())
+            ->method('isInspectionEnabled')
+            ->will($this->returnValue(true));
+
         $this->urlGenerator->expects($this->any())
             ->method('generate')
             ->will($this->returnValue('something not null'));
@@ -118,6 +122,30 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
                 && strpos($status->getDescription(), 'started') !== false
                 && $status->getTargetUrl() !== null;
             }));
+
+        $this->listener->onInspectionStarted($event);
+    }
+
+    public function testItDoesNothingIfTheRepositoryDisabledTheInspections()
+    {
+        $this->repoRepository = $this->getMockBuilder(Repository\Repositories::class)->getMock();
+        $this->repository = $this->getMockBuilder(Entity\Github\Repository::class)->disableOriginalConstructor()->getMock();
+        $this->listener = new PullRequestInspectionStatusListener($this->ghClientFactory, $this->repoRepository, $this->urlGenerator);
+
+        $inspection = $this->getMockBuilder(PullRequestInspection::class)->disableOriginalConstructor()->getMock();
+        $domainEvent = new Event\InspectionStarted($inspection, $this->pr);
+        $event = new Event\DomainEventWrapper($domainEvent);
+
+        $this->repository->expects($this->any())
+            ->method('isInspectionEnabled')
+            ->will($this->returnValue(false));
+
+        $this->repoRepository->expects($this->any())
+            ->method('find')
+            ->with('repository/identifier')
+            ->will($this->returnValue($this->repository));
+
+        $this->ghClient->expects($this->never())->method('setIntegrationStatus');
 
         $this->listener->onInspectionStarted($event);
     }

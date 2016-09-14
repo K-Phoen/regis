@@ -87,12 +87,16 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
     {
         /** @var Entity\Github\Repository $repository */
         $repository = $this->repositoriesRepo->find($pullRequest->getRepositoryIdentifier());
-        $client = $this->githubFactory->createForRepository($repository);
 
+        if (!$repository->isInspectionEnabled()) {
+            return;
+        }
+
+        $client = $this->githubFactory->createForRepository($repository);
         $client->setIntegrationStatus($pullRequest, $status);
     }
 
-    private function getInspectionUrl(Entity\Inspection $inspection)
+    private function getInspectionUrl(Entity\Inspection $inspection): string
     {
         return $this->urlGenerator->generate('inspection_detail', ['id' => $inspection->getId()], UrlGenerator::ABSOLUTE_URL);
     }
