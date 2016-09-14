@@ -91,6 +91,17 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->client->setIntegrationStatus($pr, $status);
     }
 
+    public function testSetIntegrationStatusWithATargetUrl()
+    {
+        $status = new IntegrationStatus('some state', 'some description', 'http://foo/bar');
+        $pr = $this->getMockBuilder(PullRequest::class)->disableOriginalConstructor()->getMock();
+
+        $this->vendorClient->expects($this->once())->method('authenticate');
+        $this->statusesApi->expects($this->once())->method('create');
+
+        $this->client->setIntegrationStatus($pr, $status);
+    }
+
     public function testAddDeployKey()
     {
         $this->vendorClient->expects($this->once())->method('authenticate');
