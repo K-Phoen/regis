@@ -18,6 +18,9 @@ Regis\Domain\Entity\Repository:
     fields:
         sharedSecret:
             type: string
+        isInspectionEnabled:
+            type: boolean
+            options: { default: 1 }
 
     manyToMany:
         teams:

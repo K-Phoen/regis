@@ -33,6 +33,10 @@ class SchedulePullRequestTest extends \PHPUnit_Framework_TestCase
         $repository = $this->getMockBuilder(Entity\Github\Repository::class)->disableOriginalConstructor()->getMock();
         $command = new Command\Github\Inspection\SchedulePullRequest($pullRequest);
 
+        $repository->expects($this->once())
+            ->method('isInspectionEnabled')
+            ->will($this->returnValue(true));
+
         $pullRequest->expects($this->once())
             ->method('getRepositoryIdentifier')
             ->will($this->returnValue('repo identifier'));
@@ -51,6 +55,31 @@ class SchedulePullRequestTest extends \PHPUnit_Framework_TestCase
         $this->producer->expects($this->once())
             ->method('publish')
             ->with($this->anything());
+
+        $this->handler->handle($command);
+    }
+
+    public function testItDoesNothingIfInspectionIsDisabledForTheRepository()
+    {
+        $pullRequest = $this->getMockBuilder(Model\Github\PullRequest::class)->disableOriginalConstructor()->getMock();
+        $repository = $this->getMockBuilder(Entity\Github\Repository::class)->disableOriginalConstructor()->getMock();
+        $command = new Command\Github\Inspection\SchedulePullRequest($pullRequest);
+
+        $repository->expects($this->once())
+            ->method('isInspectionEnabled')
+            ->will($this->returnValue(false));
+
+        $pullRequest->expects($this->once())
+            ->method('getRepositoryIdentifier')
+            ->will($this->returnValue('repo identifier'));
+
+        $this->repositoriesRepo->expects($this->once())
+            ->method('find')
+            ->with('repo identifier')
+            ->will($this->returnValue($repository));
+
+        $this->inspectionsRepo->expects($this->never())->method('save');
+        $this->producer->expects($this->never())->method('publish');
 
         $this->handler->handle($command);
     }

@@ -12,6 +12,7 @@ abstract class Repository
 
     private $identifier;
     private $sharedSecret;
+    private $isInspectionEnabled = true;
     /** @var ArrayCollection */
     private $inspections;
     /** @var ArrayCollection */
@@ -62,5 +63,10 @@ abstract class Repository
     public function getTeams(): \Traversable
     {
         return $this->teams;
+    }
+
+    public function isInspectionEnabled(): bool
+    {
+        return $this->isInspectionEnabled;
     }
 }

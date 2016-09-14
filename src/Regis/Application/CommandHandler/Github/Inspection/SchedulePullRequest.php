@@ -28,6 +28,10 @@ class SchedulePullRequest
         /** @var Entity\Github\Repository $repository */
         $repository = $this->repositoriesRepo->find($pullRequest->getRepositoryIdentifier());
 
+        if (!$repository->isInspectionEnabled()) {
+            return;
+        }
+
         // crreate the inspection
         $inspection = Entity\Github\PullRequestInspection::create($repository, $pullRequest);
         $this->inspectionsRepo->save($inspection);
