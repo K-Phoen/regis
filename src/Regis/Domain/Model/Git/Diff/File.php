@@ -121,4 +121,11 @@ class File
 
         throw LineNotInDiff::line($line);
     }
+
+    public function isPhp(): bool
+    {
+        $extension = pathinfo($this->getNewName(), PATHINFO_EXTENSION);
+
+        return in_array(strtolower($extension), ['php', 'phps'], true);
+    }
 }

@@ -23,6 +23,18 @@ class DiffTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('raw diff', $diff->getRawDiff());
     }
 
+    public function testGetAddedPhpFiles()
+    {
+        $binaryFile = $this->binaryFile();
+        $deletedFile = $this->binaryFile();
+        $renamedFile = $this->renamedFile();
+        $textFile = $this->textFile();
+        $phpFile = $this->phpFile();
+        $diff = new Git\Diff($this->revisions(), [$binaryFile, $deletedFile, $renamedFile, $textFile, $phpFile], 'raw diff');
+
+        $this->assertEquals([$phpFile], iterator_to_array($diff->getAddedPhpFiles()));
+    }
+
     public function testGetAddedTextFilesExcludesBinaryFiles()
     {
         $binaryFile = $this->binaryFile();
@@ -91,5 +103,15 @@ class DiffTest extends \PHPUnit_Framework_TestCase
     private function textFile(): Git\Diff\File
     {
         return $this->getMockBuilder(Git\Diff\File::class)->disableOriginalConstructor()->getMock();
+    }
+
+    private function phpFile(): Git\Diff\File
+    {
+        $file = $this->getMockBuilder(Git\Diff\File::class)->disableOriginalConstructor()->getMock();
+        $file->expects($this->any())
+            ->method('isPhp')
+            ->will($this->returnValue(true));
+
+        return $file;
     }
 }

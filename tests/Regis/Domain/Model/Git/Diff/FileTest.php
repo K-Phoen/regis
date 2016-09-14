@@ -44,6 +44,47 @@ class FileTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * @dataProvider phpFileNameProvider
+     */
+    public function testIsPhpWithPhpFiles(string $newFileName)
+    {
+        $diffFile = new File(null, $newFileName, 'old index', 'new index', false, $this->getBlob(), []);
+
+        $this->assertTrue($diffFile->isPhp());
+    }
+
+    /**
+     * @dataProvider notPhpFileNameProvider
+     */
+    public function testIsPhpWithNonPhpFiles(string $newFileName)
+    {
+        $diffFile = new File(null, $newFileName, 'old index', 'new index', false, $this->getBlob(), []);
+
+        $this->assertFalse($diffFile->isPhp());
+    }
+
+    public function phpFileNameProvider()
+    {
+        return [
+            [ 'foo.php' ],
+            [ 'foo-bar.php' ],
+            [ 'foo/bar.php' ],
+            [ 'foo.phps' ],
+        ];
+    }
+
+    public function notPhpFileNameProvider()
+    {
+        return [
+            [ 'foo' ],
+            [ 'foo-bar' ],
+            [ 'bar.txt' ],
+            [ 'foo/bar.txt' ],
+            [ 'foo/bar.inc' ],
+        ];
+    }
+
+    /**
      * @expectedException \Regis\Domain\Model\Exception\LineNotInDiff
      */
     public function testFindPositionForLineFailsIfTheLineIsNotInTheDiff()

@@ -26,7 +26,7 @@ class PhpMd implements Inspection
     public function inspectDiff(Model\Diff $diff): \Traversable
     {
         /** @var Model\Diff\File $file */
-        foreach ($diff->getAddedTextFiles() as $file) {
+        foreach ($diff->getAddedPhpFiles() as $file) {
             $report = $this->phpMd->execute($file->getNewName(), $file->getNewContent());
 
             yield from $this->buildViolations($file, $report);

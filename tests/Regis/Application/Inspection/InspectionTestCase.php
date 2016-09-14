@@ -6,12 +6,12 @@ use Regis\Domain\Model;
 
 abstract class InspectionTestCase extends \PHPUnit_Framework_TestCase
 {
-    protected function diff(array $addedFiles = []): Model\Git\Diff
+    protected function diff(array $addedPhpFiles = []): Model\Git\Diff
     {
         $diff = $this->getMockBuilder(Model\Git\Diff::class)->disableOriginalConstructor()->getMock();
         $diff->expects($this->any())
-            ->method('getAddedTextFiles')
-            ->will($this->returnValue(new \ArrayIterator($addedFiles)));
+            ->method('getAddedPhpFiles')
+            ->will($this->returnValue(new \ArrayIterator($addedPhpFiles )));
 
         return $diff;
     }

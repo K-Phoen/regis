@@ -61,4 +61,14 @@ class Diff
             yield $file;
         }
     }
+
+    public function getAddedPhpFiles(): \Traversable
+    {
+        /** @var Diff\File $file */
+        foreach ($this->getAddedTextFiles() as $file) {
+            if ($file->isPhp()) {
+                yield $file;
+            }
+        }
+    }
 }
