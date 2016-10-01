@@ -12,6 +12,7 @@ use Regis\Domain\Repository;
 
 class SchedulePullRequest
 {
+    private $producer;
     private $repositoriesRepo;
     private $inspectionsRepo;
 
