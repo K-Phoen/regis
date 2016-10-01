@@ -41,9 +41,9 @@ class EditRepositoryConfigurationType extends AbstractType implements DataMapper
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'intent' => 'nedit_repository',
-        ));
+        ]);
     }
 
     public function getName()

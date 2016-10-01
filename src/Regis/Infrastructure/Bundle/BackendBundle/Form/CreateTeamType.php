@@ -21,9 +21,9 @@ class CreateTeamType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'intent' => 'new_team',
-        ));
+        ]);
     }
 
     public function getName()
