@@ -9,7 +9,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 use Regis\Application\Command;
 use Regis\Domain\Entity;
-use Regis\Infrastructure\Bundle\BackendBundle\Form;
 use Symfony\Component\HttpFoundation\Response;
 
 class RepositoryCreatorController extends Controller
