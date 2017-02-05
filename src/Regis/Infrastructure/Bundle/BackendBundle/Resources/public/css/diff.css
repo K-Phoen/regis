@@ -19,6 +19,11 @@ table.diff tr.diff-type-deletion {
   border-color: #f1c0c0;
 }
 
+table.diff td.blob-line {
+  padding: 4px;
+  color: darkgrey;
+}
+
 table.diff td.blob-line::before {
   content: attr(data-line-number);
 }
@@ -32,4 +37,5 @@ table.diff .blob-change-type, table.diff .blob-raw-code {
 
 table.diff .blob-change-type::before {
   content: attr(data-change-symbol);
+  color: darkgrey;
 }
