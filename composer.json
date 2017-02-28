@@ -45,7 +45,8 @@
         "ircmaxell/random-lib": "^1.1",
 
         "kphoen/rulerz": "dev-master as 0.20.0",
-        "kphoen/rulerz-bundle": "dev-master"
+        "kphoen/rulerz-bundle": "dev-master",
+        "roave/security-advisories": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",
