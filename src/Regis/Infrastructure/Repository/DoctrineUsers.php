@@ -32,6 +32,7 @@ class DoctrineUsers implements Repository\Users
 
     public function matching(Specification $spec): \Traversable
     {
+        /** @var $repo \Doctrine\ORM\EntityRepository */
         $repo = $this->em->getRepository(Entity\User::class);
         $qb = $repo->createQueryBuilder('u');
 

@@ -34,7 +34,7 @@ class Repository
 
     private function augmentWithFileContents(Model\Diff $diff): Model\Diff
     {
-        $files = array_map(function(Model\Diff\File $file) use ($diff) {
+        $files = array_map(function(Model\Diff\File $file) {
             $blob = $this->repository->getBlob($file->getNewIndex());
 
             return $file->replaceNewContent(

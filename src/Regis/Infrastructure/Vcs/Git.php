@@ -17,6 +17,9 @@ class Git
     /** @var string */
     private $repositoriesDirectory;
 
+    /** @var string */
+    private $gitBinary;
+
     private $gitonomyOptions = [];
 
     public function __construct(Logger $logger, string $gitBinary, string $repositoriesDirectory)

@@ -64,7 +64,7 @@ class DoctrineRepositories implements Repository\Repositories
         if ($repository === null) {
             throw Repository\Exception\NotFound::forIdentifier($id);
         }
-        
+
         return $repository;
     }
 

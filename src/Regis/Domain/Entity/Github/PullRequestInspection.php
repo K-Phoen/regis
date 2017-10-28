@@ -13,6 +13,7 @@ class PullRequestInspection extends Inspection
 
     public static function create(Repository $repository, PullRequest $pullRequest): self
     {
+        /** @var $inspection PullRequestInspection */
         $inspection = parent::createForRevisions($repository, $pullRequest->getRevisions());
         $inspection->pullRequestNumber = $pullRequest->getNumber();
 

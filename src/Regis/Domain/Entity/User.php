@@ -45,7 +45,7 @@ class User implements UserInterface
         return $user;
     }
 
-    private function __construct(string $username, string $password = null)
+    private function __construct(string $username)
     {
         $this->id = Uuid::create();
         $this->username = $username;
