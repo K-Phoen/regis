@@ -21,7 +21,7 @@ class AccessDeniedListenerTest extends \PHPUnit_Framework_TestCase
 
         $event->expects($this->once())
             ->method('setException')
-            ->with($this->callback(function($exception) {
+            ->with($this->callback(function ($exception) {
                 return $exception instanceof SymfonyAccessDenied;
             }));
 

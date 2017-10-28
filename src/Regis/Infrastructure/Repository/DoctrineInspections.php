@@ -32,7 +32,7 @@ class DoctrineInspections implements Repository\Inspections
         if ($inspection === null) {
             throw Repository\Exception\NotFound::forIdentifier($id);
         }
-        
+
         return $inspection;
     }
 }

@@ -40,7 +40,7 @@ class InMemoryRepositories implements Repository\Repositories
         if (!array_key_exists($id, $this->repositories)) {
             throw Repository\Exception\NotFound::forIdentifier($id);
         }
-        
+
         return $this->repositories[$id];
     }
 }

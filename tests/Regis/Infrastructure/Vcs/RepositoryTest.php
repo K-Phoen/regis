@@ -37,7 +37,9 @@ class RepositoryTest extends \PHPUnit_Framework_TestCase
             'tests/Regis/Application/Inspection/CodeSnifferTest.php',
             'tests/Regis/Application/Inspection/InspectionTestCase.php',
             'tests/Regis/Application/Inspection/PhpMdTest.php',
-        ], array_map(function(Model\Diff\File $file) { return $file->getNewName(); }, $diff->getFiles()));
+        ], array_map(function (Model\Diff\File $file) {
+            return $file->getNewName();
+        }, $diff->getFiles()));
 
         $this->assertNotEquals('dummy content', $diff->getFiles()[0]->getNewContent());
     }

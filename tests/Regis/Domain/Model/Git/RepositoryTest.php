@@ -4,7 +4,7 @@ namespace Tests\Regis\Domain\Model\Git;
 
 use Regis\Domain\Model\Git;
 
-class   RepositoryTest extends \PHPUnit_Framework_TestCase
+class RepositoryTest extends \PHPUnit_Framework_TestCase
 {
     public function testItCanBeConstructedFromAnArray()
     {

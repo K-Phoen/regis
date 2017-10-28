@@ -17,7 +17,7 @@ class Revisions
     public function __construct(string $base, string $head)
     {
         $this->base = $base;
-        $this->head  = $head;
+        $this->head = $head;
     }
 
     public function toArray()

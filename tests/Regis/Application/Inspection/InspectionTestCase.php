@@ -11,7 +11,7 @@ abstract class InspectionTestCase extends \PHPUnit_Framework_TestCase
         $diff = $this->getMockBuilder(Model\Git\Diff::class)->disableOriginalConstructor()->getMock();
         $diff->expects($this->any())
             ->method('getAddedPhpFiles')
-            ->will($this->returnValue(new \ArrayIterator($addedPhpFiles )));
+            ->will($this->returnValue(new \ArrayIterator($addedPhpFiles)));
 
         return $diff;
     }

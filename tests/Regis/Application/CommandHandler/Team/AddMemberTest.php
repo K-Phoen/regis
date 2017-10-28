@@ -38,7 +38,7 @@ class AddMemberTest extends \PHPUnit_Framework_TestCase
 
         $this->teamsRepo->expects($this->once())
             ->method('save')
-            ->with($this->callback(function(Entity\Team $team) use ($newMember) {
+            ->with($this->callback(function (Entity\Team $team) use ($newMember) {
                 return count($team->getMembers()) === 1
                 && in_array($newMember, iterator_to_array($team->getMembers()), true);
             }));

@@ -24,7 +24,6 @@ class AddTest extends \PHPUnit_Framework_TestCase
         $this->handler = new CommandHandler\Github\DeployKey\Add($this->githubClientFactory, $this->repositoriesRepo);
     }
 
-
     public function testItCallsGithub()
     {
         $command = new Command\Github\DeployKey\Add('K-Phoen', 'test', 'key content');

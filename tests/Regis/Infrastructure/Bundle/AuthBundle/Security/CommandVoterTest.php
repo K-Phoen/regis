@@ -67,7 +67,7 @@ class CommandVoterTest extends \PHPUnit_Framework_TestCase
 
         $this->rulerz->expects($this->once())
             ->method('satisfiesSpec')
-            ->with($subject, $this->callback(function(Specification $specification) {
+            ->with($subject, $this->callback(function (Specification $specification) {
                 return true;
             }))
             ->will($this->returnValue(true));
@@ -80,9 +80,9 @@ class CommandVoterTest extends \PHPUnit_Framework_TestCase
     public function unsupportedAttributesProvider()
     {
         return [
-            [ 'ROLE_USER' ],
-            [ 'CMD_' ],
-            [ 'TEAM::LEAVE' ],
+            ['ROLE_USER'],
+            ['CMD_'],
+            ['TEAM::LEAVE'],
         ];
     }
 }

@@ -66,21 +66,21 @@ class FileTest extends \PHPUnit_Framework_TestCase
     public function phpFileNameProvider()
     {
         return [
-            [ 'foo.php' ],
-            [ 'foo-bar.php' ],
-            [ 'foo/bar.php' ],
-            [ 'foo.phps' ],
+            ['foo.php'],
+            ['foo-bar.php'],
+            ['foo/bar.php'],
+            ['foo.phps'],
         ];
     }
 
     public function notPhpFileNameProvider()
     {
         return [
-            [ 'foo' ],
-            [ 'foo-bar' ],
-            [ 'bar.txt' ],
-            [ 'foo/bar.txt' ],
-            [ 'foo/bar.inc' ],
+            ['foo'],
+            ['foo-bar'],
+            ['bar.txt'],
+            ['foo/bar.txt'],
+            ['foo/bar.inc'],
         ];
     }
 
@@ -273,15 +273,15 @@ index d62fdc2..cfad9e1 100644
 ';
 
         return [
-            [ $diff1, 42, 12 ],
-            [ $diff2, 15, 4 ],
-            [ $diff3, 30, 4 ],
-            [ $diff3, 33, 7 ],
-            [ $diff4, 7, 4 ],
-            [ $diff4, 90, 32 ],
-            [ $diff5, 24, 5 ],
-            [ $diff6, 30, 5 ],
-            [ $diff6, 47, 16 ],
+            [$diff1, 42, 12],
+            [$diff2, 15, 4],
+            [$diff3, 30, 4],
+            [$diff3, 33, 7],
+            [$diff4, 7, 4],
+            [$diff4, 90, 32],
+            [$diff5, 24, 5],
+            [$diff6, 30, 5],
+            [$diff6, 47, 16],
         ];
     }
 

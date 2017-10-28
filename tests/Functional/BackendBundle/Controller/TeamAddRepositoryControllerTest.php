@@ -23,7 +23,7 @@ class TeamAddRepositoryControllerTest extends WebTestCase
         $this->logIn($client, 'user');
 
         $client->request('GET', '/backend/teams/repositories', [
-            'q' => $search
+            'q' => $search,
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -38,10 +38,10 @@ class TeamAddRepositoryControllerTest extends WebTestCase
     public function searchProvider()
     {
         return [
-            [ '', [] ],
-            [ 'github', ['github/test'] ],
-            [ 'git', ['github/test'] ],
-            [ 'test', ['github/test'] ],
+            ['', []],
+            ['github', ['github/test']],
+            ['git', ['github/test']],
+            ['test', ['github/test']],
         ];
     }
 }
