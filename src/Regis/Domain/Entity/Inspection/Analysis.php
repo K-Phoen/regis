@@ -106,7 +106,7 @@ class Analysis
 
     public function errorsCount(): int
     {
-        return array_reduce($this->violations->toArray(), function(int $count, Violation $violation) {
+        return array_reduce($this->violations->toArray(), function (int $count, Violation $violation) {
             return $count + $violation->isError();
         }, 0);
     }
@@ -125,7 +125,7 @@ class Analysis
 
     public function warningsCount(): int
     {
-        return array_reduce($this->violations->toArray(), function(int $count, Violation $violation) {
+        return array_reduce($this->violations->toArray(), function (int $count, Violation $violation) {
             return $count + $violation->isWarning();
         }, 0);
     }

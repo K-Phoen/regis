@@ -12,6 +12,7 @@ declare(strict_types=1);
  * This source file is subject to the MIT license that is bundled
  * with this source code in the file LICENSE.
  */
+
 namespace Regis\Domain\Git;
 
 use Gitonomy\Git\Parser\ParserBase;
@@ -126,10 +127,10 @@ class DiffParser extends ParserBase
                 while (true) {
                     if ($this->expects(' ')) {
                         $lines[] = new Diff\Line(Diff\Change::LINE_CONTEXT, $position, $currentLine, $this->consumeTo("\n"));
-                        $currentLine++;
+                        ++$currentLine;
                     } elseif ($this->expects('+')) {
                         $lines[] = new Diff\Line(Diff\Change::LINE_ADD, $position, $currentLine, $this->consumeTo("\n"));
-                        $currentLine++;
+                        ++$currentLine;
                     } elseif ($this->expects('-')) {
                         $lines[] = new Diff\Line(Diff\Change::LINE_REMOVE, $position, $currentLine, $this->consumeTo("\n"));
                     } elseif ($this->expects("\ No newline at end of file")) {
@@ -139,7 +140,7 @@ class DiffParser extends ParserBase
                     }
 
                     $this->consumeNewLine();
-                    $position++;
+                    ++$position;
                 }
 
                 $changes[] = new Diff\Change($rangeOldStart, $rangeOldCount, $rangeNewStart, $rangeNewCount, $lines);

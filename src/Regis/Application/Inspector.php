@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Regis\Application;
 
-use Gitonomy\Git as Gitonomy;
 use Regis\Domain\Entity;
 use Regis\Domain\Model;
 use Regis\Infrastructure\Vcs\Git;

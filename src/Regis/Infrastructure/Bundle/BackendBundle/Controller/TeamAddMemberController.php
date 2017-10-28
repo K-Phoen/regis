@@ -64,7 +64,7 @@ class TeamAddMemberController extends Controller
         } else {
             $results = $this->get('regis.repository.users')->matching(new Spec\User\Matches($q));
             // TODO eurk
-            $results = array_map(function(Entity\User $user) {
+            $results = array_map(function (Entity\User $user) {
                 return [
                     'id' => $user->getId(),
                     'username' => $user->getUsername(),

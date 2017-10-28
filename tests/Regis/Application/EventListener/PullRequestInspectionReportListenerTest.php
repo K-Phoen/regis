@@ -39,7 +39,7 @@ class PullRequestInspectionReportListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->bus->expects($this->once())
             ->method('handle')
-            ->with($this->callback(function($command) {
+            ->with($this->callback(function ($command) {
                 return $command instanceof Command\Github\Inspection\SavePullRequestReport;
             }));
 

@@ -18,7 +18,7 @@ class TeamsController extends Controller
         $teams = $this->get('regis.repository.teams')->matching(new Spec\Team\AccessibleBy($this->getUser()));
 
         return $this->render('@RegisBackend/Teams/list.html.twig', [
-            'teams' => $teams
+            'teams' => $teams,
         ]);
     }
 

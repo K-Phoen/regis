@@ -36,7 +36,7 @@ class CreateTest extends \PHPUnit_Framework_TestCase
 
         $this->repositoriesRepo->expects($this->once())
             ->method('save')
-            ->with($this->callback(function(Entity\Repository $repository) use ($user) {
+            ->with($this->callback(function (Entity\Repository $repository) use ($user) {
                 return $repository->getOwner() === $user &&
                 $repository->getIdentifier() === 'some identifier' &&
                 $repository->getSharedSecret() === 'shared secret';

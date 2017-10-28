@@ -25,7 +25,7 @@ class AccessibleThroughTeam extends AbstractSpecification
 
     public function getParameters()
     {
-        $teamsIds = array_map(function(Entity\Team $team) {
+        $teamsIds = array_map(function (Entity\Team $team) {
             return $team->getId();
         }, iterator_to_array($this->user->getTeams()));
 

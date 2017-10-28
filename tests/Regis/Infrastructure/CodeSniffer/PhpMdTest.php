@@ -4,7 +4,7 @@ namespace Tests\Regis\Infrastructure\PhpMd;
 
 use Regis\Infrastructure\CodeSniffer\CodeSniffer;
 
-class CodeSnifferTest extends \PHPUnit_Framework_TestCase
+class PhpMdTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @dataProvider testFilesDataProvider
@@ -23,7 +23,7 @@ class CodeSnifferTest extends \PHPUnit_Framework_TestCase
         list($violations, $fileContent) = $this->fileWithTwoViolations();
 
         return [
-            ['test.php', $fileContent, $violations]
+            ['test.php', $fileContent, $violations],
         ];
     }
 

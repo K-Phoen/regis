@@ -5,7 +5,6 @@ namespace Tests\Regis\Infrastructure\Repository;
 use Doctrine\ORM\AbstractQuery;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Regis\Domain\Repository\Repositories;
 use RulerZ\RulerZ;
@@ -28,7 +27,7 @@ class DoctrineRepositoriesTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
-        $this->doctrineRepository =$this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
+        $this->doctrineRepository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
         $this->rulerz = $this->getMockBuilder(RulerZ::class)->disableOriginalConstructor()->getMock();
 
         $this->em->expects($this->any())

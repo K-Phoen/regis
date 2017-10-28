@@ -84,7 +84,7 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
                 return $status->getState() === Client::INTEGRATION_PENDING
                     && strpos($status->getDescription(), 'scheduled') !== false
                     && $status->getTargetUrl() === null;
@@ -100,7 +100,7 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
                 return $status->getState() === Client::INTEGRATION_PENDING
                 && strpos($status->getDescription(), 'scheduled') !== false
                 && $status->getTargetUrl() === null;
@@ -117,7 +117,7 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
                 return $status->getState() === Client::INTEGRATION_PENDING
                 && strpos($status->getDescription(), 'started') !== false
                 && $status->getTargetUrl() !== null;
@@ -158,7 +158,7 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
                 return $status->getState() === Client::INTEGRATION_ERROR
                 && strpos($status->getDescription(), 'failed') !== false
                 && $status->getTargetUrl() !== null;
@@ -180,7 +180,7 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
                 return $status->getState() === Client::INTEGRATION_FAILURE
                 && strpos($status->getDescription(), 'error(s)') !== false
                 && $status->getTargetUrl() !== null;
@@ -202,7 +202,7 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
                 return $status->getState() === Client::INTEGRATION_FAILURE
                 && strpos($status->getDescription(), 'error(s)') !== false
                 && $status->getTargetUrl() !== null;
@@ -227,7 +227,7 @@ class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCas
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function(IntegrationStatus $status) {
+            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
                 return $status->getState() === Client::INTEGRATION_SUCCESS
                 && strpos($status->getDescription(), 'successful') !== false
                 && $status->getTargetUrl() !== null;

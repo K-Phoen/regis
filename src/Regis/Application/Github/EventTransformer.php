@@ -28,9 +28,9 @@ class EventTransformer
 
             if ($payload['action'] === self::ACTION_OPEN_PULL_REQUEST) {
                 return $this->transformPullRequestOpened($payload);
-            } else if ($payload['action'] === self::ACTION_SYNC_PULL_REQUEST) {
+            } elseif ($payload['action'] === self::ACTION_SYNC_PULL_REQUEST) {
                 return $this->transformPullRequestSynced($payload);
-            } else if ($payload['action'] === self::ACTION_CLOSE_PULL_REQUEST) {
+            } elseif ($payload['action'] === self::ACTION_CLOSE_PULL_REQUEST) {
                 return $this->transformPullRequestClosed($payload);
             }
         }
