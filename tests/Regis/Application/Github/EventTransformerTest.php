@@ -102,7 +102,7 @@ class EventTransformerTest extends \PHPUnit_Framework_TestCase
 
     private function pullRequestOpenedPayload(): Request
     {
-        return $this->requestWithContent('pull_request', <<<PAYLOAD
+        return $this->requestWithContent('pull_request', <<<'PAYLOAD'
 {
   "action": "opened",
   "number": 2,
@@ -142,7 +142,7 @@ PAYLOAD
 
     private function pullRequestSyncedPayload(): Request
     {
-        return $this->requestWithContent('pull_request', <<<PAYLOAD
+        return $this->requestWithContent('pull_request', <<<'PAYLOAD'
 {
   "action": "synchronize",
   "number": 2,
@@ -184,7 +184,7 @@ PAYLOAD
 
     private function pullRequestClosedPayload(): Request
     {
-        return $this->requestWithContent('pull_request', <<<PAYLOAD
+        return $this->requestWithContent('pull_request', <<<'PAYLOAD'
 {
   "action": "closed",
   "number": 2,
@@ -224,7 +224,7 @@ PAYLOAD
 
     private function pullRequestClosedOnPrivateRepoPayload(): Request
     {
-        return $this->requestWithContent('pull_request', <<<PAYLOAD
+        return $this->requestWithContent('pull_request', <<<'PAYLOAD'
 {
   "action": "closed",
   "number": 2,

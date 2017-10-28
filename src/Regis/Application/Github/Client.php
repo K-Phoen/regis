@@ -16,9 +16,13 @@ interface Client
     const READONLY_KEY = 'readonly_key';
     const WRITE_KEY = 'write_key';
 
-    function setIntegrationStatus(Model\PullRequest $pullRequest, IntegrationStatus $status);
-    function addDeployKey(string $owner, string $repository, string $title, string $key, string $type);
-    function createWebhook(string $owner, string $repository, string $url, $secret = null);
-    function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment);
-    function listRepositories(): \Traversable;
+    public function setIntegrationStatus(Model\PullRequest $pullRequest, IntegrationStatus $status);
+
+    public function addDeployKey(string $owner, string $repository, string $title, string $key, string $type);
+
+    public function createWebhook(string $owner, string $repository, string $url, $secret = null);
+
+    public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment);
+
+    public function listRepositories(): \Traversable;
 }

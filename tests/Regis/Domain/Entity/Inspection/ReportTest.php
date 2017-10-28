@@ -56,7 +56,7 @@ class ReportTest extends \PHPUnit_Framework_TestCase
     public function testErrorsAndWarningsCounts()
     {
         $analysis = $this->analysisMock(Analysis::STATUS_ERROR, $warnings = 5, $errors = 5);
-        $analysis2= $this->analysisMock(Analysis::STATUS_ERROR, $warnings = 3, $errors = 2);
+        $analysis2 = $this->analysisMock(Analysis::STATUS_ERROR, $warnings = 3, $errors = 2);
         $report = new Report('raw diff');
 
         $this->assertEquals(0, $report->errorsCount());

@@ -47,12 +47,12 @@ class PayloadValidatorTest extends \PHPUnit_Framework_TestCase
     public function invalidRequests()
     {
         return [
-            [ $this->unsignedRequest(), 'Payload signature is missing.' ],
-            [ $this->noRepositoryRequest(), 'Could not determine the repository associated to the payload.' ],
-            [ $this->unknownRepositoryRequest(), 'Repository "k-phoen/unknown" is not known.' ],
-            [ $this->noSignatureAlgorithmRequest(), 'Payload signature is invalid.' ],
-            [ $this->unknownSignatureAlgorithmRequest(), 'Algorithm "lala" is not known.' ],
-            [ $this->invalidSignatureRequest(), 'Payload signature is invalid.' ],
+            [$this->unsignedRequest(), 'Payload signature is missing.'],
+            [$this->noRepositoryRequest(), 'Could not determine the repository associated to the payload.'],
+            [$this->unknownRepositoryRequest(), 'Repository "k-phoen/unknown" is not known.'],
+            [$this->noSignatureAlgorithmRequest(), 'Payload signature is invalid.'],
+            [$this->unknownSignatureAlgorithmRequest(), 'Algorithm "lala" is not known.'],
+            [$this->invalidSignatureRequest(), 'Payload signature is invalid.'],
         ];
     }
 
@@ -106,7 +106,7 @@ class PayloadValidatorTest extends \PHPUnit_Framework_TestCase
 
     private function unknownRepositoryPayload(): string
     {
-        return <<<PAYLOAD
+        return <<<'PAYLOAD'
 {
   "action": "opened",
   "number": 2,
@@ -123,7 +123,7 @@ PAYLOAD;
 
     private function noRepositoryPayload(): string
     {
-        return <<<PAYLOAD
+        return <<<'PAYLOAD'
 {
   "action": "opened",
   "number": 2,
@@ -136,7 +136,7 @@ PAYLOAD;
 
     private function knownRepositoryPayload(): string
     {
-        return <<<PAYLOAD
+        return <<<'PAYLOAD'
 {
   "action": "opened",
   "number": 2,

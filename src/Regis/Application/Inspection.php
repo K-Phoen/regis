@@ -8,7 +8,7 @@ use Regis\Domain\Model;
 
 interface Inspection
 {
-    function getType(): string;
+    public function getType(): string;
 
-    function inspectDiff(Model\Git\Diff $diff): \Traversable;
+    public function inspectDiff(Model\Git\Diff $diff): \Traversable;
 }

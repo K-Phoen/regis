@@ -30,7 +30,7 @@ class PullRequestReviewCommentsListenerTest extends \PHPUnit_Framework_TestCase
 
         $bus->expects($this->once())
             ->method('handle')
-            ->with($this->callback(function($command) {
+            ->with($this->callback(function ($command) {
                 return $command instanceof Command\Github\Inspection\SendViolationsAsComments;
             }));
 

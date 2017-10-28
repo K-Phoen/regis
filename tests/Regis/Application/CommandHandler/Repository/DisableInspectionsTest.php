@@ -29,7 +29,7 @@ class DisableInspectionsTest extends \PHPUnit_Framework_TestCase
 
         $this->repositoriesRepo->expects($this->once())
             ->method('save')
-            ->with($this->callback(function(Entity\Repository $repo) {
+            ->with($this->callback(function (Entity\Repository $repo) {
                 return !$repo->isInspectionEnabled();
             }));
 
