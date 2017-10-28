@@ -6,5 +6,5 @@ namespace Regis\Application\Inspection;
 
 interface CodeSnifferRunner
 {
-    function execute(string $fileName, string $fileContent): array;
+    public function execute(string $fileName, string $fileContent): array;
 }

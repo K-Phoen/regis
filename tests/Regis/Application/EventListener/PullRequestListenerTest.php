@@ -7,10 +7,9 @@ use Regis\Application\Command;
 use Regis\Application\Event;
 use Regis\Application\EventListener\PullRequestListener;
 use Regis\Application\Inspection\ViolationsCache;
-use Regis\Domain\Entity\Inspection;
 use Regis\Domain\Model\Github\PullRequest;
 
-class PullRequestistenerTest extends \PHPUnit_Framework_TestCase
+class PullRequestListenerTest extends \PHPUnit_Framework_TestCase
 {
     private $bus;
     private $violationsCache;
@@ -41,7 +40,7 @@ class PullRequestistenerTest extends \PHPUnit_Framework_TestCase
 
         $this->bus->expects($this->once())
             ->method('handle')
-            ->with($this->callback(function($command) {
+            ->with($this->callback(function ($command) {
                 return $command instanceof Command\Github\Inspection\SchedulePullRequest;
             }));
 

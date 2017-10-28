@@ -13,7 +13,6 @@ class GeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $result1 = $generator->randomString(24));
         $this->assertEquals(24, strlen($result1));
 
-
         $this->assertInternalType('string', $result2 = $generator->randomString(24));
         $this->assertEquals(24, strlen($result2));
 

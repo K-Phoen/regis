@@ -27,7 +27,7 @@ class DoctrineTeamsTest extends \PHPUnit_Framework_TestCase
     {
         $this->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
         $this->rulerz = $this->getMockBuilder(RulerZ::class)->disableOriginalConstructor()->getMock();
-        $this->doctrineRepository =$this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
+        $this->doctrineRepository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
 
         $this->em->expects($this->any())
             ->method('getRepository')

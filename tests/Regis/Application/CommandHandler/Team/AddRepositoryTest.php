@@ -38,7 +38,7 @@ class AddRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->teamsRepo->expects($this->once())
             ->method('save')
-            ->with($this->callback(function(Entity\Team $team) use ($newRepo) {
+            ->with($this->callback(function (Entity\Team $team) use ($newRepo) {
                 return count($team->getRepositories()) === 1
                 && in_array($newRepo, iterator_to_array($team->getRepositories()), true);
             }));

@@ -61,7 +61,7 @@ class TeamAddRepositoryController extends Controller
         } else {
             $results = $this->get('regis.repository.repositories')->matching(new Spec\Repository\Matches($q));
             // TODO eurk
-            $results = array_map(function(Entity\Repository $repo) {
+            $results = array_map(function (Entity\Repository $repo) {
                 return [
                     'identifier' => $repo->getIdentifier(),
                 ];

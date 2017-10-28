@@ -27,11 +27,11 @@ class CreateOrUpdateUserTest extends \PHPUnit_Framework_TestCase
         $this->usersRepo->expects($this->once())
             ->method('findByGithubId')
             ->with(42)
-            ->will($this->throwException(new Repository\Exception\NotFound));
+            ->will($this->throwException(new Repository\Exception\NotFound()));
 
         $this->usersRepo->expects($this->once())
             ->method('save')
-            ->with($this->callback(function(Entity\User $user) {
+            ->with($this->callback(function (Entity\User $user) {
                 return in_array('ROLE_USER', $user->getRoles(), true)
                 && $user->getUsername() === 'user'
                 && $user->getEmail() === 'email'

@@ -57,7 +57,7 @@ class CodeSnifferTest extends InspectionTestCase
         $diff = $this->diff([$file]);
 
         $file->method('findPositionForLine')
-            ->will($this->returnCallback(function($line) {
+            ->will($this->returnCallback(function ($line) {
                 if ($line === 12) {
                     throw Model\Exception\LineNotInDiff::line($line);
                 }
@@ -88,7 +88,7 @@ class CodeSnifferTest extends InspectionTestCase
                                 'type' => 'ERROR',
                                 'message' => 'some error message',
                             ],
-                        ]
+                        ],
                     ],
                 ],
             ]));

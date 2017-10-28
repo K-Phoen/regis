@@ -35,7 +35,7 @@ class CreateAdminTest extends \PHPUnit_Framework_TestCase
 
         $this->usersRepo->expects($this->once())
             ->method('save')
-            ->with($this->callback(function(Entity\User $user) {
+            ->with($this->callback(function (Entity\User $user) {
                 return in_array('ROLE_ADMIN', $user->getRoles())
                     && $user->getPassword() === 'encoded password'
                     && $user->getEmail() === 'email';

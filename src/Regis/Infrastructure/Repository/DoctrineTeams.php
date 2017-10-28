@@ -52,7 +52,7 @@ class DoctrineTeams implements Repository\Teams
         if ($team === null) {
             throw Repository\Exception\NotFound::forIdentifier($id);
         }
-        
+
         return $team;
     }
 

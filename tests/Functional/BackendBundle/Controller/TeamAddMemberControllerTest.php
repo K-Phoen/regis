@@ -23,7 +23,7 @@ class TeamAddMemberControllerTest extends WebTestCase
         $this->logIn($client, 'user');
 
         $client->request('GET', '/backend/teams/users', [
-            'q' => $search
+            'q' => $search,
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
@@ -38,12 +38,12 @@ class TeamAddMemberControllerTest extends WebTestCase
     public function searchProvider()
     {
         return [
-            [ '', [] ],
-            [ 'admin', ['admin@admin'] ],
-            [ 'ad', ['admin@admin'] ],
+            ['', []],
+            ['admin', ['admin@admin']],
+            ['ad', ['admin@admin']],
 
-            [ 'us', ['user@foo.org'] ],
-            [ 'foo.org', ['user@foo.org'] ],
+            ['us', ['user@foo.org']],
+            ['foo.org', ['user@foo.org']],
         ];
     }
 }

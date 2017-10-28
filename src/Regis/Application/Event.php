@@ -14,5 +14,5 @@ interface Event
     const INSPECTION_FINISHED = 'inspection_finished';
     const INSPECTION_FAILED = 'inspection_failed';
 
-    function getEventName(): string;
+    public function getEventName(): string;
 }

@@ -15,7 +15,7 @@ class File
     private $newIndex;
     private $isBinary;
     private $newBlob;
-    /** @var Change[]  */
+    /** @var Change[] */
     private $changes;
 
     public function __construct($oldName, $newName, $oldIndex, $newIndex, bool $isBinary, Blob $newBlob, array $changes)
@@ -25,7 +25,7 @@ class File
         $this->oldIndex = $oldIndex;
         $this->newIndex = $newIndex;
         $this->isBinary = $isBinary;
-        $this->newBlob  = $newBlob;
+        $this->newBlob = $newBlob;
         $this->changes = $changes;
     }
 
@@ -113,7 +113,7 @@ class File
                     return $offset + $diffLine->getPosition();
                 }
 
-                $currentLine++;
+                ++$currentLine;
             }
 
             $offset = $diffLine->getPosition() + 1; // We add 1 to skip the line starting by @@

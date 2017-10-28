@@ -36,7 +36,7 @@ class SecurityTest extends \PHPUnit_Framework_TestCase
         $command = 'not an instance of something secure';
         $nextCalled = false;
 
-        $next = function($command) use (&$nextCalled) {
+        $next = function ($command) use (&$nextCalled) {
             $nextCalled = true;
 
             return 'return value';
@@ -53,7 +53,7 @@ class SecurityTest extends \PHPUnit_Framework_TestCase
         $command = $this->getMockBuilder(Command\SecureCommand::class)->getMock();
         $nextCalled = false;
 
-        $next = function($command) use (&$nextCalled) {
+        $next = function ($command) use (&$nextCalled) {
             $nextCalled = true;
         };
 
@@ -73,7 +73,8 @@ class SecurityTest extends \PHPUnit_Framework_TestCase
     public function testASecureCommandWhenTheAuthorizationIsNotGiven()
     {
         $command = $this->getMockBuilder(Command\SecureCommand::class)->getMock();
-        $next = function($command) {};
+        $next = function ($command) {
+        };
 
         $command->expects($this->once())
             ->method('executionAuthorizedFor')
@@ -90,7 +91,7 @@ class SecurityTest extends \PHPUnit_Framework_TestCase
         $command = new CommandSecureBySpecification($spec, $target);
         $nextCalled = false;
 
-        $next = function($command) use (&$nextCalled) {
+        $next = function ($command) use (&$nextCalled) {
             $nextCalled = true;
         };
 
@@ -113,7 +114,8 @@ class SecurityTest extends \PHPUnit_Framework_TestCase
         $spec = $this->getMockBuilder(Specification::class)->getMock();
         $command = new CommandSecureBySpecification($spec, $target);
 
-        $next = function($command) use (&$nextCalled) {};
+        $next = function ($command) use (&$nextCalled) {
+        };
 
         $this->rulerz->expects($this->once())
             ->method('satisfiesSpec')

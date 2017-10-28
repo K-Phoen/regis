@@ -24,7 +24,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase
         list($violations, $fileContent) = $this->fileWithTwoViolations();
 
         return [
-            ['test.php', $fileContent, $violations]
+            ['test.php', $fileContent, $violations],
         ];
     }
 
@@ -59,7 +59,7 @@ class Foo {
                 'externalInfoUrl' => 'http://phpmd.org/rules/naming.html#longvariable',
                 'priority' => 3,
                 'description' => 'Avoid excessively long variable names like $variableNameObviouslyTooLongToBeUseful. Keep variable name length under 20.',
-            ]
+            ],
         ];
 
         return [$violations, $content];

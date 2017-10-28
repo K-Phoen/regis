@@ -52,7 +52,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->statusesApi = $this->getMockBuilder(Api\Repository\Statuses::class)->disableOriginalConstructor()->getMock();
         $this->keysApi = $this->getMockBuilder(Api\Repository\DeployKeys::class)->disableOriginalConstructor()->getMock();
         $this->hooksApi = $this->getMockBuilder(Api\Repository\Hooks::class)->disableOriginalConstructor()->getMock();
-        $this->currentUserApi= $this->getMockBuilder(Api\CurrentUser::class)->disableOriginalConstructor()->getMock();
+        $this->currentUserApi = $this->getMockBuilder(Api\CurrentUser::class)->disableOriginalConstructor()->getMock();
 
         $this->vendorClient->expects($this->any())
             ->method('pullRequest')

@@ -21,7 +21,7 @@ class RepositoriesController extends Controller
         $repositories = $this->get('regis.repository.repositories')->matching(new Spec\Repository\AccessibleBy($this->getUser()));
 
         return $this->render('@RegisBackend/Repositories/list.html.twig', [
-            'repositories' => $repositories
+            'repositories' => $repositories,
         ]);
     }
 
@@ -30,7 +30,7 @@ class RepositoriesController extends Controller
         $repositories = $this->get('regis.repository.repositories')->matching(new Spec\Repository\AccessibleBy($this->getUser()));
 
         return $this->render('@RegisBackend/Repositories/_last_repositories.html.twig', [
-            'repositories' => $repositories
+            'repositories' => $repositories,
         ]);
     }
 
@@ -40,7 +40,7 @@ class RepositoriesController extends Controller
         $repository = $this->get('regis.repository.repositories')->find($identifier, Repositories::MODE_FETCH_RELATIONS);
 
         return $this->render('@RegisBackend/Repositories/detail.html.twig', [
-            'repository' => $repository
+            'repository' => $repository,
         ]);
     }
 
@@ -48,7 +48,7 @@ class RepositoriesController extends Controller
     {
         // TODO check access rights
 
-        $absoluteUrl = $this->get('router')->generate('webhook_github', [],  UrlGeneratorInterface::ABSOLUTE_URL);
+        $absoluteUrl = $this->get('router')->generate('webhook_github', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $command = new Command\Github\Webhook\Create(
             $repository->getOwnerUsername(),
@@ -70,6 +70,7 @@ class RepositoriesController extends Controller
         $this->get('tactician.commandbus')->handle($command);
 
         $this->addFlash('info', 'Inspections disabled.');
+
         return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
     }
 
