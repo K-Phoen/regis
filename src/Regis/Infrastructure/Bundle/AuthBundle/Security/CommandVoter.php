@@ -1,6 +1,6 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace Regis\Infrastructure\Bundle\AuthBundle\Security;
 
@@ -74,7 +74,7 @@ class CommandVoter extends Voter
         // build namespace
         $namespaceParts = explode('::', $attribute);
         $className = array_pop($namespaceParts);
-        $namespaceParts = array_map(function(string $part): string {
+        $namespaceParts = array_map(function (string $part): string {
             return ucfirst(strtolower($part));
         }, $namespaceParts);
 
@@ -82,10 +82,10 @@ class CommandVoter extends Voter
 
         // camelize class name
         $classNameParts = explode('_', $className);
-        $classNameParts = array_map(function(string $part): string {
+        $classNameParts = array_map(function (string $part): string {
             return ucfirst(strtolower($part));
         }, $classNameParts);
 
-        return $namespace . '\\' . implode('', $classNameParts);
+        return $namespace.'\\'.implode('', $classNameParts);
     }
 }

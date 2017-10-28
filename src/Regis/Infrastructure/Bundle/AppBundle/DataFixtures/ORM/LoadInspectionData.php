@@ -21,10 +21,10 @@ class LoadInspectionData extends AbstractFixture implements OrderedFixtureInterf
                 'repository' => [
                     'owner' => 'github',
                     'name' => 'test',
-                    'clone_url' => 'some clone url'
+                    'clone_url' => 'some clone url',
                 ],
                 'number' => 42,
-                'revisions' => ['base' => 'base sha', 'head' => 'head sha']
+                'revisions' => ['base' => 'base sha', 'head' => 'head sha'],
             ])
         );
         $manager->persist($inspection);

@@ -40,7 +40,7 @@ class RemoveRepositoryTest extends \PHPUnit_Framework_TestCase
 
         $this->teamsRepo->expects($this->once())
             ->method('save')
-            ->with($this->callback(function(Entity\Team $team) {
+            ->with($this->callback(function (Entity\Team $team) {
                 return count($team->getRepositories()) === 0;
             }));
 

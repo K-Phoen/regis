@@ -29,7 +29,7 @@ class CreateTest extends \PHPUnit_Framework_TestCase
 
         $this->teamsRepo->expects($this->once())
             ->method('save')
-            ->with($this->callback(function(Entity\Team $team) use ($owner, $teamName) {
+            ->with($this->callback(function (Entity\Team $team) use ($owner, $teamName) {
                 return $team->getOwner() === $owner
                     && $team->getName() === $teamName
                     && $team->getId();

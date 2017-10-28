@@ -34,7 +34,7 @@ class WebhooksController extends Controller
             $this->info('Ignored payload of type {type}', [
                 'type' => $request->headers->get('X-GitHub-Event'),
                 'payload_id' => $request->headers->get('X-GitHub-Delivery'),
-                'explanation' => $e->getMessage()
+                'explanation' => $e->getMessage(),
             ]);
 
             return new Response();

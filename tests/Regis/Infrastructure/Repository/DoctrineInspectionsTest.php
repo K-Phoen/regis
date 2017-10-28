@@ -20,7 +20,7 @@ class DoctrineInspectionsTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
-        $this->doctrineRepository =$this->getMockBuilder(ObjectRepository::class)->getMock();
+        $this->doctrineRepository = $this->getMockBuilder(ObjectRepository::class)->getMock();
 
         $this->em->expects($this->any())
             ->method('getRepository')

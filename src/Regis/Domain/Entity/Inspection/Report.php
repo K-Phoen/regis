@@ -79,7 +79,7 @@ class Report
 
     public function errorsCount(): int
     {
-        return array_reduce($this->analyses->toArray(), function(int $count, Analysis $analysis) {
+        return array_reduce($this->analyses->toArray(), function (int $count, Analysis $analysis) {
             return $count + $analysis->errorsCount();
         }, 0);
     }
@@ -97,7 +97,7 @@ class Report
 
     public function warningsCount(): int
     {
-        return array_reduce($this->analyses->toArray(), function(int $count, Analysis $analysis) {
+        return array_reduce($this->analyses->toArray(), function (int $count, Analysis $analysis) {
             return $count + $analysis->warningsCount();
         }, 0);
     }

@@ -2,7 +2,6 @@
 
 namespace Tests\Regis\Infrastructure\Github;
 
-use Github\Api;
 use Github\Client as VendorClient;
 use Psr\Log\LoggerInterface;
 
