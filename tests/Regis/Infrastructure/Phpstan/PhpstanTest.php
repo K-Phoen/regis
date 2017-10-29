@@ -10,11 +10,11 @@ class PhpstanTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $source = <<<CODE
+        $source = <<<'CODE'
 <?php
 
-\$foo = 42;
-\$f = function () use (\$foo) {
+$foo = 42;
+$f = function () use ($foo) {
 };
 CODE
         ;
