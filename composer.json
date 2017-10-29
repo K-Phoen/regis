@@ -28,6 +28,7 @@
 
         "squizlabs/php_codesniffer": "^2.6",
         "phpmd/phpmd": "^2.4",
+        "phpstan/phpstan": "^0.8",
 
         "knplabs/github-api": "^1.7",
         "gitonomy/gitlib": "^1.0",

@@ -12,9 +12,6 @@ parameters:
     # access over private repositories (`repo` scope)
     github_api_token: ~
 
-    phpcs_binary: '%kernel.root_dir%/../vendor/bin/phpcs'
-    phpmd_binary: '%kernel.root_dir%/../vendor/bin/phpmd'
-
     git_binary: /usr/bin/git
     repositories_directory: '%kernel.root_dir%/../var/repositories'
 

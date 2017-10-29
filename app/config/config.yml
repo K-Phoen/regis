@@ -13,6 +13,10 @@ imports:
 parameters:
     locale: en
 
+    phpcs_binary: '%kernel.root_dir%/../vendor/bin/phpcs'
+    phpmd_binary: '%kernel.root_dir%/../vendor/bin/phpmd'
+    phpstan_binary: '%kernel.root_dir%/../vendor/bin/phpstan'
+
 framework:
     #esi:             ~
     #translator:      { fallbacks: ["%locale%"] }
