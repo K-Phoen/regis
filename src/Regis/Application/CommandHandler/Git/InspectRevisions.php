@@ -6,6 +6,7 @@ namespace Regis\Application\CommandHandler\Git;
 
 use Regis\Application\Command;
 use Regis\Application\Inspector;
+use Regis\Domain\Entity\Inspection\Report;
 
 class InspectRevisions
 {
@@ -16,7 +17,7 @@ class InspectRevisions
         $this->inspector = $inspector;
     }
 
-    public function handle(Command\Git\InspectRevisions $command)
+    public function handle(Command\Git\InspectRevisions $command): Report
     {
         return $this->inspector->inspect($command->getRepository(), $command->getRevisions());
     }
