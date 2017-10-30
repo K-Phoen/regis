@@ -2,12 +2,13 @@
 
 namespace Tests\Regis\Application\Command\Repository;
 
+use PHPUnit\Framework\TestCase;
 use RulerZ\Spec\Specification;
 
 use Regis\Application\Command;
 use Regis\Domain\Entity;
 
-class EnableInspectionsTest extends \PHPUnit_Framework_TestCase
+class EnableInspectionsTest extends TestCase
 {
     public function testCommandIsSecured()
     {

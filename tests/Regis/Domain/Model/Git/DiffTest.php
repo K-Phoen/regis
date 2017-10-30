@@ -2,9 +2,10 @@
 
 namespace Tests\Regis\Domain\Model\Git;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Domain\Model\Git;
 
-class DiffTest extends \PHPUnit_Framework_TestCase
+class DiffTest extends TestCase
 {
     public function testHeadAndBaseAreGetFromTheRevision()
     {
@@ -73,9 +74,7 @@ class DiffTest extends \PHPUnit_Framework_TestCase
     private function binaryFile(): Git\Diff\File
     {
         $file = $this->getMockBuilder(Git\Diff\File::class)->disableOriginalConstructor()->getMock();
-        $file->expects($this->any())
-            ->method('isBinary')
-            ->will($this->returnValue(true));
+        $file->method('isBinary')->willReturn(true);
 
         return $file;
     }
@@ -83,9 +82,7 @@ class DiffTest extends \PHPUnit_Framework_TestCase
     private function renamedFile(): Git\Diff\File
     {
         $file = $this->getMockBuilder(Git\Diff\File::class)->disableOriginalConstructor()->getMock();
-        $file->expects($this->any())
-            ->method('isRename')
-            ->will($this->returnValue(true));
+        $file->method('isRename')->willReturn(true);
 
         return $file;
     }
@@ -93,9 +90,7 @@ class DiffTest extends \PHPUnit_Framework_TestCase
     private function deletedFile(): Git\Diff\File
     {
         $file = $this->getMockBuilder(Git\Diff\File::class)->disableOriginalConstructor()->getMock();
-        $file->expects($this->any())
-            ->method('isDeletion')
-            ->will($this->returnValue(true));
+        $file->method('isDeletion')->willReturn(true);
 
         return $file;
     }
@@ -108,9 +103,7 @@ class DiffTest extends \PHPUnit_Framework_TestCase
     private function phpFile(): Git\Diff\File
     {
         $file = $this->getMockBuilder(Git\Diff\File::class)->disableOriginalConstructor()->getMock();
-        $file->expects($this->any())
-            ->method('isPhp')
-            ->will($this->returnValue(true));
+        $file->method('isPhp')->willReturn(true);
 
         return $file;
     }

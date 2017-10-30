@@ -2,13 +2,14 @@
 
 namespace Tests\Regis\Application;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Application\Inspection;
 use Regis\Application\Inspector;
 use Regis\Domain\Entity\Inspection\Violation;
 use Regis\Domain\Model;
 use Regis\Infrastructure\Vcs;
 
-class InspectorTest extends \PHPUnit_Framework_TestCase
+class InspectorTest extends TestCase
 {
     private $git;
     private $repository;
@@ -25,14 +26,8 @@ class InspectorTest extends \PHPUnit_Framework_TestCase
         $this->repository = $this->getMockBuilder(Model\Git\Repository::class)->disableOriginalConstructor()->getMock();
         $this->revisions = $this->getMockBuilder(Model\Git\Revisions::class)->disableOriginalConstructor()->getMock();
 
-        $this->git->expects($this->any())
-            ->method('getRepository')
-            ->with($this->repository)
-            ->will($this->returnValue($this->gitRepository));
-        $this->gitRepository->expects($this->any())
-            ->method('getDiff')
-            ->with($this->revisions)
-            ->will($this->returnValue($this->diff));
+        $this->git->method('getRepository')->with($this->repository)->willReturn($this->gitRepository);
+        $this->gitRepository->method('getDiff')->with($this->revisions)->willReturn($this->diff);
     }
 
     public function testItStartsByUpdatingTheGitRepo()

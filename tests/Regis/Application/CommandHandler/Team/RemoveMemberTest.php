@@ -2,12 +2,13 @@
 
 namespace Tests\Regis\Application\CommandHandler\Team;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
 use Regis\Domain\Entity;
 use Regis\Domain\Repository;
 
-class RemoveMemberTest extends \PHPUnit_Framework_TestCase
+class RemoveMemberTest extends TestCase
 {
     private $teamsRepo;
     private $usersRepo;

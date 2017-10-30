@@ -2,12 +2,13 @@
 
 namespace Tests\Regis\Application\Github;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 use Regis\Application\Event;
 use Regis\Application\Github\EventTransformer;
 
-class EventTransformerTest extends \PHPUnit_Framework_TestCase
+class EventTransformerTest extends TestCase
 {
     /** @var EventTransformer */
     private $transformer;

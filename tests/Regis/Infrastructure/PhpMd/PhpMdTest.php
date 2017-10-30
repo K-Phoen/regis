@@ -2,12 +2,13 @@
 
 namespace Tests\Infrastructure\Regis\PhpMd;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Infrastructure\PhpMd\PhpMd;
 
-class PhpMdTest extends \PHPUnit_Framework_TestCase
+class PhpMdTest extends TestCase
 {
     /**
-     * @dataProvider testFilesDataProvider
+     * @dataProvider filesDataProvider
      */
     public function testReportsAreGenerated(string $fileName, string $fileContent, array $expectedReports)
     {
@@ -19,7 +20,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedReports, $reports);
     }
 
-    public function testFilesDataProvider()
+    public function filesDataProvider()
     {
         list($violations, $fileContent) = $this->fileWithTwoViolations();
 

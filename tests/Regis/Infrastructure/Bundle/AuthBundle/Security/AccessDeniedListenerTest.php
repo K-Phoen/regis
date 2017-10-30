@@ -2,13 +2,14 @@
 
 namespace Tests\Regis\Infrastructure\Bundle\AuthBundle\Security;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException as SymfonyAccessDenied;
 
 use Regis\Application\Security\Exception\AccessDenied;
 use Regis\Infrastructure\Bundle\AuthBundle\Security\AccessDeniedListener;
 
-class AccessDeniedListenerTest extends \PHPUnit_Framework_TestCase
+class AccessDeniedListenerTest extends TestCase
 {
     public function testItReplacesAccessDeniedExceptionsBySymfonyOnes()
     {

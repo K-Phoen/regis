@@ -2,13 +2,14 @@
 
 namespace Tests\Regis\Infrastructure\Repository;
 
+use PHPUnit\Framework\TestCase;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 use Regis\Infrastructure\Repository\DoctrineInspections;
 use Regis\Domain\Entity;
 
-class DoctrineInspectionsTest extends \PHPUnit_Framework_TestCase
+class DoctrineInspectionsTest extends TestCase
 {
     /** @var EntityManagerInterface */
     private $em;
@@ -22,10 +23,10 @@ class DoctrineInspectionsTest extends \PHPUnit_Framework_TestCase
         $this->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
         $this->doctrineRepository = $this->getMockBuilder(ObjectRepository::class)->getMock();
 
-        $this->em->expects($this->any())
+        $this->em
             ->method('getRepository')
             ->with(Entity\Inspection::class)
-            ->will($this->returnValue($this->doctrineRepository));
+            ->willReturn($this->doctrineRepository);
 
         $this->inspectionsRepo = new DoctrineInspections($this->em);
     }

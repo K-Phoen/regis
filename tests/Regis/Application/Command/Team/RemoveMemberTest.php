@@ -2,12 +2,13 @@
 
 namespace Tests\Regis\Application\Command\Team;
 
+use PHPUnit\Framework\TestCase;
 use RulerZ\Spec\Specification;
 
 use Regis\Application\Command;
 use Regis\Domain\Entity;
 
-class RemoveMemberTest extends \PHPUnit_Framework_TestCase
+class RemoveMemberTest extends TestCase
 {
     public function testCommandIsSecured()
     {

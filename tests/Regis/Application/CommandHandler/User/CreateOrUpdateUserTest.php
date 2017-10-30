@@ -2,12 +2,13 @@
 
 namespace Tests\Regis\Application\CommandHandler\User;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
 use Regis\Domain\Entity;
 use Regis\Domain\Repository;
 
-class CreateOrUpdateUserTest extends \PHPUnit_Framework_TestCase
+class CreateOrUpdateUserTest extends TestCase
 {
     private $usersRepo;
     /** @var CommandHandler\User\CreateOrUpdateUser */

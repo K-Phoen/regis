@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\Reporter;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Application\Reporter\Github as GithubReporter;
 use Regis\Application\Github\Client as GithubClient;
 use Regis\Application\Github\ClientFactory as GithubClientFactory;
@@ -9,7 +10,7 @@ use Regis\Domain\Entity\Github\Repository;
 use Regis\Domain\Entity\Inspection\Violation;
 use Regis\Domain\Model\Github\PullRequest;
 
-class GithubTest extends \PHPUnit_Framework_TestCase
+class GithubTest extends TestCase
 {
     /** @var GithubClientFactory */
     private $clientFactory;

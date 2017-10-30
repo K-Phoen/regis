@@ -2,9 +2,10 @@
 
 namespace Tests\Regis\Domain;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Domain\Uuid;
 
-class UuidTest extends \PHPUnit_Framework_TestCase
+class UuidTest extends TestCase
 {
     public function testItGeneratesSomethingThatLooksLikeAUuid()
     {

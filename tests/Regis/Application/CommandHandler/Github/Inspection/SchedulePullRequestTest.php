@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\CommandHandler\Github\Inspection;
 
+use PHPUnit\Framework\TestCase;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 
 use Regis\Application\Command;
@@ -10,7 +11,7 @@ use Regis\Domain\Entity;
 use Regis\Domain\Model;
 use Regis\Domain\Repository;
 
-class SchedulePullRequestTest extends \PHPUnit_Framework_TestCase
+class SchedulePullRequestTest extends TestCase
 {
     private $producer;
     private $repositoriesRepo;

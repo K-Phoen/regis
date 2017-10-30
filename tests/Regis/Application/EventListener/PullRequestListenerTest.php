@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\EventListener;
 
+use PHPUnit\Framework\TestCase;
 use League\Tactician\CommandBus;
 use Regis\Application\Command;
 use Regis\Application\Event;
@@ -9,7 +10,7 @@ use Regis\Application\EventListener\PullRequestListener;
 use Regis\Application\Inspection\ViolationsCache;
 use Regis\Domain\Model\Github\PullRequest;
 
-class PullRequestListenerTest extends \PHPUnit_Framework_TestCase
+class PullRequestListenerTest extends TestCase
 {
     private $bus;
     private $violationsCache;

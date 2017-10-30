@@ -2,13 +2,14 @@
 
 namespace Tests\Regis\Application\CommandHandler\Git;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
 use Regis\Application\Inspector;
 use Regis\Domain\Entity;
 use Regis\Domain\Model;
 
-class InspectRevisionsTest extends \PHPUnit_Framework_TestCase
+class InspectRevisionsTest extends TestCase
 {
     /** @var Inspector */
     private $inspector;

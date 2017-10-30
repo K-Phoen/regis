@@ -2,11 +2,12 @@
 
 namespace Tests\Regis\Domain\Model;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Domain\Git\DiffParser;
 use Regis\Domain\Model\Git\Blob;
 use Regis\Domain\Model\Git\Diff\File;
 
-class FileTest extends \PHPUnit_Framework_TestCase
+class FileTest extends TestCase
 {
     public function testDeletionsAreDetected()
     {
@@ -288,9 +289,7 @@ index d62fdc2..cfad9e1 100644
     private function getBlob(): Blob
     {
         $blob = $this->getMockBuilder(Blob::class)->disableOriginalConstructor()->getMock();
-        $blob->expects($this->any())
-            ->method('getContent')
-            ->will($this->returnValue('blob content'));
+        $blob->method('getContent')->willReturn('blob content');
 
         return $blob;
     }

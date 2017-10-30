@@ -2,12 +2,13 @@
 
 namespace Tests\Regis\Application\Command\Team;
 
+use PHPUnit\Framework\TestCase;
 use RulerZ\Spec\Specification;
 
 use Regis\Application\Command;
 use Regis\Domain\Entity;
 
-class AddMemberTest extends \PHPUnit_Framework_TestCase
+class AddMemberTest extends TestCase
 {
     public function testCommandIsSecured()
     {

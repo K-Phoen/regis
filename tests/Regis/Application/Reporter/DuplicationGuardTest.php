@@ -2,13 +2,14 @@
 
 namespace Tests\Regis\Application\Reporter;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Application\Inspection\ViolationsCache;
 use Regis\Application\Reporter;
 use Regis\Domain\Entity\Inspection\Violation;
 use Regis\Domain\Entity\Repository;
 use Regis\Domain\Model\Github\PullRequest;
 
-class DuplicationGuardTest extends \PHPUnit_Framework_TestCase
+class DuplicationGuardTest extends TestCase
 {
     /** @var Reporter */
     private $reporter;

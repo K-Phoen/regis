@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\Worker;
 
+use PHPUnit\Framework\TestCase;
 use League\Tactician\CommandBus;
 use PhpAmqpLib\Message\AMQPMessage;
 
@@ -10,7 +11,7 @@ use Regis\Application\Worker\GithubPrInspectionRunner;
 use Regis\Domain\Entity\Github\PullRequestInspection;
 use Regis\Domain\Repository;
 
-class GithubPrInspectionRunnerTest extends \PHPUnit_Framework_TestCase
+class GithubPrInspectionRunnerTest extends TestCase
 {
     private $commandBus;
     private $inspectionsRepo;

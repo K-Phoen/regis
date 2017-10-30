@@ -2,10 +2,11 @@
 
 namespace Tests\Regis\Domain\Entity\Inspection;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Domain\Entity\Inspection\Analysis;
 use Regis\Domain\Entity\Inspection\Report;
 
-class ReportTest extends \PHPUnit_Framework_TestCase
+class ReportTest extends TestCase
 {
     public function testReportStatus()
     {
