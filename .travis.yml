@@ -23,9 +23,6 @@ matrix:
     allow_failures:
       - php: 7.1
 
-before_install:
-    - composer self-update
-
 install:
     - composer install --optimize-autoloader --no-interaction --no-scripts ${COMPOSER_FLAGS}
     - composer require satooshi/php-coveralls '^1.0'
