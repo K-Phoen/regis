@@ -30,7 +30,8 @@
         "phpmd/phpmd": "^2.4",
         "phpstan/phpstan": "^0.8",
 
-        "knplabs/github-api": "^1.7",
+        "php-http/guzzle6-adapter": "^1.1",
+        "knplabs/github-api": "^2.6",
         "gitonomy/gitlib": "^1.0",
 
         "php-amqplib/rabbitmq-bundle": "^1.10",

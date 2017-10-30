@@ -1,13 +1,6 @@
 services:
-    regis.github.cached_http_client:
-        class: Github\HttpClient\CachedHttpClient
-        arguments:
-            - { cache_dir: '%kernel.cache_dir%/github-api-cache' }
-        public: false
-
     regis.github.github:
         class: Github\Client
-        arguments: [ '@regis.github.cached_http_client' ]
         public: false
 
     regis.github.client_factory:
