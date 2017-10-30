@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Infrastructure\Repository;
 
+use PHPUnit\Framework\TestCase;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
@@ -12,7 +13,7 @@ use RulerZ\Spec\Specification;
 use Regis\Domain\Entity;
 use Regis\Infrastructure\Repository\DoctrineTeams;
 
-class DoctrineTeamsTest extends \PHPUnit_Framework_TestCase
+class DoctrineTeamsTest extends TestCase
 {
     /** @var EntityManagerInterface */
     private $em;

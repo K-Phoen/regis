@@ -2,9 +2,10 @@
 
 namespace Tests\Regis\Infrastructure\RandomLib;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Infrastructure\RandomLib\Generator;
 
-class GeneratorTest extends \PHPUnit_Framework_TestCase
+class GeneratorTest extends TestCase
 {
     public function testItCanGenerateRandomStrings()
     {

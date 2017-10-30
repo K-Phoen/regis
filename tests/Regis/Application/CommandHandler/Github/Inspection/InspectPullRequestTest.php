@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\CommandHandler\Github\Inspection;
 
+use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 
@@ -13,7 +14,7 @@ use Regis\Domain\Entity;
 use Regis\Domain\Model;
 use Regis\Domain\Repository;
 
-class InspectPullRequestTest extends \PHPUnit_Framework_TestCase
+class InspectPullRequestTest extends TestCase
 {
     private $dispatcher;
     private $inspector;

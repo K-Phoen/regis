@@ -1,13 +1,14 @@
 <?php
 
-namespace Tests\Regis\Infrastructure\PhpMd;
+namespace Tests\Regis\Infrastructure\CodeSniffer;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Infrastructure\CodeSniffer\CodeSniffer;
 
-class PhpMdTest extends \PHPUnit_Framework_TestCase
+class CodeSnifferTest extends TestCase
 {
     /**
-     * @dataProvider testFilesDataProvider
+     * @dataProvider filesDataProvider
      */
     public function testReportsAreGenerated(string $fileName, string $fileContent, array $expectedReports)
     {
@@ -18,7 +19,7 @@ class PhpMdTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expectedReports, $phpcs->execute($fileName, $fileContent));
     }
 
-    public function testFilesDataProvider()
+    public function filesDataProvider()
     {
         list($violations, $fileContent) = $this->fileWithTwoViolations();
 

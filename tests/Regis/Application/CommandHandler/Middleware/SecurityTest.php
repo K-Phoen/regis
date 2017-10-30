@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\CommandHandler\Middleware;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Domain\Entity\User;
 use RulerZ\RulerZ;
 
@@ -11,7 +12,7 @@ use Regis\Application\Security\Context;
 use RulerZ\Spec\Specification;
 use Tests\Stub\CommandSecureBySpecification;
 
-class SecurityTest extends \PHPUnit_Framework_TestCase
+class SecurityTest extends TestCase
 {
     private $rulerz;
     private $securityContext;

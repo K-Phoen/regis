@@ -2,12 +2,13 @@
 
 namespace Tests\Regis\Domain\Entity\Github;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Domain\Entity\Github\Repository;
 use Regis\Domain\Entity\Github\PullRequestInspection;
 use Regis\Domain\Entity\Inspection;
 use Regis\Domain\Model\Github\PullRequest;
 
-class PullRequestInspectionTest extends \PHPUnit_Framework_TestCase
+class PullRequestInspectionTest extends TestCase
 {
     private $repository;
     private $pullRequest;

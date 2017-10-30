@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\Github;
 
+use PHPUnit\Framework\TestCase;
 use RulerZ\Compiler as RulerZCompiler;
 use RulerZ\RulerZ;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,7 +12,7 @@ use Regis\Application\Github\PayloadValidator;
 use Regis\Domain\Entity;
 use Regis\Infrastructure\Repository;
 
-class PayloadValidatorTest extends \PHPUnit_Framework_TestCase
+class PayloadValidatorTest extends TestCase
 {
     /** @var PayloadValidator */
     private $payloadValidator;
@@ -31,6 +32,7 @@ class PayloadValidatorTest extends \PHPUnit_Framework_TestCase
     public function testValidRequestsAreAccepted()
     {
         $this->payloadValidator->validate($this->validRequest());
+        $this->assertTrue(true, 'No exception is raised');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\CommandHandler\Github\Repository;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
 use Regis\Application\Random;
@@ -9,7 +10,7 @@ use Regis\Domain\Entity;
 use Regis\Domain\Repository\Exception;
 use Regis\Domain\Repository\Repositories;
 
-class CreateTest extends \PHPUnit_Framework_TestCase
+class CreateTest extends TestCase
 {
     private $repositoriesRepo;
     private $randomGenerator;

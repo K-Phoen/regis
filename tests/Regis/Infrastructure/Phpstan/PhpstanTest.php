@@ -2,9 +2,10 @@
 
 namespace Tests\Regis\Infrastructure\PhpMd;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Infrastructure\Phpstan\Phpstan;
 
-class PhpstanTest extends \PHPUnit_Framework_TestCase
+class PhpstanTest extends TestCase
 {
     private $filename;
 

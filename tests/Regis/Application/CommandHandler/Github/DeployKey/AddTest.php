@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\CommandHandler\Github\DeployKey;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
 use Regis\Application\Github\Client as GithubClient;
@@ -9,7 +10,7 @@ use Regis\Application\Github\ClientFactory as GithubClientFactory;
 use Regis\Domain\Entity;
 use Regis\Domain\Repository\Repositories;
 
-class AddTest extends \PHPUnit_Framework_TestCase
+class AddTest extends TestCase
 {
     private $githubClientFactory;
     private $repositoriesRepo;

@@ -2,9 +2,10 @@
 
 namespace Tests\Regis\Domain\Model\Git;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Domain\Model\Git;
 
-class BlobTest extends \PHPUnit_Framework_TestCase
+class BlobTest extends TestCase
 {
     public function testItJustHoldsValues()
     {

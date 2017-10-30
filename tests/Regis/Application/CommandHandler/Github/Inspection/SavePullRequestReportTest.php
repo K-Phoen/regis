@@ -2,13 +2,14 @@
 
 namespace Tests\Regis\Application\CommandHandler\Github\Inspection;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
 use Regis\Domain\Entity\Github\PullRequestInspection;
 use Regis\Domain\Entity\Inspection\Report;
 use Regis\Domain\Repository;
 
-class SavePullRequestReportTest extends \PHPUnit_Framework_TestCase
+class SavePullRequestReportTest extends TestCase
 {
     private $inspectionsRepository;
     /** @var CommandHandler\Github\Inspection\SavePullRequestReport */

@@ -2,12 +2,13 @@
 
 namespace Tests\Infrastructure\Regis\Vcs;
 
+use PHPUnit\Framework\TestCase;
 use Gitonomy\Git as Gitonomy;
 
 use Regis\Domain\Model\Git as Model;
 use Regis\Infrastructure\Vcs\Repository;
 
-class RepositoryTest extends \PHPUnit_Framework_TestCase
+class RepositoryTest extends TestCase
 {
     public function testUpdate()
     {

@@ -2,10 +2,11 @@
 
 namespace Tests\Regis\Domain\Entity\Github;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Domain\Entity;
 use Regis\Domain\Entity\Github\Repository;
 
-class RepositoryTest extends \PHPUnit_Framework_TestCase
+class RepositoryTest extends TestCase
 {
     private $owner;
 

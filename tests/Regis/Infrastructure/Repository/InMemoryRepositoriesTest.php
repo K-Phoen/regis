@@ -2,12 +2,13 @@
 
 namespace Tests\Regis\Infrastructure\Repository;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Infrastructure\Repository\InMemoryRepositories;
 use Regis\Domain\Entity;
 use RulerZ\RulerZ;
 use RulerZ\Spec\Specification;
 
-class InMemoryRepositoriesTest extends \PHPUnit_Framework_TestCase
+class InMemoryRepositoriesTest extends TestCase
 {
     private $owner;
     private $rulerz;

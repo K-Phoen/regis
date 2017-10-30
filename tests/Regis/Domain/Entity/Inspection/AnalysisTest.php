@@ -2,10 +2,11 @@
 
 namespace Tests\Regis\Domain\Entity\Inspection;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Domain\Entity\Inspection\Analysis;
 use Regis\Domain\Entity\Inspection\Violation;
 
-class AnalysisTest extends \PHPUnit_Framework_TestCase
+class AnalysisTest extends TestCase
 {
     public function testItHasErrorsIfAtLeastOneViolationIsAnError()
     {

@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Infrastructure\Bundle\AuthBundle\Security;
 
+use PHPUnit\Framework\TestCase;
 use RulerZ\RulerZ;
 use RulerZ\Spec\Specification;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -10,7 +11,7 @@ use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 use Regis\Domain\Entity;
 use Regis\Infrastructure\Bundle\AuthBundle\Security\CommandVoter;
 
-class CommandVoterTest extends \PHPUnit_Framework_TestCase
+class CommandVoterTest extends TestCase
 {
     private $rulerz;
     /** @var VoterInterface */
@@ -24,9 +25,7 @@ class CommandVoterTest extends \PHPUnit_Framework_TestCase
         $this->token = $this->getMockBuilder(TokenInterface::class)->getMock();
         $this->user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
 
-        $this->token->expects($this->any())
-            ->method('getUser')
-            ->will($this->returnValue($this->user));
+        $this->token->method('getUser')->willReturn($this->user);
 
         $this->voter = new CommandVoter($this->rulerz);
     }

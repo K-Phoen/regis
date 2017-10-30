@@ -2,9 +2,10 @@
 
 namespace Tests\Regis\Domain\Model\Git\Diff;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Domain\Model\Git;
 
-class ChangeTest extends \PHPUnit_Framework_TestCase
+class ChangeTest extends TestCase
 {
     public function testItJustHoldsValues()
     {

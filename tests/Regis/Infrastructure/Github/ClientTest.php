@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Infrastructure\Github;
 
+use PHPUnit\Framework\TestCase;
 use Github\Api;
 use Github\Client as VendorClient;
 use Psr\Http\Message\ResponseInterface;
@@ -14,7 +15,7 @@ use Regis\Domain\Model\Github\Repository;
 use Regis\Domain\Model\Github\ReviewComment;
 use Regis\Infrastructure\Github\Client;
 
-class ClientTest extends \PHPUnit_Framework_TestCase
+class ClientTest extends TestCase
 {
     const API_TOKEN = 'some api token';
 

@@ -2,9 +2,10 @@
 
 namespace Tests\Regis\Domain\Model\Github;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Domain\Model\Github\ReviewComment;
 
-class ReviewCommentTest extends \PHPUnit_Framework_TestCase
+class ReviewCommentTest extends TestCase
 {
     public function testConstruction()
     {

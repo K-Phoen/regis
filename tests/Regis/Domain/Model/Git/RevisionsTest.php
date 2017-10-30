@@ -2,9 +2,10 @@
 
 namespace Tests\Regis\Domain\Model\Git;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Domain\Model\Git;
 
-class RevisionsTest extends \PHPUnit_Framework_TestCase
+class RevisionsTest extends TestCase
 {
     public function testItCanBeConstructedFromAnArray()
     {

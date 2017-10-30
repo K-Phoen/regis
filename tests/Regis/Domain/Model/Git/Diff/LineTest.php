@@ -2,10 +2,11 @@
 
 namespace Tests\Regis\Domain\Model;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Domain\Model\Git\Diff\Change;
 use Regis\Domain\Model\Git\Diff\Line;
 
-class LineTest extends \PHPUnit_Framework_TestCase
+class LineTest extends TestCase
 {
     public function testConstruction()
     {

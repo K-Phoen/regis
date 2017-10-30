@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Infrastructure\Repository;
 
+use PHPUnit\Framework\TestCase;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -11,7 +12,7 @@ use RulerZ\Spec\Specification;
 use Regis\Domain\Entity;
 use Regis\Infrastructure\Repository\DoctrineUsers;
 
-class DoctrineUsersTest extends \PHPUnit_Framework_TestCase
+class DoctrineUsersTest extends TestCase
 {
     /** @var EntityManagerInterface */
     private $em;

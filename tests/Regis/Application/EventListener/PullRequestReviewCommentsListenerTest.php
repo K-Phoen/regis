@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\EventListener;
 
+use PHPUnit\Framework\TestCase;
 use League\Tactician\CommandBus;
 use Regis\Application\Command;
 use Regis\Application\Event;
@@ -10,7 +11,7 @@ use Regis\Domain\Entity\Github\PullRequestInspection;
 use Regis\Domain\Entity\Inspection;
 use Regis\Domain\Model\Github\PullRequest;
 
-class PullRequestReviewCommentsListenerTest extends \PHPUnit_Framework_TestCase
+class PullRequestReviewCommentsListenerTest extends TestCase
 {
     public function testItListensToTheRightEvents()
     {
@@ -30,9 +31,7 @@ class PullRequestReviewCommentsListenerTest extends \PHPUnit_Framework_TestCase
 
         $bus->expects($this->once())
             ->method('handle')
-            ->with($this->callback(function ($command) {
-                return $command instanceof Command\Github\Inspection\SendViolationsAsComments;
-            }));
+            ->with($this->isInstanceOf(Command\Github\Inspection\SendViolationsAsComments::class));
 
         $listener = new PullRequestReviewCommentsListener($bus);
         $listener->onInspectionFinished($event);

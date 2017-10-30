@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\EventListener;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Application\Github\IntegrationStatus;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface as UrlGenerator;
 use Regis\Application\Event;
@@ -14,7 +15,7 @@ use Regis\Domain\Entity\Inspection\Report;
 use Regis\Domain\Model\Github\PullRequest;
 use Regis\Domain\Repository;
 
-class PullRequestInspectionStatusListenerTest extends \PHPUnit_Framework_TestCase
+class PullRequestInspectionStatusListenerTest extends TestCase
 {
     /** @var ClientFactory */
     private $ghClientFactory;

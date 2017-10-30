@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\CommandHandler\Github\Inspection;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
 use Regis\Application\Reporter;
@@ -11,7 +12,7 @@ use Regis\Domain\Entity\Inspection\Violation;
 use Regis\Domain\Entity\Repository;
 use Regis\Domain\Model\Github\PullRequest;
 
-class SendViolationsAsCommentsTest extends \PHPUnit_Framework_TestCase
+class SendViolationsAsCommentsTest extends TestCase
 {
     private $reporter;
     /** @var CommandHandler\Github\Inspection\SendViolationsAsComments */

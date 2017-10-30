@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Application\CommandHandler\User;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 use Regis\Application\Command;
@@ -9,7 +10,7 @@ use Regis\Application\CommandHandler;
 use Regis\Domain\Entity;
 use Regis\Domain\Repository;
 
-class CreateAdminTest extends \PHPUnit_Framework_TestCase
+class CreateAdminTest extends TestCase
 {
     private $usersRepo;
     private $passwordEncoder;

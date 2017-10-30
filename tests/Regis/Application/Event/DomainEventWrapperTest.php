@@ -2,9 +2,10 @@
 
 namespace Tests\Regis\Application\Event;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Application\Event;
 
-class DomainEventWrapperTest extends \PHPUnit_Framework_TestCase
+class DomainEventWrapperTest extends TestCase
 {
     public function testItJustWrapsADomainEvent()
     {

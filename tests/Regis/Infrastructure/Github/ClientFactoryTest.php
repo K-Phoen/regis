@@ -2,6 +2,7 @@
 
 namespace Tests\Regis\Infrastructure\Github;
 
+use PHPUnit\Framework\TestCase;
 use Github\Client as VendorClient;
 use Psr\Log\LoggerInterface;
 
@@ -10,7 +11,7 @@ use Regis\Domain\Entity\User;
 use Regis\Infrastructure\Github\Client;
 use Regis\Infrastructure\Github\ClientFactory;
 
-class ClientFactoryTest extends \PHPUnit_Framework_TestCase
+class ClientFactoryTest extends TestCase
 {
     private $vendorClient;
     private $logger;
@@ -19,8 +20,8 @@ class ClientFactoryTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->vendorClient = $this->getMockBuilder(VendorClient::class)->disableOriginalConstructor()->getMock();
-        $this->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
+        $this->vendorClient = $this->createMock(VendorClient::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
 
         $this->clientFactory = new ClientFactory($this->vendorClient, $this->logger);
     }

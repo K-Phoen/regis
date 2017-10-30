@@ -2,13 +2,14 @@
 
 namespace Tests\Regis\Infrastructure\Bundle\AuthBundle\Security;
 
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 use Regis\Domain\Entity\User;
 use Regis\Infrastructure\Bundle\AuthBundle\Security\Context;
 
-class ContextTest extends \PHPUnit_Framework_TestCase
+class ContextTest extends TestCase
 {
     public function testItFetchesTheUserFromTheTokenStorage()
     {

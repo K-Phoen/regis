@@ -2,13 +2,14 @@
 
 namespace Tests\Regis\Application\Inspection;
 
+use PHPUnit\Framework\TestCase;
 use M6Web\Component\RedisMock\RedisMockFactory;
 use Predis\ClientInterface as RedisClient;
 use Regis\Application\Inspection\ViolationsCache;
 use Regis\Domain\Entity;
 use Regis\Domain\Model;
 
-class ViolationsCacheTest extends \PHPUnit_Framework_TestCase
+class ViolationsCacheTest extends TestCase
 {
     /** @var RedisClient */
     private $redis;
@@ -25,7 +26,7 @@ class ViolationsCacheTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $factory = new RedisMockFactory();
-        $this->redis = $factory->getAdapter('Predis\Client', true);
+        $this->redis = $factory->getAdapter(\Predis\Client::class, true);
         $this->violationsCache = new ViolationsCache($this->redis);
 
         $revisions = new Model\Git\Revisions('head sha', 'base sha');

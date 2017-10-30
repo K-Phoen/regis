@@ -2,12 +2,13 @@
 
 namespace Tests\Regis\Application\CommandHandler\Github\Repository;
 
+use PHPUnit\Framework\TestCase;
 use Regis\Application\Command;
 use Regis\Application\CommandHandler;
 use Regis\Domain\Entity;
 use Regis\Domain\Repository\Repositories;
 
-class UpdateConfigurationTest extends \PHPUnit_Framework_TestCase
+class UpdateConfigurationTest extends TestCase
 {
     private $repositoriesRepo;
     private $repository;
