@@ -4,8 +4,7 @@ namespace Tests\Regis\Infrastructure\Github;
 
 use Github\Api;
 use Github\Client as VendorClient;
-use Github\HttpClient\HttpClient;
-use Guzzle\Http\Message\Response;
+use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 use Regis\Application\Github\IntegrationStatus;
@@ -36,15 +35,13 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->vendorClient = $this->getMockBuilder(VendorClient::class)
-            ->setMethods(['authenticate', 'repo', 'pullRequest', 'currentUser', 'getHttpClient'])
+            ->setMethods(['authenticate', 'repo', 'pullRequest', 'currentUser', 'getLastResponse'])
             ->disableOriginalConstructor()
             ->getMock();
-        $this->logger = $this->getMockBuilder(LoggerInterface::class)->getMock();
+        $this->logger = $this->createMock(LoggerInterface::class);
         $this->user = $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock();
 
-        $this->user->expects($this->any())
-            ->method('getGithubAccessToken')
-            ->will($this->returnValue(self::API_TOKEN));
+        $this->user->method('getGithubAccessToken')->willReturn(self::API_TOKEN);
 
         $this->prApi = $this->getMockBuilder(Api\PullRequest::class)->disableOriginalConstructor()->getMock();
         $this->repoApi = $this->getMockBuilder(Api\Repo::class)->disableOriginalConstructor()->getMock();
@@ -54,28 +51,15 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $this->hooksApi = $this->getMockBuilder(Api\Repository\Hooks::class)->disableOriginalConstructor()->getMock();
         $this->currentUserApi = $this->getMockBuilder(Api\CurrentUser::class)->disableOriginalConstructor()->getMock();
 
-        $this->vendorClient->expects($this->any())
-            ->method('pullRequest')
-            ->will($this->returnValue($this->prApi));
-        $this->vendorClient->expects($this->any())
-            ->method('repo')
-            ->will($this->returnValue($this->repoApi));
-        $this->vendorClient->expects($this->any())
-            ->method('currentUser')
-            ->will($this->returnValue($this->currentUserApi));
+        $this->vendorClient->method('pullRequest')->willReturn($this->prApi);
+        $this->vendorClient->method('repo')->willReturn($this->repoApi);
+        $this->vendorClient->method('currentUser')->willReturn($this->currentUserApi);
 
-        $this->prApi->expects($this->any())
-            ->method('comments')
-            ->will($this->returnValue($this->prCommentsApi));
-        $this->repoApi->expects($this->any())
-            ->method('statuses')
-            ->will($this->returnValue($this->statusesApi));
-        $this->repoApi->expects($this->any())
-            ->method('keys')
-            ->will($this->returnValue($this->keysApi));
-        $this->repoApi->expects($this->any())
-            ->method('hooks')
-            ->will($this->returnValue($this->hooksApi));
+        $this->prApi->method('comments')->willReturn($this->prCommentsApi);
+
+        $this->repoApi->method('statuses')->willReturn($this->statusesApi);
+        $this->repoApi->method('keys')->willReturn($this->keysApi);
+        $this->repoApi->method('hooks')->willReturn($this->hooksApi);
 
         $this->client = new Client($this->vendorClient, $this->user, $this->logger);
     }
@@ -131,22 +115,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
 
     public function testListRepositories()
     {
-        $httpClient = $this->getMockBuilder(HttpClient::class)->disableOriginalConstructor()->getMock();
-        $httpResponse = $this->getMockBuilder(Response::class)->disableOriginalConstructor()->getMock();
-
-        $this->vendorClient->expects($this->once())
-            ->method('getHttpClient')
-            ->will($this->returnValue($httpClient));
-
-        $httpClient->expects($this->once())
-            ->method('getLastResponse')
-            ->will($this->returnValue($httpResponse));
+        $httpResponse = $this->createMock(ResponseInterface::class);
+        $this->vendorClient->method('getLastResponse')->willReturn($httpResponse);
 
         $this->vendorClient->expects($this->once())->method('authenticate');
 
         $this->currentUserApi->expects($this->once())
             ->method('repositories')
-            ->will($this->returnValue([
+            ->willReturn([
                 [
                     'full_name' => 'first/repo',
                     'html_url' => 'first/repo → html_url',
@@ -159,7 +135,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
                     'clone_url' => 'second/repo → clone_url',
                     'private' => true,
                 ],
-            ]));
+            ]);
 
         $repositories = iterator_to_array($this->client->listRepositories());
 
