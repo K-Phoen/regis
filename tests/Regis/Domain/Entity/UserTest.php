@@ -18,6 +18,19 @@ class UserTest extends TestCase
         $this->assertEquals(['ROLE_ADMIN'], $admin->getRoles());
     }
 
+    public function testAUserCanBeCreatedWithNoEmail()
+    {
+        $user = User::createUser('user', 42, 'access token');
+
+        $this->assertNotEmpty($user->getId());
+        $this->assertSame('user', $user->getUsername());
+        $this->assertSame(42, $user->getGithubId());
+        $this->assertSame('access token', $user->getGithubAccessToken());
+        $this->assertNull($user->getEmail());
+        $this->assertNull($user->getPassword());
+        $this->assertEquals(['ROLE_USER'], $user->getRoles());
+    }
+
     /**
      * @expectedException \InvalidArgumentException
      * @expectedExceptionMessage The new password can not be empty

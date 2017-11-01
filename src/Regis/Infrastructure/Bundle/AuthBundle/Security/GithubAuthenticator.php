@@ -37,7 +37,7 @@ class GithubAuthenticator extends SocialAuthenticator
 
     public function getCredentials(Request $request)
     {
-        if ($request->getPathInfo() !== '/login/github/check') {
+        if ($request->getPathInfo() !== $this->router->generate('github_connect_check')) {
             return null;
         }
 
@@ -52,8 +52,8 @@ class GithubAuthenticator extends SocialAuthenticator
         $command = new Command\User\CreateOrUpdateUser(
             $githubUser->getNickname(),
             (int) $githubUser->getId(),
-            $githubUser->getEmail(),
-            $credentials->getToken()
+            $credentials->getToken(),
+            $githubUser->getEmail()
         );
 
         return $this->commandBus->handle($command);

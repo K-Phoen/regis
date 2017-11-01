@@ -11,12 +11,12 @@ class CreateOrUpdateUser
     private $email;
     private $accessToken;
 
-    public function __construct(string $username, int $githubId, string $email, string $accessToken)
+    public function __construct(string $username, int $githubId, string $accessToken, string $email = null)
     {
         $this->username = $username;
         $this->githubId = $githubId;
-        $this->email = $email;
         $this->accessToken = $accessToken;
+        $this->email = $email;
     }
 
     public function getUsername(): string
@@ -29,7 +29,10 @@ class CreateOrUpdateUser
         return $this->githubId;
     }
 
-    public function getEmail(): string
+    /**
+     * @return string|null
+     */
+    public function getEmail()
     {
         return $this->email;
     }

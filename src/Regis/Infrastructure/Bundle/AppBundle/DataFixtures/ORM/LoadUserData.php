@@ -17,7 +17,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $userAdmin = User::createAdmin('admin', 'admin', 'admin@admin');
         $manager->persist($userAdmin);
 
-        $user = User::createUser('user', 'user@foo.org', 42, 'fake access token');
+        $user = User::createUser('user', 42, 'fake access token', 'user@foo.org');
         $manager->persist($user);
 
         $manager->flush();
