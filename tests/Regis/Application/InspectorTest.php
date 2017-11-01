@@ -19,7 +19,7 @@ class InspectorTest extends TestCase
 
     public function setUp()
     {
-        $this->git = $this->getMockBuilder(Vcs\Git::class)->disableOriginalConstructor()->getMock();
+        $this->git = $this->getMockBuilder(Vcs\Vcs::class)->disableOriginalConstructor()->getMock();
         $this->gitRepository = $this->getMockBuilder(Vcs\Repository::class)->disableOriginalConstructor()->getMock();
 
         $this->diff = $this->getMockBuilder(Model\Git\Diff::class)->disableOriginalConstructor()->getMock();

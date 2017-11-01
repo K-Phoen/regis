@@ -1,0 +1,6 @@
+services:
+    regis.command_handler.inspections.revisions:
+        class: Regis\AnalysisContext\Application\CommandHandler\InspectRevisions
+        arguments: [ '@regis.inspector' ]
+        tags:
+            - { name: tactician.handler, command: Regis\AnalysisContext\Application\Command\InspectRevisions }

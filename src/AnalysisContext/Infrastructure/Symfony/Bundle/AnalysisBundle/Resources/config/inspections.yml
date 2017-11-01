@@ -1,0 +1,36 @@
+services:
+    regis.inspector:
+        class: Regis\AnalysisContext\Application\Inspector
+        arguments:
+            - '@regis.vcs.git'
+            - [ '@regis.inspection.code_sniffer', '@regis.inspection.phpmd', '@regis.inspection.phpstan' ]
+
+    regis.inspection.phpstan:
+        class: Regis\AnalysisContext\Application\Inspection\Phpstan
+        arguments: [ '@regis.tools.phpstan' ]
+        public: false
+
+    regis.inspection.code_sniffer:
+        class: Regis\AnalysisContext\Application\Inspection\CodeSniffer
+        arguments: [ '@regis.tools.code_sniffer' ]
+        public: false
+
+    regis.inspection.phpmd:
+        class: Regis\AnalysisContext\Application\Inspection\PhpMd
+        arguments: [ '@regis.tools.phpmd', '%regis.config.inspections.phpmd%' ]
+        public: false
+
+    regis.tools.code_sniffer:
+        class: Regis\AnalysisContext\Infrastructure\CodeSniffer\CodeSniffer
+        arguments: [ '%phpcs_binary%', '%regis.config.inspections.phpcs%' ]
+        public: false
+
+    regis.tools.phpstan:
+        class: Regis\AnalysisContext\Infrastructure\Phpstan\Phpstan
+        arguments: [ '%phpstan_binary%' ]
+        public: false
+
+    regis.tools.phpmd:
+        class: Regis\AnalysisContext\Infrastructure\PhpMd\PhpMd
+        arguments: [ '%phpmd_binary%' ]
+        public: false

@@ -41,12 +41,6 @@ services:
         tags:
             - { name: tactician.handler, command: Regis\Application\Command\Github\Inspection\SchedulePullRequest }
 
-    regis.command_handler.inspections.revisions:
-        class: Regis\Application\CommandHandler\Git\InspectRevisions
-        arguments: [ '@regis.inspector' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Git\InspectRevisions }
-
     regis.command_handler.inspections.start:
         class: Regis\Application\CommandHandler\Github\Inspection\InspectPullRequest
         arguments: [ '@event_dispatcher', '@regis.inspector', '@regis.repository.inspections', '@logger' ]

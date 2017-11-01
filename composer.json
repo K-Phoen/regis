@@ -3,11 +3,17 @@
     "license": "MIT",
     "type": "project",
     "autoload": {
-        "psr-4": { "": "src/" },
+        "psr-4": {
+            "Regis\\AnalysisContext\\": "src/AnalysisContext",
+            "": "src/"
+        },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "autoload-dev": {
-        "psr-4": { "Tests\\": "tests/" }
+        "psr-4": {
+            "Tests\\Regis\\AnalysisContext\\": "tests/unit/AnalysisContext/",
+            "Tests\\": "tests/"
+        }
     },
     "config": {
         "platform": {
