@@ -1,0 +1,26 @@
+Regis\GithubContext\Domain\Entity\User:
+    type: entity
+    table: users
+
+    id:
+        id:
+            type: string
+            generator: { strategy: NONE }
+
+    fields:
+        username:
+            type: string
+            unique: true
+        githubId:
+            type: integer
+            nullable: true
+        githubAccessToken:
+            type: string
+            nullable: true
+        roles:
+            type: simple_array
+
+    oneToMany:
+        repositories:
+          targetEntity: Regis\GithubContext\Domain\Entity\Repository
+          mappedBy: owner

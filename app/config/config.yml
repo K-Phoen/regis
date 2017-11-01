@@ -69,6 +69,6 @@ doctrine:
             Regis:
                 type: yml
                 is_bundle: false
-                dir: '%kernel.root_dir%/../src/Regis/Domain/Entity/config'
-                prefix: Regis\Domain\Entity
-                alias: Regis
+                dir: '%kernel.root_dir%/../src/GithubContext/Domain/Entity/config'
+                prefix: Regis\GithubContext\Domain\Entity
+                alias: RegisGithubContext

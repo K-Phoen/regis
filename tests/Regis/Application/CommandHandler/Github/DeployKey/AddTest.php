@@ -14,7 +14,7 @@ class AddTest extends TestCase
 {
     private $githubClientFactory;
     private $repositoriesRepo;
-    /** @var CommandHandler\Github\Webhook\Create */
+    /** @var CommandHandler\Github\Webhook\CreateWebhook */
     private $handler;
 
     public function setUp()
@@ -22,12 +22,12 @@ class AddTest extends TestCase
         $this->githubClientFactory = $this->getMockBuilder(GithubClientFactory::class)->disableOriginalConstructor()->getMock();
         $this->repositoriesRepo = $this->getMockBuilder(Repositories::class)->getMock();
 
-        $this->handler = new CommandHandler\Github\DeployKey\Add($this->githubClientFactory, $this->repositoriesRepo);
+        $this->handler = new CommandHandler\Github\DeployKey\AddDeployKey($this->githubClientFactory, $this->repositoriesRepo);
     }
 
     public function testItCallsGithub()
     {
-        $command = new Command\Github\DeployKey\Add('K-Phoen', 'test', 'key content');
+        $command = new Command\Github\DeployKey\AddDeployKey('K-Phoen', 'test', 'key content');
         $client = $this->getMockBuilder(GithubClient::class)->getMock();
 
         $repository = $this->getMockBuilder(Entity\Github\Repository::class)->disableOriginalConstructor()->getMock();

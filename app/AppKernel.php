@@ -26,10 +26,10 @@ class AppKernel extends Kernel
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
 
             new Regis\AnalysisContext\Infrastructure\Symfony\Bundle\AnalysisBundle\RegisAnalysisBundle(),
+            new Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\RegisGithubBundle(),
 
             new Regis\Infrastructure\Bundle\AuthBundle\RegisAuthBundle(),
             new Regis\Infrastructure\Bundle\BackendBundle\RegisBackendBundle(),
-            new Regis\Infrastructure\Bundle\WebhooksBundle\RegisWebhooksBundle(),
             new Regis\Infrastructure\Bundle\AppBundle\RegisAppBundle(),
         ];
 

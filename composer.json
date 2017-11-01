@@ -5,6 +5,7 @@
     "autoload": {
         "psr-4": {
             "Regis\\AnalysisContext\\": "src/AnalysisContext",
+            "Regis\\GithubContext\\": "src/GithubContext",
             "": "src/"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]

@@ -14,7 +14,7 @@ class CreateTest extends TestCase
 {
     private $repositoriesRepo;
     private $randomGenerator;
-    /** @var CommandHandler\Github\Repository\Create */
+    /** @var CommandHandler\Github\Repository\DefineSharedSecret */
     private $handler;
 
     public function setUp()
@@ -22,7 +22,7 @@ class CreateTest extends TestCase
         $this->repositoriesRepo = $this->getMockBuilder(Repositories::class)->getMock();
         $this->randomGenerator = $this->getMockBuilder(Random\Generator::class)->getMock();
 
-        $this->handler = new CommandHandler\Github\Repository\Create($this->repositoriesRepo, $this->randomGenerator);
+        $this->handler = new CommandHandler\Github\Repository\DefineSharedSecret($this->repositoriesRepo, $this->randomGenerator);
     }
 
     public function testItBuildsAndSaveTheEntityIfItDoesNotAlreadyExists()

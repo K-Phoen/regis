@@ -6,7 +6,7 @@ security:
     providers:
         regis_db_provider:
             entity:
-                class: Regis\Domain\Entity\User
+                class: Regis\GithubContext\Domain\Entity\User
                 property: username
 
     role_hierarchy:
@@ -36,7 +36,7 @@ security:
                 secret: '%secret%'
                 always_remember_me: true
             guard:
-                authenticators: [ regis.auth.github_authenticator ]
+                authenticators: [ regis.github.authenticator ]
             logout:
                 path: /logout
                 target: /login

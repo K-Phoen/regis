@@ -7,7 +7,7 @@ use League\Tactician\CommandBus;
 use PhpAmqpLib\Message\AMQPMessage;
 
 use Regis\Application\Command;
-use Regis\Application\Worker\GithubPrInspectionRunner;
+use Regis\Application\Worker\PrInspectionRunner;
 use Regis\Domain\Entity\Github\PullRequestInspection;
 use Regis\Domain\Repository;
 
@@ -22,7 +22,7 @@ class GithubPrInspectionRunnerTest extends TestCase
         $this->commandBus = $this->getMockBuilder(CommandBus::class)->disableOriginalConstructor()->getMock();
         $this->inspectionsRepo = $this->getMockBuilder(Repository\Inspections::class)->getMock();
 
-        $this->worker = new GithubPrInspectionRunner($this->commandBus, $this->inspectionsRepo);
+        $this->worker = new PrInspectionRunner($this->commandBus, $this->inspectionsRepo);
     }
 
     public function testItRunsTheInspectionViaTheCommandBus()

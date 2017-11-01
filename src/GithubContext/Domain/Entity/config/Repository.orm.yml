@@ -1,0 +1,32 @@
+Regis\GithubContext\Domain\Entity\Repository:
+    type: entity
+    table: repositories
+
+    discriminatorColumn:
+        name: type
+        type: string
+
+    id:
+        identifier:
+            type: string
+            generator: { strategy: NONE }
+
+    fields:
+        sharedSecret:
+            type: string
+        isInspectionEnabled:
+            type: boolean
+            options: { default: 1 }
+
+    manyToOne:
+        owner:
+          targetEntity: Regis\GithubContext\Domain\Entity\User
+          inversedBy: repositories
+          joinColumn:
+            name: owner_id
+            referencedColumnName: id
+
+#    oneToMany:
+#        inspections:
+#          targetEntity: Regis\GithubContext\Domain\Entity\Inspection
+#          mappedBy: repository

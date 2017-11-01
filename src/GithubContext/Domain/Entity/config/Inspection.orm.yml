@@ -1,0 +1,48 @@
+Regis\Domain\Entity\Inspection:
+    type: entity
+    table: inspections
+    inheritanceType: SINGLE_TABLE
+
+    discriminatorColumn:
+        name: type
+        type: string
+
+    discriminatorMap:
+        github_pr: Regis\Domain\Entity\Github\PullRequestInspection
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: NONE }
+
+    fields:
+        createdAt:
+            type: datetimetz
+        startedAt:
+            type: datetimetz
+            nullable: true
+        finishedAt:
+            type: datetimetz
+            nullable: true
+        status:
+            type: string
+        failureTrace:
+            type: text
+        base:
+            type: string
+        head:
+            type: string
+
+    oneToOne:
+        report:
+          targetEntity: Regis\Domain\Entity\Inspection\Report
+          mappedBy: inspection
+          cascade: [ 'persist', 'merge' ]
+
+    manyToOne:
+        repository:
+          targetEntity: Regis\Domain\Entity\Repository
+          inversedBy: inspections
+          joinColumn:
+            name: repository_id
+            referencedColumnName: identifier

@@ -1,6 +1,0 @@
-Regis\Domain\Entity\Github\PullRequestInspection:
-    type: entity
-
-    fields:
-        pullRequestNumber:
-            type: integer

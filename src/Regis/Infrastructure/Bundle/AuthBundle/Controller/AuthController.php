@@ -12,15 +12,4 @@ class AuthController extends Controller
     {
         return $this->render('@RegisAuth/Auth/login.html.twig');
     }
-
-    public function githubConnectAction()
-    {
-        return $this->get('oauth2.registry')
-            ->getClient('github')
-            ->redirect($scopes = ['user:email', 'repo']);
-    }
-
-    public function githubConnectCheckAction()
-    {
-    }
 }

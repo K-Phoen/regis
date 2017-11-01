@@ -1,0 +1,54 @@
+services:
+    regis.github.command_handler.repository.create:
+        class: Regis\GithubContext\Application\CommandHandler\Repository\RegisterRepository
+        arguments: [ '@regis.github.repository.repositories', '@regis.random.generator' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Repository\RegisterRepository }
+
+    regis.github.command_handler.repository.define_shared_secret:
+        class: Regis\GithubContext\Application\CommandHandler\Repository\DefineSharedSecret
+        arguments: [ '@regis.github.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Repository\DefineSharedSecret }
+
+    regis.github.command_handler.repository.create_webhook:
+        class: Regis\GithubContext\Application\CommandHandler\Repository\CreateWebhook
+        arguments: [ '@regis.github.client_factory', '@regis.github.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Repository\CreateWebhook }
+
+    regis.github.command_handler.repository.add_deploy_key:
+        class: Regis\GithubContext\Application\CommandHandler\Repository\AddDeployKey
+        arguments: [ '@regis.github.client_factory', '@regis.github.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Repository\AddDeployKey }
+
+    regis.github.command_handler.inspections.schedule:
+        class: Regis\GithubContext\Application\CommandHandler\Inspection\SchedulePullRequest
+        arguments: [ '@old_sound_rabbit_mq.webhook_github_pr_event_producer', '@regis.github.repository.repositories', '@regis.github.repository.inspections' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Inspection\SchedulePullRequest }
+
+    regis.github.command_handler.inspections.start:
+        class: Regis\GithubContext\Application\CommandHandler\Inspection\InspectPullRequest
+        arguments: [ '@event_dispatcher', '@regis.inspector', '@regis.github.repository.inspections', '@logger' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Inspection\InspectPullRequest }
+
+    regis.github.command_handler.inspections.save_report:
+        class: Regis\GithubContext\Application\CommandHandler\Inspection\SavePullRequestReport
+        arguments: [ '@regis.github.repository.inspections' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Inspection\SavePullRequestReport }
+
+    regis.github.command_handler.inspections.send_pr_comments:
+        class: Regis\GithubContext\Application\CommandHandler\Inspection\SendViolationsAsComments
+        arguments: [ '@regis.github.violation_reporter.duplication_guard' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Inspection\SendViolationsAsComments }
+
+    regis.github.command_handler.users.create_or_update_user:
+        class: Regis\GithubContext\Application\CommandHandler\User\CreateOrUpdateUser
+        arguments: [ '@regis.github.repository.users' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\User\CreateOrUpdateUser }

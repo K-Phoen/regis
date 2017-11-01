@@ -4,9 +4,8 @@ auth:
 app:
     resource: "@RegisAppBundle/Resources/config/routing.yml"
 
-webhooks:
-    resource: "@RegisWebhooksBundle/Resources/config/routing.yml"
-    prefix: webhook
+github:
+    resource: "@RegisGithubBundle/Resources/config/routing.yml"
 
 backend:
     resource: "@RegisBackendBundle/Resources/config/routing.yml"
@@ -14,3 +13,6 @@ backend:
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+logout:
+    path: /logout

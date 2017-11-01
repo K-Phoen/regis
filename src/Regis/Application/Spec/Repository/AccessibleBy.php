@@ -6,7 +6,7 @@ namespace Regis\Application\Spec\Repository;
 
 use RulerZ\Spec\ComposedSpecification;
 
-use Regis\Domain\Entity;
+use Regis\GithubContext\Domain\Entity;
 
 class AccessibleBy extends ComposedSpecification
 {
@@ -19,6 +19,6 @@ class AccessibleBy extends ComposedSpecification
 
     protected function getSpecification()
     {
-        return (new IsOwner($this->user))->orX(new AccessibleThroughTeam($this->user));
+        return (new IsOwner($this->user)); //->orX(new AccessibleThroughTeam($this->user));
     }
 }

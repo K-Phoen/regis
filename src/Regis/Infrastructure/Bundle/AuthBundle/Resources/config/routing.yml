@@ -2,16 +2,3 @@ login:
     path:      /login
     defaults:  { _controller: RegisAuthBundle:Auth:login }
     methods:   GET
-
-logout:
-    path: /logout
-
-github_connect:
-    path:      /login/github
-    defaults:  { _controller: RegisAuthBundle:Auth:githubConnect }
-    methods:   GET
-
-github_connect_check:
-    path:      /login/github/check
-    defaults:  { _controller: RegisAuthBundle:Auth:githubConnectCheck }
-    methods:   GET

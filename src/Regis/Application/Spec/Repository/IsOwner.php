@@ -6,7 +6,7 @@ namespace Regis\Application\Spec\Repository;
 
 use RulerZ\Spec\AbstractSpecification;
 
-use Regis\Domain\Entity;
+use Regis\GithubContext\Domain\Entity;
 
 class IsOwner extends AbstractSpecification
 {

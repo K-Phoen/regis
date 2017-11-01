@@ -1,0 +1,14 @@
+webhook_github:
+    path: /webhook/github
+    defaults: { _controller: RegisGithubBundle:Webhooks:github }
+    methods: POST
+
+github_connect:
+    path: /login/github
+    defaults: { _controller: RegisGithubBundle:Auth:githubConnect }
+    methods: GET
+
+github_connect_check:
+    path: /login/github/check
+    defaults: { _controller: RegisGithubBundle:Auth:githubConnectCheck }
+    methods: GET

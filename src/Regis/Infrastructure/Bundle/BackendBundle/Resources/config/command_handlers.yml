@@ -1,108 +1,55 @@
 services:
-    regis.command_handler.repository.create:
-        class: Regis\Application\CommandHandler\Github\Repository\Create
-        arguments: [ '@regis.repository.repositories', '@regis.random.generator' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Github\Repository\Create }
-
-    regis.command_handler.repository.disable_inspections:
-        class: Regis\Application\CommandHandler\Repository\DisableInspections
-        arguments: [ '@regis.repository.repositories' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Repository\DisableInspections }
-
-    regis.command_handler.repository.enable_inspections:
-        class: Regis\Application\CommandHandler\Repository\EnableInspections
-        arguments: [ '@regis.repository.repositories' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Repository\EnableInspections }
-
-    regis.command_handler.repository.update_configuration:
-        class: Regis\Application\CommandHandler\Github\Repository\UpdateConfiguration
-        arguments: [ '@regis.repository.repositories' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Github\Repository\UpdateConfiguration }
-
-    regis.command_handler.webhooks.create:
-        class: Regis\Application\CommandHandler\Github\Webhook\Create
-        arguments: [ '@regis.github.client_factory', '@regis.repository.repositories' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Github\Webhook\Create }
-
-    regis.command_handler.deploy_key.add:
-        class: Regis\Application\CommandHandler\Github\DeployKey\Add
-        arguments: [ '@regis.github.client_factory', '@regis.repository.repositories' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Github\DeployKey\Add }
-
-    regis.command_handler.inspections.schedule:
-        class: Regis\Application\CommandHandler\Github\Inspection\SchedulePullRequest
-        arguments: [ '@old_sound_rabbit_mq.webhook_github_pr_event_producer', '@regis.repository.repositories', '@regis.repository.inspections' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Github\Inspection\SchedulePullRequest }
-
-    regis.command_handler.inspections.start:
-        class: Regis\Application\CommandHandler\Github\Inspection\InspectPullRequest
-        arguments: [ '@event_dispatcher', '@regis.inspector', '@regis.repository.inspections', '@logger' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Github\Inspection\InspectPullRequest }
-
-    regis.command_handler.inspections.save_report:
-        class: Regis\Application\CommandHandler\Github\Inspection\SavePullRequestReport
-        arguments: [ '@regis.repository.inspections' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Github\Inspection\SavePullRequestReport }
-
-    regis.command_handler.inspections.send_pr_comments:
-        class: Regis\Application\CommandHandler\Github\Inspection\SendViolationsAsComments
-        arguments: [ '@regis.violation_reporter.duplication_guard' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Github\Inspection\SendViolationsAsComments }
-
-    regis.command_handler.users.create_admin:
-        class: Regis\Application\CommandHandler\User\CreateAdmin
-        arguments: [ '@regis.repository.users', '@security.password_encoder' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\User\CreateAdmin }
-
-    regis.command_handler.users.create_or_update_user:
-        class: Regis\Application\CommandHandler\User\CreateOrUpdateUser
-        arguments: [ '@regis.repository.users' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\User\CreateOrUpdateUser }
-
-    regis.command_handler.teams.create:
-        class: Regis\Application\CommandHandler\Team\Create
-        arguments: [ '@regis.repository.teams' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Team\Create }
-
-    regis.command_handler.teams.add_member:
-        class: Regis\Application\CommandHandler\Team\AddMember
-        arguments: [ '@regis.repository.teams', '@regis.repository.users' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Team\AddMember }
-
-    regis.command_handler.teams.remove_member:
-        class: Regis\Application\CommandHandler\Team\RemoveMember
-        arguments: [ '@regis.repository.teams', '@regis.repository.users' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Team\RemoveMember }
-
-    regis.command_handler.teams.leave:
-        class: Regis\Application\CommandHandler\Team\Leave
-        arguments: [ '@regis.repository.teams' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Team\Leave }
-
-    regis.command_handler.teams.add_repository:
-        class: Regis\Application\CommandHandler\Team\AddRepository
-        arguments: [ '@regis.repository.teams', '@regis.repository.repositories' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Team\AddRepository }
-
-    regis.command_handler.teams.remove_repository:
-        class: Regis\Application\CommandHandler\Team\RemoveRepository
-        arguments: [ '@regis.repository.teams', '@regis.repository.repositories' ]
-        tags:
-            - { name: tactician.handler, command: Regis\Application\Command\Team\RemoveRepository }
+#    regis.command_handler.repository.disable_inspections:
+#        class: Regis\Application\CommandHandler\Repository\DisableInspections
+#        arguments: [ '@regis.repository.repositories' ]
+#        tags:
+#            - { name: tactician.handler, command: Regis\Application\Command\Repository\DisableInspections }
+#
+#    regis.command_handler.repository.enable_inspections:
+#        class: Regis\Application\CommandHandler\Repository\EnableInspections
+#        arguments: [ '@regis.repository.repositories' ]
+#        tags:
+#            - { name: tactician.handler, command: Regis\Application\Command\Repository\EnableInspections }
+#
+#    regis.command_handler.users.create_admin:
+#        class: Regis\Application\CommandHandler\User\CreateAdmin
+#        arguments: [ '@regis.repository.users', '@security.password_encoder' ]
+#        tags:
+#            - { name: tactician.handler, command: Regis\Application\Command\User\CreateAdmin }
+#
+#
+#    regis.command_handler.teams.create:
+#        class: Regis\Application\CommandHandler\Team\Create
+#        arguments: [ '@regis.repository.teams' ]
+#        tags:
+#            - { name: tactician.handler, command: Regis\Application\Command\Team\Create }
+#
+#    regis.command_handler.teams.add_member:
+#        class: Regis\Application\CommandHandler\Team\AddMember
+#        arguments: [ '@regis.repository.teams', '@regis.repository.users' ]
+#        tags:
+#            - { name: tactician.handler, command: Regis\Application\Command\Team\AddMember }
+#
+#    regis.command_handler.teams.remove_member:
+#        class: Regis\Application\CommandHandler\Team\RemoveMember
+#        arguments: [ '@regis.repository.teams', '@regis.repository.users' ]
+#        tags:
+#            - { name: tactician.handler, command: Regis\Application\Command\Team\RemoveMember }
+#
+#    regis.command_handler.teams.leave:
+#        class: Regis\Application\CommandHandler\Team\Leave
+#        arguments: [ '@regis.repository.teams' ]
+#        tags:
+#            - { name: tactician.handler, command: Regis\Application\Command\Team\Leave }
+#
+#    regis.command_handler.teams.add_repository:
+#        class: Regis\Application\CommandHandler\Team\AddRepository
+#        arguments: [ '@regis.repository.teams', '@regis.repository.repositories' ]
+#        tags:
+#            - { name: tactician.handler, command: Regis\Application\Command\Team\AddRepository }
+#
+#    regis.command_handler.teams.remove_repository:
+#        class: Regis\Application\CommandHandler\Team\RemoveRepository
+#        arguments: [ '@regis.repository.teams', '@regis.repository.repositories' ]
+#        tags:
+#            - { name: tactician.handler, command: Regis\Application\Command\Team\RemoveRepository }

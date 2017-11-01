@@ -14,7 +14,7 @@ class CreateTest extends TestCase
 {
     private $githubClientFactory;
     private $repositoriesRepo;
-    /** @var CommandHandler\Github\Webhook\Create */
+    /** @var CommandHandler\Github\Webhook\CreateWebhook */
     private $handler;
 
     public function setUp()
@@ -22,12 +22,12 @@ class CreateTest extends TestCase
         $this->githubClientFactory = $this->getMockBuilder(GithubClientFactory::class)->disableOriginalConstructor()->getMock();
         $this->repositoriesRepo = $this->getMockBuilder(Repositories::class)->getMock();
 
-        $this->handler = new CommandHandler\Github\Webhook\Create($this->githubClientFactory, $this->repositoriesRepo);
+        $this->handler = new CommandHandler\Github\Webhook\CreateWebhook($this->githubClientFactory, $this->repositoriesRepo);
     }
 
     public function testItCallsGithub()
     {
-        $command = new Command\Github\Webhook\Create('K-Phoen', 'test', 'http://callback.url');
+        $command = new Command\Github\Webhook\CreateWebhook('K-Phoen', 'test', 'http://callback.url');
         $client = $this->getMockBuilder(GithubClient::class)->getMock();
 
         $repository = $this->getMockBuilder(Entity\Github\Repository::class)->disableOriginalConstructor()->getMock();

@@ -1,0 +1,15 @@
+services:
+    regis.github.violation_reporter.github:
+        class: Regis\GithubContext\Application\Reporter\Github
+        arguments: [ '@regis.github.client_factory' ]
+        public: false
+
+    regis.github.violation_reporter.duplication_guard:
+        class: Regis\GithubContext\Application\Reporter\DuplicationGuard
+        arguments: [ '@regis.github.violation_reporter.github', '@regis.github.violations_cache' ]
+        public: false
+
+    regis.github.violations_cache:
+        class: Regis\GithubContext\Application\Inspection\ViolationsCache
+        arguments: [ '@snc_redis.violations' ]
+        public: false

@@ -1,0 +1,12 @@
+services:
+    regis.github.repository.repositories:
+        class: Regis\GithubContext\Infrastructure\Repository\DoctrineRepositories
+        arguments: [ '@doctrine.orm.entity_manager', '@rulerz' ]
+
+    regis.github.repository.inspections:
+        class: Regis\GithubContext\Infrastructure\Repository\DoctrineInspections
+        arguments: [ '@doctrine.orm.entity_manager' ]
+
+    regis.github.repository.users:
+        class: Regis\GithubContext\Infrastructure\Repository\DoctrineUsers
+        arguments: [ '@doctrine.orm.entity_manager', '@rulerz' ]

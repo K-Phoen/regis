@@ -1,4 +1,0 @@
-webhook_github:
-    path:      /github
-    defaults:  { _controller: RegisWebhooksBundle:Webhooks:github }
-    methods:   POST

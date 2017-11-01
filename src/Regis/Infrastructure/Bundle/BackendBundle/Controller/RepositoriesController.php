@@ -4,21 +4,21 @@ declare(strict_types=1);
 
 namespace Regis\Infrastructure\Bundle\BackendBundle\Controller;
 
-use Regis\Domain\Repository\Repositories;
+use Regis\GithubContext\Domain\Repository\Repositories;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
-use Regis\Application\Command;
+use Regis\GithubContext\Application\Command;
 use Regis\Application\Spec;
-use Regis\Domain\Entity;
+use Regis\GithubContext\Domain\Entity;
 use Regis\Infrastructure\Bundle\BackendBundle\Form;
 
 class RepositoriesController extends Controller
 {
     public function listAction()
     {
-        $repositories = $this->get('regis.repository.repositories')->matching(new Spec\Repository\AccessibleBy($this->getUser()));
+        $repositories = $this->get('regis.github.repository.repositories')->matching(new Spec\Repository\AccessibleBy($this->getUser()));
 
         return $this->render('@RegisBackend/Repositories/list.html.twig', [
             'repositories' => $repositories,
@@ -27,7 +27,7 @@ class RepositoriesController extends Controller
 
     public function lastRepositoriesAction()
     {
-        $repositories = $this->get('regis.repository.repositories')->matching(new Spec\Repository\AccessibleBy($this->getUser()));
+        $repositories = $this->get('regis.github.repository.repositories')->matching(new Spec\Repository\AccessibleBy($this->getUser()));
 
         return $this->render('@RegisBackend/Repositories/_last_repositories.html.twig', [
             'repositories' => $repositories,
@@ -37,20 +37,20 @@ class RepositoriesController extends Controller
     public function detailAction($identifier)
     {
         // TODO check access rights
-        $repository = $this->get('regis.repository.repositories')->find($identifier, Repositories::MODE_FETCH_RELATIONS);
+        $repository = $this->get('regis.github.repository.repositories')->find($identifier, Repositories::MODE_FETCH_RELATIONS);
 
         return $this->render('@RegisBackend/Repositories/detail.html.twig', [
             'repository' => $repository,
         ]);
     }
 
-    public function setupWebhookAction(Entity\Github\Repository $repository)
+    public function setupWebhookAction(Entity\Repository $repository)
     {
         // TODO check access rights
 
         $absoluteUrl = $this->get('router')->generate('webhook_github', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        $command = new Command\Github\Webhook\Create(
+        $command = new Command\Repository\CreateWebhook(
             $repository->getOwnerUsername(),
             $repository->getName(),
             $absoluteUrl
@@ -63,7 +63,7 @@ class RepositoriesController extends Controller
         return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
     }
 
-    public function disableInspectionsAction(Entity\Github\Repository $repository)
+    public function disableInspectionsAction(Entity\Repository $repository)
     {
         $command = new Command\Repository\DisableInspections($repository);
 
@@ -74,7 +74,7 @@ class RepositoriesController extends Controller
         return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
     }
 
-    public function enableInspectionsAction(Entity\Github\Repository $repository)
+    public function enableInspectionsAction(Entity\Repository $repository)
     {
         $command = new Command\Repository\EnableInspections($repository);
 
@@ -85,7 +85,7 @@ class RepositoriesController extends Controller
         return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
     }
 
-    public function editAction(Request $request, Entity\Github\Repository $repository)
+    public function editAction(Request $request, Entity\Repository $repository)
     {
         // TODO check access rights
         $form = $form = $this->createForm(Form\EditRepositoryConfigurationType::class, $repository, [
@@ -95,7 +95,7 @@ class RepositoriesController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $command = new Command\Github\Repository\UpdateConfiguration(
+            $command = new Command\Repository\DefineSharedSecret(
                 $repository,
                 $form->get('sharedSecret')->getData()
             );

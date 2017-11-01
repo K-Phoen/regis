@@ -12,7 +12,7 @@ class UpdateConfigurationTest extends TestCase
 {
     private $repositoriesRepo;
     private $repository;
-    /** @var CommandHandler\Github\Repository\UpdateConfiguration */
+    /** @var CommandHandler\Github\Repository\DefineSharedSecret */
     private $handler;
 
     public function setUp()
@@ -20,7 +20,7 @@ class UpdateConfigurationTest extends TestCase
         $this->repositoriesRepo = $this->getMockBuilder(Repositories::class)->getMock();
         $this->repository = $this->getMockBuilder(Entity\Github\Repository::class)->disableOriginalConstructor()->getMock();
 
-        $this->handler = new CommandHandler\Github\Repository\UpdateConfiguration($this->repositoriesRepo);
+        $this->handler = new CommandHandler\Github\Repository\DefineSharedSecret($this->repositoriesRepo);
     }
 
     public function testItBuildsAndSaveTheEntity()
