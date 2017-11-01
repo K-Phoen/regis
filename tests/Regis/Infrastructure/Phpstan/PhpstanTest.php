@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\Infrastructure\PhpMd;
+namespace Tests\Regis\Infrastructure\Phpstan;
 
 use PHPUnit\Framework\TestCase;
 use Regis\Infrastructure\Phpstan\Phpstan;

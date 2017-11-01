@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Infrastructure\Regis\PhpMd;
+namespace Tests\Regis\Infrastructure\PhpMd;
 
 use PHPUnit\Framework\TestCase;
 use Regis\Infrastructure\PhpMd\PhpMd;

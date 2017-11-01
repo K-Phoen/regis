@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Infrastructure\Regis\Vcs;
+namespace Tests\Regis\Infrastructure\Vcs;
 
 use PHPUnit\Framework\TestCase;
 use Gitonomy\Git as Gitonomy;

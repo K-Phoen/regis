@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\Application\CommandHandler\Team;
+namespace Tests\Regis\Application\CommandHandler\Repository;
 
 use PHPUnit\Framework\TestCase;
 use Regis\Application\Command;

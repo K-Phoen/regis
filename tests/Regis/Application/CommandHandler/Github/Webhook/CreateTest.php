@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\Application\CommandHandler\Webhook;
+namespace Tests\Regis\Application\CommandHandler\Github\Webhook;
 
 use PHPUnit\Framework\TestCase;
 use Regis\Application\Command;

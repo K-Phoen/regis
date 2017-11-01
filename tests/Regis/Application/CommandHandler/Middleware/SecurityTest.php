@@ -115,7 +115,7 @@ class SecurityTest extends TestCase
         $spec = $this->getMockBuilder(Specification::class)->getMock();
         $command = new CommandSecureBySpecification($spec, $target);
 
-        $next = function ($command) use (&$nextCalled) {
+        $next = function ($command) {
         };
 
         $this->rulerz->expects($this->once())

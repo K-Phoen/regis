@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\Domain\Model;
+namespace Tests\Regis\Domain\Model\Git\Diff;
 
 use PHPUnit\Framework\TestCase;
 use Regis\Domain\Model\Git\Diff\Change;
