@@ -1,4 +1,4 @@
-Regis\Domain\Entity\Inspection:
+Regis\GithubContext\Domain\Entity\Inspection:
     type: entity
     table: inspections
     inheritanceType: SINGLE_TABLE
@@ -8,7 +8,7 @@ Regis\Domain\Entity\Inspection:
         type: string
 
     discriminatorMap:
-        github_pr: Regis\Domain\Entity\Github\PullRequestInspection
+        github_pr: Regis\GithubContext\Domain\Entity\PullRequestInspection
 
     id:
         id:
@@ -33,15 +33,15 @@ Regis\Domain\Entity\Inspection:
         head:
             type: string
 
-    oneToOne:
-        report:
-          targetEntity: Regis\Domain\Entity\Inspection\Report
-          mappedBy: inspection
-          cascade: [ 'persist', 'merge' ]
+#    oneToOne:
+#        report:
+#          targetEntity: Regis\Domain\Entity\Inspection\Report
+#          mappedBy: inspection
+#          cascade: [ 'persist', 'merge' ]
 
     manyToOne:
         repository:
-          targetEntity: Regis\Domain\Entity\Repository
+          targetEntity: Regis\GithubContext\Domain\Entity\Repository
           inversedBy: inspections
           joinColumn:
             name: repository_id

@@ -37,11 +37,24 @@ class Client implements GithubClient
 
         foreach ($paginator->fetchAll($api, 'repositories', ['all']) as $repositoryData) {
             yield new Model\Repository(
-                $repositoryData['full_name'],
+                Model\RepositoryIdentifier::fromFullName($repositoryData['full_name']),
                 $repositoryData['html_url'],
                 $repositoryData['private'] ? $repositoryData['clone_url'] : $repositoryData['ssh_url']
             );
         }
+    }
+
+    public function getPullRequestDetails(Model\RepositoryIdentifier $repository, int $number): array
+    {
+        $this->assertAuthenticated();
+
+        $this->logger->info('Fetching pull request {pull_request}', [
+            'repository_owner' => $this->user->getUsername(),
+            'pull_request' => $number,
+            'repository' => $repository->getIdentifier(),
+        ]);
+
+        return $this->client->pullRequest()->show($repository->getOwner(), $repository->getName(), $number);
     }
 
     public function setIntegrationStatus(Model\PullRequest $pullRequest, IntegrationStatus $status)

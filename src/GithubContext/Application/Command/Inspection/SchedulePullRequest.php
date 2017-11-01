@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Application\Command\Inspection;
 
-use Regis\GithubContext\Domain\Model\PullRequest;
+use Regis\GithubContext\Domain\Model;
 
 class SchedulePullRequest
 {
     private $pullRequest;
 
-    public function __construct(PullRequest $pullRequest)
+    public function __construct(Model\PullRequest $pullRequest)
     {
         $this->pullRequest = $pullRequest;
     }
 
-    public function getPullRequest(): PullRequest
+    public function getPullRequest(): Model\PullRequest
     {
         return $this->pullRequest;
     }

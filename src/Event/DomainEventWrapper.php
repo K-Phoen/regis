@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Application\Event;
+namespace Regis\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use Regis\GithubContext\Application\Event as DomainEvent;
+use Regis\Event as DomainEvent;
 
 class DomainEventWrapper extends Event
 {
     private $domainEvent;
 
-    public function __construct(DomainEvent $event)
+    public function __construct(DomainEvent\Events $event)
     {
         $this->domainEvent = $event;
     }
 
-    public function getDomainEvent(): DomainEvent
+    public function getDomainEvent(): DomainEvent\Events
     {
         return $this->domainEvent;
     }

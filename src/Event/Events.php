@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Application;
+namespace Regis\Event;
 
-interface Event
+interface Events
 {
     const PULL_REQUEST_OPENED = 'pull_request_opened';
     const PULL_REQUEST_CLOSED = 'pull_request_closed';

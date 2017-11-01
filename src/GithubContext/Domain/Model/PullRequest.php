@@ -4,28 +4,29 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Domain\Model;
 
-use Regis\GithubContext\Domain\Model\Git;
-
 class PullRequest
 {
     private $repository;
     private $number;
-    private $revisions;
+    private $head;
+    private $base;
 
     public static function fromArray(array $data): PullRequest
     {
         return new static(
-            Git\Repository::fromArray($data['repository']),
+            Repository::fromArray($data['repository']),
             $data['number'],
-            Git\Revisions::fromArray($data['revisions'])
+            $data['head'],
+            $data['base']
         );
     }
 
-    public function __construct(Git\Repository $repository, int $number, Git\Revisions $revisions)
+    public function __construct(Repository $repository, int $number, string $head, string $base)
     {
         $this->repository = $repository;
         $this->number = $number;
-        $this->revisions = $revisions;
+        $this->head = $head;
+        $this->base = $base;
     }
 
     public function toArray()
@@ -33,11 +34,12 @@ class PullRequest
         return [
             'repository' => $this->repository->toArray(),
             'number' => $this->number,
-            'revisions' => $this->revisions->toArray(),
+            'head' => $this->head,
+            'base' => $this->base,
         ];
     }
 
-    public function getRepository(): Git\Repository
+    public function getRepository(): Repository
     {
         return $this->repository;
     }
@@ -49,22 +51,17 @@ class PullRequest
 
     public function getHead(): string
     {
-        return $this->revisions->getHead();
+        return $this->head;
     }
 
     public function getBase(): string
     {
-        return $this->revisions->getBase();
-    }
-
-    public function getRevisions(): Git\Revisions
-    {
-        return $this->revisions;
+        return $this->base;
     }
 
     public function getRepositoryIdentifier()
     {
-        return $this->getRepository()->getIdentifier();
+        return $this->repository->getIdentifier();
     }
 
     public function __toString(): string

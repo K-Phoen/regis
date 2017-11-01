@@ -25,4 +25,6 @@ interface Client
     public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment);
 
     public function listRepositories(): \Traversable;
+
+    public function getPullRequestDetails(Model\RepositoryIdentifier $repository, int $number): array;
 }

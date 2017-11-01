@@ -33,14 +33,22 @@ class SchedulePullRequest
             return;
         }
 
-        // crreate the inspection
+        // create the inspection
         $inspection = Entity\PullRequestInspection::create($repository, $pullRequest);
         $this->inspectionsRepo->save($inspection);
 
         // and schedule it
         $this->producer->publish(json_encode([
-            'inspection' => $inspection->getId(),
-            'pull_request' => $pullRequest->toArray(),
+            'inspection_id' => $inspection->getId(),
+            'repository' => [
+                'owner' => $repository->getOwnerUsername(),
+                'name' => $repository->getName(),
+                'clone_url' => $pullRequest->getRepository()->getCloneUrl(),
+            ],
+            'revisions' => [
+                'base' => $pullRequest->getBase(),
+                'head' => $pullRequest->getHead(),
+            ],
         ]));
     }
 }

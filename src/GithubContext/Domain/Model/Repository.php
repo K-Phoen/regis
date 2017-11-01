@@ -10,16 +10,44 @@ class Repository
     private $publicUrl;
     private $cloneUrl;
 
-    public function __construct(string $identifier, string $publicUrl, string $cloneUrl)
+    public static function fromArray(array $data): Repository
+    {
+        return new static(
+            RepositoryIdentifier::fromArray($data['identifier']),
+            $data['publicUrl'],
+            $data['cloneUrl']
+        );
+    }
+
+    public function __construct(RepositoryIdentifier $identifier, string $publicUrl, string $cloneUrl)
     {
         $this->identifier = $identifier;
         $this->publicUrl = $publicUrl;
         $this->cloneUrl = $cloneUrl;
     }
 
+    public function toArray()
+    {
+        return [
+            'identifier' => $this->identifier->toArray(),
+            'publicUrl' => $this->publicUrl,
+            'cloneUrl' => $this->cloneUrl,
+        ];
+    }
+
     public function getIdentifier(): string
     {
-        return $this->identifier;
+        return $this->identifier->getIdentifier();
+    }
+
+    public function getOwner(): string
+    {
+        return $this->identifier->getOwner();
+    }
+
+    public function getName(): string
+    {
+        return $this->identifier->getName();
     }
 
     public function getPublicUrl(): string

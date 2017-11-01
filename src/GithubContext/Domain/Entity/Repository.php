@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Regis\GithubContext\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Regis\GithubContext\Domain\Model;
 
 class Repository
 {
@@ -18,6 +19,7 @@ class Repository
     /** @var ArrayCollection */
     private $teams;
     private $owner;
+
     public function __construct(User $owner, string $identifier = null, string $sharedSecret = null)
     {
         $this->owner = $owner;
@@ -42,6 +44,13 @@ class Repository
         return explode('/', $this->getIdentifier())[0];
     }
 
+    public function toIdentifier(): Model\RepositoryIdentifier
+    {
+        return new Model\RepositoryIdentifier(
+            $this->getOwnerUsername(),
+            $this->getName()
+        );
+    }
 
     public function getIdentifier(): string
     {

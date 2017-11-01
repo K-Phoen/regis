@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Domain\Entity;
 
-use Regis\GithubContext\Domain\Model\Git\Revisions;
 use Regis\GithubContext\Domain\Uuid;
 
 abstract class Inspection
@@ -29,14 +28,14 @@ abstract class Inspection
 
     abstract public function getType(): string;
 
-    protected static function createForRevisions(Repository $repository, Revisions $revisions): self
+    protected static function createForRevisions(Repository $repository, string $head, string $base): self
     {
         $inspection = new static(Uuid::create());
         $inspection->repository = $repository;
         $inspection->createdAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
         $inspection->status = self::STATUS_SCHEDULED;
-        $inspection->base = $revisions->getBase();
-        $inspection->head = $revisions->getHead();
+        $inspection->base = $base;
+        $inspection->head = $head;
 
         return $inspection;
     }
@@ -142,10 +141,5 @@ abstract class Inspection
     public function getBase(): string
     {
         return $this->base;
-    }
-
-    public function getRevisions(): Revisions
-    {
-        return new Revisions($this->base, $this->head);
     }
 }
