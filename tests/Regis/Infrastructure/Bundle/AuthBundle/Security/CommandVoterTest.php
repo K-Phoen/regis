@@ -22,7 +22,7 @@ class CommandVoterTest extends TestCase
     public function setUp()
     {
         $this->rulerz = $this->getMockBuilder(RulerZ::class)->disableOriginalConstructor()->getMock();
-        $this->token = $this->getMockBuilder(TokenInterface::class)->getMock();
+        $this->token = $this->createMock(TokenInterface::class);
         $this->user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
 
         $this->token->method('getUser')->willReturn($this->user);
@@ -69,7 +69,7 @@ class CommandVoterTest extends TestCase
             ->with($subject, $this->callback(function (Specification $specification) {
                 return true;
             }))
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $result = $this->voter->vote($this->token, $subject, ['COMMAND_TEAM::ADD_REPOSITORY']);
 
