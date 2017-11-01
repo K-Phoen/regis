@@ -41,7 +41,7 @@ class User implements UserInterface
         $user->changeGithubAccessToken($githubAccessToken);
         $user->roles = ['ROLE_USER'];
 
-        if ($email) {
+        if ($email !== null) {
             $user->changeEmail($email);
         }
 
