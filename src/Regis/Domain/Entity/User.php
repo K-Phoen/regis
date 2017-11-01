@@ -26,7 +26,7 @@ class User implements UserInterface
 
     public static function createAdmin(string $username, string $password, string $email): User
     {
-        $user = new static($username, $password);
+        $user = new static($username);
         $user->changeEmail($email);
         $user->changePassword($password);
         $user->roles = ['ROLE_ADMIN'];
@@ -34,13 +34,16 @@ class User implements UserInterface
         return $user;
     }
 
-    public static function createUser(string $username, string $email, int $githubId, string $githubAccessToken): User
+    public static function createUser(string $username, int $githubId, string $githubAccessToken, string $email = null): User
     {
         $user = new static($username);
         $user->githubId = $githubId;
-        $user->changeEmail($email);
         $user->changeGithubAccessToken($githubAccessToken);
         $user->roles = ['ROLE_USER'];
+
+        if ($email) {
+            $user->changeEmail($email);
+        }
 
         return $user;
     }

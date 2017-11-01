@@ -23,7 +23,7 @@ class CreateOrUpdateUserTest extends TestCase
 
     public function testItCreatesANewUserIfItDoesNotAlreadyExist()
     {
-        $command = new Command\User\CreateOrUpdateUser('user', 42, 'email', 'access token');
+        $command = new Command\User\CreateOrUpdateUser('user', 42, 'access token', 'email');
 
         $this->usersRepo->expects($this->once())
             ->method('findByGithubId')
@@ -46,7 +46,7 @@ class CreateOrUpdateUserTest extends TestCase
     public function testItUpdatesTheUserIfItAlreadyExist()
     {
         $user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
-        $command = new Command\User\CreateOrUpdateUser('user', 42, 'email', 'access token');
+        $command = new Command\User\CreateOrUpdateUser('user', 42, 'access token', 'email');
 
         $this->usersRepo->expects($this->once())
             ->method('findByGithubId')
