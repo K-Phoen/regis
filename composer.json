@@ -26,8 +26,8 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
 
-        "league/tactician-bundle": "~0.4",
-        "league/tactician-logger": "^0.9",
+        "league/tactician-bundle": "~1.0",
+        "league/tactician-logger": "^0.10",
 
         "ramsey/uuid": "^3.4",
 
