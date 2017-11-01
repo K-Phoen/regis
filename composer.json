@@ -44,8 +44,6 @@
 
         "friendsofsymfony/jsrouting-bundle": "^1.6",
 
-        "ircmaxell/random-lib": "^1.1",
-
         "kphoen/rulerz": "^0.20",
         "kphoen/rulerz-bundle": "^0.14",
         "roave/security-advisories": "dev-master"
