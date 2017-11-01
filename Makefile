@@ -11,4 +11,7 @@ db:
 	bin/console doctrine:schema:update --force -n --env=test
 	bin/console doctrine:fixtures:load --env=test -n
 
-.PHONY: tests unittests functionaltests
+phpstan:
+	./vendor/bin/phpstan analyse -c phpstan.neon src tests
+
+.PHONY: tests unittests functionaltests phpstan
