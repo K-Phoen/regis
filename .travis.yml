@@ -22,11 +22,11 @@ matrix:
     fast_finish: true
 
 install:
-    - composer install --optimize-autoloader --no-interaction --no-scripts ${COMPOSER_FLAGS}
-    - composer require satooshi/php-coveralls '^1.0'
+    - composer install --optimize-autoloader --no-interaction
+    - if [ "$TRAVIS_PHP_VERSION" = "7.1" ]; then composer require satooshi/php-coveralls '^1.0'; fi
 
 script:
     - make tests
 
 after_script:
-    - php vendor/bin/coveralls -v
+    - if [ "$TRAVIS_PHP_VERSION" = "7.1" ]; then php vendor/bin/coveralls -v; fi
