@@ -61,6 +61,18 @@ class InspectRevisionsCommand extends ContainerAwareCommand
     {
         $io = new SymfonyStyle($input, $output);
 
+        if (!$input->getOption('repository-owner')) {
+            $input->setOption('repository-owner', $io->ask('Repository owner?'));
+        }
+
+        if (!$input->getOption('repository-name')) {
+            $input->setOption('repository-name', $io->ask('Repository name?'));
+        }
+
+        if (!$input->getOption('clone-url')) {
+            $input->setOption('clone-url', $io->ask('Clone URL?'));
+        }
+
         if (!$input->getOption('head')) {
             $input->setOption('head', $io->ask('Head commit?'));
         }
