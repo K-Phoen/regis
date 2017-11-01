@@ -11,12 +11,13 @@ use Regis\Domain\Repository;
 class CreateOrUpdateUserTest extends TestCase
 {
     private $usersRepo;
+
     /** @var CommandHandler\User\CreateOrUpdateUser */
     private $handler;
 
     public function setUp()
     {
-        $this->usersRepo = $this->getMockBuilder(Repository\Users::class)->getMock();
+        $this->usersRepo = $this->createMock(Repository\Users::class);
 
         $this->handler = new CommandHandler\User\CreateOrUpdateUser($this->usersRepo);
     }
@@ -25,19 +26,41 @@ class CreateOrUpdateUserTest extends TestCase
     {
         $command = new Command\User\CreateOrUpdateUser('user', 42, 'access token', 'email');
 
-        $this->usersRepo->expects($this->once())
+        $this->usersRepo
             ->method('findByGithubId')
             ->with(42)
-            ->will($this->throwException(new Repository\Exception\NotFound()));
+            ->willThrowException(new Repository\Exception\NotFound());
 
         $this->usersRepo->expects($this->once())
             ->method('save')
             ->with($this->callback(function (Entity\User $user) {
                 return in_array('ROLE_USER', $user->getRoles(), true)
-                && $user->getUsername() === 'user'
-                && $user->getEmail() === 'email'
-                && $user->getGithubId() === 42
-                && $user->getGithubAccessToken() === 'access token';
+                    && $user->getUsername() === 'user'
+                    && $user->getEmail() === 'email'
+                    && $user->getGithubId() === 42
+                    && $user->getGithubAccessToken() === 'access token';
+            }));
+
+        $this->handler->handle($command);
+    }
+
+    public function testItCreatesANewUserEvenIfTheEmailIsNotSpecified()
+    {
+        $command = new Command\User\CreateOrUpdateUser('user', 42, 'access token');
+
+        $this->usersRepo
+            ->method('findByGithubId')
+            ->with(42)
+            ->willThrowException(new Repository\Exception\NotFound());
+
+        $this->usersRepo->expects($this->once())
+            ->method('save')
+            ->with($this->callback(function (Entity\User $user) {
+                return in_array('ROLE_USER', $user->getRoles(), true)
+                    && $user->getUsername() === 'user'
+                    && $user->getEmail() === null
+                    && $user->getGithubId() === 42
+                    && $user->getGithubAccessToken() === 'access token';
             }));
 
         $this->handler->handle($command);
@@ -48,10 +71,10 @@ class CreateOrUpdateUserTest extends TestCase
         $user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
         $command = new Command\User\CreateOrUpdateUser('user', 42, 'access token', 'email');
 
-        $this->usersRepo->expects($this->once())
+        $this->usersRepo
             ->method('findByGithubId')
             ->with(42)
-            ->will($this->returnValue($user));
+            ->willReturn($user);
 
         $this->usersRepo->expects($this->once())
             ->method('save')
