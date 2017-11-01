@@ -9,6 +9,11 @@
     "autoload-dev": {
         "psr-4": { "Tests\\": "tests/" }
     },
+    "config": {
+        "platform": {
+            "php": "7.0"
+        }
+    },
     "require": {
         "php": ">=7.0",
         "symfony/symfony": "3.2.*",
