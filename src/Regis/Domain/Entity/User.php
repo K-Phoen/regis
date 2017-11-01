@@ -88,7 +88,10 @@ class User implements UserInterface
         return $this->id;
     }
 
-    public function getEmail(): string
+    /**
+     * @return string|null
+     */
+    public function getEmail()
     {
         return $this->email;
     }

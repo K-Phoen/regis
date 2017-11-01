@@ -37,7 +37,7 @@ class GithubAuthenticator extends SocialAuthenticator
 
     public function getCredentials(Request $request)
     {
-        if ($request->getPathInfo() !== '/login/github/check') {
+        if ($request->getPathInfo() !== $this->router->generate('github_connect_check')) {
             return null;
         }
 
