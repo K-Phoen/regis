@@ -17,7 +17,7 @@ services:
 
     regis.inspection.phpmd:
         class: Regis\Application\Inspection\PhpMd
-        arguments: [ '@regis.tools.phpmd' ]
+        arguments: [ '@regis.tools.phpmd', '%regis.config.inspections.phpmd%' ]
         public: false
 
     regis.tools.code_sniffer:
@@ -32,7 +32,7 @@ services:
 
     regis.tools.phpmd:
         class: Regis\Infrastructure\PhpMd\PhpMd
-        arguments: [ '%phpmd_binary%', '%regis.config.inspections.phpmd%' ]
+        arguments: [ '%phpmd_binary%' ]
         public: false
 
     regis.violation_reporter.github:

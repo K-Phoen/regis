@@ -1,6 +1,6 @@
 services:
     regis.vcs.git:
         class: Regis\Infrastructure\Vcs\Git
-        arguments: [ '@logger', '%git_binary%', '%repositories_directory%' ]
+        arguments: [ "@filesystem", '@logger', '%git_binary%', '%repositories_directory%' ]
         tags:
             - { name: monolog.logger, channel: git }

@@ -8,9 +8,13 @@ use Gitonomy\Git as Gitonomy;
 use Psr\Log\LoggerInterface as Logger;
 
 use Regis\Domain\Model;
+use Symfony\Component\Filesystem\Filesystem;
 
-class Git
+class Git implements \Regis\Application\Vcs\Git
 {
+    /** @var Filesystem */
+    private $filesystem;
+
     /** @var Logger */
     private $logger;
 
@@ -22,8 +26,9 @@ class Git
 
     private $gitonomyOptions = [];
 
-    public function __construct(Logger $logger, string $gitBinary, string $repositoriesDirectory)
+    public function __construct(Filesystem $filesystem, Logger $logger, string $gitBinary, string $repositoriesDirectory)
     {
+        $this->filesystem = $filesystem;
         $this->logger = $logger;
         $this->gitBinary = $gitBinary;
         $this->repositoriesDirectory = $repositoriesDirectory;
@@ -33,7 +38,7 @@ class Git
         ];
     }
 
-    public function getRepository(Model\Git\Repository $repository): Repository
+    public function getRepository(Model\Git\Repository $repository): \Regis\Application\Vcs\Repository
     {
         $repositoryPath = $this->getRepositoryPath($repository);
 
@@ -45,7 +50,7 @@ class Git
 
         $gitRepo->setLogger($this->logger);
 
-        return new Repository($gitRepo);
+        return new Repository($gitRepo, $this->filesystem);
     }
 
     private function getRepositoryPath(Model\Git\Repository $repository): string

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Regis\Application\Inspection;
 
 use Regis\Application\Inspection;
+use Regis\Application\Vcs;
 use Regis\Domain\Model\Exception\LineNotInDiff;
 use Regis\Domain\Model\Git as Model;
 use Regis\Domain\Entity\Inspection\Violation;
@@ -23,7 +24,7 @@ class CodeSniffer implements Inspection
         return 'phpcs';
     }
 
-    public function inspectDiff(Model\Diff $diff): \Traversable
+    public function inspectDiff(Vcs\Repository $repository, Model\Diff $diff): \Traversable
     {
         /** @var Model\Diff\File $file */
         foreach ($diff->getAddedPhpFiles() as $file) {

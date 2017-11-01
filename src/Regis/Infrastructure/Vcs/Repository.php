@@ -6,21 +6,39 @@ namespace Regis\Infrastructure\Vcs;
 
 use Gitonomy\Git as Gitonomy;
 
+use Regis\Application\Vcs\FileNotFound;
 use Regis\Domain\Model\Git as Model;
+use Symfony\Component\Filesystem\Filesystem;
 
-class Repository
+class Repository implements \Regis\Application\Vcs\Repository
 {
     /** @var Gitonomy\Repository */
     private $repository;
 
-    public function __construct(Gitonomy\Repository $repository)
+    /** @var Filesystem */
+    private $filesystem;
+
+    public function __construct(Gitonomy\Repository $repository, Filesystem $filesystem)
     {
         $this->repository = $repository;
+        $this->filesystem = $filesystem;
     }
 
-    public function update()
+    public function checkout(string $revision)
     {
         $this->repository->run('fetch');
+        $this->repository->getWorkingCopy()->checkout($revision);
+    }
+
+    public function locateFile(string $name): string
+    {
+        $repositoryPath = $this->repository->getPath();
+
+        if (!$this->filesystem->exists($name)) {
+            throw FileNotFound::inRepository($repositoryPath, $name);
+        }
+
+        return $repositoryPath.'/'.$name;
     }
 
     public function getDiff(Model\Revisions $revisions): Model\Diff

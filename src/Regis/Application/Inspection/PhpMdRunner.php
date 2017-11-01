@@ -6,5 +6,5 @@ namespace Regis\Application\Inspection;
 
 interface PhpMdRunner
 {
-    public function execute(string $fileName, string $fileContent): \Traversable;
+    public function execute(string $fileName, string $fileContent, string $ruleset): \Traversable;
 }

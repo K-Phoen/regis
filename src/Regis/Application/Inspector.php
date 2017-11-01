@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Application;
 
+use Regis\Application\Vcs\Repository;
 use Regis\Domain\Entity;
 use Regis\Domain\Model;
 use Regis\Infrastructure\Vcs\Git;
@@ -23,21 +24,21 @@ class Inspector
     public function inspect(Model\Git\Repository $repository, Model\Git\Revisions $revisions): Entity\Inspection\Report
     {
         $gitRepository = $this->git->getRepository($repository);
-        $gitRepository->update();
+        $gitRepository->checkout($revisions->getHead());
 
         $diff = $gitRepository->getDiff($revisions);
 
-        return $this->inspectDiff($diff);
+        return $this->inspectDiff($gitRepository, $diff);
     }
 
-    private function inspectDiff(Model\Git\Diff $diff): Entity\Inspection\Report
+    private function inspectDiff(Repository $repository, Model\Git\Diff $diff): Entity\Inspection\Report
     {
         $report = new Entity\Inspection\Report($diff->getRawDiff());
 
         foreach ($this->inspections as $inspection) {
             $analysis = new Entity\Inspection\Analysis($inspection->getType());
 
-            foreach ($inspection->inspectDiff($diff) as $violation) {
+            foreach ($inspection->inspectDiff($repository, $diff) as $violation) {
                 $analysis->addViolation($violation);
             }
 

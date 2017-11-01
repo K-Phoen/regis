@@ -10,17 +10,15 @@ use Regis\Application\Inspection\PhpMdRunner;
 class PhpMd implements PhpMdRunner
 {
     private $phpmdBin;
-    private $config;
     private $tempDir;
 
-    public function __construct(string $phpCsBin, array $config = [], string $tempDir = null)
+    public function __construct(string $phpCsBin, string $tempDir = null)
     {
         $this->phpmdBin = $phpCsBin;
-        $this->config = $config;
         $this->tempDir = $tempDir ?: sys_get_temp_dir();
     }
 
-    public function execute(string $fileName, string $fileContent): \Traversable
+    public function execute(string $fileName, string $fileContent, string $ruleset): \Traversable
     {
         $tempFile = sprintf('%s/%s', $this->tempDir, uniqid('phpmd_', true).str_replace('/', '', $fileName));
 
@@ -31,7 +29,7 @@ class PhpMd implements PhpMdRunner
                 '%s %s xml %s',
                 escapeshellarg($this->phpmdBin),
                 escapeshellarg($tempFile),
-                escapeshellarg(implode(',', $this->config['rulesets']))
+                escapeshellarg($ruleset)
             ));
 
             $process->run();
