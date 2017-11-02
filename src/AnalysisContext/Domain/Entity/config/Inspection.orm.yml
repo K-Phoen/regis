@@ -1,6 +1,6 @@
 Regis\AnalysisContext\Domain\Entity\Inspection:
     type: entity
-    table: inspections
+    table: inspection
 
     id:
         id:

@@ -1,6 +1,6 @@
 Regis\GithubContext\Domain\Entity\Violation:
     type: entity
-    table: violations
+    table: violation
 
     id:
         id:

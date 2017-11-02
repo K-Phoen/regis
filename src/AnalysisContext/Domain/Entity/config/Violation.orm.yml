@@ -1,6 +1,6 @@
 Regis\AnalysisContext\Domain\Entity\Violation:
     type: entity
-    table: violations
+    table: violation
 
     id:
         id:

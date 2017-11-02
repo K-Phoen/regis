@@ -1,6 +1,6 @@
 Regis\AnalysisContext\Domain\Entity\Report:
     type: entity
-    table: reports
+    table: report
 
     id:
         id:
