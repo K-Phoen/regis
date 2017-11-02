@@ -1,0 +1,26 @@
+Regis\AnalysisContext\Domain\Entity\Inspection:
+    type: entity
+    table: inspections
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: NONE }
+
+    fields:
+        startedAt:
+            type: datetimetz
+            nullable: true
+        finishedAt:
+            type: datetimetz
+            nullable: true
+        status:
+            type: string
+        failureTrace:
+            type: text
+
+    oneToOne:
+        report:
+          targetEntity: Report
+          mappedBy: inspection
+          cascade: [ 'persist', 'merge' ]

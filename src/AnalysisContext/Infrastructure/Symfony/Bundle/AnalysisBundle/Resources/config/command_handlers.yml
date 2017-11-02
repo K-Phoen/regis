@@ -1,6 +1,6 @@
 services:
-    regis.command_handler.inspections.revisions:
-        class: Regis\AnalysisContext\Application\CommandHandler\InspectRevisions
+    regis.command_handler.run_analyses:
+        class: Regis\AnalysisContext\Application\CommandHandler\RunAnalyses
         arguments: [ '@regis.inspector' ]
         tags:
-            - { name: tactician.handler, command: Regis\AnalysisContext\Application\Command\InspectRevisions }
+            - { name: tactician.handler, command: Regis\AnalysisContext\Application\Command\RunAnalyses }

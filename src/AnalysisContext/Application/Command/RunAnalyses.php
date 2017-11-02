@@ -6,22 +6,15 @@ namespace Regis\AnalysisContext\Application\Command;
 
 use Regis\AnalysisContext\Domain\Model\Git;
 
-class InspectRevisions
+class RunAnalyses
 {
-    private $inspectionId;
     private $repository;
     private $revisions;
 
-    public function __construct(string $inspectionId, Git\Repository $repository, Git\Revisions $revisions)
+    public function __construct(Git\Repository $repository, Git\Revisions $revisions)
     {
-        $this->inspectionId = $inspectionId;
         $this->repository = $repository;
         $this->revisions = $revisions;
-    }
-
-    public function getInspectionId(): string
-    {
-        return $this->inspectionId;
     }
 
     public function getRepository(): Git\Repository

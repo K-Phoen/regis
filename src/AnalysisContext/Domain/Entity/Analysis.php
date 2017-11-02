@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\AnalysisContext\Domain\Model\Inspection;
+namespace Regis\AnalysisContext\Domain\Entity;
 
 class Analysis
 {
@@ -10,44 +10,28 @@ class Analysis
     const STATUS_WARNING = 'warning';
     const STATUS_ERROR = 'error';
 
-    /** @var Violation[] */
-    private $violations = [];
     private $type;
     private $status = self::STATUS_OK;
 
-    private $violationsMap;
+    /** @var Violation[] */
+    private $violations = [];
 
     public function __construct(string $type)
     {
         $this->type = $type;
     }
 
-    public function violationsAtLine(string $file, int $line): array
+    public function addViolation(Violation $violation)
     {
-        if ($this->violationsMap === null) {
-            $this->buildViolationsMap();
+        $violation->setAnalysis($this);
+        $this->violations[] = $violation;
+
+        if ($violation->isError()) {
+            $this->status = self::STATUS_ERROR;
         }
 
-        if (!isset($this->violationsMap[sprintf('%s:%d', $file, $line)])) {
-            return [];
-        }
-
-        return $this->violationsMap[sprintf('%s:%d', $file, $line)];
-    }
-
-    private function buildViolationsMap()
-    {
-        $this->violationsMap = [];
-
-        /** @var Violation $violation */
-        foreach ($this->violations() as $violation) {
-            $key = sprintf('%s:%d', $violation->file(), $violation->line());
-
-            if (!isset($this->violationsMap[$key])) {
-                $this->violationsMap[$key] = [];
-            }
-
-            $this->violationsMap[$key][] = $violation;
+        if ($this->status !== self::STATUS_ERROR && $violation->isWarning()) {
+            $this->status = self::STATUS_WARNING;
         }
     }
 
@@ -59,22 +43,6 @@ class Analysis
     public function status(): string
     {
         return $this->status;
-    }
-
-    public function addViolation(Violation $violation)
-    {
-        $this->violationsMap = null;
-
-        $violation->setAnalysis($this);
-        $this->violations[] = $violation;
-
-        if ($violation->isError()) {
-            $this->status = self::STATUS_ERROR;
-        }
-
-        if ($this->status !== self::STATUS_ERROR && $violation->isWarning()) {
-            $this->status = self::STATUS_WARNING;
-        }
     }
 
     /**

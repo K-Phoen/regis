@@ -8,7 +8,7 @@ use Regis\AnalysisContext\Application\Inspection;
 use Regis\AnalysisContext\Application\Vcs;
 use Regis\AnalysisContext\Domain\Model\Exception\LineNotInDiff;
 use Regis\AnalysisContext\Domain\Model\Git as Model;
-use Regis\AnalysisContext\Domain\Model\Inspection\Violation;
+use Regis\AnalysisContext\Domain\Entity\Violation;
 
 class CodeSniffer implements Inspection
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\AnalysisContext\Domain\Model\Inspection;
+namespace Regis\AnalysisContext\Domain\Entity;
 
 class Violation
 {
@@ -17,6 +17,7 @@ class Violation
 
     /** @var Analysis */
     private $analysis;
+
 
     public static function newError(string $file, int $line, int $position, string $description): Violation
     {

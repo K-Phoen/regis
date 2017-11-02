@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Regis\AnalysisContext\Infrastructure\Symfony\Bundle\AnalysisBundle\Command;
 
-use Regis\AnalysisContext\Domain\Model\Inspection\Report;
-use Regis\AnalysisContext\Domain\Model\Inspection\Violation;
+use Regis\AnalysisContext\Domain\Entity\Report;
+use Regis\AnalysisContext\Domain\Entity\Violation;
 use Regis\AnalysisContext\Domain\Model\Git;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Helper\Table;
@@ -16,7 +16,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 use Regis\AnalysisContext\Application\Command;
 
-class InspectRevisionsCommand extends ContainerAwareCommand
+class RunAnalysesCommand extends ContainerAwareCommand
 {
     /**
      * {@inheritdoc}
@@ -24,8 +24,8 @@ class InspectRevisionsCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('regis:inspect:revisions')
-            ->setDescription('Inspects the given repository and revisions and displays the result.')
+            ->setName('regis:analyses:run')
+            ->setDescription('Runs the analyses on the given repository and revisions and displays the result.')
             ->addOption(
                 'repository-owner', 'o',
                 InputOption::VALUE_REQUIRED,
@@ -94,7 +94,7 @@ class InspectRevisionsCommand extends ContainerAwareCommand
             $input->getOption('clone-url')
         );
 
-        $command = new Command\InspectRevisions($repository, $revision);
+        $command = new Command\RunAnalyses($repository, $revision);
         /** @var Report $report */
         $report = $this->getContainer()->get('tactician.commandbus')->handle($command);
 
