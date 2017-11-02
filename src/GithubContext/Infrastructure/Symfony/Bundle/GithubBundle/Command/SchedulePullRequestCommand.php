@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Domain\Entity;
 
-class InspectPullRequestCommand extends ContainerAwareCommand
+class SchedulePullRequestCommand extends ContainerAwareCommand
 {
     /**
      * {@inheritdoc}
@@ -25,7 +25,7 @@ class InspectPullRequestCommand extends ContainerAwareCommand
             ->setName('regis:github:schedule-pull-request')
             ->setDescription('Schedules the given GitHub pull request for inspection.')
             ->addOption(
-                'repository', 'o',
+                'repository', 'r',
                 InputOption::VALUE_REQUIRED,
                 'Name of the repository.'
             )
