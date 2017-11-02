@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "19abd0bea21aa22f21bad68808f636e1",
+    "content-hash": "9e5526a3838aa589775dde4625d63d4d",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -2235,25 +2235,25 @@
         },
         {
             "name": "knpuniversity/oauth2-client-bundle",
-            "version": "1.12.0",
+            "version": "1.13.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/knpuniversity/oauth2-client-bundle.git",
-                "reference": "4eace79028a89aeeeea2bfa454aa628619ad61bf"
+                "reference": "4a3a6a65038774483f144702edfa4c31c4af8853"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/knpuniversity/oauth2-client-bundle/zipball/4eace79028a89aeeeea2bfa454aa628619ad61bf",
-                "reference": "4eace79028a89aeeeea2bfa454aa628619ad61bf",
+                "url": "https://api.github.com/repos/knpuniversity/oauth2-client-bundle/zipball/4a3a6a65038774483f144702edfa4c31c4af8853",
+                "reference": "4a3a6a65038774483f144702edfa4c31c4af8853",
                 "shasum": ""
             },
             "require": {
                 "league/oauth2-client": "^1.0|^2.0",
                 "php": " >=5.5.9",
-                "symfony/dependency-injection": "^2.8|^3.0",
-                "symfony/framework-bundle": "^2.7|^3.0",
-                "symfony/http-foundation": "^2.7|^3.0",
-                "symfony/routing": "^2.7|^3.0"
+                "symfony/dependency-injection": "^2.8|^3.0|4.0",
+                "symfony/framework-bundle": "^2.7|^3.0|4.0",
+                "symfony/http-foundation": "^2.7|^3.0|^4.0",
+                "symfony/routing": "^2.7|^3.0|^4.0"
             },
             "require-dev": {
                 "league/oauth2-facebook": "^1.1|^2.0",
@@ -2285,7 +2285,7 @@
                 "oauth",
                 "oauth2"
             ],
-            "time": "2017-09-27T17:08:07+00:00"
+            "time": "2017-11-02T16:31:20+00:00"
         },
         {
             "name": "kphoen/rulerz",
@@ -4271,296 +4271,6 @@
             "time": "2017-09-06T17:15:07+00:00"
         },
         {
-            "name": "pomm-project/cli",
-            "version": "2.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pomm-project/Cli.git",
-                "reference": "603a2522f5ba6937d8092fbcdeecca1b16a16f1d"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pomm-project/Cli/zipball/603a2522f5ba6937d8092fbcdeecca1b16a16f1d",
-                "reference": "603a2522f5ba6937d8092fbcdeecca1b16a16f1d",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pgsql": "*",
-                "php": ">=5.4.4",
-                "pomm-project/foundation": "~2.0",
-                "pomm-project/model-manager": "~2.0",
-                "psr/log": "~1.0",
-                "symfony/console": "~2.5|~3.0"
-            },
-            "require-dev": {
-                "atoum/atoum": "dev-master",
-                "symfony/filesystem": "~2.5|~3.0"
-            },
-            "bin": [
-                "bin/pomm.php"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PommProject\\Cli\\": "sources/lib"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Grégoire HUBERT",
-                    "email": "hubert.greg@gmail.com",
-                    "homepage": "http://www.pomm-project.org"
-                }
-            ],
-            "description": "Command line for Pomm.",
-            "homepage": "http://www.pomm-project.org",
-            "keywords": [
-                "cli",
-                "database",
-                "pomm",
-                "postgresql"
-            ],
-            "time": "2015-12-04T10:24:20+00:00"
-        },
-        {
-            "name": "pomm-project/foundation",
-            "version": "2.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pomm-project/Foundation.git",
-                "reference": "6a6278b92956f9949b8e1045bce014a63fae4478"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pomm-project/Foundation/zipball/6a6278b92956f9949b8e1045bce014a63fae4478",
-                "reference": "6a6278b92956f9949b8e1045bce014a63fae4478",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pgsql": "*",
-                "php": ">=5.4.4",
-                "psr/log": "~1.0"
-            },
-            "require-dev": {
-                "atoum/atoum": "^2.8 || ^3.0"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PommProject\\Foundation\\": "sources/lib"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Grégoire HUBERT",
-                    "email": "hubert.greg@gmail.com",
-                    "homepage": "http://www.coolkeums.org"
-                }
-            ],
-            "description": "Pomm connection manager for Postgresql",
-            "homepage": "http://www.pomm-project.org",
-            "keywords": [
-                "database",
-                "framework",
-                "pomm",
-                "postgresql"
-            ],
-            "time": "2017-04-28T08:31:47+00:00"
-        },
-        {
-            "name": "pomm-project/model-manager",
-            "version": "2.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pomm-project/ModelManager.git",
-                "reference": "628e54ede7e5cafd3274bb413a91fb56d1a6b414"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pomm-project/ModelManager/zipball/628e54ede7e5cafd3274bb413a91fb56d1a6b414",
-                "reference": "628e54ede7e5cafd3274bb413a91fb56d1a6b414",
-                "shasum": ""
-            },
-            "require": {
-                "ext-pgsql": "*",
-                "php": ">=5.4.4",
-                "pomm-project/foundation": "~2.0",
-                "psr/log": "~1.0"
-            },
-            "require-dev": {
-                "atoum/atoum": "dev-master"
-            },
-            "suggest": {
-                "pomm-project/cli": "dev-master"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "PommProject\\ModelManager\\": "sources/lib"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Grégoire HUBERT",
-                    "email": "hubert.greg@gmail.com",
-                    "homepage": "http://www.pomm-project.org"
-                }
-            ],
-            "description": "PHP Object Model Manager for Postgresql",
-            "homepage": "http://www.pomm-project.org",
-            "keywords": [
-                "database",
-                "orm",
-                "pomm",
-                "postgresql"
-            ],
-            "time": "2017-05-15T19:42:26+00:00"
-        },
-        {
-            "name": "pomm-project/pomm-bundle",
-            "version": "2.3.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pomm-project/pomm-bundle.git",
-                "reference": "d6d89cbe4c2bd08f6531d427191a81f7eaecd274"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pomm-project/pomm-bundle/zipball/d6d89cbe4c2bd08f6531d427191a81f7eaecd274",
-                "reference": "d6d89cbe4c2bd08f6531d427191a81f7eaecd274",
-                "shasum": ""
-            },
-            "require": {
-                "jdorn/sql-formatter": "~1.2",
-                "php": ">=5.4.4",
-                "pomm-project/cli": "~2.0",
-                "pomm-project/model-manager": "~2.0",
-                "pomm-project/pomm-symfony-bridge": "~2.3@rc",
-                "symfony/framework-bundle": "~2.8|~3.0"
-            },
-            "require-dev": {
-                "squizlabs/php_codesniffer": "~2.7",
-                "symfony/console": "~2.6|~3.0"
-            },
-            "suggest": {
-                "sensio/distribution-bundle": "To use the entity param converter",
-                "symfony/web-profiler-bundle": "Display queries log"
-            },
-            "type": "symfony-bundle",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PommProject\\PommBundle\\": "sources/lib/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Grégoire HUBERT",
-                    "email": "hubert.greg@gmail.com"
-                },
-                {
-                    "name": "Nicolas JOSEPH",
-                    "email": "nicolas.joseph@homecomputing.fr"
-                }
-            ],
-            "description": "The Symfony2 bundle for Pomm2",
-            "homepage": "http://www.pomm-project.org",
-            "keywords": [
-                "database",
-                "orm",
-                "pomm",
-                "postgresql",
-                "symfony"
-            ],
-            "time": "2017-06-12T12:00:34+00:00"
-        },
-        {
-            "name": "pomm-project/pomm-symfony-bridge",
-            "version": "2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/pomm-project/pomm-symfony-bridge.git",
-                "reference": "af67b77d5785d89b143d18d70f7142826487cec4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/pomm-project/pomm-symfony-bridge/zipball/af67b77d5785d89b143d18d70f7142826487cec4",
-                "reference": "af67b77d5785d89b143d18d70f7142826487cec4",
-                "shasum": ""
-            },
-            "require": {
-                "pomm-project/foundation": "~2.0",
-                "symfony/http-foundation": "~2.5|~3.0",
-                "symfony/http-kernel": "~2.5|~3.0",
-                "symfony/property-info": "~2.8|~3.0",
-                "symfony/serializer": "~2.5|~3.0"
-            },
-            "require-dev": {
-                "squizlabs/php_codesniffer": "~2.7"
-            },
-            "suggest": {
-                "pomm-project/cli": "~2.0",
-                "pomm-project/model-manager": "~2.0",
-                "silex/silex": "~1.0",
-                "symfony/symfony": "~2.5|~3.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "2.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "PommProject\\SymfonyBridge\\": "sources/lib"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Jérôme MACIAS",
-                    "email": "jerome.macias@gmail.com"
-                },
-                {
-                    "name": "Grégoire HUBERT",
-                    "email": "hubert.greg@gmail.com"
-                }
-            ],
-            "description": "Pomm2 shared elements between Silex and Symfony.",
-            "homepage": "http://www.pomm-project.org",
-            "keywords": [
-                "debug",
-                "pomm",
-                "profiler",
-                "silex",
-                "symfony"
-            ],
-            "time": "2017-08-12T08:51:03+00:00"
-        },
-        {
             "name": "predis/predis",
             "version": "v1.1.1",
             "source": {
@@ -5022,76 +4732,6 @@
             ],
             "description": "Prevents installation of composer packages with known security vulnerabilities: no API, simply require it",
             "time": "2017-10-31T23:55:04+00:00"
-        },
-        {
-            "name": "robmorgan/phinx",
-            "version": "v0.9.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/cakephp/phinx.git",
-                "reference": "c1d51fd065af3aa3fabd684ce561cd9c38281eb8"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/phinx/zipball/c1d51fd065af3aa3fabd684ce561cd9c38281eb8",
-                "reference": "c1d51fd065af3aa3fabd684ce561cd9c38281eb8",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4",
-                "symfony/config": "~2.8|~3.0",
-                "symfony/console": "~2.8|~3.0",
-                "symfony/yaml": "~2.8|~3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8.26|^5.0"
-            },
-            "bin": [
-                "bin/phinx"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Phinx\\": "src/Phinx"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Woody Gilk",
-                    "email": "woody.gilk@gmail.com",
-                    "homepage": "http://shadowhand.me",
-                    "role": "Developer"
-                },
-                {
-                    "name": "Rob Morgan",
-                    "email": "robbym@gmail.com",
-                    "homepage": "https://robmorgan.id.au",
-                    "role": "Lead Developer"
-                },
-                {
-                    "name": "Richard Quadling",
-                    "email": "rquadling@gmail.com",
-                    "role": "Developer"
-                },
-                {
-                    "name": "CakePHP Community",
-                    "homepage": "https://github.com/cakephp/phinx/graphs/contributors"
-                }
-            ],
-            "description": "Phinx makes it ridiculously easy to manage the database migrations for your PHP app.",
-            "homepage": "https://phinx.org",
-            "keywords": [
-                "database",
-                "database migrations",
-                "db",
-                "migrations",
-                "phinx"
-            ],
-            "time": "2017-09-09T13:54:33+00:00"
         },
         {
             "name": "sensio/distribution-bundle",

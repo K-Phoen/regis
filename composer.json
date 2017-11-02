@@ -34,8 +34,6 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
 
-        "pomm-project/pomm-bundle": "^2.3",
-
         "league/tactician-bundle": "~1.0",
         "league/tactician-logger": "^0.10",
 
