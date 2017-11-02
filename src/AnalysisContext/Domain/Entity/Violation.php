@@ -9,6 +9,7 @@ class Violation
     const WARNING = 10;
     const ERROR = 20;
 
+    private $id;
     private $severity;
     private $file;
     private $position;

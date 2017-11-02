@@ -1,4 +1,10 @@
-Regis\AnalysisContext\Domain\Entity\Inspection\Report:
+Re#Regis\GithubContext\Domain\Entity\PullRequestInspection:
+#    type: entity
+#
+#    fields:
+#        pullRequestNumber:
+#            type: integer
+gis\AnalysisContext\Domain\Entity\Report:
     type: entity
     table: reports
 
@@ -18,11 +24,11 @@ Regis\AnalysisContext\Domain\Entity\Inspection\Report:
           targetEntity: Analysis
           mappedBy: report
           cascade: [ 'persist', 'merge' ]
-
-    oneToOne:
-        inspection:
-          targetEntity: Inspection
-          inversedBy: report
-          joinColumn:
-            name: inspection_id
-            referencedColumnName: id
+#
+#    oneToOne:
+#        inspection:
+#          targetEntity: Inspection
+#          inversedBy: report
+#          joinColumn:
+#            name: inspection_id
+#            referencedColumnName: id

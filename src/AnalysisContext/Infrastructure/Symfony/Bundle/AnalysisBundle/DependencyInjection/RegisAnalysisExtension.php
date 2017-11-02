@@ -18,7 +18,9 @@ class RegisAnalysisExtension extends Extension
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('command_handlers.yml');
         $loader->load('inspections.yml');
+        $loader->load('repositories.yml');
         $loader->load('vcs.yml');
+        $loader->load('workers.yml');
 
         foreach ($config['inspections'] as $inspection => $inspectionConfig) {
             $container->setParameter('regis.config.inspections.'.$inspection, $inspectionConfig);

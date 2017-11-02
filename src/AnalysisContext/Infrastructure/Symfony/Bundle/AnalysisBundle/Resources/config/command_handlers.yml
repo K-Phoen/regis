@@ -4,3 +4,9 @@ services:
         arguments: [ '@regis.inspector' ]
         tags:
             - { name: tactician.handler, command: Regis\AnalysisContext\Application\Command\RunAnalyses }
+
+    regis.command_handler.inspect_revisions:
+        class: Regis\AnalysisContext\Application\CommandHandler\InspectRevisions
+        arguments: [ '@tactician.commandbus', '@regis.analysis.repository.inspections', '@event_dispatcher', '@logger' ]
+        tags:
+            - { name: tactician.handler, command: Regis\AnalysisContext\Application\Command\InspectRevisions }

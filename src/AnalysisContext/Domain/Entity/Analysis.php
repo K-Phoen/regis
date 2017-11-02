@@ -10,6 +10,7 @@ class Analysis
     const STATUS_WARNING = 'warning';
     const STATUS_ERROR = 'error';
 
+    private $id;
     private $type;
     private $status = self::STATUS_OK;
 

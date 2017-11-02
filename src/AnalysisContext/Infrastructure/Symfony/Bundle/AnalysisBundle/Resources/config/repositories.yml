@@ -1,0 +1,4 @@
+services:
+    regis.analysis.repository.inspections:
+        class: Regis\AnalysisContext\Infrastructure\Repository\DoctrineInspections
+        arguments: [ '@doctrine.orm.entity_manager' ]

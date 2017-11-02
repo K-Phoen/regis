@@ -25,7 +25,7 @@ services:
 
     regis.github.command_handler.inspections.schedule:
         class: Regis\GithubContext\Application\CommandHandler\Inspection\SchedulePullRequest
-        arguments: [ '@old_sound_rabbit_mq.webhook_github_pr_event_producer', '@regis.github.repository.repositories', '@regis.github.repository.inspections' ]
+        arguments: [ '@old_sound_rabbit_mq.inspection_event_producer', '@regis.github.repository.repositories', '@regis.github.repository.inspections' ]
         tags:
             - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Inspection\SchedulePullRequest }
 

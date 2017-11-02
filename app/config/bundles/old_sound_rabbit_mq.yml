@@ -19,13 +19,13 @@ old_sound_rabbit_mq:
             #requires php_sockets.dll
             #use_socket: true # default false
     producers:
-        webhook_github_pr_event:
+        inspection_event:
             connection:       default
-            exchange_options: {name: 'webhook-github-pr-event', type: direct}
+            exchange_options: {name: 'inspection-event', type: direct}
     consumers:
-        webhook_github_pr_event:
+        inspection_event:
             connection:       default
-            exchange_options: {name: 'webhook-github-pr-event', type: direct}
-            queue_options:    {name: 'webhook-github-pr-event'}
-            callback:         regis.github.worker.webhook_github_pr_event
+            exchange_options: {name: 'inspection-event', type: direct}
+            queue_options:    {name: 'inspection-event'}
+            callback:         regis.analysis.worker.inspection_event
             enable_logger:    true

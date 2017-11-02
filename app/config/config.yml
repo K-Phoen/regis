@@ -66,7 +66,13 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         mappings:
-            Regis:
+            Regis\AnalysisContext:
+                type: yml
+                is_bundle: false
+                dir: '%kernel.root_dir%/../src/AnalysisContext/Domain/Entity/config'
+                prefix: Regis\AnalysisContext\Domain\Entity
+                alias: RegisAnalysisContext
+            Regis\GithubContext:
                 type: yml
                 is_bundle: false
                 dir: '%kernel.root_dir%/../src/GithubContext/Domain/Entity/config'

@@ -1,4 +1,4 @@
-Regis\AnalysisContext\Domain\Entity\Inspection\Analysis:
+Regis\AnalysisContext\Domain\Entity\Analysis:
     type: entity
     table: analyses
 
@@ -16,11 +16,11 @@ Regis\AnalysisContext\Domain\Entity\Inspection\Analysis:
           targetEntity: Violation
           mappedBy: analysis
           cascade: [ 'persist', 'merge' ]
-
-    manyToOne:
-        report:
-          targetEntity: Report
-          inversedBy: analyses
-          joinColumn:
-            name: report_id
-            referencedColumnName: id
+#
+#    manyToOne:
+#        report:
+#          targetEntity: Report
+#          inversedBy: analyses
+#          joinColumn:
+#            name: report_id
+#            referencedColumnName: id

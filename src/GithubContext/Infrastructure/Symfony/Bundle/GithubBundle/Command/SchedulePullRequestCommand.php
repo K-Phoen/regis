@@ -84,9 +84,6 @@ class SchedulePullRequestCommand extends ContainerAwareCommand
             $prNumber
         );
 
-        $head = $prDetails['head']['sha'];
-        $base = $prDetails['base']['sha'];
-
         return new Model\PullRequest(
             new Model\Repository(
                 $repository->toIdentifier(),
@@ -94,8 +91,8 @@ class SchedulePullRequestCommand extends ContainerAwareCommand
                 $prDetails['head']['repo']['private'] ? $prDetails['head']['repo']['ssh_url'] : $prDetails['head']['repo']['clone_url']
             ),
             $prNumber,
-            $head,
-            $base
+            $prDetails['head']['sha'],
+            $prDetails['base']['sha']
         );
     }
 }

@@ -1,4 +1,4 @@
-Regis\AnalysisContext\Domain\Entity\Inspection\Violation:
+Regis\AnalysisContext\Domain\Entity\Violation:
     type: entity
     table: violations
 

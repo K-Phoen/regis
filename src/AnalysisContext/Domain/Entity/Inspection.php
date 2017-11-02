@@ -11,6 +11,7 @@ class Inspection
     const STATUS_FINISHED = 'finished';
     const STATUS_FAILED = 'failed';
 
+    private $id;
     private $report;
     private $status;
     private $startedAt;

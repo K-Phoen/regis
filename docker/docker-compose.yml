@@ -37,7 +37,7 @@ services:
         volumes:
             - ..:/var/www/html
             - ../var/ssh:/root/.ssh
-        command: './docker/wait-for-it.sh rabbit:5672 -- ./bin/console rabbitmq:consumer -vvv --env=prod webhook_github_pr_event'
+        command: './docker/wait-for-it.sh rabbit:5672 -- ./bin/console rabbitmq:consumer -vvv --env=dev inspection_event'
 
     web:
         build:
