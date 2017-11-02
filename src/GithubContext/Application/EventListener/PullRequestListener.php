@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace Regis\GithubContext\Application\EventListener;
 
 use League\Tactician\CommandBus;
+use Regis\Kernel\Events;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\GithubContext\Application\Command;
-use Regis\GithubContext\Application\Event;
 use Regis\GithubContext\Application\Inspection\ViolationsCache;
 
 class PullRequestListener implements EventSubscriberInterface
@@ -25,9 +25,9 @@ class PullRequestListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            Event::PULL_REQUEST_OPENED => 'onPullRequestUpdated',
-            Event::PULL_REQUEST_SYNCED => 'onPullRequestUpdated',
-            Event::PULL_REQUEST_CLOSED => 'onPullRequestClosed',
+            Events::PULL_REQUEST_OPENED => 'onPullRequestUpdated',
+            Events::PULL_REQUEST_SYNCED => 'onPullRequestUpdated',
+            Events::PULL_REQUEST_CLOSED => 'onPullRequestClosed',
         ];
     }
 

@@ -7,7 +7,7 @@ namespace Regis\GithubContext\Application\EventListener;
 use League\Tactician\CommandBus;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
-use Regis\GithubContext\Application\Event;
+use Regis\Kernel\Events;
 use Regis\GithubContext\Application\Command;
 
 class PullRequestReviewCommentsListener implements EventSubscriberInterface
@@ -22,7 +22,7 @@ class PullRequestReviewCommentsListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            Event::INSPECTION_FINISHED => 'onInspectionFinished',
+            Events::INSPECTION_FINISHED => 'onInspectionFinished',
         ];
     }
 

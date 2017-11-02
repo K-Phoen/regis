@@ -8,7 +8,7 @@ use League\Tactician\CommandBus;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\GithubContext\Application\Command;
-use Regis\GithubContext\Application\Event;
+use Regis\Kernel\Events;
 
 class PullRequestInspectionReportListener implements EventSubscriberInterface
 {
@@ -22,7 +22,7 @@ class PullRequestInspectionReportListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            Event::INSPECTION_FINISHED => 'onInspectionFinished',
+            Events::INSPECTION_FINISHED => 'onInspectionFinished',
         ];
     }
 

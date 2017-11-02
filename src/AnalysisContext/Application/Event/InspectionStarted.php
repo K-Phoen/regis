@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\AnalysisContext\Application\Event;
 
-use Regis\Event\Events;
+use Regis\Kernel\Events;
 
 class InspectionStarted implements Events
 {

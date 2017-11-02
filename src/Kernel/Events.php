@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Event;
+namespace Regis\Kernel;
 
 interface Events
 {

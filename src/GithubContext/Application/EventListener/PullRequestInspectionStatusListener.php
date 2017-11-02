@@ -8,7 +8,7 @@ use Regis\GithubContext\Application\Github\IntegrationStatus;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface as UrlGenerator;
 
-use Regis\GithubContext\Application\Event;
+use Regis\Kernel\Events;
 use Regis\GithubContext\Application\Github\Client;
 use Regis\GithubContext\Application\Github\ClientFactory;
 use Regis\GithubContext\Domain\Entity;
@@ -35,12 +35,12 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
     {
         return [
             // @TODO There should be a domain event for "PR inspection scheduled"
-            Event::PULL_REQUEST_OPENED => 'onPullRequestUpdated',
-            Event::PULL_REQUEST_SYNCED => 'onPullRequestUpdated',
+            Events::PULL_REQUEST_OPENED => 'onPullRequestUpdated',
+            Events::PULL_REQUEST_SYNCED => 'onPullRequestUpdated',
 
-            Event::INSPECTION_STARTED => 'onInspectionStarted',
-            Event::INSPECTION_FINISHED => 'onInspectionFinished',
-            Event::INSPECTION_FAILED => 'onInspectionFailed',
+            Events::INSPECTION_STARTED => 'onInspectionStarted',
+            Events::INSPECTION_FINISHED => 'onInspectionFinished',
+            Events::INSPECTION_FAILED => 'onInspectionFailed',
         ];
     }
 

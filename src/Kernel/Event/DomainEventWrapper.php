@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Event;
+namespace Regis\Kernel\Event;
 
 use Symfony\Component\EventDispatcher\Event;
 use Regis\Event as DomainEvent;
