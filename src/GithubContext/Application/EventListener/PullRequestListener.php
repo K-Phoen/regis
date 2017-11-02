@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace Regis\GithubContext\Application\EventListener;
 
 use League\Tactician\CommandBus;
-use Regis\Kernel\Events;
+use Regis\Kernel\Event\DomainEventWrapper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+use Regis\GithubContext\Application\Events as GithubEvents;
+use Regis\GithubContext\Application\Event as GithubEvent;
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Application\Inspection\ViolationsCache;
 
@@ -25,24 +27,24 @@ class PullRequestListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            Events::PULL_REQUEST_OPENED => 'onPullRequestUpdated',
-            Events::PULL_REQUEST_SYNCED => 'onPullRequestUpdated',
-            Events::PULL_REQUEST_CLOSED => 'onPullRequestClosed',
+            GithubEvents::PULL_REQUEST_OPENED => 'onPullRequestUpdated',
+            GithubEvents::PULL_REQUEST_SYNCED => 'onPullRequestUpdated',
+            GithubEvents::PULL_REQUEST_CLOSED => 'onPullRequestClosed',
         ];
     }
 
-    public function onPullRequestUpdated(Event\DomainEventWrapper $event)
+    public function onPullRequestUpdated(DomainEventWrapper $event)
     {
-        /** @var Event\PullRequestOpened|Event\PullRequestSynced $domainEvent */
+        /** @var GithubEvent\PullRequestOpened|GithubEvent\PullRequestSynced $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
         $command = new Command\Inspection\SchedulePullRequest($domainEvent->getPullRequest());
         $this->commandBus->handle($command);
     }
 
-    public function onPullRequestClosed(Event\DomainEventWrapper $event)
+    public function onPullRequestClosed(DomainEventWrapper $event)
     {
-        /** @var Event\PullRequestClosed $domainEvent */
+        /** @var GithubEvent\PullRequestClosed $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
         // TODO should be in a command

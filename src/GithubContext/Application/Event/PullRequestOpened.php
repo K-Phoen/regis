@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Application\Event;
 
-use Regis\Event\Events;
 use Regis\GithubContext\Domain\Model\PullRequest;
+use Regis\GithubContext\Application\Events as GithubEvents;
+use Regis\Kernel\Events;
 
 class PullRequestOpened implements Events
 {
@@ -23,6 +24,6 @@ class PullRequestOpened implements Events
 
     public function getEventName(): string
     {
-        return Events::PULL_REQUEST_OPENED;
+        return GithubEvents::PULL_REQUEST_OPENED;
     }
 }

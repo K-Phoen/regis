@@ -1,6 +1,7 @@
 Regis\GithubContext\Domain\Entity\Inspection:
     type: entity
     table: inspections
+
     inheritanceType: SINGLE_TABLE
 
     discriminatorColumn:
@@ -16,8 +17,6 @@ Regis\GithubContext\Domain\Entity\Inspection:
             generator: { strategy: NONE }
 
     fields:
-        createdAt:
-            type: datetimetz
         startedAt:
             type: datetimetz
             nullable: true
@@ -28,21 +27,11 @@ Regis\GithubContext\Domain\Entity\Inspection:
             type: string
         failureTrace:
             type: text
-        base:
-            type: string
-        head:
-            type: string
 
-#    oneToOne:
-#        report:
-#          targetEntity: Regis\Domain\Entity\Inspection\Report
-#          mappedBy: inspection
-#          cascade: [ 'persist', 'merge' ]
-
-    manyToOne:
-        repository:
-          targetEntity: Regis\GithubContext\Domain\Entity\Repository
-          inversedBy: inspections
+    oneToOne:
+        report:
+          targetEntity: Report
           joinColumn:
-            name: repository_id
-            referencedColumnName: identifier
+              name: report_id
+              referencedColumnName: id
+          cascade: [ 'persist', 'merge' ]

@@ -21,7 +21,7 @@ class Inspection
     public function start()
     {
         if ($this->startedAt !== null) {
-            throw new \LogicException('This inspection is already started');
+            //throw new \LogicException('This inspection is already started');
         }
 
         $this->startedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));

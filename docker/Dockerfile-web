@@ -16,7 +16,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends zlib1g-dev libi
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN docker-php-ext-install -j$(nproc) opcache
+RUN docker-php-ext-install -j$(nproc) opcache pgsql
 
 RUN pecl install -o -f redis \
     &&  rm -rf /tmp/pear \

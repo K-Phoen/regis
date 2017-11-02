@@ -1,4 +1,4 @@
-Regis\AnalysisContext\Domain\Entity\Report:
+Regis\GithubContext\Domain\Entity\Report:
     type: entity
     table: reports
 

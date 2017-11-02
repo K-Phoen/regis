@@ -1,0 +1,7 @@
+pomm:
+    configuration:
+        regis:
+            dsn: "pgsql://%database_user%:%database_password%@%database_host%:%database_port%/%database_name%"
+            pomm:default: true
+    logger:
+        service: "@logger"

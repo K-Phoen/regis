@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Application\Command\Repository;
 
-use Regis\Domain\Entity\User;
+use Regis\GithubContext\Domain\Entity\User;
 
 class RegisterRepository
 {

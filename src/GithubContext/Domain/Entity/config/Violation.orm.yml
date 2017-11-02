@@ -1,0 +1,28 @@
+Regis\GithubContext\Domain\Entity\Violation:
+    type: entity
+    table: violations
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: UUID }
+
+    fields:
+        severity:
+            type: smallint
+        file:
+            type: string
+        line:
+            type: integer
+        position:
+            type: integer
+        description:
+            type: string
+
+    manyToOne:
+        analysis:
+          targetEntity: Analysis
+          inversedBy: violations
+          joinColumn:
+            name: analysis_id
+            referencedColumnName: id

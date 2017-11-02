@@ -5,18 +5,18 @@ declare(strict_types=1);
 namespace Regis\Kernel\Event;
 
 use Symfony\Component\EventDispatcher\Event;
-use Regis\Event as DomainEvent;
+use Regis\Kernel\Events as DomainEvent;
 
 class DomainEventWrapper extends Event
 {
     private $domainEvent;
 
-    public function __construct(DomainEvent\Events $event)
+    public function __construct(DomainEvent $event)
     {
         $this->domainEvent = $event;
     }
 
-    public function getDomainEvent(): DomainEvent\Events
+    public function getDomainEvent(): DomainEvent
     {
         return $this->domainEvent;
     }

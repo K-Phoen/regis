@@ -8,6 +8,8 @@ services:
 
     db:
         image: 'postgres:9.5'
+        ports:
+            - 4242:5432
         volumes:
             - ./postgres/data:/var/lib/postgresql/data/regis_data:rw
             - ./postgres/config:/docker-entrypoint-initdb.d:rw

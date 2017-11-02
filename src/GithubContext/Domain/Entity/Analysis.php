@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\AnalysisContext\Domain\Entity;
+namespace Regis\GithubContext\Domain\Entity;
 
 class Analysis
 {

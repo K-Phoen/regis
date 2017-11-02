@@ -7,7 +7,11 @@ services:
 
     regis.github.subscriber.pull_request_inspection_status:
         class: Regis\GithubContext\Application\EventListener\PullRequestInspectionStatusListener
-        arguments: [ '@regis.github.client_factory', '@regis.github.repository.repositories', '@router' ]
+        arguments:
+            - '@regis.github.client_factory'
+            - '@regis.github.repository.repositories'
+            - '@regis.github.repository.inspections'
+            - '@router'
         tags:
             - { name: kernel.event_subscriber }
 

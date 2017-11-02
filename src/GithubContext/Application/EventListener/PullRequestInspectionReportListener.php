@@ -8,6 +8,7 @@ use League\Tactician\CommandBus;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 use Regis\GithubContext\Application\Command;
+use Regis\Kernel\Event;
 use Regis\Kernel\Events;
 
 class PullRequestInspectionReportListener implements EventSubscriberInterface

@@ -22,5 +22,7 @@ Regis\AnalysisContext\Domain\Entity\Inspection:
     oneToOne:
         report:
           targetEntity: Report
-          mappedBy: inspection
+          joinColumn:
+              name: report_id
+              referencedColumnName: id
           cascade: [ 'persist', 'merge' ]

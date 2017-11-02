@@ -9,10 +9,8 @@ use Regis\AnalysisContext\Domain\Repository\Inspections;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 use Psr\Log\LoggerInterface as Logger;
 use Regis\AnalysisContext\Application\Command;
-use Regis\AnalysisContext\Application\Event;
-use Regis\AnalysisContext\Domain\Entity\Report;
-use Regis\Event\Events;
-use Regis\Event as DomainEvent;
+use Regis\Kernel\Event;
+use Regis\Kernel\Events;
 
 class InspectRevisions
 {
@@ -51,7 +49,7 @@ class InspectRevisions
             $this->logger->info('Inspection {inspection_id} finished', [
                 'inspection_id' => $inspectionId,
             ]);
-            $this->dispatch(Events::INSPECTION_FINISHED, new Event\InspectionFinished($inspectionId, $report));
+            $this->dispatch(Events::INSPECTION_FINISHED, new Event\InspectionFinished($inspectionId));
         } catch (\Exception $e) {
             $inspection->fail($e);
             $this->dispatch(Events::INSPECTION_FAILED, new Event\InspectionFailed($inspectionId, $e));
@@ -71,6 +69,6 @@ class InspectRevisions
 
     private function dispatch(string $eventName, Events $event)
     {
-        $this->dispatcher->dispatch($eventName, new DomainEvent\DomainEventWrapper($event));
+        $this->dispatcher->dispatch($eventName, new Event\DomainEventWrapper($event));
     }
 }

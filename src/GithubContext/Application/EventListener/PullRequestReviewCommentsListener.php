@@ -7,6 +7,7 @@ namespace Regis\GithubContext\Application\EventListener;
 use League\Tactician\CommandBus;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
+use Regis\Kernel\Event;
 use Regis\Kernel\Events;
 use Regis\GithubContext\Application\Command;
 

@@ -16,7 +16,7 @@ interface Client
     const READONLY_KEY = 'readonly_key';
     const WRITE_KEY = 'write_key';
 
-    public function setIntegrationStatus(Model\PullRequest $pullRequest, IntegrationStatus $status);
+    public function setIntegrationStatus(Model\RepositoryIdentifier $repository, string $head, IntegrationStatus $status);
 
     public function addDeployKey(string $owner, string $repository, string $title, string $key, string $type);
 

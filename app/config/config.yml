@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: bundles/pomm.yml }
     - { resource: bundles/knpu_oauth2_client.yml }
     - { resource: bundles/kphoen_rulerz.yml }
     - { resource: bundles/regis_analysis.yml }

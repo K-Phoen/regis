@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\AnalysisContext\Application\Event;
+namespace Regis\Kernel\Event;
 
 use Regis\Kernel\Events;
 

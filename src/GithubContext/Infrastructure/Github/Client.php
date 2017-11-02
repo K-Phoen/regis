@@ -57,15 +57,12 @@ class Client implements GithubClient
         return $this->client->pullRequest()->show($repository->getOwner(), $repository->getName(), $number);
     }
 
-    public function setIntegrationStatus(Model\PullRequest $pullRequest, IntegrationStatus $status)
+    public function setIntegrationStatus(Model\RepositoryIdentifier $repository, string $head, IntegrationStatus $status)
     {
         $this->assertAuthenticated();
-
-        $repository = $pullRequest->getRepository();
-
-        $this->logger->info('Creating integration status for PR {pull_request}', [
-            'pull_request' => $pullRequest,
-            'head' => $pullRequest->getHead(),
+        $this->logger->info('Creating integration status for repository {repository_identifer}', [
+            'repository_identifier' => $head,
+            'head' => $head,
             'description' => $status->getDescription(),
         ]);
 
@@ -79,7 +76,7 @@ class Client implements GithubClient
             $parameters['target_url'] = $status->getTargetUrl();
         }
 
-        $this->client->repo()->statuses()->create($repository->getOwner(), $repository->getName(), $pullRequest->getHead(), $parameters);
+        $this->client->repo()->statuses()->create($repository->getOwner(), $repository->getName(), $head, $parameters);
     }
 
     public function addDeployKey(string $owner, string $repository, string $title, string $key, string $type)
