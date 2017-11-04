@@ -34,6 +34,8 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
 
+        "robmorgan/phinx": "^0.9",
+
         "league/tactician-bundle": "~1.0",
         "league/tactician-logger": "^0.10",
 
