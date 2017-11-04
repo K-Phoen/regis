@@ -15,8 +15,6 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
 
-            new \PommProject\PommBundle\PommBundle(),
-
             new KPhoen\RulerZBundle\KPhoenRulerZBundle(),
             new League\Tactician\Bundle\TacticianBundle(),
 
