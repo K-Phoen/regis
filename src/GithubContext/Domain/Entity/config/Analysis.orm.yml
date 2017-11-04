@@ -16,11 +16,11 @@ Regis\GithubContext\Domain\Entity\Analysis:
           targetEntity: Violation
           mappedBy: analysis
           cascade: [ 'persist', 'merge' ]
-#
-#    manyToOne:
-#        report:
-#          targetEntity: Report
-#          inversedBy: analyses
-#          joinColumn:
-#            name: report_id
-#            referencedColumnName: id
+
+    manyToOne:
+        report:
+          targetEntity: Report
+          inversedBy: analyses
+          joinColumn:
+            name: report_id
+            referencedColumnName: id

@@ -2,14 +2,14 @@ Regis\GithubContext\Domain\Entity\Inspection:
     type: entity
     table: inspection
 
-    inheritanceType: SINGLE_TABLE
+    inheritanceType: joined
 
     discriminatorColumn:
         name: type
         type: string
 
     discriminatorMap:
-        github_pr: Regis\GithubContext\Domain\Entity\PullRequestInspection
+        github_pr: PullRequestInspection
 
     id:
         id:
@@ -17,6 +17,8 @@ Regis\GithubContext\Domain\Entity\Inspection:
             generator: { strategy: NONE }
 
     fields:
+        createdAt:
+            type: datetimetz
         startedAt:
             type: datetimetz
             nullable: true
@@ -24,6 +26,10 @@ Regis\GithubContext\Domain\Entity\Inspection:
             type: datetimetz
             nullable: true
         status:
+            type: string
+        base:
+            type: string
+        head:
             type: string
         failureTrace:
             type: text
@@ -34,4 +40,3 @@ Regis\GithubContext\Domain\Entity\Inspection:
           joinColumn:
               name: report_id
               referencedColumnName: id
-          cascade: [ 'persist', 'merge' ]

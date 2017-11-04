@@ -9,7 +9,7 @@ use RulerZ\Spec\Specification;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
 
-use Regis\Domain\Entity;
+use Regis\GithubContext\Domain\Entity;
 use Regis\Application\Command;
 
 class CommandVoter extends Voter

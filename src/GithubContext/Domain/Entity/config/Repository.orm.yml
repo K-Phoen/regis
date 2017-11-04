@@ -20,13 +20,13 @@ Regis\GithubContext\Domain\Entity\Repository:
 
     manyToOne:
         owner:
-          targetEntity: Regis\GithubContext\Domain\Entity\User
+          targetEntity: User
           inversedBy: repositories
           joinColumn:
             name: owner_id
             referencedColumnName: id
 
-#    oneToMany:
-#        inspections:
-#          targetEntity: Regis\GithubContext\Domain\Entity\Inspection
-#          mappedBy: repository
+    oneToMany:
+        inspections:
+          targetEntity: PullRequestInspection
+          mappedBy: repository

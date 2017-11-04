@@ -9,11 +9,13 @@ use Regis\GithubContext\Domain\Model\PullRequest;
 class PullRequestInspection extends Inspection
 {
     private $pullRequestNumber;
+    private $repository;
 
     public static function create(Repository $repository, PullRequest $pullRequest): self
     {
         /** @var $inspection PullRequestInspection */
-        $inspection = parent::createForRevisions($repository, $pullRequest->getHead(), $pullRequest->getBase());
+        $inspection = parent::createForRevisions($pullRequest->getHead(), $pullRequest->getBase());
+        $inspection->repository = $repository;
         $inspection->pullRequestNumber = $pullRequest->getNumber();
 
         return $inspection;
@@ -27,5 +29,10 @@ class PullRequestInspection extends Inspection
     public function getPullRequestNumber(): int
     {
         return $this->pullRequestNumber;
+    }
+
+    public function getRepository(): Repository
+    {
+        return $this->repository;
     }
 }

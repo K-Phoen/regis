@@ -8,7 +8,7 @@ use RulerZ\Spec\Specification;
 
 use Regis\Application\Command;
 use Regis\Application\Spec\Repository;
-use Regis\Domain\Entity;
+use Regis\GithubContext\Domain\Entity;
 
 class DisableInspections implements Command\SecureCommandBySpecification
 {

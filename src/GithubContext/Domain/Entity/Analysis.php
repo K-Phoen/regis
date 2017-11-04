@@ -12,6 +12,7 @@ class Analysis
 
     private $id;
     private $type;
+    private $report;
     private $status = self::STATUS_OK;
 
     /** @var Violation[] */

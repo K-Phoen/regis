@@ -53,6 +53,10 @@ class Repository implements Vcs\Repository
     private function augmentWithFileContents(Model\Diff $diff): Model\Diff
     {
         $files = array_map(function (Model\Diff\File $file) {
+            if ($file->isDeletion()) {
+                return $file;
+            }
+
             $blob = $this->repository->getBlob($file->getNewIndex());
 
             return $file->replaceNewContent(

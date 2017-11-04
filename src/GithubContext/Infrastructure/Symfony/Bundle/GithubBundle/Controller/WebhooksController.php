@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Controller;
 
+use Regis\Kernel\Event\DomainEventWrapper;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
-use Regis\GithubContext\Application\Event;
 use Regis\GithubContext\Application\Github\Exception\EventNotHandled;
 use Regis\GithubContext\Application\Github\Exception\PayloadSignature;
 
@@ -40,7 +40,7 @@ class WebhooksController extends Controller
             return new Response();
         }
 
-        $this->get('event_dispatcher')->dispatch($event->getEventName(), new Event\DomainEventWrapper($event));
+        $this->get('event_dispatcher')->dispatch($event->getEventName(), new DomainEventWrapper($event));
 
         return new Response('', Response::HTTP_ACCEPTED);
     }

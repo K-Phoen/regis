@@ -30,6 +30,7 @@ class CreateInspectionTables extends AbstractMigration
     public function change()
     {
         $inspections = $this->table('inspection', ['id' => false, 'primary_key' => ['id']]);
+        $githubPrInspections = $this->table('github_pr_inspection', ['id' => false, 'primary_key' => ['id']]);
         $reports = $this->table('report', ['id' => false, 'primary_key' => ['id']]);
         $analyses = $this->table('analysis', ['id' => false, 'primary_key' => ['id']]);
         $violations = $this->table('violation', ['id' => false, 'primary_key' => ['id']]);
@@ -37,12 +38,23 @@ class CreateInspectionTables extends AbstractMigration
         $inspections
             ->addColumn('id', 'uuid')
             ->addColumn('report_id', 'uuid', ['null' => true])
-            ->addColumn('started_at', 'datetime', ['timezone' => true])
-            ->addColumn('finished_at', 'datetime', ['timezone' => true])
+            ->addColumn('created_at', 'datetime', ['timezone' => true])
+            ->addColumn('started_at', 'datetime', ['timezone' => true, 'null' => true])
+            ->addColumn('finished_at', 'datetime', ['timezone' => true, 'null' => true])
+            ->addColumn('base', 'string')
+            ->addColumn('head', 'string')
             ->addColumn('status', 'string')
             ->addColumn('type', 'string')
             ->addColumn('failure_trace', 'text')
             ->addForeignKey('report_id', 'report', 'id')
+        ;
+
+        $githubPrInspections
+            ->addColumn('id', 'uuid')
+            ->addColumn('pull_request_number', 'integer')
+            ->addColumn('repository_id', 'string')
+            ->addForeignKey('id', 'inspection', 'id')
+            //->addForeignKey('repository_id', 'repository', 'identifier')
         ;
 
         $reports
@@ -71,6 +83,7 @@ class CreateInspectionTables extends AbstractMigration
 
         $reports->create();
         $inspections->create();
+        $githubPrInspections->create();
         $analyses->create();
         $violations->create();
     }

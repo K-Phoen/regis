@@ -6,7 +6,7 @@ namespace Regis\Application\Command;
 
 use RulerZ\Spec\Specification;
 
-use Regis\Domain\Entity;
+use Regis\GithubContext\Domain\Entity;
 
 interface SecureCommandBySpecification
 {

@@ -6,22 +6,25 @@ namespace Regis\Infrastructure\Bundle\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
-use Regis\Application\Command;
-use Regis\Domain\Entity;
-use Regis\Domain\Model\Git\Repository;
-use Regis\Domain\Model\Github\PullRequest;
+use Regis\GithubContext\Application\Command;
+use Regis\GithubContext\Domain\Entity;
+use Regis\GithubContext\Domain\Model\Repository;
+use Regis\GithubContext\Domain\Model\PullRequest;
 
 class InspectionsController extends Controller
 {
-    public function retryAction(Entity\Github\PullRequestInspection $inspection)
+    public function retryAction(Entity\PullRequestInspection $inspection)
     {
-        /** @var Entity\Github\Repository $repository */
+        /** @var Entity\Repository $repository */
         $repository = $inspection->getRepository();
 
-        $command = new Command\Github\Inspection\SchedulePullRequest(new PullRequest(
-            new Repository($repository->getOwnerUsername(), $repository->getName(), 'we don\'t have the clone URL, lets hope it is already cloned by now.'),
+        // TODO we should just give the repository identifier and the command should call github to retrieve the missing
+        // clone and public URLs
+        $command = new Command\Inspection\SchedulePullRequest(new PullRequest(
+            new Repository($repository->toIdentifier(), 'we don\'t have the clone URL, lets hope it is already cloned by now.', 'lala'),
             $inspection->getPullRequestNumber(),
-            $inspection->getRevisions()
+            $inspection->getHead(),
+            $inspection->getBase()
         ));
 
         $this->get('tactician.commandbus')->handle($command);
@@ -31,7 +34,7 @@ class InspectionsController extends Controller
         return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
     }
 
-    public function detailAction(Entity\Github\PullRequestInspection $inspection)
+    public function detailAction(Entity\PullRequestInspection $inspection)
     {
         return $this->render('@RegisBackend/Inspections/detail.html.twig', [
             'inspection' => $inspection,

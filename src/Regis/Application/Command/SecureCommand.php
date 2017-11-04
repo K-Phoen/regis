@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Application\Command;
 
-use Regis\Domain\Entity;
+use Regis\GithubContext\Domain\Entity;
 
 interface SecureCommand
 {
