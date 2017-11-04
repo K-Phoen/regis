@@ -84,6 +84,17 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         $domainEvent = $event->getDomainEvent();
 
         $inspection = $this->findPrInspection($domainEvent->getInspectionId());
+
+        if (!$inspection->hasReport()) {
+            $this->setIntegrationStatus(
+                $inspection->getRepository(),
+                $inspection->getHead(),
+                new IntegrationStatus(Client::INTEGRATION_FAILURE, 'Internal error.', $this->getInspectionUrl($inspection))
+            );
+
+            return;
+        }
+
         $report = $inspection->getReport();
 
         if ($report->hasErrors() || $report->hasWarnings()) {
