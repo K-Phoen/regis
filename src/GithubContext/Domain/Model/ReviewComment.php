@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Domain\Model;
 
-use Regis\Domain\Entity\Inspection\Violation;
+use Regis\GithubContext\Domain\Entity\Violation;
 
 class ReviewComment
 {
@@ -14,7 +14,7 @@ class ReviewComment
 
     public static function fromViolation(Violation $violation): ReviewComment
     {
-        return new static($violation->getFile(), $violation->getPosition(), $violation->getDescription());
+        return new static($violation->file(), $violation->position(), $violation->description());
     }
 
     public function __construct(string $file, int $position, string $content)

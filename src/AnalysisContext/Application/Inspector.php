@@ -36,7 +36,7 @@ class Inspector
         $report = new Entity\Report($diff->getRawDiff());
 
         foreach ($this->inspections as $inspection) {
-            $analysis = new Entity\Analysis($inspection->getType());
+            $analysis = new Entity\Analysis($report, $inspection->getType());
 
             foreach ($inspection->inspectDiff($repository, $diff) as $violation) {
                 $analysis->addViolation($violation);

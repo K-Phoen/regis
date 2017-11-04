@@ -13,28 +13,22 @@ class Analysis
     private $id;
     private $type;
     private $report;
-    private $status = self::STATUS_OK;
 
     /** @var Violation[] */
     private $violations = [];
+
+    private $violationsMap;
+    private $errorsCount;
+    private $warningsCount;
 
     public function __construct(string $type)
     {
         $this->type = $type;
     }
 
-    public function addViolation(Violation $violation)
+    public function id(): string
     {
-        $violation->setAnalysis($this);
-        $this->violations[] = $violation;
-
-        if ($violation->isError()) {
-            $this->status = self::STATUS_ERROR;
-        }
-
-        if ($this->status !== self::STATUS_ERROR && $violation->isWarning()) {
-            $this->status = self::STATUS_WARNING;
-        }
+        return $this->id;
     }
 
     public function type(): string
@@ -44,26 +38,83 @@ class Analysis
 
     public function status(): string
     {
-        return $this->status;
+        if ($this->hasErrors()) {
+            return self::STATUS_ERROR;
+        }
+
+        if ($this->hasWarnings()) {
+            return self::STATUS_WARNING;
+        }
+
+        return self::STATUS_OK;
     }
 
     /**
      * @return Violation[]
      */
-    public function violations(): array
+    public function violations(): \Traversable
     {
         return $this->violations;
     }
 
-    public function hasErrors(): bool
+    public function violationsAtLine(string $file, int $line): array
     {
-        /** @var Violation $violation */
-        foreach ($this->violations as $violation) {
-            if ($violation->isError()) {
-                return true;
-            }
+        if ($this->violationsMap === null) {
+            $this->buildViolationsMap();
         }
 
-        return false;
+        if (!isset($this->violationsMap[sprintf('%s:%d', $file, $line)])) {
+            return [];
+        }
+
+        return $this->violationsMap[sprintf('%s:%d', $file, $line)];
+    }
+
+    private function buildViolationsMap()
+    {
+        $this->violationsMap = [];
+
+        /** @var Violation $violation */
+        foreach ($this->violations as $violation) {
+            $key = sprintf('%s:%d', $violation->file(), $violation->line());
+
+            if (!isset($this->violationsMap[$key])) {
+                $this->violationsMap[$key] = [];
+            }
+
+            $this->violationsMap[$key][] = $violation;
+        }
+    }
+
+    public function hasErrors(): bool
+    {
+        return $this->errorsCount() !== 0;
+    }
+
+    public function errorsCount(): int
+    {
+        if ($this->errorsCount !== null) {
+            return $this->errorsCount;
+        }
+
+        return $this->errorsCount = array_reduce($this->violations->toArray(), function (int $count, Violation $violation) {
+            return $count + $violation->isError();
+        }, 0);
+    }
+
+    public function hasWarnings(): bool
+    {
+        return $this->warningsCount() !== 0;
+    }
+
+    public function warningsCount(): int
+    {
+        if ($this->warningsCount !== null) {
+            return $this->warningsCount;
+        }
+
+        return $this->warningsCount = array_reduce($this->violations->toArray(), function (int $count, Violation $violation) {
+            return $count + $violation->isWarning();
+        }, 0);
     }
 }

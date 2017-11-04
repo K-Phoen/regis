@@ -11,14 +11,16 @@ class Analysis
     const STATUS_ERROR = 'error';
 
     private $id;
+    private $report;
     private $type;
     private $status = self::STATUS_OK;
 
     /** @var Violation[] */
     private $violations = [];
 
-    public function __construct(string $type)
+    public function __construct(Report $report, string $type)
     {
+        $this->report = $report;
         $this->type = $type;
     }
 

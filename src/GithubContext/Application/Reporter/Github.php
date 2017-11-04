@@ -18,7 +18,7 @@ class Github implements Reporter
         $this->clientFactory = $clientFactory;
     }
 
-    public function report(Entity\Repository $repository, Entity\Inspection\Violation $violation, Model\PullRequest $pullRequest)
+    public function report(Entity\Repository $repository, Entity\Violation $violation, Model\PullRequest $pullRequest)
     {
         /** @var Entity\Repository $repository */
         $client = $this->clientFactory->createForRepository($repository);

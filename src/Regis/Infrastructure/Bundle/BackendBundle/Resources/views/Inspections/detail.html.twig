@@ -71,7 +71,7 @@
 </div>
 
 {% if inspection.hasReport %}
-    {% include '@RegisBackend/Inspections/_report.html.twig' with {'report': inspection.report} %}
+    {% include '@RegisBackend/Inspections/_report.html.twig' with {'report': inspection.report, 'diff': inspection.diff} %}
 {% endif %}
 
 {% endblock %}

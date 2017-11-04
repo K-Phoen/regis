@@ -17,12 +17,12 @@ class ViolationsCache
         $this->redis = $redis;
     }
 
-    public function has(Entity\Inspection\Violation $violation, Model\PullRequest $pullRequest): bool
+    public function has(Entity\Violation $violation, Model\PullRequest $pullRequest): bool
     {
         return (bool) $this->redis->sismember($this->getPullRequestKey($pullRequest), $this->getViolationKey($violation));
     }
 
-    public function save(Entity\Inspection\Violation $violation, Model\PullRequest $pullRequest)
+    public function save(Entity\Violation $violation, Model\PullRequest $pullRequest)
     {
         $this->redis->sadd($this->getPullRequestKey($pullRequest), $this->getViolationKey($violation));
     }
@@ -37,7 +37,7 @@ class ViolationsCache
         return (string) $pullRequest;
     }
 
-    private function getViolationKey(Entity\Inspection\Violation $violation)
+    private function getViolationKey(Entity\Violation $violation)
     {
         return md5((string) $violation);
     }

@@ -9,5 +9,5 @@ use Regis\GithubContext\Domain\Model;
 
 interface Reporter
 {
-    public function report(Entity\Repository $repository, Entity\Inspection\Violation $violation, Model\PullRequest $pullRequest);
+    public function report(Entity\Repository $repository, Entity\Violation $violation, Model\PullRequest $pullRequest);
 }
