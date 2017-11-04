@@ -21,7 +21,7 @@ class Inspection
     public function start()
     {
         if ($this->startedAt !== null) {
-            //throw new \LogicException('This inspection is already started');
+            throw new \LogicException('This inspection is already started');
         }
 
         $this->startedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
@@ -31,7 +31,7 @@ class Inspection
     public function finish(Report $report)
     {
         if ($this->finishedAt !== null) {
-            //throw new \LogicException('This inspection is already finished');
+            throw new \LogicException('This inspection is already finished');
         }
 
         $this->finishedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
