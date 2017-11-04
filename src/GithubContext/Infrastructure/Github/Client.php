@@ -120,7 +120,7 @@ class Client implements GithubClient
     {
         $this->assertAuthenticated();
 
-        $repository = $pullRequest->getRepository();
+        $repository = $pullRequest->getRepositoryIdentifier();
 
         $this->logger->info('Sending review comment for PR {pull_request} -- {commit_id}@{path}:{position} -- {comment}', [
             'pull_request' => $pullRequest->getNumber(),

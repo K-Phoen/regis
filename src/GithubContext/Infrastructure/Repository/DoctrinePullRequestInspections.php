@@ -9,7 +9,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Regis\GithubContext\Domain\Entity;
 use Regis\GithubContext\Domain\Repository;
 
-class DoctrineInspections implements Repository\Inspections
+class DoctrinePullRequestInspections implements Repository\PullRequestInspections
 {
     /** @var EntityManagerInterface */
     private $em;
@@ -19,15 +19,15 @@ class DoctrineInspections implements Repository\Inspections
         $this->em = $em;
     }
 
-    public function save(Entity\Inspection $inspections)
+    public function save(Entity\PullRequestInspection $inspections)
     {
         $this->em->persist($inspections);
         $this->em->flush();
     }
 
-    public function find(string $id): Entity\Inspection
+    public function find(string $id): Entity\PullRequestInspection
     {
-        $inspection = $this->em->getRepository(Entity\Inspection::class)->find($id);
+        $inspection = $this->em->getRepository(Entity\PullRequestInspection::class)->find($id);
 
         if ($inspection === null) {
             throw Repository\Exception\NotFound::forIdentifier($id);

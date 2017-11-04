@@ -79,17 +79,10 @@ class SchedulePullRequestCommand extends ContainerAwareCommand
     private function findPrDetails(Entity\Repository $repository, int $prNumber): Model\PullRequest
     {
         $githubClient = $this->getContainer()->get('regis.github.client_factory')->createForRepository($repository);
-        $prDetails = $githubClient->getPullRequestDetails(
-            $repository->toIdentifier(),
-            $prNumber
-        );
+        $prDetails = $githubClient->getPullRequestDetails($repository->toIdentifier(), $prNumber);
 
         return new Model\PullRequest(
-            new Model\Repository(
-                $repository->toIdentifier(),
-                $prDetails['head']['repo']['html_url'],
-                $prDetails['head']['repo']['private'] ? $prDetails['head']['repo']['ssh_url'] : $prDetails['head']['repo']['clone_url']
-            ),
+            $repository->toIdentifier(),
             $prNumber,
             $prDetails['head']['sha'],
             $prDetails['base']['sha']

@@ -25,21 +25,13 @@ services:
 
     regis.github.command_handler.inspections.schedule:
         class: Regis\GithubContext\Application\CommandHandler\Inspection\SchedulePullRequest
-        arguments: [ '@old_sound_rabbit_mq.inspection_event_producer', '@regis.github.repository.repositories', '@regis.github.repository.inspections' ]
+        arguments:
+            - '@old_sound_rabbit_mq.inspection_event_producer'
+            - '@regis.github.repository.repositories'
+            - '@regis.github.repository.pull_request_inspections'
+            - '@regis.github.client_factory'
         tags:
             - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Inspection\SchedulePullRequest }
-
-    regis.github.command_handler.inspections.start:
-        class: Regis\GithubContext\Application\CommandHandler\Inspection\InspectPullRequest
-        arguments: [ '@event_dispatcher', '@regis.inspector', '@regis.github.repository.inspections', '@logger' ]
-        tags:
-            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Inspection\InspectPullRequest }
-
-    regis.github.command_handler.inspections.save_report:
-        class: Regis\GithubContext\Application\CommandHandler\Inspection\SavePullRequestReport
-        arguments: [ '@regis.github.repository.inspections' ]
-        tags:
-            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Inspection\SavePullRequestReport }
 
     regis.github.command_handler.inspections.send_pr_comments:
         class: Regis\GithubContext\Application\CommandHandler\Inspection\SendViolationsAsComments

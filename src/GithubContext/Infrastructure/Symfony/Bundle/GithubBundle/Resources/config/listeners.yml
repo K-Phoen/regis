@@ -10,19 +10,13 @@ services:
         arguments:
             - '@regis.github.client_factory'
             - '@regis.github.repository.repositories'
-            - '@regis.github.repository.inspections'
+            - '@regis.github.repository.pull_request_inspections'
             - '@router'
-        tags:
-            - { name: kernel.event_subscriber }
-
-    regis.github.subscriber.pull_request_inspection_report:
-        class: Regis\GithubContext\Application\EventListener\PullRequestInspectionReportListener
-        arguments: [ '@tactician.commandbus' ]
         tags:
             - { name: kernel.event_subscriber }
 
     regis.github.subscriber.pull_request_report_as_comments:
         class: Regis\GithubContext\Application\EventListener\PullRequestReviewCommentsListener
-        arguments: [ '@tactician.commandbus' ]
+        arguments: [ '@tactician.commandbus', '@regis.github.repository.pull_request_inspections' ]
         tags:
             - { name: kernel.event_subscriber }

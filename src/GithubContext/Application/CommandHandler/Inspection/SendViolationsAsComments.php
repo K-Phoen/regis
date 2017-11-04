@@ -21,6 +21,10 @@ class SendViolationsAsComments
         $inspection = $command->getInspection();
         $repository = $inspection->getRepository();
 
+        if (!$inspection->hasReport()) {
+            return;
+        }
+
         foreach ($inspection->getReport()->violations() as $violation) {
             $this->reporter->report($repository, $violation, $command->getPullRequest());
         }

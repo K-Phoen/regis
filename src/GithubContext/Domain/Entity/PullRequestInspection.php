@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Domain\Entity;
 
-use Regis\GithubContext\Domain\Model\PullRequest;
+use Regis\GithubContext\Domain\Model;
 use Regis\AnalysisContext\Domain\Model\Git\Diff;
 use Regis\AnalysisContext\Domain\Model\Git\Revisions;
 
 class PullRequestInspection extends Inspection
 {
     private $pullRequestNumber;
+
+    /** @var Repository */
     private $repository;
 
-    public static function create(Repository $repository, PullRequest $pullRequest): self
+    public static function create(Repository $repository, Model\PullRequest $pullRequest): self
     {
         /** @var $inspection PullRequestInspection */
         $inspection = parent::createForRevisions($pullRequest->getHead(), $pullRequest->getBase());
@@ -45,5 +47,15 @@ class PullRequestInspection extends Inspection
     public function getRepository(): Repository
     {
         return $this->repository;
+    }
+
+    public function getPullRequest(): Model\PullRequest
+    {
+        return new Model\PullRequest(
+            $this->repository->toIdentifier(),
+            $this->pullRequestNumber,
+            $this->getHead(),
+            $this->getBase()
+        );
     }
 }

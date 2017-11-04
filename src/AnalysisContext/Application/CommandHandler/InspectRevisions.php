@@ -45,6 +45,7 @@ class InspectRevisions
             $report = $this->commandBus->handle(new Command\RunAnalyses($command->getRepository(), $command->getRevisions()));
 
             $inspection->finish($report);
+            $this->inspectionsRepo->save($inspection);
 
             $this->logger->info('Inspection {inspection_id} finished', [
                 'inspection_id' => $inspectionId,
@@ -52,6 +53,8 @@ class InspectRevisions
             $this->dispatch(Events::INSPECTION_FINISHED, new Event\InspectionFinished($inspectionId));
         } catch (\Exception $e) {
             $inspection->fail($e);
+            $this->inspectionsRepo->save($inspection);
+
             $this->dispatch(Events::INSPECTION_FAILED, new Event\InspectionFailed($inspectionId, $e));
 
             $this->logger->warning('Inspection {inspection_id} failed', [
@@ -62,8 +65,6 @@ class InspectRevisions
                 'error_message' => $e->getMessage(),
                 'error_backtrace' => $e->getTraceAsString(),
             ]);
-        } finally {
-            $this->inspectionsRepo->save($inspection);
         }
     }
 
