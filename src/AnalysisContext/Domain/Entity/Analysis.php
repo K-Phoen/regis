@@ -58,9 +58,13 @@ class Analysis
 
     public function hasErrors(): bool
     {
-        /** @var Violation $violation */
+        return $this->status === self::STATUS_ERROR;
+    }
+
+    public function hasWarnings(): bool
+    {
         foreach ($this->violations as $violation) {
-            if ($violation->isError()) {
+            if ($violation->isWarning()) {
                 return true;
             }
         }

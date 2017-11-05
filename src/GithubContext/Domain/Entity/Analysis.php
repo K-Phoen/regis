@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Domain\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 class Analysis
 {
     const STATUS_OK = 'ok';
@@ -21,9 +23,9 @@ class Analysis
     private $errorsCount;
     private $warningsCount;
 
-    public function __construct(string $type)
+    public function __construct(array $violations = [])
     {
-        $this->type = $type;
+        $this->violations = new ArrayCollection($violations);
     }
 
     public function id(): string
@@ -52,9 +54,9 @@ class Analysis
     /**
      * @return Violation[]
      */
-    public function violations(): \Traversable
+    public function violations(): array
     {
-        return $this->violations;
+        return $this->violations->toArray();
     }
 
     public function violationsAtLine(string $file, int $line): array
@@ -97,7 +99,7 @@ class Analysis
             return $this->errorsCount;
         }
 
-        return $this->errorsCount = array_reduce($this->violations->toArray(), function (int $count, Violation $violation) {
+        return $this->errorsCount = array_reduce($this->violations(), function (int $count, Violation $violation) {
             return $count + $violation->isError();
         }, 0);
     }
@@ -113,7 +115,7 @@ class Analysis
             return $this->warningsCount;
         }
 
-        return $this->warningsCount = array_reduce($this->violations->toArray(), function (int $count, Violation $violation) {
+        return $this->warningsCount = array_reduce($this->violations(), function (int $count, Violation $violation) {
             return $count + $violation->isWarning();
         }, 0);
     }

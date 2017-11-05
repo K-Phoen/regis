@@ -5,7 +5,8 @@ namespace Tests\Regis\AnalysisContext\Application\Inspection;
 use Regis\AnalysisContext\Application\Inspection\CodeSniffer;
 use Regis\AnalysisContext\Application\Inspection\CodeSnifferRunner;
 use Regis\AnalysisContext\Application\Vcs\Repository;
-use Regis\AnalysisContext\Domain\Model;
+use Regis\AnalysisContext\Domain\Entity;
+use Regis\AnalysisContext\Domain\Model\Exception\LineNotInDiff;
 
 class CodeSnifferTest extends InspectionTestCase
 {
@@ -62,7 +63,7 @@ class CodeSnifferTest extends InspectionTestCase
         $file->method('findPositionForLine')
             ->will($this->returnCallback(function ($line) {
                 if ($line === 12) {
-                    throw Model\Exception\LineNotInDiff::line($line);
+                    throw LineNotInDiff::line($line);
                 }
 
                 return $line + 1;
@@ -100,20 +101,20 @@ class CodeSnifferTest extends InspectionTestCase
 
         $this->assertCount(2, $violations);
 
-        /** @var Model\Inspection\Violation $firstViolation */
+        /** @var Entity\Violation $firstViolation */
         $firstViolation = $violations[0];
-        $this->assertInstanceOf(Model\Inspection\Violation::class, $firstViolation);
-        $this->assertEquals(Model\Inspection\Violation::WARNING, $firstViolation->severity());
+        $this->assertInstanceOf(Entity\Violation::class, $firstViolation);
+        $this->assertEquals(Entity\Violation::WARNING, $firstViolation->severity());
         $this->assertTrue($firstViolation->isWarning());
         $this->assertFalse($firstViolation->isError());
         $this->assertEquals('test.php', $firstViolation->file());
         $this->assertEquals('some warning message', $firstViolation->description());
         $this->assertEquals(24 + 1, $firstViolation->position());
 
-        /** @var Model\Inspection\Violation $secondViolation */
+        /** @var Entity\Violation $secondViolation */
         $secondViolation = $violations[1];
-        $this->assertInstanceOf(Model\Inspection\Violation::class, $secondViolation);
-        $this->assertEquals(Model\Inspection\Violation::ERROR, $secondViolation->severity());
+        $this->assertInstanceOf(Entity\Violation::class, $secondViolation);
+        $this->assertEquals(Entity\Violation::ERROR, $secondViolation->severity());
         $this->assertFalse($secondViolation->isWarning());
         $this->assertTrue($secondViolation->isError());
         $this->assertEquals('test.php', $secondViolation->file());

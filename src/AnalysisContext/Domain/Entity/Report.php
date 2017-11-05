@@ -42,9 +42,9 @@ class Report
         }
     }
 
-    public function analyses(): \Traversable
+    public function analyses(): array
     {
-        return $this->analyses;
+        return $this->analyses->toArray();
     }
 
     public function status(): string
