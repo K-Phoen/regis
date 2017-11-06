@@ -5,35 +5,44 @@ namespace Tests\Regis\GithubContext\Application\EventListener;
 use PHPUnit\Framework\TestCase;
 use League\Tactician\CommandBus;
 use Regis\GithubContext\Application\Command;
-use Regis\GithubContext\Application\Event;
 use Regis\GithubContext\Application\EventListener\PullRequestReviewCommentsListener;
 use Regis\GithubContext\Domain\Entity\PullRequestInspection;
-use Regis\GithubContext\Domain\Entity\Report;
-use Regis\GithubContext\Domain\Model\PullRequest;
+use Regis\GithubContext\Domain\Repository\PullRequestInspections;
+use Regis\Kernel\Event\DomainEventWrapper;
+use Regis\Kernel\Event\InspectionFinished;
+use Regis\Kernel\Events;
 
 class PullRequestReviewCommentsListenerTest extends TestCase
 {
+    private $bus;
+    private $inspectionRepo;
+    private $listener;
+
+    public function setUp()
+    {
+        $this->bus = $this->createMock(CommandBus::class);
+        $this->inspectionRepo = $this->createMock(PullRequestInspections::class);
+
+        $this->listener = new PullRequestReviewCommentsListener($this->bus, $this->inspectionRepo);
+    }
+
     public function testItListensToTheRightEvents()
     {
         $listenedEvents = PullRequestReviewCommentsListener::getSubscribedEvents();
 
-        $this->assertArrayHasKey(Event::INSPECTION_FINISHED, $listenedEvents);
+        $this->assertArrayHasKey(Events::INSPECTION_FINISHED, $listenedEvents);
     }
 
     public function testItSendsTheRightCommandToTheBus()
     {
-        $bus = $this->getMockBuilder(CommandBus::class)->disableOriginalConstructor()->getMock();
-        $inspection = $this->getMockBuilder(PullRequestInspection::class)->disableOriginalConstructor()->getMock();
-        $pr = $this->getMockBuilder(PullRequest::class)->disableOriginalConstructor()->getMock();
-        $report = $this->getMockBuilder(Report::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new Event\InspectionFinished($inspection, $pr, $report);
-        $event = new Event\DomainEventWrapper($domainEvent);
+        $inspection = $this->createMock(PullRequestInspection::class);
+        $this->inspectionRepo->method('find')->with('inspection-id')->willReturn($inspection);
 
-        $bus->expects($this->once())
+        $this->bus->expects($this->once())
             ->method('handle')
             ->with($this->isInstanceOf(Command\Inspection\SendViolationsAsComments::class));
 
-        $listener = new PullRequestReviewCommentsListener($bus);
-        $listener->onInspectionFinished($event);
+
+        $this->listener->onInspectionFinished(new DomainEventWrapper(new InspectionFinished('inspection-id')));
     }
 }

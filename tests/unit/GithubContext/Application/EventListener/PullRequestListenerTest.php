@@ -7,8 +7,10 @@ use League\Tactician\CommandBus;
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Application\Event;
 use Regis\GithubContext\Application\EventListener\PullRequestListener;
+use Regis\GithubContext\Application\Events;
 use Regis\GithubContext\Application\Inspection\ViolationsCache;
 use Regis\GithubContext\Domain\Model\PullRequest;
+use Regis\Kernel\Event\DomainEventWrapper;
 
 class PullRequestListenerTest extends TestCase
 {
@@ -18,8 +20,8 @@ class PullRequestListenerTest extends TestCase
 
     public function setUp()
     {
-        $this->bus = $this->getMockBuilder(CommandBus::class)->disableOriginalConstructor()->getMock();
-        $this->violationsCache = $this->getMockBuilder(ViolationsCache::class)->disableOriginalConstructor()->getMock();
+        $this->bus = $this->createMock(CommandBus::class);
+        $this->violationsCache = $this->createMock(ViolationsCache::class);
 
         $this->listener = new PullRequestListener($this->bus, $this->violationsCache);
     }
@@ -28,31 +30,27 @@ class PullRequestListenerTest extends TestCase
     {
         $listenedEvents = PullRequestListener::getSubscribedEvents();
 
-        $this->assertArrayHasKey(Event::PULL_REQUEST_OPENED, $listenedEvents);
-        $this->assertArrayHasKey(Event::PULL_REQUEST_SYNCED, $listenedEvents);
-        $this->assertArrayHasKey(Event::PULL_REQUEST_CLOSED, $listenedEvents);
+        $this->assertArrayHasKey(Events::PULL_REQUEST_OPENED, $listenedEvents);
+        $this->assertArrayHasKey(Events::PULL_REQUEST_SYNCED, $listenedEvents);
+        $this->assertArrayHasKey(Events::PULL_REQUEST_CLOSED, $listenedEvents);
     }
 
     public function testItSendsTheRightCommandToTheBusWhenAPRIsCreated()
     {
-        $pr = $this->getMockBuilder(PullRequest::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new Event\PullRequestOpened($pr);
-        $event = new Event\DomainEventWrapper($domainEvent);
+        $pr = $this->createMock(PullRequest::class);
+        $event = new DomainEventWrapper(new Event\PullRequestClosed($pr));
 
         $this->bus->expects($this->once())
             ->method('handle')
-            ->with($this->callback(function ($command) {
-                return $command instanceof Command\Inspection\SchedulePullRequest;
-            }));
+            ->with($this->isInstanceOf(Command\Inspection\SchedulePullRequest::class));
 
         $this->listener->onPullRequestUpdated($event);
     }
 
     public function testItCleansTheViolationCacheWhenAPRIsClosed()
     {
-        $pr = $this->getMockBuilder(PullRequest::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new Event\PullRequestClosed($pr);
-        $event = new Event\DomainEventWrapper($domainEvent);
+        $pr = $this->createMock(PullRequest::class);
+        $event = new DomainEventWrapper(new Event\PullRequestClosed($pr));
 
         $this->violationsCache->expects($this->once())
             ->method('clear')

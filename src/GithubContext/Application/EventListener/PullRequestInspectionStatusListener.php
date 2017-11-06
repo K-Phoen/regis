@@ -39,7 +39,6 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return [
-            // @TODO There should be a domain event for "PR inspection scheduled"
             GithubEvents::PULL_REQUEST_OPENED => 'onPullRequestUpdated',
             GithubEvents::PULL_REQUEST_SYNCED => 'onPullRequestUpdated',
 

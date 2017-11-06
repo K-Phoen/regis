@@ -4,6 +4,7 @@ namespace Tests\Regis\GithubContext\Application\EventListener;
 
 use PHPUnit\Framework\TestCase;
 use Regis\GithubContext\Application\Github\IntegrationStatus;
+use Regis\GithubContext\Domain\Model\RepositoryIdentifier;
 use Regis\Kernel\Event\DomainEventWrapper;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface as UrlGenerator;
 use Regis\GithubContext\Application\Event;
@@ -19,6 +20,13 @@ use Regis\Kernel\Event as KernelEvent;
 
 class PullRequestInspectionStatusListenerTest extends TestCase
 {
+    const INSPECTION_HEAD = 'inspection HEAD sha';
+    const INSPECTION_ID = 'inspection-id';
+    const INSPECTION_URL = 'inspection-url';
+
+    const WITH_ERRORS = 1;
+    const WITH_WARNINGS = 2;
+
     /** @var ClientFactory */
     private $ghClientFactory;
     /** @var Client */
@@ -30,7 +38,9 @@ class PullRequestInspectionStatusListenerTest extends TestCase
     /** @var Repository\PullRequestInspections */
     private $prInspectionsRepo;
     /** @var Entity\Repository */
-    private $repository;
+    private $repositoryEntity;
+    /** @var RepositoryIdentifier */
+    private $repositoryIdentifier;
     /** @var PullRequest */
     private $pr;
     /** @var PullRequestInspectionStatusListener */
@@ -43,29 +53,37 @@ class PullRequestInspectionStatusListenerTest extends TestCase
         $this->repoRepository = $this->createMock(Repository\Repositories::class);
         $this->prInspectionsRepo = $this->createMock(Repository\PullRequestInspections::class);
         $this->pr = $this->createMock(PullRequest::class);
-        $this->repository = $this->createMock(Entity\Repository::class);
+        $this->repositoryEntity = $this->createMock(Entity\Repository::class);
         $this->urlGenerator = $this->createMock(UrlGenerator::class);
 
-        $this->repository
+        $this->repositoryIdentifier = RepositoryIdentifier::fromFullName('repository/identifier');
+
+        $this->repositoryEntity
             ->method('isInspectionEnabled')
             ->willReturn(true);
+        $this->repositoryEntity
+            ->method('toIdentifier')
+            ->willReturn($this->repositoryIdentifier);
 
         $this->urlGenerator
             ->method('generate')
-            ->willReturn('something not null');
+            ->willReturn(self::INSPECTION_URL);
 
         $this->pr
             ->method('getRepositoryIdentifier')
-            ->willReturn('repository/identifier');
+            ->willReturn($this->repositoryIdentifier);
+        $this->pr
+            ->method('getHead')
+            ->willReturn(self::INSPECTION_HEAD);
 
         $this->repoRepository
             ->method('find')
-            ->with('repository/identifier')
-            ->willReturn($this->repository);
+            ->with($this->repositoryIdentifier->getIdentifier())
+            ->willReturn($this->repositoryEntity);
 
         $this->ghClientFactory
             ->method('createForRepository')
-            ->with($this->repository)
+            ->with($this->repositoryEntity)
             ->willReturn($this->ghClient);
 
         $this->listener = new PullRequestInspectionStatusListener($this->ghClientFactory, $this->repoRepository, $this->prInspectionsRepo, $this->urlGenerator);
@@ -90,11 +108,17 @@ class PullRequestInspectionStatusListenerTest extends TestCase
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
-                return $status->getState() === Client::INTEGRATION_PENDING
-                    && strpos($status->getDescription(), 'scheduled') !== false
-                    && $status->getTargetUrl() === null;
-            }));
+            ->with(
+                $this->repositoryIdentifier,
+                self::INSPECTION_HEAD,
+                $this->callback(function (IntegrationStatus $status) {
+                    $this->assertSame(Client::INTEGRATION_PENDING, $status->getState());
+                    $this->assertContains('scheduled', $status->getDescription());
+                    $this->assertNull($status->getTargetUrl());
+
+                    return true;
+                })
+            );
 
         $this->listener->onPullRequestUpdated($event);
     }
@@ -106,50 +130,59 @@ class PullRequestInspectionStatusListenerTest extends TestCase
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
-                return $status->getState() === Client::INTEGRATION_PENDING
-                && strpos($status->getDescription(), 'scheduled') !== false
-                && $status->getTargetUrl() === null;
-            }));
+            ->with(
+                $this->repositoryIdentifier,
+                self::INSPECTION_HEAD,
+                $this->callback(function (IntegrationStatus $status) {
+                    $this->assertSame(Client::INTEGRATION_PENDING, $status->getState());
+                    $this->assertContains('scheduled', $status->getDescription());
+                    $this->assertNull($status->getTargetUrl());
+
+                    return true;
+                })
+            );
 
         $this->listener->onPullRequestUpdated($event);
     }
 
     public function testItSetsTheIntegrationStatusAsStartedWhenAnInspectionStarts()
     {
-        $inspection = $this->getMockBuilder(PullRequestInspection::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new KernelEvent\InspectionStarted($inspection, $this->pr);
+        $inspection = $this->createInspection();
+        $domainEvent = new KernelEvent\InspectionStarted(self::INSPECTION_ID);
         $event = new DomainEventWrapper($domainEvent);
+
+        $this->prInspectionsRepo->method('find')->with(self::INSPECTION_ID)->willReturn($inspection);
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
-                return $status->getState() === Client::INTEGRATION_PENDING
-                && strpos($status->getDescription(), 'started') !== false
-                && $status->getTargetUrl() !== null;
-            }));
+            ->with(
+                $this->repositoryIdentifier,
+                self::INSPECTION_HEAD,
+                $this->callback(function (IntegrationStatus $status) {
+                    $this->assertSame(Client::INTEGRATION_PENDING, $status->getState());
+                    $this->assertContains('started', $status->getDescription());
+                    $this->assertSame(self::INSPECTION_URL, $status->getTargetUrl());
+
+                    return true;
+                })
+            );
 
         $this->listener->onInspectionStarted($event);
     }
 
     public function testItDoesNothingIfTheRepositoryDisabledTheInspections()
     {
-        $this->repoRepository = $this->getMockBuilder(Repository\Repositories::class)->getMock();
-        $this->repository = $this->getMockBuilder(Entity\Repository::class)->disableOriginalConstructor()->getMock();
-        $this->listener = new PullRequestInspectionStatusListener($this->ghClientFactory, $this->repoRepository, $this->prInspectionsRepo, $this->urlGenerator);
-
-        $inspection = $this->getMockBuilder(Entity\PullRequestInspection::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new KernelEvent\InspectionStarted($inspection, $this->pr);
+        $domainEvent = new KernelEvent\InspectionStarted(self::INSPECTION_ID);
         $event = new DomainEventWrapper($domainEvent);
 
-        $this->repository->expects($this->any())
+        $this->repositoryEntity
             ->method('isInspectionEnabled')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
-        $this->repoRepository->expects($this->any())
+        $this->repoRepository
             ->method('find')
-            ->with('repository/identifier')
-            ->will($this->returnValue($this->repository));
+            ->with($this->repositoryIdentifier->getIdentifier())
+            ->willReturn($this->repositoryEntity);
 
         $this->ghClient->expects($this->never())->method('setIntegrationStatus');
 
@@ -158,87 +191,130 @@ class PullRequestInspectionStatusListenerTest extends TestCase
 
     public function testItSetsTheIntegrationStatusAsErroredWhenAnInspectionFails()
     {
-        $inspection = $this->getMockBuilder(PullRequestInspection::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new KernelEvent\InspectionFailed($inspection, $this->pr, new \Exception());
+        $inspection = $this->createInspection();
+        $domainEvent = new KernelEvent\InspectionFailed(self::INSPECTION_ID, new \Exception());
         $event = new DomainEventWrapper($domainEvent);
+
+        $this->prInspectionsRepo->method('find')->with(self::INSPECTION_ID)->willReturn($inspection);
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
-                return $status->getState() === Client::INTEGRATION_ERROR
-                && strpos($status->getDescription(), 'failed') !== false
-                && $status->getTargetUrl() !== null;
-            }));
+            ->with(
+                $this->repositoryIdentifier,
+                self::INSPECTION_HEAD,
+                $this->callback(function (IntegrationStatus $status) {
+                    $this->assertSame(Client::INTEGRATION_ERROR, $status->getState());
+                    $this->assertContains('failed', $status->getDescription());
+                    $this->assertSame(self::INSPECTION_URL, $status->getTargetUrl());
+
+                    return true;
+                })
+            );
 
         $this->listener->onInspectionFailed($event);
     }
 
     public function testItSetsTheIntegrationStatusAsFailedWhenAnInspectionFinishesWithErrors()
     {
-        $inspection = $this->getMockBuilder(PullRequestInspection::class)->disableOriginalConstructor()->getMock();
-        $report = $this->getMockBuilder(Report::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new KernelEvent\InspectionFinished($inspection, $this->pr, $report);
+        $inspection = $this->createInspection(self::WITH_ERRORS);
+        $domainEvent = new KernelEvent\InspectionFinished(self::INSPECTION_ID);
         $event = new DomainEventWrapper($domainEvent);
 
-        $report->expects($this->once())
-            ->method('hasErrors')
-            ->will($this->returnValue(true));
+        $this->prInspectionsRepo->method('find')->with(self::INSPECTION_ID)->willReturn($inspection);
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
-                return $status->getState() === Client::INTEGRATION_FAILURE
-                && strpos($status->getDescription(), 'error(s)') !== false
-                && $status->getTargetUrl() !== null;
-            }));
+            ->with(
+                $this->repositoryIdentifier,
+                self::INSPECTION_HEAD,
+                $this->callback(function (IntegrationStatus $status) {
+                    $this->assertSame(Client::INTEGRATION_FAILURE, $status->getState());
+                    $this->assertContains('error(s)', $status->getDescription());
+                    $this->assertSame(self::INSPECTION_URL, $status->getTargetUrl());
+
+                    return true;
+                })
+            );
 
         $this->listener->onInspectionFinished($event);
     }
 
     public function testItSetsTheIntegrationStatusAsFailedWhenAnInspectionFinishesWithWarnings()
     {
-        $inspection = $this->getMockBuilder(PullRequestInspection::class)->disableOriginalConstructor()->getMock();
-        $report = $this->getMockBuilder(Report::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new KernelEvent\InspectionFinished($inspection, $this->pr, $report);
+        $inspection = $this->createInspection(self::WITH_WARNINGS);
+        $domainEvent = new KernelEvent\InspectionFinished(self::INSPECTION_ID);
         $event = new DomainEventWrapper($domainEvent);
 
-        $report->expects($this->once())
-            ->method('hasWarnings')
-            ->will($this->returnValue(true));
+        $this->prInspectionsRepo->method('find')->with(self::INSPECTION_ID)->willReturn($inspection);
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
-                return $status->getState() === Client::INTEGRATION_FAILURE
-                && strpos($status->getDescription(), 'error(s)') !== false
-                && $status->getTargetUrl() !== null;
-            }));
+            ->with(
+                $this->repositoryIdentifier,
+                self::INSPECTION_HEAD,
+                $this->callback(function (IntegrationStatus $status) {
+                    $this->assertSame(Client::INTEGRATION_FAILURE, $status->getState());
+                    $this->assertContains('error(s)', $status->getDescription());
+                    $this->assertSame(self::INSPECTION_URL, $status->getTargetUrl());
+
+                    return true;
+                })
+            );
 
         $this->listener->onInspectionFinished($event);
     }
 
     public function testItSetsTheIntegrationStatusAsSuccessWhenAnInspectionFinishesSuccessfully()
     {
-        $inspection = $this->getMockBuilder(Entity\PullRequestInspection::class)->disableOriginalConstructor()->getMock();
-        $report = $this->getMockBuilder(Entity\Report::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new KernelEvent\InspectionFinished($inspection, $this->pr, $report);
+        $inspection = $this->createInspection();
+        $domainEvent = new KernelEvent\InspectionFinished(self::INSPECTION_ID);
         $event = new DomainEventWrapper($domainEvent);
 
-        $report->expects($this->once())
-            ->method('hasErrors')
-            ->will($this->returnValue(false));
-        $report->expects($this->once())
-            ->method('hasWarnings')
-            ->will($this->returnValue(false));
+        $this->prInspectionsRepo->method('find')->with(self::INSPECTION_ID)->willReturn($inspection);
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
-            ->with($this->pr, $this->callback(function (IntegrationStatus $status) {
-                return $status->getState() === Client::INTEGRATION_SUCCESS
-                && strpos($status->getDescription(), 'successful') !== false
-                && $status->getTargetUrl() !== null;
-            }));
+            ->with(
+                $this->repositoryIdentifier,
+                self::INSPECTION_HEAD,
+                $this->callback(function (IntegrationStatus $status) {
+                    $this->assertSame(Client::INTEGRATION_SUCCESS, $status->getState());
+                    $this->assertContains('successful', $status->getDescription());
+                    $this->assertSame(self::INSPECTION_URL, $status->getTargetUrl());
+
+                    return true;
+                })
+            );
+
 
         $this->listener->onInspectionFinished($event);
+    }
+
+    private function createInspection(int $flags = 0): Entity\PullRequestInspection
+    {
+        $inspection = $this->createMock(Entity\PullRequestInspection::class);
+        $report = $this->createReport($flags);
+
+        $inspection->method('getHead')->willReturn(self::INSPECTION_HEAD);
+        $inspection->method('getRepository')->willReturn($this->repositoryEntity);
+        $inspection->method('hasReport')->willReturn(true);
+        $inspection->method('getReport')->willReturn($report);
+
+        return $inspection;
+    }
+
+    private function createReport(int $flags = 0): Entity\Report
+    {
+        $report = $this->createMock(Entity\Report::class);
+
+        if (($flags & self::WITH_ERRORS) !== 0) {
+            $report->method('hasErrors')->willReturn(true);
+        }
+
+        if (($flags & self::WITH_WARNINGS) !== 0) {
+            $report->method('hasWarnings')->willReturn(true);
+        }
+
+        return $report;
     }
 }
