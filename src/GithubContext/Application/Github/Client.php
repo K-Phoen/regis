@@ -18,9 +18,9 @@ interface Client
 
     public function setIntegrationStatus(Model\RepositoryIdentifier $repository, string $head, IntegrationStatus $status);
 
-    public function addDeployKey(string $owner, string $repository, string $title, string $key, string $type);
+    public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key, string $type);
 
-    public function createWebhook(string $owner, string $repository, string $url, $secret = null);
+    public function createWebhook(Model\RepositoryIdentifier $repository, string $url, $secret = null);
 
     public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment);
 

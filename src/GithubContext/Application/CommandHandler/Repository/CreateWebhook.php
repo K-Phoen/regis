@@ -23,12 +23,11 @@ class CreateWebhook
     public function handle(Command\Repository\CreateWebhook $command)
     {
         /** @var Entity\Repository $repository */
-        $repository = $this->repositoriesRepo->find($command->getOwner().'/'.$command->getRepo());
+        $repository = $this->repositoriesRepo->find($command->getRepository()->getIdentifier());
         $githubClient = $this->githubClientFactory->createForRepository($repository);
 
         $githubClient->createWebhook(
-            $command->getOwner(),
-            $command->getRepo(),
+            $command->getRepository(),
             $command->getCallbackUrl(),
             $repository->getSharedSecret()
         );

@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Regis\Application\CommandHandler\User;
+namespace Tests\Regis\GithubContext\Application\CommandHandler\Repository;
 
 use PHPUnit\Framework\TestCase;
-use Regis\Application\Command;
-use Regis\Application\CommandHandler;
-use Regis\Domain\Entity;
-use Regis\Domain\Repository;
+use Regis\GithubContext\Application\Command;
+use Regis\GithubContext\Application\CommandHandler;
+use Regis\GithubContext\Domain\Entity;
+use Regis\GithubContext\Domain\Repository;
 
 class CreateOrUpdateUserTest extends TestCase
 {
@@ -34,11 +34,13 @@ class CreateOrUpdateUserTest extends TestCase
         $this->usersRepo->expects($this->once())
             ->method('save')
             ->with($this->callback(function (Entity\User $user) {
-                return in_array('ROLE_USER', $user->getRoles(), true)
-                    && $user->getUsername() === 'user'
-                    && $user->getEmail() === 'email'
-                    && $user->getGithubId() === 42
-                    && $user->getGithubAccessToken() === 'access token';
+                $this->assertEquals(['ROLE_USER'], $user->getRoles());
+                $this->assertSame('user', $user->getUsername());
+                $this->assertSame('email', $user->getEmail());
+                $this->assertSame(42, $user->getGithubId());
+                $this->assertSame('access token', $user->getGithubAccessToken());
+
+                return true;
             }));
 
         $this->handler->handle($command);
@@ -55,12 +57,13 @@ class CreateOrUpdateUserTest extends TestCase
 
         $this->usersRepo->expects($this->once())
             ->method('save')
-            ->with($this->callback(function (Entity\User $user) {
-                return in_array('ROLE_USER', $user->getRoles(), true)
-                    && $user->getUsername() === 'user'
-                    && $user->getEmail() === null
-                    && $user->getGithubId() === 42
-                    && $user->getGithubAccessToken() === 'access token';
+            ->with($this->callback(function (Entity\User $user) {$this->assertEquals(['ROLE_USER'], $user->getRoles());
+                $this->assertSame('user', $user->getUsername());
+                $this->assertNull($user->getEmail());
+                $this->assertSame(42, $user->getGithubId());
+                $this->assertSame('access token', $user->getGithubAccessToken());
+
+                return true;
             }));
 
         $this->handler->handle($command);
@@ -68,7 +71,7 @@ class CreateOrUpdateUserTest extends TestCase
 
     public function testItUpdatesTheUserIfItAlreadyExist()
     {
-        $user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+        $user = $this->createMock(Entity\User::class);
         $command = new Command\User\CreateOrUpdateUser('user', 42, 'access token', 'email');
 
         $this->usersRepo

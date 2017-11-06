@@ -41,15 +41,12 @@ class Repository
 
     public function getOwnerUsername(): string
     {
-        return explode('/', $this->getIdentifier())[0];
+        return $this->owner->getUsername();
     }
 
     public function toIdentifier(): Model\RepositoryIdentifier
     {
-        return new Model\RepositoryIdentifier(
-            $this->getOwnerUsername(),
-            $this->getName()
-        );
+        return Model\RepositoryIdentifier::fromFullName($this->identifier);
     }
 
     public function getIdentifier(): string
@@ -64,7 +61,7 @@ class Repository
 
     public function getName(): string
     {
-        return explode('/', $this->identifier)[1];
+        return $this->toIdentifier()->getName();
     }
 
     public function getSharedSecret(): string

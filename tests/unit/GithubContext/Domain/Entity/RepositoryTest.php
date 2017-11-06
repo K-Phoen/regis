@@ -8,11 +8,14 @@ use Regis\GithubContext\Domain\Entity\User;
 
 class RepositoryTest extends TestCase
 {
+    const OWNER_NAME = 'K-Phoen';
+
     private $owner;
 
     public function setUp()
     {
         $this->owner = $this->createMock(User::class);
+        $this->owner->method('getUsername')->willReturn(self::OWNER_NAME);
     }
 
     public function testItHasAType()
@@ -22,11 +25,11 @@ class RepositoryTest extends TestCase
         $this->assertSame(Repository::TYPE_GITHUB, $repository->getType());
     }
 
-    public function testItComputesTheOwner()
+    public function testItRetrievesTheOwnerUsernameInTheOwner()
     {
         $repository = new Repository($this->owner, 'K-Phoen/test');
 
-        $this->assertSame('K-Phoen', $repository->getOwnerUsername());
+        $this->assertSame(self::OWNER_NAME, $repository->getOwnerUsername());
     }
 
     public function testItComputesTheName()

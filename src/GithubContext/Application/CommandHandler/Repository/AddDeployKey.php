@@ -30,8 +30,7 @@ class AddDeployKey
         $githubClient = $this->githubClientFactory->createForRepository($repository);
 
         $githubClient->addDeployKey(
-            $repository->getOwnerUsername(),
-            $repository->getName(),
+            $repository->toIdentifier(),
             self::KEY_TITLE,
             $command->getKeyContent(),
             GithubClient::READONLY_KEY

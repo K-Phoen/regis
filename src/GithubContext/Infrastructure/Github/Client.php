@@ -79,32 +79,32 @@ class Client implements GithubClient
         $this->client->repo()->statuses()->create($repository->getOwner(), $repository->getName(), $head, $parameters);
     }
 
-    public function addDeployKey(string $owner, string $repository, string $title, string $key, string $type)
+    public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key, string $type)
     {
         $this->assertAuthenticated();
 
         $this->logger->info('Adding new deploy key for repository {repository} -- {key_title}', [
-            'repository' => sprintf('%s/%s', $owner, $repository),
+            'repository' => $repository->getIdentifier(),
             'key_title' => $title,
         ]);
 
-        $this->client->repo()->keys()->create($owner, $repository, [
+        $this->client->repo()->keys()->create($repository->getOwner(), $repository->getName(), [
             'title' => $title,
             'key' => $key,
             'read_only' => $type === self::READONLY_KEY,
         ]);
     }
 
-    public function createWebhook(string $owner, string $repository, string $url, $secret = null)
+    public function createWebhook(Model\RepositoryIdentifier $repository, string $url, $secret = null)
     {
         $this->assertAuthenticated();
 
         $this->logger->info('Creating webhook for {repository} to call {url}', [
-            'repository' => sprintf('%s/%s', $owner, $repository),
+            'repository' => $repository->getIdentifier(),
             'url' => $url,
         ]);
 
-        $this->client->repo()->hooks()->create($owner, $repository, [
+        $this->client->repo()->hooks()->create($repository->getOwner(), $repository->getName(), [
             'name' => 'web',
             'config' => [
                 'url' => $url,

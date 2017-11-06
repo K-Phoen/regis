@@ -4,33 +4,27 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Application\Command\Repository;
 
+use Regis\GithubContext\Domain\Model\RepositoryIdentifier;
+
 class CreateWebhook
 {
-    private $owner;
-    private $repo;
+    private $repository;
     private $callbackUrl;
 
     /**
-     * @param string $owner Owner of the repository.
-     * @param string $repo Name of the repository.
      * @param string $callbackUrl Absolute URL.
      */
-    public function __construct(string $owner, string $repo, string $callbackUrl)
+    public function __construct(RepositoryIdentifier $repository, string $callbackUrl)
     {
-        $this->owner = $owner;
-        $this->repo = $repo;
+        $this->repository = $repository;
         $this->callbackUrl = $callbackUrl;
     }
 
-    public function getOwner(): string
+    public function getRepository(): RepositoryIdentifier
     {
-        return $this->owner;
+        return $this->repository;
     }
 
-    public function getRepo(): string
-    {
-        return $this->repo;
-    }
 
     public function getCallbackUrl(): string
     {
