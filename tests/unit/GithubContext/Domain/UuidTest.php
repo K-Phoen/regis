@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Regis\Domain;
+namespace Tests\Regis\GithubContext\Domain;
 
 use PHPUnit\Framework\TestCase;
-use Regis\Domain\Uuid;
+use Regis\GithubContext\Domain\Uuid;
 
 class UuidTest extends TestCase
 {

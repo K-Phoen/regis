@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Regis\Domain\Entity\Github;
+namespace Tests\Regis\GithubContext\Domain\Entity;
 
 use PHPUnit\Framework\TestCase;
-use Regis\Domain\Entity;
-use Regis\Domain\Entity\Github\Repository;
+use Regis\GithubContext\Domain\Entity\Repository;
+use Regis\GithubContext\Domain\Entity\User;
 
 class RepositoryTest extends TestCase
 {
@@ -12,7 +12,7 @@ class RepositoryTest extends TestCase
 
     public function setUp()
     {
-        $this->owner = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+        $this->owner = $this->createMock(User::class);
     }
 
     public function testItHasAType()

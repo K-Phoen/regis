@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Regis\Domain\Entity;
+namespace Tests\Regis\GithubContext\Domain\Entity;
 
 use PHPUnit\Framework\TestCase;
-use Regis\Domain\Entity\User;
+use Regis\GithubContext\Domain\Entity\User;
 
 class UserTest extends TestCase
 {

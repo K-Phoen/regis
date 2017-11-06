@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Regis\Domain\Model\Github;
+namespace Tests\Regis\GithubContext\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
-use Regis\Domain\Model\Github\ReviewComment;
+use Regis\GithubContext\Domain\Model\ReviewComment;
 
 class ReviewCommentTest extends TestCase
 {
