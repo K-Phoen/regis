@@ -1,16 +1,16 @@
 <?php
 
-namespace Tests\Regis\Application\Github;
+namespace Tests\Regis\GithubContext\Application\Github;
 
 use PHPUnit\Framework\TestCase;
 use RulerZ\Compiler as RulerZCompiler;
 use RulerZ\RulerZ;
 use Symfony\Component\HttpFoundation\Request;
 
-use Regis\Application\Github\Exception\PayloadSignature;
-use Regis\Application\Github\PayloadValidator;
-use Regis\Domain\Entity;
-use Regis\Infrastructure\Repository;
+use Regis\GithubContext\Application\Github\Exception\PayloadSignature;
+use Regis\GithubContext\Application\Github\PayloadValidator;
+use Regis\GithubContext\Domain\Entity;
+use Regis\GithubContext\Infrastructure\Repository;
 
 class PayloadValidatorTest extends TestCase
 {
@@ -19,11 +19,11 @@ class PayloadValidatorTest extends TestCase
 
     public function setUp()
     {
-        $admin = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+        $admin = $this->createMock(Entity\User::class);
         $rulerz = new RulerZ(new RulerZCompiler\Compiler(new RulerZCompiler\EvalEvaluator()));
 
         $repositoriesRepo = new Repository\InMemoryRepositories($rulerz, [
-            new Entity\Github\Repository($admin, 'k-phoen/test', 'some_awesome_secret'),
+            new Entity\Repository($admin, 'k-phoen/test', 'some_awesome_secret'),
         ]);
 
         $this->payloadValidator = new PayloadValidator($repositoriesRepo);

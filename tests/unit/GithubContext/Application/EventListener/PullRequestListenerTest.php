@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Regis\Application\EventListener;
+namespace Tests\Regis\GithubContext\Application\EventListener;
 
 use PHPUnit\Framework\TestCase;
 use League\Tactician\CommandBus;
-use Regis\Application\Command;
-use Regis\Application\Event;
-use Regis\Application\EventListener\PullRequestListener;
-use Regis\Application\Inspection\ViolationsCache;
-use Regis\Domain\Model\Github\PullRequest;
+use Regis\GithubContext\Application\Command;
+use Regis\GithubContext\Application\Event;
+use Regis\GithubContext\Application\EventListener\PullRequestListener;
+use Regis\GithubContext\Application\Inspection\ViolationsCache;
+use Regis\GithubContext\Domain\Model\PullRequest;
 
 class PullRequestListenerTest extends TestCase
 {
@@ -42,7 +42,7 @@ class PullRequestListenerTest extends TestCase
         $this->bus->expects($this->once())
             ->method('handle')
             ->with($this->callback(function ($command) {
-                return $command instanceof Command\Github\Inspection\SchedulePullRequest;
+                return $command instanceof Command\Inspection\SchedulePullRequest;
             }));
 
         $this->listener->onPullRequestUpdated($event);

@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Regis\Application\Reporter;
+namespace Tests\Regis\GithubContext\Application\Reporter;
 
 use PHPUnit\Framework\TestCase;
-use Regis\Application\Inspection\ViolationsCache;
-use Regis\Application\Reporter;
-use Regis\Domain\Entity\Inspection\Violation;
-use Regis\Domain\Entity\Repository;
-use Regis\Domain\Model\Github\PullRequest;
+use Regis\GithubContext\Application\Inspection\ViolationsCache;
+use Regis\GithubContext\Application\Reporter;
+use Regis\GithubContext\Domain\Entity\Violation;
+use Regis\GithubContext\Domain\Entity\Repository;
+use Regis\GithubContext\Domain\Model\PullRequest;
 
 class DuplicationGuardTest extends TestCase
 {
@@ -36,7 +36,7 @@ class DuplicationGuardTest extends TestCase
 
         $this->violationsCache->expects($this->once())
             ->method('has')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $this->reporter->expects($this->never())->method('report');
 
@@ -51,7 +51,7 @@ class DuplicationGuardTest extends TestCase
 
         $this->violationsCache->expects($this->once())
             ->method('has')
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
         $this->reporter->expects($this->once())
             ->method('report')

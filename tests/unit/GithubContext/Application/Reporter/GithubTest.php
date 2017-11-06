@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Regis\Application\Reporter;
+namespace Tests\Regis\GithubContext\Application\Reporter;
 
 use PHPUnit\Framework\TestCase;
-use Regis\Application\Reporter\Github as GithubReporter;
-use Regis\Application\Github\Client as GithubClient;
-use Regis\Application\Github\ClientFactory as GithubClientFactory;
-use Regis\Domain\Entity\Github\Repository;
-use Regis\Domain\Entity\Inspection\Violation;
-use Regis\Domain\Model\Github\PullRequest;
+use Regis\GithubContext\Application\Reporter\Github as GithubReporter;
+use Regis\GithubContext\Application\Github\Client as GithubClient;
+use Regis\GithubContext\Application\Github\ClientFactory as GithubClientFactory;
+use Regis\GithubContext\Domain\Entity\Repository;
+use Regis\GithubContext\Domain\Entity\Violation;
+use Regis\GithubContext\Domain\Model\PullRequest;
 
 class GithubTest extends TestCase
 {
@@ -37,7 +37,7 @@ class GithubTest extends TestCase
         $this->clientFactory->expects($this->once())
             ->method('createForRepository')
             ->with($repository)
-            ->will($this->returnValue($client));
+            ->willReturn($client);
 
         $this->reporter->report($repository, $violation, $pullRequest);
     }

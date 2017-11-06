@@ -1,12 +1,13 @@
 <?php
 
-namespace Tests\Regis\Application\Github;
+namespace Tests\Regis\GithubContext\Application\Github;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
-use Regis\Application\Event;
-use Regis\Application\Github\EventTransformer;
+use Regis\GithubContext\Application\Event;
+use Regis\GithubContext\Application\Events;
+use Regis\GithubContext\Application\Github\EventTransformer;
 
 class EventTransformerTest extends TestCase
 {
@@ -19,7 +20,7 @@ class EventTransformerTest extends TestCase
     }
 
     /**
-     * @expectedException \Regis\Application\Github\Exception\EventNotHandled
+     * @expectedException \Regis\GithubContext\Application\Github\Exception\EventNotHandled
      * @expectedExceptionMessage Event of type "unknown_event_type" not handled.
      */
     public function testUnknownEventsAreRejected()
@@ -32,7 +33,7 @@ class EventTransformerTest extends TestCase
         $event = $this->transformer->transform($this->pullRequestOpenedPayload());
 
         $this->assertInstanceOf(Event\PullRequestOpened::class, $event);
-        $this->assertEquals(Event::PULL_REQUEST_OPENED, $event->getEventName());
+        $this->assertEquals(Events::PULL_REQUEST_OPENED, $event->getEventName());
 
         $pr = $event->getPullRequest();
 
@@ -40,11 +41,10 @@ class EventTransformerTest extends TestCase
         $this->assertEquals('57dee1bee0cf795d2a1dcf8616320618e72807a8', $pr->getHead());
         $this->assertEquals('1d6206cb1f76682a9f272e0547721a2aadc58554', $pr->getBase());
 
-        $repo = $pr->getRepository();
+        $repo = $pr->getRepositoryIdentifier();
 
         $this->assertEquals('test', $repo->getName());
         $this->assertEquals('K-Phoen', $repo->getOwner());
-        $this->assertEquals('https://github.com/K-Phoen/test.git', $repo->getCloneUrl());
     }
 
     public function testPullRequestSyncedEventsAreTransformed()
@@ -52,7 +52,7 @@ class EventTransformerTest extends TestCase
         $event = $this->transformer->transform($this->pullRequestSyncedPayload());
 
         $this->assertInstanceOf(Event\PullRequestSynced::class, $event);
-        $this->assertEquals(Event::PULL_REQUEST_SYNCED, $event->getEventName());
+        $this->assertEquals(Events::PULL_REQUEST_SYNCED, $event->getEventName());
 
         $this->assertEquals('1d6206cb1f76682a9f272e0547721a2aadc58554', $event->getBefore());
         $this->assertEquals('57dee1bee0cf795d2a1dcf8616320618e72807a8', $event->getAfter());
@@ -63,17 +63,16 @@ class EventTransformerTest extends TestCase
         $this->assertEquals('57dee1bee0cf795d2a1dcf8616320618e72807a8', $pr->getHead());
         $this->assertEquals('1d6206cb1f76682a9f272e0547721a2aadc58554', $pr->getBase());
 
-        $repo = $pr->getRepository();
+        $repo = $pr->getRepositoryIdentifier();
 
         $this->assertEquals('test', $repo->getName());
         $this->assertEquals('K-Phoen', $repo->getOwner());
-        $this->assertEquals('https://github.com/K-Phoen/test.git', $repo->getCloneUrl());
     }
 
     public function testPullRequestClosedEventsAreTransformed()
     {
         $event = $this->transformer->transform($this->pullRequestClosedPayload());
-        $this->assertEquals(Event::PULL_REQUEST_CLOSED, $event->getEventName());
+        $this->assertEquals(Events::PULL_REQUEST_CLOSED, $event->getEventName());
 
         $this->assertInstanceOf(Event\PullRequestClosed::class, $event);
 
@@ -83,22 +82,10 @@ class EventTransformerTest extends TestCase
         $this->assertEquals('57dee1bee0cf795d2a1dcf8616320618e72807a8', $pr->getHead());
         $this->assertEquals('1d6206cb1f76682a9f272e0547721a2aadc58554', $pr->getBase());
 
-        $repo = $pr->getRepository();
+        $repo = $pr->getRepositoryIdentifier();
 
         $this->assertEquals('test', $repo->getName());
         $this->assertEquals('K-Phoen', $repo->getOwner());
-        $this->assertEquals('https://github.com/K-Phoen/test.git', $repo->getCloneUrl());
-    }
-
-    public function testItChosesSshUrlForPrivateRepositories()
-    {
-        $event = $this->transformer->transform($this->pullRequestClosedOnPrivateRepoPayload());
-
-        $this->assertInstanceOf(Event\PullRequestClosed::class, $event);
-
-        $repo = $event->getPullRequest()->getRepository();
-
-        $this->assertEquals('git@github.com:K-Phoen/test.git', $repo->getCloneUrl());
     }
 
     private function pullRequestOpenedPayload(): Request
@@ -215,46 +202,6 @@ PAYLOAD
       "login": "K-Phoen"
     },
     "private": false,
-    "clone_url": "https://github.com/K-Phoen/test.git",
-    "ssh_url": "git@github.com:K-Phoen/test.git"
-  }
-}
-PAYLOAD
-        );
-    }
-
-    private function pullRequestClosedOnPrivateRepoPayload(): Request
-    {
-        return $this->requestWithContent('pull_request', <<<'PAYLOAD'
-{
-  "action": "closed",
-  "number": 2,
-  "pull_request": {
-    "url": "https://api.github.com/repos/K-Phoen/test/pulls/2",
-    "id": 72605898,
-    "number": 2,
-    "state": "open",
-    "locked": false,
-    "title": "Moar style violations",
-    "head": {
-      "label": "K-Phoen:moar-style-violations",
-      "ref": "moar-style-violations",
-      "sha": "57dee1bee0cf795d2a1dcf8616320618e72807a8"
-    },
-    "base": {
-      "label": "K-Phoen:master",
-      "ref": "master",
-      "sha": "1d6206cb1f76682a9f272e0547721a2aadc58554"
-    }
-  },
-  "repository": {
-    "id": 60372801,
-    "name": "test",
-    "full_name": "K-Phoen/test",
-    "owner": {
-      "login": "K-Phoen"
-    },
-    "private": true,
     "clone_url": "https://github.com/K-Phoen/test.git",
     "ssh_url": "git@github.com:K-Phoen/test.git"
   }

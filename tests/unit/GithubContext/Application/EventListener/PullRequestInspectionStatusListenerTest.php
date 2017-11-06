@@ -1,19 +1,21 @@
 <?php
 
-namespace Tests\Regis\Application\EventListener;
+namespace Tests\Regis\GithubContext\Application\EventListener;
 
 use PHPUnit\Framework\TestCase;
-use Regis\Application\Github\IntegrationStatus;
+use Regis\GithubContext\Application\Github\IntegrationStatus;
+use Regis\Kernel\Event\DomainEventWrapper;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface as UrlGenerator;
-use Regis\Application\Event;
-use Regis\Application\EventListener\PullRequestInspectionStatusListener;
-use Regis\Application\Github\Client;
-use Regis\Application\Github\ClientFactory;
-use Regis\Domain\Entity;
-use Regis\Domain\Entity\Github\PullRequestInspection;
-use Regis\Domain\Entity\Inspection\Report;
-use Regis\Domain\Model\Github\PullRequest;
-use Regis\Domain\Repository;
+use Regis\GithubContext\Application\Event;
+use Regis\GithubContext\Application\EventListener\PullRequestInspectionStatusListener;
+use Regis\GithubContext\Application\Github\Client;
+use Regis\GithubContext\Application\Github\ClientFactory;
+use Regis\GithubContext\Application\Events;
+use Regis\GithubContext\Domain\Entity;
+use Regis\GithubContext\Domain\Model\PullRequest;
+use Regis\GithubContext\Domain\Repository;
+use Regis\Kernel\Events as KernelEvents;
+use Regis\Kernel\Event as KernelEvent;
 
 class PullRequestInspectionStatusListenerTest extends TestCase
 {
@@ -25,7 +27,9 @@ class PullRequestInspectionStatusListenerTest extends TestCase
     private $urlGenerator;
     /** @var Repository\Repositories */
     private $repoRepository;
-    /** @var Entity\Github\Repository */
+    /** @var Repository\PullRequestInspections */
+    private $prInspectionsRepo;
+    /** @var Entity\Repository */
     private $repository;
     /** @var PullRequest */
     private $pr;
@@ -34,54 +38,55 @@ class PullRequestInspectionStatusListenerTest extends TestCase
 
     public function setUp()
     {
-        $this->ghClientFactory = $this->getMockBuilder(ClientFactory::class)->getMock();
-        $this->ghClient = $this->getMockBuilder(Client::class)->getMock();
-        $this->repoRepository = $this->getMockBuilder(Repository\Repositories::class)->getMock();
-        $this->pr = $this->getMockBuilder(PullRequest::class)->disableOriginalConstructor()->getMock();
-        $this->repository = $this->getMockBuilder(Entity\Github\Repository::class)->disableOriginalConstructor()->getMock();
-        $this->urlGenerator = $this->getMockBuilder(UrlGenerator::class)->getMock();
+        $this->ghClientFactory = $this->createMock(ClientFactory::class);
+        $this->ghClient = $this->createMock(Client::class);
+        $this->repoRepository = $this->createMock(Repository\Repositories::class);
+        $this->prInspectionsRepo = $this->createMock(Repository\PullRequestInspections::class);
+        $this->pr = $this->createMock(PullRequest::class);
+        $this->repository = $this->createMock(Entity\Repository::class);
+        $this->urlGenerator = $this->createMock(UrlGenerator::class);
 
-        $this->repository->expects($this->any())
+        $this->repository
             ->method('isInspectionEnabled')
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
-        $this->urlGenerator->expects($this->any())
+        $this->urlGenerator
             ->method('generate')
-            ->will($this->returnValue('something not null'));
+            ->willReturn('something not null');
 
-        $this->pr->expects($this->any())
+        $this->pr
             ->method('getRepositoryIdentifier')
-            ->will($this->returnValue('repository/identifier'));
+            ->willReturn('repository/identifier');
 
-        $this->repoRepository->expects($this->any())
+        $this->repoRepository
             ->method('find')
             ->with('repository/identifier')
-            ->will($this->returnValue($this->repository));
+            ->willReturn($this->repository);
 
-        $this->ghClientFactory->expects($this->any())
+        $this->ghClientFactory
             ->method('createForRepository')
             ->with($this->repository)
-            ->will($this->returnValue($this->ghClient));
+            ->willReturn($this->ghClient);
 
-        $this->listener = new PullRequestInspectionStatusListener($this->ghClientFactory, $this->repoRepository, $this->urlGenerator);
+        $this->listener = new PullRequestInspectionStatusListener($this->ghClientFactory, $this->repoRepository, $this->prInspectionsRepo, $this->urlGenerator);
     }
 
     public function testItListensToTheRightEvents()
     {
         $listenedEvents = PullRequestInspectionStatusListener::getSubscribedEvents();
 
-        $this->assertArrayHasKey(Event::PULL_REQUEST_OPENED, $listenedEvents);
-        $this->assertArrayHasKey(Event::PULL_REQUEST_SYNCED, $listenedEvents);
+        $this->assertArrayHasKey(Events::PULL_REQUEST_OPENED, $listenedEvents);
+        $this->assertArrayHasKey(Events::PULL_REQUEST_SYNCED, $listenedEvents);
 
-        $this->assertArrayHasKey(Event::INSPECTION_STARTED, $listenedEvents);
-        $this->assertArrayHasKey(Event::INSPECTION_FAILED, $listenedEvents);
-        $this->assertArrayHasKey(Event::INSPECTION_FINISHED, $listenedEvents);
+        $this->assertArrayHasKey(KernelEvents::INSPECTION_STARTED, $listenedEvents);
+        $this->assertArrayHasKey(KernelEvents::INSPECTION_FAILED, $listenedEvents);
+        $this->assertArrayHasKey(KernelEvents::INSPECTION_FINISHED, $listenedEvents);
     }
 
     public function testItSetsTheIntegrationStatusAsScheduledWhenAPrIsOpened()
     {
         $domainEvent = new Event\PullRequestOpened($this->pr);
-        $event = new Event\DomainEventWrapper($domainEvent);
+        $event = new DomainEventWrapper($domainEvent);
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
@@ -97,7 +102,7 @@ class PullRequestInspectionStatusListenerTest extends TestCase
     public function testItSetsTheIntegrationStatusAsScheduledWhenAPrIsSynced()
     {
         $domainEvent = new Event\PullRequestSynced($this->pr, 'before sha', 'after sha');
-        $event = new Event\DomainEventWrapper($domainEvent);
+        $event = new DomainEventWrapper($domainEvent);
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
@@ -113,8 +118,8 @@ class PullRequestInspectionStatusListenerTest extends TestCase
     public function testItSetsTheIntegrationStatusAsStartedWhenAnInspectionStarts()
     {
         $inspection = $this->getMockBuilder(PullRequestInspection::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new Event\InspectionStarted($inspection, $this->pr);
-        $event = new Event\DomainEventWrapper($domainEvent);
+        $domainEvent = new KernelEvent\InspectionStarted($inspection, $this->pr);
+        $event = new DomainEventWrapper($domainEvent);
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
@@ -130,12 +135,12 @@ class PullRequestInspectionStatusListenerTest extends TestCase
     public function testItDoesNothingIfTheRepositoryDisabledTheInspections()
     {
         $this->repoRepository = $this->getMockBuilder(Repository\Repositories::class)->getMock();
-        $this->repository = $this->getMockBuilder(Entity\Github\Repository::class)->disableOriginalConstructor()->getMock();
-        $this->listener = new PullRequestInspectionStatusListener($this->ghClientFactory, $this->repoRepository, $this->urlGenerator);
+        $this->repository = $this->getMockBuilder(Entity\Repository::class)->disableOriginalConstructor()->getMock();
+        $this->listener = new PullRequestInspectionStatusListener($this->ghClientFactory, $this->repoRepository, $this->prInspectionsRepo, $this->urlGenerator);
 
-        $inspection = $this->getMockBuilder(PullRequestInspection::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new Event\InspectionStarted($inspection, $this->pr);
-        $event = new Event\DomainEventWrapper($domainEvent);
+        $inspection = $this->getMockBuilder(Entity\PullRequestInspection::class)->disableOriginalConstructor()->getMock();
+        $domainEvent = new KernelEvent\InspectionStarted($inspection, $this->pr);
+        $event = new DomainEventWrapper($domainEvent);
 
         $this->repository->expects($this->any())
             ->method('isInspectionEnabled')
@@ -154,8 +159,8 @@ class PullRequestInspectionStatusListenerTest extends TestCase
     public function testItSetsTheIntegrationStatusAsErroredWhenAnInspectionFails()
     {
         $inspection = $this->getMockBuilder(PullRequestInspection::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new Event\InspectionFailed($inspection, $this->pr, new \Exception());
-        $event = new Event\DomainEventWrapper($domainEvent);
+        $domainEvent = new KernelEvent\InspectionFailed($inspection, $this->pr, new \Exception());
+        $event = new DomainEventWrapper($domainEvent);
 
         $this->ghClient->expects($this->once())
             ->method('setIntegrationStatus')
@@ -172,8 +177,8 @@ class PullRequestInspectionStatusListenerTest extends TestCase
     {
         $inspection = $this->getMockBuilder(PullRequestInspection::class)->disableOriginalConstructor()->getMock();
         $report = $this->getMockBuilder(Report::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new Event\InspectionFinished($inspection, $this->pr, $report);
-        $event = new Event\DomainEventWrapper($domainEvent);
+        $domainEvent = new KernelEvent\InspectionFinished($inspection, $this->pr, $report);
+        $event = new DomainEventWrapper($domainEvent);
 
         $report->expects($this->once())
             ->method('hasErrors')
@@ -194,8 +199,8 @@ class PullRequestInspectionStatusListenerTest extends TestCase
     {
         $inspection = $this->getMockBuilder(PullRequestInspection::class)->disableOriginalConstructor()->getMock();
         $report = $this->getMockBuilder(Report::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new Event\InspectionFinished($inspection, $this->pr, $report);
-        $event = new Event\DomainEventWrapper($domainEvent);
+        $domainEvent = new KernelEvent\InspectionFinished($inspection, $this->pr, $report);
+        $event = new DomainEventWrapper($domainEvent);
 
         $report->expects($this->once())
             ->method('hasWarnings')
@@ -214,10 +219,10 @@ class PullRequestInspectionStatusListenerTest extends TestCase
 
     public function testItSetsTheIntegrationStatusAsSuccessWhenAnInspectionFinishesSuccessfully()
     {
-        $inspection = $this->getMockBuilder(PullRequestInspection::class)->disableOriginalConstructor()->getMock();
-        $report = $this->getMockBuilder(Report::class)->disableOriginalConstructor()->getMock();
-        $domainEvent = new Event\InspectionFinished($inspection, $this->pr, $report);
-        $event = new Event\DomainEventWrapper($domainEvent);
+        $inspection = $this->getMockBuilder(Entity\PullRequestInspection::class)->disableOriginalConstructor()->getMock();
+        $report = $this->getMockBuilder(Entity\Report::class)->disableOriginalConstructor()->getMock();
+        $domainEvent = new KernelEvent\InspectionFinished($inspection, $this->pr, $report);
+        $event = new DomainEventWrapper($domainEvent);
 
         $report->expects($this->once())
             ->method('hasErrors')
