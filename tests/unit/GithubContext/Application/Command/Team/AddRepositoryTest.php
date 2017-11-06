@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Regis\Application\Command\Team;
+namespace Tests\Regis\GithubContext\Application\Command\Team;
 
 use PHPUnit\Framework\TestCase;
 use RulerZ\Spec\Specification;
 
-use Regis\Application\Command;
-use Regis\Domain\Entity;
+use Regis\GithubContext\Application\Command;
+use Regis\GithubContext\Domain\Entity;
 
 class AddRepositoryTest extends TestCase
 {
