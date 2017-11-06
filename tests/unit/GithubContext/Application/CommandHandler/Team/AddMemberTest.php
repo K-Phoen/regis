@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Regis\Application\CommandHandler\Team;
+namespace Tests\Regis\GithubContext\Application\CommandHandler\Team;
 
 use PHPUnit\Framework\TestCase;
-use Regis\Application\Command;
-use Regis\Application\CommandHandler;
-use Regis\Domain\Entity;
-use Regis\Domain\Repository;
+use Regis\GithubContext\Application\Command;
+use Regis\GithubContext\Application\CommandHandler;
+use Regis\GithubContext\Domain\Entity;
+use Regis\GithubContext\Domain\Repository;
 
 class AddMemberTest extends TestCase
 {
@@ -17,16 +17,16 @@ class AddMemberTest extends TestCase
 
     public function setUp()
     {
-        $this->teamsRepo = $this->getMockBuilder(Repository\Teams::class)->getMock();
-        $this->usersRepo = $this->getMockBuilder(Repository\Users::class)->getMock();
+        $this->teamsRepo = $this->createMock(Repository\Teams::class);
+        $this->usersRepo = $this->createMock(Repository\Users::class);
 
         $this->handler = new CommandHandler\Team\AddMember($this->teamsRepo, $this->usersRepo);
     }
 
     public function testItAddsTheUserToTheTeam()
     {
-        $owner = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
-        $newMember = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+        $owner = $this->createMock(Entity\User::class);
+        $newMember = $this->createMock(Entity\User::class);
         $newMemberId = 'new-member-id';
         $team = new Entity\Team($owner, 'super team');
 
@@ -49,8 +49,8 @@ class AddMemberTest extends TestCase
 
     public function testItDoesNothingIfTheUserIsAlreadyInTheTeam()
     {
-        $owner = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
-        $newMember = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+        $owner = $this->createMock(Entity\User::class);
+        $newMember = $this->createMock(Entity\User::class);
         $newMemberId = 'new-member-id';
         $team = new Entity\Team($owner, 'super team');
 

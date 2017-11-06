@@ -1,24 +1,24 @@
 <?php
 
-namespace Tests\Regis\Infrastructure\Bundle\AuthBundle\Security;
+namespace Tests\Regis\Kernel\Bundle\AuthBundle\Security;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException as SymfonyAccessDenied;
 
-use Regis\Application\Security\Exception\AccessDenied;
-use Regis\Infrastructure\Bundle\AuthBundle\Security\AccessDeniedListener;
+use Regis\Kernel\Security\Exception\AccessDenied;
+use Regis\Kernel\Bundle\AuthBundle\Security\AccessDeniedListener;
 
 class AccessDeniedListenerTest extends TestCase
 {
     public function testItReplacesAccessDeniedExceptionsBySymfonyOnes()
     {
         $exception = AccessDenied::forCommand(new \Datetime());
-        $event = $this->getMockBuilder(GetResponseForExceptionEvent::class)->disableOriginalConstructor()->getMock();
+        $event = $this->createMock(GetResponseForExceptionEvent::class);
 
         $event->expects($this->once())
             ->method('getException')
-            ->will($this->returnValue($exception));
+            ->willReturn($exception);
 
         $event->expects($this->once())
             ->method('setException')
@@ -33,11 +33,11 @@ class AccessDeniedListenerTest extends TestCase
     public function testItDoesNothingForOtherExceptions()
     {
         $exception = new \RuntimeException();
-        $event = $this->getMockBuilder(GetResponseForExceptionEvent::class)->disableOriginalConstructor()->getMock();
+        $event = $this->createMock(GetResponseForExceptionEvent::class);
 
         $event->expects($this->once())
             ->method('getException')
-            ->will($this->returnValue($exception));
+            ->willReturn($exception);
 
         $event->expects($this->never())->method('setException');
 

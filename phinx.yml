@@ -15,7 +15,7 @@ environments:
         port: 5432
         charset: utf8
 
-    development:
+    dev:
         adapter: pgsql
         host: db
         name: regis
@@ -24,13 +24,8 @@ environments:
         port: 5432
         charset: utf8
 
-    testing:
-        adapter: pgsql
-        host: db
-        name: regis
-        user: regis
-        pass: pg_password
-        port: 5432
-        charset: utf8
+    test:
+        adapter: sqlite
+        name: ./var/test_db.sqlite
 
 version_order: creation

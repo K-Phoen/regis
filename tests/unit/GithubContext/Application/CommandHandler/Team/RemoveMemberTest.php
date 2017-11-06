@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\Regis\Application\CommandHandler\Team;
+namespace Tests\Regis\GithubContext\Application\CommandHandler\Team;
 
 use PHPUnit\Framework\TestCase;
-use Regis\Application\Command;
-use Regis\Application\CommandHandler;
-use Regis\Domain\Entity;
-use Regis\Domain\Repository;
+use Regis\GithubContext\Application\Command;
+use Regis\GithubContext\Application\CommandHandler;
+use Regis\GithubContext\Domain\Entity;
+use Regis\GithubContext\Domain\Repository;
 
 class RemoveMemberTest extends TestCase
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\Infrastructure\Bundle\AuthBundle\Security;
+namespace Tests\Regis\Kernel\Bundle\AuthBundle\Security;
 
 use PHPUnit\Framework\TestCase;
 use RulerZ\RulerZ;
@@ -8,8 +8,8 @@ use RulerZ\Spec\Specification;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
-use Regis\Domain\Entity;
-use Regis\Infrastructure\Bundle\AuthBundle\Security\CommandVoter;
+use Regis\GithubContext\Domain\Entity;
+use Regis\Kernel\Bundle\AuthBundle\Security\CommandVoter;
 
 class CommandVoterTest extends TestCase
 {
@@ -21,9 +21,9 @@ class CommandVoterTest extends TestCase
 
     public function setUp()
     {
-        $this->rulerz = $this->getMockBuilder(RulerZ::class)->disableOriginalConstructor()->getMock();
+        $this->rulerz = $this->createMock(RulerZ::class);
         $this->token = $this->createMock(TokenInterface::class);
-        $this->user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+        $this->user = $this->createMock(Entity\User::class);
 
         $this->token->method('getUser')->willReturn($this->user);
 

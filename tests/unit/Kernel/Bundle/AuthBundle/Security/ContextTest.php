@@ -1,31 +1,31 @@
 <?php
 
-namespace Tests\Regis\Infrastructure\Bundle\AuthBundle\Security;
+namespace Tests\Regis\Kernel\Bundle\AuthBundle\Security;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
-use Regis\Domain\Entity\User;
-use Regis\Infrastructure\Bundle\AuthBundle\Security\Context;
+use Regis\GithubContext\Domain\Entity\User;
+use Regis\Kernel\Bundle\AuthBundle\Security\Context;
 
 class ContextTest extends TestCase
 {
     public function testItFetchesTheUserFromTheTokenStorage()
     {
-        $tokenStorage = $this->getMockBuilder(TokenStorageInterface::class)->getMock();
-        $token = $this->getMockBuilder(TokenInterface::class)->getMock();
-        $user = $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock();
+        $tokenStorage = $this->createMock(TokenStorageInterface::class);
+        $token = $this->createMock(TokenInterface::class);
+        $user = $this->createMock(User::class);
 
         $context = new Context($tokenStorage);
 
         $tokenStorage->expects($this->once())
             ->method('getToken')
-            ->will($this->returnValue($token));
+            ->willReturn($token);
 
         $token->expects($this->once())
             ->method('getUser')
-            ->will($this->returnValue($user));
+            ->willReturn($user);
 
         $this->assertSame($user, $context->getUser());
     }

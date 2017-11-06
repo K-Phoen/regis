@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Regis\Application\CommandHandler\User;
+namespace Tests\Regis\GithubContext\Application\CommandHandler\User;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-use Regis\Application\Command;
-use Regis\Application\CommandHandler;
-use Regis\Domain\Entity;
-use Regis\Domain\Repository;
+use Regis\GithubContext\Application\Command;
+use Regis\GithubContext\Application\CommandHandler;
+use Regis\GithubContext\Domain\Entity;
+use Regis\GithubContext\Domain\Repository;
 
 class CreateAdminTest extends TestCase
 {
@@ -19,8 +19,8 @@ class CreateAdminTest extends TestCase
 
     public function setUp()
     {
-        $this->usersRepo = $this->getMockBuilder(Repository\Users::class)->getMock();
-        $this->passwordEncoder = $this->getMockBuilder(UserPasswordEncoderInterface::class)->getMock();
+        $this->usersRepo = $this->createMock(Repository\Users::class);
+        $this->passwordEncoder = $this->createMock(UserPasswordEncoderInterface::class);
 
         $this->handler = new CommandHandler\User\CreateAdmin($this->usersRepo, $this->passwordEncoder);
     }
@@ -32,7 +32,7 @@ class CreateAdminTest extends TestCase
         $this->passwordEncoder->expects($this->once())
             ->method('encodePassword')
             ->with($this->anything(), 'password')
-            ->will($this->returnValue('encoded password'));
+            ->willReturn('encoded password');
 
         $this->usersRepo->expects($this->once())
             ->method('save')

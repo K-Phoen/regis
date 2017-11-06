@@ -2,13 +2,13 @@ tests: db
 	php ./vendor/bin/phpunit
 
 unittests:
-	php ./vendor/bin/phpunit ./tests/Regis/
+	php ./vendor/bin/phpunit ./tests/unit/
 
 functionaltests: db
 	php ./vendor/bin/phpunit ./tests/Functional/
 
 db:
-	bin/console doctrine:schema:update --force -n --env=test
+	vendor/bin/phinx migrate --environment=test
 	bin/console doctrine:fixtures:load --env=test -n
 
 phpmd:
