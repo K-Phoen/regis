@@ -22,5 +22,14 @@ Regis\GithubContext\Domain\Entity\User:
 
     oneToMany:
         repositories:
-          targetEntity: Regis\GithubContext\Domain\Entity\Repository
-          mappedBy: owner
+            targetEntity: Repository
+            mappedBy: owner
+
+        ownedTeams:
+            targetEntity: Team
+            mappedBy: owner
+
+    manyToMany:
+        teams:
+            targetEntity: Team
+            mappedBy: members

@@ -1,0 +1,3 @@
+services:
+    regis.random.generator:
+        class: Regis\GithubContext\Application\Random\Generator

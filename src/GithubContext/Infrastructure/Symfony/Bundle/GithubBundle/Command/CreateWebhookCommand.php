@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Command;
 
+use Regis\GithubContext\Domain\Model\RepositoryIdentifier;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -66,11 +67,10 @@ class CreateWebhookCommand extends ContainerAwareCommand
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $host = rtrim($input->getOption('host'), '/');
-        $absoluteUrl = $host.$this->getContainer()->get('router')->generate('webhook_github');
+        $absoluteUrl = $host.$this->getContainer()->get('router')->generate('github_webhook');
 
         $command = new Command\Repository\CreateWebhook(
-            $input->getOption('owner'),
-            $input->getOption('repository'),
+            new RepositoryIdentifier($input->getOption('owner'), $input->getOption('repository')),
             $absoluteUrl
         );
 

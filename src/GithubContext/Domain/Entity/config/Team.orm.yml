@@ -1,0 +1,36 @@
+Regis\GithubContext\Domain\Entity\Team:
+    type: entity
+    table: teams
+
+    id:
+        id:
+            type: string
+            generator: { strategy: NONE }
+
+    fields:
+        name:
+            type: string
+
+    manyToOne:
+        owner:
+          targetEntity: User
+          inversedBy: ownedTeams
+          joinColumn:
+            name: owner_id
+            referencedColumnName: id
+
+    manyToMany:
+        repositories:
+          targetEntity: Repository
+          inversedBy: teams
+          joinTable:
+            name: repositories_teams
+            inverseJoinColumns:
+              repository_id:
+                referencedColumnName: identifier
+
+        members:
+          targetEntity: User
+          inversedBy: teams
+          joinTable:
+            name: users_teams

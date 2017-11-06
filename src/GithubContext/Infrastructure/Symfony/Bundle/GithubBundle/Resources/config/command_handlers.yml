@@ -44,3 +44,57 @@ services:
         arguments: [ '@regis.github.repository.users' ]
         tags:
             - { name: tactician.handler, command: Regis\GithubContext\Application\Command\User\CreateOrUpdateUser }
+
+    regis.command_handler.repository.disable_inspections:
+        class: Regis\GithubContext\Application\CommandHandler\Repository\DisableInspections
+        arguments: [ '@regis.github.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Repository\DisableInspections }
+
+    regis.command_handler.repository.enable_inspections:
+        class: Regis\GithubContext\Application\CommandHandler\Repository\EnableInspections
+        arguments: [ '@regis.github.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Repository\EnableInspections }
+
+    regis.command_handler.users.create_admin:
+        class: Regis\GithubContext\Application\CommandHandler\User\CreateAdmin
+        arguments: [ '@regis.github.repository.users', '@security.password_encoder' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\User\CreateAdmin }
+
+    regis.command_handler.teams.create:
+        class: Regis\GithubContext\Application\CommandHandler\Team\Create
+        arguments: [ '@regis.github.repository.teams' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Team\Create }
+
+    regis.command_handler.teams.add_member:
+        class: Regis\GithubContext\Application\CommandHandler\Team\AddMember
+        arguments: [ '@regis.github.repository.teams', '@regis.github.repository.users' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Team\AddMember }
+
+    regis.command_handler.teams.remove_member:
+        class: Regis\GithubContext\Application\CommandHandler\Team\RemoveMember
+        arguments: [ '@regis.github.repository.teams', '@regis.github.repository.users' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Team\RemoveMember }
+
+    regis.command_handler.teams.leave:
+        class: Regis\GithubContext\Application\CommandHandler\Team\Leave
+        arguments: [ '@regis.github.repository.teams' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Team\Leave }
+
+    regis.command_handler.teams.add_repository:
+        class: Regis\GithubContext\Application\CommandHandler\Team\AddRepository
+        arguments: [ '@regis.github.repository.teams', '@regis.github.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Team\AddRepository }
+
+    regis.command_handler.teams.remove_repository:
+        class: Regis\GithubContext\Application\CommandHandler\Team\RemoveRepository
+        arguments: [ '@regis.github.repository.teams', '@regis.github.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Team\RemoveRepository }

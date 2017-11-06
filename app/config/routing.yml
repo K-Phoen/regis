@@ -4,15 +4,12 @@ auth:
 app:
     resource: "@RegisAppBundle/Resources/config/routing.yml"
 
-github:
-    resource: "@RegisGithubBundle/Resources/config/routing.yml"
-
 bitbucket:
     resource: "@RegisBitbucketBundle/Resources/config/routing.yml"
 
-backend:
-    resource: "@RegisBackendBundle/Resources/config/routing.yml"
-    prefix: backend
+github_backend:
+    resource: "@RegisGithubBundle/Resources/config/routing_backend.yml"
+    prefix: /backend
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

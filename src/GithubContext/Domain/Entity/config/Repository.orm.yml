@@ -18,6 +18,11 @@ Regis\GithubContext\Domain\Entity\Repository:
             type: boolean
             options: { default: 1 }
 
+    manyToMany:
+        teams:
+            targetEntity: Team
+            mappedBy: repositories
+
     manyToOne:
         owner:
           targetEntity: User

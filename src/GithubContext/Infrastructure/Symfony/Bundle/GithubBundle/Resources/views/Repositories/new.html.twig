@@ -1,0 +1,31 @@
+{% extends '::layout.html.twig' %}
+
+{% block content %}
+<h1 class="page-header">New repository</h1>
+
+<form class="form-inline">
+    <div class="form-group">
+        <div class="input-group">
+            <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
+            <input type="text" class="form-control" id="repository-search" placeholder="Search…">
+        </div>
+    </div>
+</form>
+
+<ul id="repositories-list">
+    <li>Loading...</li>
+</ul>
+
+<form style="display: none" id="repository-create" action="{{ path('repositories_create') }}" method="POST">
+    <input type="hidden" name="identifier"  />
+</form>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
+
+    <script src="{{ asset('bundles/regisgithub/js/new_repository.js') }}"></script>
+{% endblock %}

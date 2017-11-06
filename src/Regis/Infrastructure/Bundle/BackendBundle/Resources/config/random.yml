@@ -1,3 +1,0 @@
-services:
-    regis.random.generator:
-        class: Regis\Infrastructure\RandomLib\Generator

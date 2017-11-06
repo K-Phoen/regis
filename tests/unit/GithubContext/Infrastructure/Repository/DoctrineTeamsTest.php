@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\Infrastructure\Repository;
+namespace Tests\Regis\GithubContext\Infrastructure\Repository;
 
 use PHPUnit\Framework\TestCase;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -10,8 +10,8 @@ use Doctrine\ORM\QueryBuilder;
 use RulerZ\RulerZ;
 use RulerZ\Spec\Specification;
 
-use Regis\Domain\Entity;
-use Regis\Infrastructure\Repository\DoctrineTeams;
+use Regis\GithubContext\Domain\Entity;
+use Regis\GithubContext\Infrastructure\Repository\DoctrineTeams;
 
 class DoctrineTeamsTest extends TestCase
 {
@@ -26,39 +26,39 @@ class DoctrineTeamsTest extends TestCase
 
     public function setUp()
     {
-        $this->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
-        $this->rulerz = $this->getMockBuilder(RulerZ::class)->disableOriginalConstructor()->getMock();
-        $this->doctrineRepository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
+        $this->em = $this->createMock(EntityManagerInterface::class);
+        $this->rulerz = $this->createMock(RulerZ::class);
+        $this->doctrineRepository = $this->createMock(EntityRepository::class);
 
         $this->em->expects($this->any())
             ->method('getRepository')
             ->with(Entity\Team::class)
-            ->will($this->returnValue($this->doctrineRepository));
+            ->willReturn($this->doctrineRepository);
 
         $this->teamsRepo = new DoctrineTeams($this->em, $this->rulerz);
     }
 
     public function testMatching()
     {
-        $qb = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
-        $spec = $this->getMockBuilder(Specification::class)->getMock();
+        $qb = $this->createMock(QueryBuilder::class);
+        $spec = $this->createMock(Specification::class);
         $results = new \ArrayIterator();
 
         $this->doctrineRepository->expects($this->once())
             ->method('createQueryBuilder')
-            ->will($this->returnValue($qb));
+            ->willReturn($qb);
 
         $this->rulerz->expects($this->once())
             ->method('filterSpec')
             ->with($qb, $spec)
-            ->will($this->returnValue($results));
+            ->willReturn($results);
 
         $this->assertSame($results, $this->teamsRepo->matching($spec));
     }
 
     public function testSaveTeam()
     {
-        $team = $this->getMockBuilder(Entity\Team::class)->disableOriginalConstructor()->getMock();
+        $team = $this->createMock(Entity\Team::class);
 
         $this->em->expects($this->once())
             ->method('persist')
@@ -70,41 +70,41 @@ class DoctrineTeamsTest extends TestCase
     }
 
     /**
-     * @expectedException \Regis\Domain\Repository\Exception\UniqueConstraintViolation
+     * @expectedException \Regis\GithubContext\Domain\Repository\Exception\UniqueConstraintViolation
      */
     public function testSaveTeamWrapsUniqueConstraintsViolations()
     {
-        $team = $this->getMockBuilder(Entity\Team::class)->disableOriginalConstructor()->getMock();
-        $exception = $this->getMockBuilder(UniqueConstraintViolationException::class)->disableOriginalConstructor()->getMock();
+        $team = $this->createMock(Entity\Team::class);
+        $exception = $this->createMock(UniqueConstraintViolationException::class);
 
         $this->em->expects($this->once())
             ->method('flush')
-            ->will($this->throwException($exception));
+            ->willThrowException($exception);
 
         $this->teamsRepo->save($team);
     }
 
     public function testFindWhenTheTeamExists()
     {
-        $team = $this->getMockBuilder(Entity\Team::class)->disableOriginalConstructor()->getMock();
+        $team = $this->createMock(Entity\Team::class);
 
         $this->doctrineRepository->expects($this->once())
             ->method('find')
             ->with('some identifier')
-            ->will($this->returnValue($team));
+            ->willReturn($team);
 
         $this->assertSame($team, $this->teamsRepo->find('some identifier'));
     }
 
     /**
-     * @expectedException \Regis\Domain\Repository\Exception\NotFound
+     * @expectedException \Regis\GithubContext\Domain\Repository\Exception\NotFound
      */
     public function testFindWhenTheTeamDoesNotExist()
     {
         $this->doctrineRepository->expects($this->once())
             ->method('find')
             ->with('some identifier')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $this->teamsRepo->find('some identifier');
     }
