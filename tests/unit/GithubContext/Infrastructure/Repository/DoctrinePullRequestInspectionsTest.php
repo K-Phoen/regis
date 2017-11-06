@@ -1,39 +1,39 @@
 <?php
 
-namespace Tests\Regis\Infrastructure\Repository;
+namespace Tests\Regis\GithubContext\Infrastructure\Repository;
 
 use PHPUnit\Framework\TestCase;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-use Regis\Infrastructure\Repository\DoctrineInspections;
-use Regis\Domain\Entity;
+use Regis\GithubContext\Infrastructure\Repository\DoctrinePullRequestInspections;
+use Regis\GithubContext\Domain\Entity;
 
-class DoctrineInspectionsTest extends TestCase
+class DoctrinePullRequestInspectionsTest extends TestCase
 {
     /** @var EntityManagerInterface */
     private $em;
     /** @var ObjectRepository */
     private $doctrineRepository;
-    /** @var DoctrineInspections */
+    /** @var DoctrinePullRequestInspections */
     private $inspectionsRepo;
 
     public function setUp()
     {
-        $this->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
-        $this->doctrineRepository = $this->getMockBuilder(ObjectRepository::class)->getMock();
+        $this->em = $this->createMock(EntityManagerInterface::class);
+        $this->doctrineRepository = $this->createMock(ObjectRepository::class);
 
         $this->em
             ->method('getRepository')
-            ->with(Entity\Inspection::class)
+            ->with(Entity\PullRequestInspection::class)
             ->willReturn($this->doctrineRepository);
 
-        $this->inspectionsRepo = new DoctrineInspections($this->em);
+        $this->inspectionsRepo = new DoctrinePullRequestInspections($this->em);
     }
 
     public function testSaveInspection()
     {
-        $inspection = $this->getMockBuilder(Entity\Inspection::class)->disableOriginalConstructor()->getMock();
+        $inspection = $this->createMock(Entity\PullRequestInspection::class);
 
         $this->em->expects($this->once())
             ->method('persist')
@@ -46,25 +46,25 @@ class DoctrineInspectionsTest extends TestCase
 
     public function testFindWhenTheInspectionExists()
     {
-        $inspection = $this->getMockBuilder(Entity\Inspection::class)->disableOriginalConstructor()->getMock();
+        $inspection = $this->createMock(Entity\PullRequestInspection::class);
 
         $this->doctrineRepository->expects($this->once())
             ->method('find')
             ->with('some identifier')
-            ->will($this->returnValue($inspection));
+            ->willReturn($inspection);
 
         $this->assertSame($inspection, $this->inspectionsRepo->find('some identifier'));
     }
 
     /**
-     * @expectedException \Regis\Domain\Repository\Exception\NotFound
+     * @expectedException \Regis\GithubContext\Domain\Repository\Exception\NotFound
      */
     public function testFindWhenTheInspectionDoesNotExist()
     {
         $this->doctrineRepository->expects($this->once())
             ->method('find')
             ->with('some identifier')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $this->inspectionsRepo->find('some identifier');
     }

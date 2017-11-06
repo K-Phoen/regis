@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Regis\Infrastructure\RandomLib;
+namespace Tests\Regis\GithubContext\Infrastructure\Random;
 
 use PHPUnit\Framework\TestCase;
-use Regis\Infrastructure\RandomLib\Generator;
+use Regis\GithubContext\Application\Random\Generator;
 
 class GeneratorTest extends TestCase
 {

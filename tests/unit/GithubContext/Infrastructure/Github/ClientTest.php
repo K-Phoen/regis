@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\Infrastructure\Github;
+namespace Tests\Regis\GithubContext\Infrastructure\Github;
 
 use PHPUnit\Framework\TestCase;
 use Github\Api;
@@ -8,12 +8,13 @@ use Github\Client as VendorClient;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
-use Regis\Application\Github\IntegrationStatus;
-use Regis\Domain\Entity\User;
-use Regis\Domain\Model\Github\PullRequest;
-use Regis\Domain\Model\Github\Repository;
-use Regis\Domain\Model\Github\ReviewComment;
-use Regis\Infrastructure\Github\Client;
+use Regis\GithubContext\Application\Github\IntegrationStatus;
+use Regis\GithubContext\Domain\Entity\User;
+use Regis\GithubContext\Domain\Model\PullRequest;
+use Regis\GithubContext\Domain\Model\Repository;
+use Regis\GithubContext\Domain\Model\RepositoryIdentifier;
+use Regis\GithubContext\Domain\Model\ReviewComment;
+use Regis\GithubContext\Infrastructure\Github\Client;
 
 class ClientTest extends TestCase
 {
@@ -40,17 +41,17 @@ class ClientTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->user = $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock();
+        $this->user = $this->createMock(User::class);
 
         $this->user->method('getGithubAccessToken')->willReturn(self::API_TOKEN);
 
-        $this->prApi = $this->getMockBuilder(Api\PullRequest::class)->disableOriginalConstructor()->getMock();
-        $this->repoApi = $this->getMockBuilder(Api\Repo::class)->disableOriginalConstructor()->getMock();
-        $this->prCommentsApi = $this->getMockBuilder(Api\PullRequest\Comments::class)->disableOriginalConstructor()->getMock();
-        $this->statusesApi = $this->getMockBuilder(Api\Repository\Statuses::class)->disableOriginalConstructor()->getMock();
-        $this->keysApi = $this->getMockBuilder(Api\Repository\DeployKeys::class)->disableOriginalConstructor()->getMock();
-        $this->hooksApi = $this->getMockBuilder(Api\Repository\Hooks::class)->disableOriginalConstructor()->getMock();
-        $this->currentUserApi = $this->getMockBuilder(Api\CurrentUser::class)->disableOriginalConstructor()->getMock();
+        $this->prApi = $this->createMock(Api\PullRequest::class);
+        $this->repoApi = $this->createMock(Api\Repo::class);
+        $this->prCommentsApi = $this->createMock(Api\PullRequest\Comments::class);
+        $this->statusesApi = $this->createMock(Api\Repository\Statuses::class);
+        $this->keysApi = $this->createMock(Api\Repository\DeployKeys::class);
+        $this->hooksApi = $this->createMock(Api\Repository\Hooks::class);
+        $this->currentUserApi = $this->createMock(Api\CurrentUser::class);
 
         $this->vendorClient->method('pullRequest')->willReturn($this->prApi);
         $this->vendorClient->method('repo')->willReturn($this->repoApi);
@@ -68,39 +69,70 @@ class ClientTest extends TestCase
     public function testSetIntegrationStatus()
     {
         $status = new IntegrationStatus('some state', 'some description');
-        $pr = $this->getMockBuilder(PullRequest::class)->disableOriginalConstructor()->getMock();
 
         $this->vendorClient->expects($this->once())->method('authenticate');
-        $this->statusesApi->expects($this->once())->method('create');
 
-        $this->client->setIntegrationStatus($pr, $status);
+        $this->statusesApi->expects($this->once())
+            ->method('create')
+            ->with('K-Phoen', 'test', 'head commit', [
+                'state' => $status->getState(),
+                'description' => $status->getDescription(),
+                'context' => IntegrationStatus::STATUS_CONTEXT,
+            ]);
+
+        $this->client->setIntegrationStatus(RepositoryIdentifier::fromFullName('K-Phoen/test'), 'head commit', $status);
     }
 
     public function testSetIntegrationStatusWithATargetUrl()
     {
         $status = new IntegrationStatus('some state', 'some description', 'http://foo/bar');
-        $pr = $this->getMockBuilder(PullRequest::class)->disableOriginalConstructor()->getMock();
 
         $this->vendorClient->expects($this->once())->method('authenticate');
-        $this->statusesApi->expects($this->once())->method('create');
+        $this->statusesApi->expects($this->once())
+            ->method('create')
+            ->with('K-Phoen', 'test', 'head commit', [
+                'state' => $status->getState(),
+                'description' => $status->getDescription(),
+                'context' => IntegrationStatus::STATUS_CONTEXT,
+                'target_url' => $status->getTargetUrl(),
+            ]);
 
-        $this->client->setIntegrationStatus($pr, $status);
+        $this->client->setIntegrationStatus(RepositoryIdentifier::fromFullName('K-Phoen/test'), 'head commit', $status);
     }
 
     public function testAddDeployKey()
     {
         $this->vendorClient->expects($this->once())->method('authenticate');
-        $this->keysApi->expects($this->once())->method('create');
 
-        $this->client->addDeployKey('owner', 'repo', 'key content', 'type', Client::READONLY_KEY);
+        $this->keysApi->expects($this->once())
+            ->method('create')
+            ->with('K-Phoen', 'test', [
+                'title' => 'key title',
+                'key' => 'key content',
+                'read_only' => true,
+            ]);
+
+        $this->client->addDeployKey(RepositoryIdentifier::fromFullName('K-Phoen/test'), 'key title', 'key content', Client::READONLY_KEY);
     }
 
     public function testCreateWebhook()
     {
         $this->vendorClient->expects($this->once())->method('authenticate');
-        $this->hooksApi->expects($this->once())->method('create');
 
-        $this->client->createWebhook('owner', 'repo', 'url', 'secret');
+        $this->hooksApi->expects($this->once())
+            ->method('create')
+            ->with('K-Phoen', 'test', [
+                'name' => 'web',
+                'config' => [
+                    'url' => 'some url',
+                    'content_type' => 'json',
+                    'secret' => 'some secret',
+                ],
+                'events' => ['*'],
+                'active' => true,
+            ]);
+
+        $this->client->createWebhook(RepositoryIdentifier::fromFullName('K-Phoen/test'), 'some url', 'some secret');
     }
 
     public function testSendComment()

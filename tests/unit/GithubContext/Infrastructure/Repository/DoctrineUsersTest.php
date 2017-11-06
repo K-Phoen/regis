@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\Infrastructure\Repository;
+namespace Tests\Regis\GithubContext\Infrastructure\Repository;
 
 use PHPUnit\Framework\TestCase;
 use Doctrine\ORM\EntityManagerInterface;
@@ -9,8 +9,8 @@ use Doctrine\ORM\QueryBuilder;
 use RulerZ\RulerZ;
 use RulerZ\Spec\Specification;
 
-use Regis\Domain\Entity;
-use Regis\Infrastructure\Repository\DoctrineUsers;
+use Regis\GithubContext\Domain\Entity;
+use Regis\GithubContext\Infrastructure\Repository\DoctrineUsers;
 
 class DoctrineUsersTest extends TestCase
 {
@@ -25,21 +25,21 @@ class DoctrineUsersTest extends TestCase
 
     public function setUp()
     {
-        $this->em = $this->getMockBuilder(EntityManagerInterface::class)->getMock();
-        $this->rulerz = $this->getMockBuilder(RulerZ::class)->disableOriginalConstructor()->getMock();
-        $this->doctrineRepository = $this->getMockBuilder(EntityRepository::class)->disableOriginalConstructor()->getMock();
+        $this->em = $this->createMock(EntityManagerInterface::class);
+        $this->rulerz = $this->createMock(RulerZ::class);
+        $this->doctrineRepository = $this->createMock(EntityRepository::class);
 
-        $this->em->expects($this->any())
+        $this->em
             ->method('getRepository')
             ->with(Entity\User::class)
-            ->will($this->returnValue($this->doctrineRepository));
+            ->willReturn($this->doctrineRepository);
 
         $this->usersRepo = new DoctrineUsers($this->em, $this->rulerz);
     }
 
     public function testSaveUser()
     {
-        $user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+        $user = $this->createMock(Entity\User::class);
 
         $this->em->expects($this->once())
             ->method('persist')
@@ -52,68 +52,68 @@ class DoctrineUsersTest extends TestCase
 
     public function testMatching()
     {
-        $qb = $this->getMockBuilder(QueryBuilder::class)->disableOriginalConstructor()->getMock();
-        $spec = $this->getMockBuilder(Specification::class)->getMock();
+        $qb = $this->createMock(QueryBuilder::class);
+        $spec = $this->createMock(Specification::class);
         $results = new \ArrayIterator();
 
         $this->doctrineRepository->expects($this->once())
             ->method('createQueryBuilder')
-            ->will($this->returnValue($qb));
+            ->willReturn($qb);
 
         $this->rulerz->expects($this->once())
             ->method('filterSpec')
             ->with($qb, $spec)
-            ->will($this->returnValue($results));
+            ->willReturn($results);
 
         $this->assertSame($results, $this->usersRepo->matching($spec));
     }
 
     public function testFindByIdWhenTheUserExists()
     {
-        $user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+        $user = $this->createMock(Entity\User::class);
 
         $this->doctrineRepository->expects($this->once())
             ->method('find')
             ->with('some identifier')
-            ->will($this->returnValue($user));
+            ->willReturn($user);
 
         $this->assertSame($user, $this->usersRepo->findById('some identifier'));
     }
 
     /**
-     * @expectedException \Regis\Domain\Repository\Exception\NotFound
+     * @expectedException \Regis\GithubContext\Domain\Repository\Exception\NotFound
      */
     public function testFindByIdWhenTheUserDoesNotExist()
     {
         $this->doctrineRepository->expects($this->once())
             ->method('find')
             ->with('some identifier')
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $this->usersRepo->findById('some identifier');
     }
 
     public function testFindByGithubIdWhenTheUserExists()
     {
-        $user = $this->getMockBuilder(Entity\User::class)->disableOriginalConstructor()->getMock();
+        $user = $this->createMock(Entity\User::class);
 
         $this->doctrineRepository->expects($this->once())
             ->method('findOneBy')
             ->with(['githubId' => 42])
-            ->will($this->returnValue($user));
+            ->willReturn($user);
 
         $this->assertSame($user, $this->usersRepo->findByGithubId(42));
     }
 
     /**
-     * @expectedException \Regis\Domain\Repository\Exception\NotFound
+     * @expectedException \Regis\GithubContext\Domain\Repository\Exception\NotFound
      */
     public function testFindByGithubIdWhenTheUserDoesNotExist()
     {
         $this->doctrineRepository->expects($this->once())
             ->method('findOneBy')
             ->with(['githubId' => 42])
-            ->will($this->returnValue(null));
+            ->willReturn(null);
 
         $this->usersRepo->findByGithubId(42);
     }
