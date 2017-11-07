@@ -1,24 +1,23 @@
 Regis\GithubContext\Domain\Entity\User:
     type: entity
-    table: users
+    table: user_account
 
     id:
         id:
-            type: string
+            type: guid
             generator: { strategy: NONE }
 
     fields:
         username:
             type: string
-            unique: true
-        githubId:
-            type: integer
-            nullable: true
-        githubAccessToken:
-            type: string
-            nullable: true
         roles:
             type: simple_array
+
+    oneToOne:
+        details:
+            targetEntity: GithubDetails
+            mappedBy: user
+            cascade: [persist]
 
     oneToMany:
         repositories:

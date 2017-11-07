@@ -1,10 +1,10 @@
 bitbucket_webhook:
     path: /webhook/bitbucket
-    defaults: { _controller: RegisBitbucketBundle:Webhooks:bitbucket }
+    defaults: { _controller: RegisBitbucketBundle:Webhooks:webhook }
     methods: POST
 
 bitbucket_connect:
-    path: /login/github
+    path: /login/bitbucket
     defaults: { _controller: RegisBitbucketBundle:Auth:connect }
     methods: GET
 

@@ -8,6 +8,6 @@ class Generator
 {
     public function randomString(int $length = 24): string
     {
-        return random_bytes($length);
+        return substr(bin2hex(random_bytes($length)), 0, $length);
     }
 }

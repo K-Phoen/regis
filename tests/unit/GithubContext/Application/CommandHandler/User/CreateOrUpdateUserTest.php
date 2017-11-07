@@ -24,7 +24,7 @@ class CreateOrUpdateUserTest extends TestCase
 
     public function testItCreatesANewUserIfItDoesNotAlreadyExist()
     {
-        $command = new Command\User\CreateOrUpdateUser('user', 42, 'access token', 'email');
+        $command = new Command\User\CreateOrUpdateUser('user', 42, 'access token');
 
         $this->usersRepo
             ->method('findByGithubId')
@@ -36,30 +36,6 @@ class CreateOrUpdateUserTest extends TestCase
             ->with($this->callback(function (Entity\User $user) {
                 $this->assertEquals(['ROLE_USER'], $user->getRoles());
                 $this->assertSame('user', $user->getUsername());
-                $this->assertSame('email', $user->getEmail());
-                $this->assertSame(42, $user->getGithubId());
-                $this->assertSame('access token', $user->getGithubAccessToken());
-
-                return true;
-            }));
-
-        $this->handler->handle($command);
-    }
-
-    public function testItCreatesANewUserEvenIfTheEmailIsNotSpecified()
-    {
-        $command = new Command\User\CreateOrUpdateUser('user', 42, 'access token');
-
-        $this->usersRepo
-            ->method('findByGithubId')
-            ->with(42)
-            ->willThrowException(new Repository\Exception\NotFound());
-
-        $this->usersRepo->expects($this->once())
-            ->method('save')
-            ->with($this->callback(function (Entity\User $user) {$this->assertEquals(['ROLE_USER'], $user->getRoles());
-                $this->assertSame('user', $user->getUsername());
-                $this->assertNull($user->getEmail());
                 $this->assertSame(42, $user->getGithubId());
                 $this->assertSame('access token', $user->getGithubAccessToken());
 
@@ -72,7 +48,7 @@ class CreateOrUpdateUserTest extends TestCase
     public function testItUpdatesTheUserIfItAlreadyExist()
     {
         $user = $this->createMock(Entity\User::class);
-        $command = new Command\User\CreateOrUpdateUser('user', 42, 'access token', 'email');
+        $command = new Command\User\CreateOrUpdateUser('user', 42, 'access token');
 
         $this->usersRepo
             ->method('findByGithubId')
@@ -83,9 +59,6 @@ class CreateOrUpdateUserTest extends TestCase
             ->method('save')
             ->with($user);
 
-        $user->expects($this->once())
-            ->method('changeEmail')
-            ->with('email');
         $user->expects($this->once())
             ->method('changeGithubAccessToken')
             ->with('access token');

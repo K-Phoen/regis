@@ -12,4 +12,4 @@ Regis\GithubContext\Domain\Entity\PullRequestInspection:
           inversedBy: inspections
           joinColumn:
               name: repository_id
-              referencedColumnName: identifier
+              referencedColumnName: id

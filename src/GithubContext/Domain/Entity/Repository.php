@@ -6,12 +6,15 @@ namespace Regis\GithubContext\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Regis\GithubContext\Domain\Model;
+use Regis\Kernel\Uuid;
 
 class Repository
 {
     const TYPE_GITHUB = 'github';
 
+    private $id;
     private $identifier;
+    private $type = self::TYPE_GITHUB;
     private $sharedSecret;
     private $isInspectionEnabled = true;
     /** @var ArrayCollection */
@@ -22,6 +25,7 @@ class Repository
 
     public function __construct(User $owner, string $identifier = null, string $sharedSecret = null)
     {
+        $this->id = Uuid::create();
         $this->owner = $owner;
         $this->identifier = $identifier;
         $this->sharedSecret = $sharedSecret;
@@ -36,7 +40,7 @@ class Repository
 
     public function getType(): string
     {
-        return self::TYPE_GITHUB;
+        return $this->type;
     }
 
     public function getOwnerUsername(): string

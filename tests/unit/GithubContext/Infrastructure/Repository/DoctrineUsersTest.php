@@ -92,29 +92,4 @@ class DoctrineUsersTest extends TestCase
 
         $this->usersRepo->findById('some identifier');
     }
-
-    public function testFindByGithubIdWhenTheUserExists()
-    {
-        $user = $this->createMock(Entity\User::class);
-
-        $this->doctrineRepository->expects($this->once())
-            ->method('findOneBy')
-            ->with(['githubId' => 42])
-            ->willReturn($user);
-
-        $this->assertSame($user, $this->usersRepo->findByGithubId(42));
-    }
-
-    /**
-     * @expectedException \Regis\GithubContext\Domain\Repository\Exception\NotFound
-     */
-    public function testFindByGithubIdWhenTheUserDoesNotExist()
-    {
-        $this->doctrineRepository->expects($this->once())
-            ->method('findOneBy')
-            ->with(['githubId' => 42])
-            ->willReturn(null);
-
-        $this->usersRepo->findByGithubId(42);
-    }
 }

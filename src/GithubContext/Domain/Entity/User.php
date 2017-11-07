@@ -16,13 +16,14 @@ class User implements UserInterface
     private $id;
     private $username;
     private $email;
-    private $githubId;
-    private $githubAccessToken;
     private $roles = [];
     private $password;
     private $repositories;
     private $ownedTeams;
     private $teams;
+
+    /** @var GithubDetails */
+    private $details;
 
     public static function createAdmin(string $username, string $password, string $email): User
     {
@@ -34,16 +35,12 @@ class User implements UserInterface
         return $user;
     }
 
-    public static function createUser(string $username, int $githubId, string $githubAccessToken, string $email = null): User
+    public static function createUser(string $username, int $githubId, string $githubAccessToken): User
     {
         $user = new static($username);
-        $user->githubId = $githubId;
-        $user->changeGithubAccessToken($githubAccessToken);
+        $details = new GithubDetails($user, $githubId, $githubAccessToken);
+        $user->details = $details;
         $user->roles = ['ROLE_USER'];
-
-        if ($email !== null) {
-            $user->changeEmail($email);
-        }
 
         return $user;
     }
@@ -76,16 +73,17 @@ class User implements UserInterface
 
     public function changeGithubAccessToken(string $accessToken)
     {
-        if (empty($accessToken)) {
-            throw new \InvalidArgumentException('The new access token can not be empty');
-        }
-
-        $this->githubAccessToken = $accessToken;
+        $this->details->changeGithubAccessToken($accessToken);
     }
 
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getDetails(): GithubDetails
+    {
+        return $this->details;
     }
 
     /**
@@ -101,7 +99,7 @@ class User implements UserInterface
      */
     public function getGithubId()
     {
-        return $this->githubId;
+        return $this->details->getRemoteId();
     }
 
     /**
@@ -109,7 +107,7 @@ class User implements UserInterface
      */
     public function getGithubAccessToken()
     {
-        return $this->githubAccessToken;
+        return $this->details->getAccessToken();
     }
 
     public function getRepositories(): \Traversable

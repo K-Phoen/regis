@@ -1,10 +1,10 @@
 Regis\GithubContext\Domain\Entity\Team:
     type: entity
-    table: teams
+    table: team
 
     id:
         id:
-            type: string
+            type: guid
             generator: { strategy: NONE }
 
     fields:
@@ -21,16 +21,13 @@ Regis\GithubContext\Domain\Entity\Team:
 
     manyToMany:
         repositories:
-          targetEntity: Repository
-          inversedBy: teams
-          joinTable:
-            name: repositories_teams
-            inverseJoinColumns:
-              repository_id:
-                referencedColumnName: identifier
+            targetEntity: Repository
+            inversedBy: teams
+            joinTable:
+                name: team_repository
 
         members:
-          targetEntity: User
-          inversedBy: teams
-          joinTable:
-            name: users_teams
+            targetEntity: User
+            inversedBy: teams
+            joinTable:
+                name: team_user

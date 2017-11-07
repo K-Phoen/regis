@@ -41,7 +41,18 @@ class DoctrineUsers implements Repository\Users
 
     public function findByGithubId(int $id): Entity\User
     {
-        $user = $this->em->getRepository(Entity\User::class)->findOneBy(['githubId' => $id]);
+        /** @var $repo \Doctrine\ORM\EntityRepository */
+        $repo = $this->em->getRepository(Entity\User::class);
+        $qb = $repo->createQueryBuilder('u');
+
+        $qb
+            ->innerJoin('u.details', 'details')
+            ->andWhere('details.remoteId = :githubId')
+            ->setParameters([
+                'githubId' => $id,
+            ])
+        ;
+        $user = $qb->getQuery()->getOneOrNullResult();
 
         if ($user === null) {
             throw Repository\Exception\NotFound::forIdentifier((string) $id);

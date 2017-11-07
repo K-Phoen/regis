@@ -1,17 +1,21 @@
 Regis\GithubContext\Domain\Entity\Repository:
     type: entity
-    table: repositories
+    table: repository
 
     discriminatorColumn:
         name: type
         type: string
 
     id:
-        identifier:
-            type: string
+        id:
+            type: guid
             generator: { strategy: NONE }
 
     fields:
+        identifier:
+            type: string
+        type:
+            type: string
         sharedSecret:
             type: string
         isInspectionEnabled:
