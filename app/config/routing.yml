@@ -7,6 +7,9 @@ app:
 bitbucket:
     resource: "@RegisBitbucketBundle/Resources/config/routing.yml"
 
+github:
+    resource: "@RegisGithubBundle/Resources/config/routing.yml"
+
 github_backend:
     resource: "@RegisGithubBundle/Resources/config/routing_backend.yml"
     prefix: /backend
