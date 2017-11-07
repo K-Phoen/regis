@@ -53,7 +53,7 @@ class Repository implements Vcs\Repository
     private function augmentWithFileContents(Model\Diff $diff): Model\Diff
     {
         $files = array_map(function (Model\Diff\File $file) {
-            if ($file->isDeletion()) {
+            if ($file->isDeletion() || $file->isRename()) {
                 return $file;
             }
 

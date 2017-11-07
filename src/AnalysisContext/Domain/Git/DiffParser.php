@@ -105,8 +105,8 @@ class DiffParser extends ParserBase
 
             $oldName = $oldName === '/dev/null' ? null : substr($oldName, 2);
             $newName = $newName === '/dev/null' ? null : substr($newName, 2);
-            $oldIndex = preg_match('/^0+$/', $oldIndex) ? null : $oldIndex;
-            $newIndex = preg_match('/^0+$/', $newIndex) ? null : $newIndex;
+            $oldIndex = preg_match('/^0+$/', $oldIndex ?: '') ? null : $oldIndex;
+            $newIndex = preg_match('/^0+$/', $newIndex ?: '') ? null : $newIndex;
 
             // 5. Diff
             $changes = [];
