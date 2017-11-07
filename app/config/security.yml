@@ -36,7 +36,10 @@ security:
                 secret: '%secret%'
                 always_remember_me: true
             guard:
-                authenticators: [ regis.github.authenticator ]
+                authenticators:
+                    - regis.github.authenticator
+                    - regis.bitbucket.authenticator
+                entry_point: regis.github.authenticator
             logout:
                 path: /logout
                 target: /login

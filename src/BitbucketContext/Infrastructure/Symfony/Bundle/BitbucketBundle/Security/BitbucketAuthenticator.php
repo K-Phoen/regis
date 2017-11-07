@@ -2,12 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Security;
+namespace Regis\BitbucketContext\Infrastructure\Symfony\Bundle\BitbucketBundle\Security;
 
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
-use KnpU\OAuth2ClientBundle\Client\Provider\GithubClient;
+use KnpU\OAuth2ClientBundle\Client\Provider\BitbucketClient;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
-use League\OAuth2\Client\Provider\GithubResourceOwner;
 use League\Tactician\CommandBus;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,9 +16,9 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
-use Regis\GithubContext\Application\Command;
+use Regis\BitbucketContext\Application\Command;
 
-class GithubAuthenticator extends SocialAuthenticator
+class BitbucketAuthenticator extends SocialAuthenticator
 {
     private $clientRegistry;
     private $commandBus;
@@ -40,27 +39,26 @@ class GithubAuthenticator extends SocialAuthenticator
             return null;
         }
 
-        return $this->fetchAccessToken($this->getGithubClient());
+        return $this->fetchAccessToken($this->getBitbucketClient());
     }
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
-        /** @var GithubResourceOwner $githubUser */
-        $githubUser = $this->getGithubClient()->fetchUserFromToken($credentials);
+        $bitbucketUser = $this->getBitbucketClient()->fetchUserFromToken($credentials);
 
         $command = new Command\User\CreateOrUpdateUser(
-            $githubUser->getNickname(),
-            (int) $githubUser->getId(),
+            $bitbucketUser->getUsername(),
+            (int) $bitbucketUser->getId(),
             $credentials->getToken(),
-            $githubUser->getEmail()
+            $bitbucketUser->getEmail()
         );
 
         return $this->commandBus->handle($command);
     }
 
-    private function getGithubClient(): GithubClient
+    private function getBitbucketClient(): BitbucketClient
     {
-        return $this->clientRegistry->getClient('github');
+        return $this->clientRegistry->getClient('bitbucket');
     }
 
     /**

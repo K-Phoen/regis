@@ -1,0 +1,4 @@
+services:
+    regis.bitbucket.authenticator:
+        class: Regis\BitbucketContext\Infrastructure\Symfony\Bundle\BitbucketBundle\Security\BitbucketAuthenticator
+        arguments: [ '@knpu.oauth2.registry', '@tactician.commandbus', '@router' ]

@@ -5,6 +5,7 @@
     "autoload": {
         "psr-4": {
             "Regis\\AnalysisContext\\": "src/AnalysisContext",
+            "Regis\\BitbucketContext\\": "src/BitbucketContext",
             "Regis\\GithubContext\\": "src/GithubContext",
             "Regis\\Kernel\\": "src/Kernel",
             "": "src/"
@@ -56,6 +57,7 @@
 
         "knpuniversity/oauth2-client-bundle": "^1.12",
         "league/oauth2-github": "^2.0",
+        "stevenmaguire/oauth2-bitbucket": "^2.0",
 
         "friendsofsymfony/jsrouting-bundle": "^1.6",
 
