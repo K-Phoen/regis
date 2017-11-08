@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Domain\Entity;
 
-use Regis\GithubContext\Domain\Uuid;
+use Regis\Kernel\Uuid;
 
 abstract class Inspection
 {
@@ -29,7 +29,7 @@ abstract class Inspection
 
     protected static function createForRevisions(string $head, string $base): self
     {
-        $inspection = new static(Uuid::create());
+        $inspection = new static;
         $inspection->createdAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
         $inspection->status = self::STATUS_SCHEDULED;
         $inspection->base = $base;
@@ -38,9 +38,9 @@ abstract class Inspection
         return $inspection;
     }
 
-    private function __construct(string $id)
+    private function __construct()
     {
-        $this->id = $id;
+        $this->id = Uuid::create();
     }
 
     public function getReport(): Report

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Domain\Entity;
 
-use Regis\GithubContext\Domain\Uuid;
+use Regis\Kernel\Uuid;
 
 class GithubDetails
 {

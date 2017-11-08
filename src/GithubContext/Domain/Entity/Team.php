@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Regis\GithubContext\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Regis\GithubContext\Domain\Uuid;
+use Regis\Kernel\Uuid;
 
 class Team
 {
@@ -21,7 +21,7 @@ class Team
     {
         $this->owner = $owner;
         $this->name = $name;
-        $this->id = Uuid    ::create();
+        $this->id = Uuid::create();
         $this->repositories = new ArrayCollection();
         $this->members = new ArrayCollection();
     }

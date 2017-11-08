@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Regis\GithubContext\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Regis\Kernel\Uuid;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Regis\GithubContext\Domain\Uuid;
 
 /**
  * @todo all the symfony and doctrine-related stuff should be in the infrastructure layer
