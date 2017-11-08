@@ -45,7 +45,7 @@ class Repository
 
     public function getOwnerUsername(): string
     {
-        return $this->owner->getUsername();
+        return $this->toIdentifier()->getOwner();
     }
 
     public function toIdentifier(): Model\RepositoryIdentifier
