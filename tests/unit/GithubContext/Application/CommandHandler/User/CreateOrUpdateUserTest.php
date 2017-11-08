@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\GithubContext\Application\CommandHandler\Repository;
+namespace Tests\Regis\GithubContext\Application\CommandHandler\User;
 
 use PHPUnit\Framework\TestCase;
 use Regis\GithubContext\Application\Command;

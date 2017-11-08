@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\GithubContext\Infrastructure\Random;
+namespace Tests\Regis\GithubContext\Application\Random;
 
 use PHPUnit\Framework\TestCase;
 use Regis\GithubContext\Application\Random\Generator;

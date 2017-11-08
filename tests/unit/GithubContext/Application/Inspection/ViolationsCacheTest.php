@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\GithubContext\Infrastructure\Inspection;
+namespace Tests\Regis\GithubContext\Application\Inspection;
 
 use PHPUnit\Framework\TestCase;
 use M6Web\Component\RedisMock\RedisMockFactory;
