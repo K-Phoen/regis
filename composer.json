@@ -4,11 +4,7 @@
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Regis\\AnalysisContext\\": "src/AnalysisContext",
-            "Regis\\BitbucketContext\\": "src/BitbucketContext",
-            "Regis\\GithubContext\\": "src/GithubContext",
-            "Regis\\Kernel\\": "src/Kernel",
-            "": "src/"
+            "Regis\\": "src/"
         },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
