@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\Kernel\Bundle\AuthBundle\Security;
+namespace Regis\Kernel\Bundle\AppBundle\Security;
 
 use RulerZ\RulerZ;
 use RulerZ\Spec\Specification;

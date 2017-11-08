@@ -1,4 +1,0 @@
-login:
-    path:      /login
-    defaults:  { _controller: RegisAuthBundle:Auth:login }
-    methods:   GET

@@ -1,15 +1,15 @@
 services:
     regis.security.context:
-        class: Regis\Kernel\Bundle\AuthBundle\Security\Context
+        class: Regis\Kernel\Bundle\AppBundle\Security\Context
         arguments: [ '@security.token_storage' ]
 
     regis.security.listener.access_denied:
-        class: Regis\Kernel\Bundle\AuthBundle\Security\AccessDeniedListener
+        class: Regis\Kernel\Bundle\AppBundle\Security\AccessDeniedListener
         tags:
             - { name: kernel.event_listener, event: kernel.exception, method: onKernelException, priority: 200 }
 
     regis.security.voter.command:
-        class: Regis\Kernel\Bundle\AuthBundle\Security\CommandVoter
+        class: Regis\Kernel\Bundle\AppBundle\Security\CommandVoter
         arguments: [ '@rulerz' ]
         public: false
         tags:

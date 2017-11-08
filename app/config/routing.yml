@@ -1,6 +1,3 @@
-auth:
-    resource: "@RegisAuthBundle/Resources/config/routing.yml"
-
 app:
     resource: "@RegisAppBundle/Resources/config/routing.yml"
 
@@ -16,6 +13,3 @@ github_backend:
 
 fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
-
-logout:
-    path: /logout

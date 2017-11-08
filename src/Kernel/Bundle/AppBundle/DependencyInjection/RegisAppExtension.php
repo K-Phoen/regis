@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Regis\Kernel\Bundle\AuthBundle\DependencyInjection;
+namespace Regis\Kernel\Bundle\AppBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class RegisAuthExtension extends Extension
+class RegisAppExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {

@@ -29,7 +29,6 @@ class AppKernel extends Kernel
             new Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\RegisGithubBundle(),
             new Regis\BitbucketContext\Infrastructure\Symfony\Bundle\BitbucketBundle\RegisBitbucketBundle(),
 
-            new Regis\Kernel\Bundle\AuthBundle\RegisAuthBundle(),
             new Regis\Kernel\Bundle\AppBundle\RegisAppBundle(),
         ];
 
