@@ -10,7 +10,7 @@ class AnalysisTest extends TestCase
 {
     public function testItHasErrorsIfAtLeastOneViolationIsAnError()
     {
-        $error = Violation::newError('file', 42, 9, 'description');
+        $error = $this->error('file', 42, 9);
         $analysis = new Analysis([$error]);
 
         $this->assertTrue($analysis->hasErrors());
@@ -19,7 +19,7 @@ class AnalysisTest extends TestCase
 
     public function testItHasWarningsIfAtLeastOneViolationIsAWarning()
     {
-        $warning = Violation::newWarning('file', 42, 9, 'description');
+        $warning = $this->warning('file', 42, 9);
         $analysis = new Analysis([$warning]);
 
         $this->assertTrue($analysis->hasWarnings());
@@ -28,9 +28,9 @@ class AnalysisTest extends TestCase
 
     public function testWarningCount()
     {
-        $error = Violation::newError('file', 42, 9, 'description');
-        $warning = Violation::newWarning('file', 42, 9, 'description');
-        $warning2 = Violation::newWarning('other file', 42, 9, 'description');
+        $error = $this->error('file', 42, 9);
+        $warning = $this->warning('file', 42, 9);
+        $warning2 = $this->warning('other file', 42, 9);
         $analysis = new Analysis([$error, $warning, $warning2]);
 
         $this->assertEquals(2, $analysis->warningsCount());
@@ -38,9 +38,9 @@ class AnalysisTest extends TestCase
 
     public function testErrorCount()
     {
-        $error = Violation::newError('file', 42, 9, 'description');
-        $error2 = Violation::newError('other file', 42, 9, 'description');
-        $warning = Violation::newWarning('file', 42, 9, 'description');
+        $error = $this->error('file', 42, 9);
+        $error2 = $this->error('other file', 42, 9);
+        $warning = $this->warning('file', 42, 9);
         $analysis = new Analysis([$error, $error2, $warning]);
 
         $this->assertEquals(2, $analysis->errorsCount());
@@ -56,8 +56,8 @@ class AnalysisTest extends TestCase
 
     public function analysisProvider()
     {
-        $error = Violation::newError('file', 42, 9, 'description');
-        $warning = Violation::newWarning('file', 42, 9, 'description');
+        $error = $this->error('file', 42, 9);
+        $warning = $this->warning('file', 42, 9);
 
         $analysisWithOnlyWarning = new Analysis([$warning]);
         $analysisWithOnlyError = new Analysis([$error]);
@@ -75,10 +75,10 @@ class AnalysisTest extends TestCase
 
     public function testViolationsCanBeRetrievedByFileAndLine()
     {
-        $error = Violation::newError('file', 42, 9, 'description');
-        $error2 = Violation::newError('other file', 42, 9, 'description');
-        $warning = Violation::newWarning('file', 42, 9, 'description');
-        $warning2 = Violation::newWarning('file', 43, 9, 'description');
+        $error = $this->error('file', 42, 9);
+        $error2 = $this->error('other file', 42, 9);
+        $warning = $this->warning('file', 42, 9);
+        $warning2 = $this->warning('file', 43, 9);
 
         $analysis = new Analysis([$error, $error2, $warning, $warning2]);
 
@@ -90,5 +90,31 @@ class AnalysisTest extends TestCase
         $this->assertSame([$warning2], $analysis->violationsAtLine('file', 43));
 
         $this->assertSame([$error, $error2, $warning, $warning2], $analysis->violations());
+    }
+
+    private function error(string $file, int $line, int $position): Violation
+    {
+        $violation = $this->createMock(Violation::class);
+
+        $violation->method('isWarning')->willReturn(false);
+        $violation->method('isError')->willReturn(true);
+        $violation->method('file')->willReturn($file);
+        $violation->method('line')->willReturn($line);
+        $violation->method('position')->willReturn($position);
+
+        return $violation;
+    }
+
+    private function warning(string $file, int $line, int $position): Violation
+    {
+        $violation = $this->createMock(Violation::class);
+
+        $violation->method('isWarning')->willReturn(true);
+        $violation->method('isError')->willReturn(false);
+        $violation->method('file')->willReturn($file);
+        $violation->method('line')->willReturn($line);
+        $violation->method('position')->willReturn($position);
+
+        return $violation;
     }
 }

@@ -31,7 +31,7 @@ class ViolationsCacheTest extends TestCase
 
         $repositoryIdentifier = Model\RepositoryIdentifier::fromFullName('K-Phoen/test');
 
-        $this->violation = Entity\Violation::newError('file.php', 42, 4, 'Test violation');
+        $this->violation = new Entity\Violation(Entity\Violation::WARNING, 'file.php', 42, 4, 'Test violation');
         $this->pullRequest = new Model\PullRequest($repositoryIdentifier, 2, 'head-sha', 'base-sha');
     }
 

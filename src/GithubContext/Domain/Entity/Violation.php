@@ -19,17 +19,6 @@ class Violation
     /** @var Analysis */
     private $analysis;
 
-
-    public static function newError(string $file, int $line, int $position, string $description): Violation
-    {
-        return new static(self::ERROR, $file, $line, $position, $description);
-    }
-
-    public static function newWarning(string $file, int $line, int $position, string $description): Violation
-    {
-        return new static(self::WARNING, $file, $line, $position, $description);
-    }
-
     public function __construct(int $severity, string $file, int $line, int $position, string $description)
     {
         $this->severity = $severity;
@@ -42,11 +31,6 @@ class Violation
     public function analysis(): Analysis
     {
         return $this->analysis;
-    }
-
-    public function setAnalysis(Analysis $analysis)
-    {
-        $this->analysis = $analysis;
     }
 
     public function severity(): int

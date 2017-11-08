@@ -19,7 +19,6 @@ class Violation
     /** @var Analysis */
     private $analysis;
 
-
     public static function newError(string $file, int $line, int $position, string $description): Violation
     {
         return new static(self::ERROR, $file, $line, $position, $description);
@@ -82,10 +81,5 @@ class Violation
     public function line(): int
     {
         return $this->line;
-    }
-
-    public function __toString(): string
-    {
-        return sprintf('%s:%d -- %s', $this->file, $this->position, $this->description);
     }
 }
