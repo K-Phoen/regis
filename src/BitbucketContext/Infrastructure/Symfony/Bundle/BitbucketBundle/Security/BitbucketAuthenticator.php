@@ -35,7 +35,7 @@ class BitbucketAuthenticator extends SocialAuthenticator
     {
         $requestedUrl = $request->getBaseUrl().$request->getPathInfo();
 
-        if ($requestedUrl !== $this->router->generate('github_connect_check')) {
+        if ($requestedUrl !== $this->router->generate('bitbucket_connect_check')) {
             return null;
         }
 
@@ -49,8 +49,7 @@ class BitbucketAuthenticator extends SocialAuthenticator
         $command = new Command\User\CreateOrUpdateUser(
             $bitbucketUser->getUsername(),
             (int) $bitbucketUser->getId(),
-            $credentials->getToken(),
-            $bitbucketUser->getEmail()
+            $credentials->getToken()
         );
 
         return $this->commandBus->handle($command);
