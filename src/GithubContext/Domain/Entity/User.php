@@ -15,7 +15,6 @@ class User implements UserInterface
 {
     private $id;
     private $username;
-    private $email;
     private $roles = [];
     private $password;
     private $repositories;
@@ -25,10 +24,9 @@ class User implements UserInterface
     /** @var GithubDetails */
     private $details;
 
-    public static function createAdmin(string $username, string $password, string $email): User
+    public static function createAdmin(string $username, string $password): User
     {
         $user = new static($username);
-        $user->changeEmail($email);
         $user->changePassword($password);
         $user->roles = ['ROLE_ADMIN'];
 
@@ -62,15 +60,6 @@ class User implements UserInterface
         $this->password = $password;
     }
 
-    public function changeEmail(string $email)
-    {
-        if (empty($email)) {
-            throw new \InvalidArgumentException('The new email can not be empty');
-        }
-
-        $this->email = $email;
-    }
-
     public function changeGithubAccessToken(string $accessToken)
     {
         $this->details->changeGithubAccessToken($accessToken);
@@ -84,14 +73,6 @@ class User implements UserInterface
     public function getDetails(): GithubDetails
     {
         return $this->details;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getEmail()
-    {
-        return $this->email;
     }
 
     /**

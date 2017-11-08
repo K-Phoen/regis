@@ -20,7 +20,7 @@ class TeamAddRepositoryControllerTest extends WebTestCase
     public function testRepositoriesCanBeSearched($search, $expectedRepoIdentifiers)
     {
         $client = static::createClient();
-        $this->logIn($client, 'user');
+        $this->logIn($client, 'K-Phoen');
 
         $client->request('GET', '/backend/teams/repositories', [
             'q' => $search,
@@ -39,9 +39,11 @@ class TeamAddRepositoryControllerTest extends WebTestCase
     {
         return [
             ['', []],
-            ['github', ['github/test']],
-            ['git', ['github/test']],
-            ['test', ['github/test']],
+            ['no-match', []],
+
+            ['K-P', ['K-Phoen/regis']],
+            ['k-phoe', ['K-Phoen/regis']],
+            ['regis', ['K-Phoen/regis']],
         ];
     }
 }

@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Functional\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Client;
 
-use Regis\Domain\Entity;
+use Regis\GithubContext\Domain\Entity;
 use Tests\Functional\WebTestCase;
 
 class InspectionsControllerTest extends WebTestCase
@@ -24,7 +26,7 @@ class InspectionsControllerTest extends WebTestCase
         $client = static::createClient();
         $inspection = $this->findInspection($client);
 
-        $this->logIn($client, 'user');
+        $this->logIn($client, 'K-Phoen');
 
         $crawler = $client->request('GET', '/backend/inspections/'.$inspection->getId());
 

@@ -14,8 +14,8 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Tests\\Regis\\AnalysisContext\\": "tests/unit/AnalysisContext/",
-            "Tests\\": "tests/"
+            "Tests\\Functional\\": "tests/functional",
+            "Tests\\Regis\\": "tests/unit"
         }
     },
     "config": {
@@ -70,7 +70,6 @@
         "symfony/phpunit-bridge": "^3.0",
         "phpunit/phpunit": "^6.4",
         "m6web/redis-mock": "^2.0",
-        "doctrine/doctrine-fixtures-bundle": "^2.3",
         "phpstan/phpstan-doctrine": "^0.8.0"
     },
     "scripts": {

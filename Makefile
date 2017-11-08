@@ -5,11 +5,12 @@ unittests:
 	php ./vendor/bin/phpunit ./tests/unit/
 
 functionaltests: db
-	php ./vendor/bin/phpunit ./tests/Functional/
+	php ./vendor/bin/phpunit ./tests/functional/
 
 db:
+	rm -f ./var/test_db.sqlite || true
 	vendor/bin/phinx migrate --environment=test
-	bin/console doctrine:fixtures:load --env=test -n
+	vendor/bin/phinx seed:run --environment=test
 
 phpmd:
 	./vendor/bin/phpmd src,tests text phpmd-ruleset.xml

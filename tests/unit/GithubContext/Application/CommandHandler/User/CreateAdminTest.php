@@ -38,8 +38,7 @@ class CreateAdminTest extends TestCase
             ->method('save')
             ->with($this->callback(function (Entity\User $user) {
                 return in_array('ROLE_ADMIN', $user->getRoles())
-                    && $user->getPassword() === 'encoded password'
-                    && $user->getEmail() === 'email';
+                    && $user->getPassword() === 'encoded password';
             }));
 
         $this->handler->handle($command);

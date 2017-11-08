@@ -17,14 +17,14 @@ class RepositoriesControllerTest extends WebTestCase
     public function testThatAnAuthorizedUserCanAccessTheRepositoriesList()
     {
         $client = static::createClient();
-        $this->logIn($client, 'user');
+        $this->logIn($client, 'K-Phoen');
 
         $crawler = $client->request('GET', '/backend/repositories');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertGreaterThan(
             0,
-            $crawler->filter('.main:contains("github/test")')->count(),
+            $crawler->filter('.main:contains("K-Phoen/regis")')->count(),
             'A repository is found'
         );
     }
@@ -32,9 +32,9 @@ class RepositoriesControllerTest extends WebTestCase
     public function testThatTheRepositoryDetailsPageIsAccessible()
     {
         $client = static::createClient();
-        $this->logIn($client, 'user');
+        $this->logIn($client, 'K-Phoen');
 
-        $crawler = $client->request('GET', '/backend/repositories/github/test');
+        $crawler = $client->request('GET', '/backend/repositories/K-Phoen/regis');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertGreaterThan(

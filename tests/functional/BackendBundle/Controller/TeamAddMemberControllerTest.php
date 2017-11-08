@@ -17,10 +17,10 @@ class TeamAddMemberControllerTest extends WebTestCase
     /**
      * @dataProvider searchProvider
      */
-    public function testUserCanBeSearched($search, $expectedUserEmails)
+    public function testUserCanBeSearched($search, $expectedUserIds)
     {
         $client = static::createClient();
-        $this->logIn($client, 'user');
+        $this->logIn($client, 'K-Phoen');
 
         $client->request('GET', '/backend/teams/users', [
             'q' => $search,
@@ -30,20 +30,19 @@ class TeamAddMemberControllerTest extends WebTestCase
         $this->assertEquals('application/json', $client->getResponse()->headers->get('Content-Type'));
 
         $results = json_decode($client->getResponse()->getContent(), true);
-        $emails = array_column($results['users'], 'email');
+        $emails = array_column($results['users'], 'id');
 
-        $this->assertEquals($expectedUserEmails, $emails);
+        $this->assertEquals($expectedUserIds, $emails);
     }
 
     public function searchProvider()
     {
         return [
             ['', []],
-            ['admin', ['admin@admin']],
-            ['ad', ['admin@admin']],
+            ['joe', []],
 
-            ['us', ['user@foo.org']],
-            ['foo.org', ['user@foo.org']],
+            ['K-Ph', ['d67ff369-704b-4315-a75f-b67f5bc9cc5a']],
+            ['k-pho', ['d67ff369-704b-4315-a75f-b67f5bc9cc5a']],
         ];
     }
 }

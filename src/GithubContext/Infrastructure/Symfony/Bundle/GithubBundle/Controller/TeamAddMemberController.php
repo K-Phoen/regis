@@ -68,7 +68,6 @@ class TeamAddMemberController extends Controller
                 return [
                     'id' => $user->getId(),
                     'username' => $user->getUsername(),
-                    'email' => $user->getEmail(),
                 ];
             }, iterator_to_array($results));
         }
