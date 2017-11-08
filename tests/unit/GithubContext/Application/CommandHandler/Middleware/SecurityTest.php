@@ -1,16 +1,15 @@
 <?php
 
-namespace Tests\Regis\Application\CommandHandler\Middleware;
+namespace Tests\Regis\GithubContext\Application\CommandHandler\Middleware;
 
 use PHPUnit\Framework\TestCase;
-use Regis\Domain\Entity\User;
 use RulerZ\RulerZ;
-
-use Regis\Application\Command;
-use Regis\Application\CommandHandler\Middleware;
-use Regis\Application\Security\Context;
 use RulerZ\Spec\Specification;
-use Tests\Stub\CommandSecureBySpecification;
+
+use Regis\GithubContext\Domain\Entity\User;
+use Regis\Kernel\Security\Context;
+use Regis\GithubContext\Application\Command;
+use Regis\GithubContext\Application\CommandHandler\Middleware;
 
 class SecurityTest extends TestCase
 {
@@ -21,13 +20,11 @@ class SecurityTest extends TestCase
 
     public function setUp()
     {
-        $this->rulerz = $this->getMockBuilder(RulerZ::class)->disableOriginalConstructor()->getMock();
-        $this->securityContext = $this->getMockBuilder(Context::class)->getMock();
-        $this->user = $this->getMockBuilder(User::class)->disableOriginalConstructor()->getMock();
+        $this->rulerz = $this->createMock(RulerZ::class);
+        $this->securityContext = $this->createMock(Context::class);
+        $this->user = $this->createMock(User::class);
 
-        $this->securityContext->expects($this->any())
-            ->method('getUser')
-            ->will($this->returnValue($this->user));
+        $this->securityContext->method('getUser')->willReturn($this->user);
 
         $this->middleware = new Middleware\Security($this->rulerz, $this->securityContext);
     }
@@ -51,7 +48,7 @@ class SecurityTest extends TestCase
 
     public function testASecureCommandWhenTheAuthorizationIsGiven()
     {
-        $command = $this->getMockBuilder(Command\SecureCommand::class)->getMock();
+        $command = $this->createMock(Command\SecureCommand::class);
         $nextCalled = false;
 
         $next = function ($command) use (&$nextCalled) {
@@ -61,7 +58,7 @@ class SecurityTest extends TestCase
         $command->expects($this->once())
             ->method('executionAuthorizedFor')
             ->with($this->user)
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $this->middleware->execute($command, $next);
 
@@ -69,18 +66,18 @@ class SecurityTest extends TestCase
     }
 
     /**
-     * @expectedException \Regis\Application\Security\Exception\AccessDenied
+     * @expectedException \Regis\Kernel\Security\Exception\AccessDenied
      */
     public function testASecureCommandWhenTheAuthorizationIsNotGiven()
     {
-        $command = $this->getMockBuilder(Command\SecureCommand::class)->getMock();
+        $command = $this->createMock(Command\SecureCommand::class);
         $next = function ($command) {
         };
 
-        $command->expects($this->once())
+        $command
             ->method('executionAuthorizedFor')
             ->with($this->user)
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
         $this->middleware->execute($command, $next);
     }
@@ -88,8 +85,8 @@ class SecurityTest extends TestCase
     public function testASecureCommandBySpecificationWhenTheAuthorizationIsGiven()
     {
         $target = new \stdClass();
-        $spec = $this->getMockBuilder(Specification::class)->getMock();
-        $command = new CommandSecureBySpecification($spec, $target);
+        $spec = $this->createMock(Specification::class);
+        $command = $this->createCommandSecuredBySpec($spec, $target);
         $nextCalled = false;
 
         $next = function ($command) use (&$nextCalled) {
@@ -99,7 +96,7 @@ class SecurityTest extends TestCase
         $this->rulerz->expects($this->once())
             ->method('satisfiesSpec')
             ->with($target, $spec)
-            ->will($this->returnValue(true));
+            ->willReturn(true);
 
         $this->middleware->execute($command, $next);
 
@@ -107,22 +104,46 @@ class SecurityTest extends TestCase
     }
 
     /**
-     * @expectedException \Regis\Application\Security\Exception\AccessDenied
+     * @expectedException \Regis\Kernel\Security\Exception\AccessDenied
      */
     public function testASecureCommandBySpecificationWhenTheAuthorizationIsNotGiven()
     {
         $target = new \stdClass();
-        $spec = $this->getMockBuilder(Specification::class)->getMock();
-        $command = new CommandSecureBySpecification($spec, $target);
+        $spec = $this->createMock(Specification::class);
+        $command = $this->createCommandSecuredBySpec($spec, $target);
 
         $next = function ($command) {
         };
 
-        $this->rulerz->expects($this->once())
+        $this->rulerz
             ->method('satisfiesSpec')
             ->with($target, $spec)
-            ->will($this->returnValue(false));
+            ->willReturn(false);
 
         $this->middleware->execute($command, $next);
+    }
+
+    private function createCommandSecuredBySpec(Specification $spec, $target)
+    {
+        return new class($spec, $target) implements Command\SecureCommandBySpecification {
+            public static $spec;
+            public static $target;
+
+            public function __construct(Specification $spec, $target = null)
+            {
+                self::$spec = $spec;
+                self::$target = $target;
+            }
+
+            public static function executionAuthorizedFor(User $user): Specification
+            {
+                return self::$spec;
+            }
+
+            public function getTargetToSecure()
+            {
+                return self::$target;
+            }
+        };
     }
 }

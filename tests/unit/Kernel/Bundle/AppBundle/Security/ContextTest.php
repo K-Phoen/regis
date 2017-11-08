@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Regis\Kernel\Bundle\AuthBundle\Security;
+namespace Tests\Regis\Kernel\Bundle\AppBundle\Security;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 
 use Regis\GithubContext\Domain\Entity\User;
-use Regis\Kernel\Bundle\AuthBundle\Security\Context;
+use Regis\Kernel\Bundle\AppBundle\Security\Context;
 
 class ContextTest extends TestCase
 {

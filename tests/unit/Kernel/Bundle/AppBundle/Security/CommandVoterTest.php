@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\Kernel\Bundle\AuthBundle\Security;
+namespace Tests\Regis\Kernel\Bundle\AppBundle\Security;
 
 use PHPUnit\Framework\TestCase;
 use RulerZ\RulerZ;
@@ -9,7 +9,7 @@ use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
 
 use Regis\GithubContext\Domain\Entity;
-use Regis\Kernel\Bundle\AuthBundle\Security\CommandVoter;
+use Regis\Kernel\Bundle\AppBundle\Security\CommandVoter;
 
 class CommandVoterTest extends TestCase
 {
