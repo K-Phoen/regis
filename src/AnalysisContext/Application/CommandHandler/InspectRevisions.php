@@ -52,11 +52,6 @@ class InspectRevisions
             ]);
             $this->dispatch(Events::INSPECTION_FINISHED, new Event\InspectionFinished($inspectionId));
         } catch (\Exception $e) {
-            $inspection->fail($e);
-            $this->inspectionsRepo->save($inspection);
-
-            $this->dispatch(Events::INSPECTION_FAILED, new Event\InspectionFailed($inspectionId, $e));
-
             $this->logger->warning('Inspection {inspection_id} failed', [
                 'inspection_id' => $command->getInspectionId(),
                 'repository' => $command->getRepository()->toArray(),
@@ -65,6 +60,11 @@ class InspectRevisions
                 'error_message' => $e->getMessage(),
                 'error_backtrace' => $e->getTraceAsString(),
             ]);
+
+            $inspection->fail($e);
+            $this->inspectionsRepo->save($inspection);
+
+            $this->dispatch(Events::INSPECTION_FAILED, new Event\InspectionFailed($inspectionId, $e));
         }
     }
 

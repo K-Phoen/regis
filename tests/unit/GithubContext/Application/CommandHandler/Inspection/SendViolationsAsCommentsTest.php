@@ -38,6 +38,7 @@ class SendViolationsAsCommentsTest extends TestCase
         $inspection->method('getReport')->willReturn($report);
         $inspection->method('hasReport')->willReturn(true);
         $inspection->method('getRepository')->willReturn($repository);
+        $inspection->method('getPullRequest')->willReturn($pullRequest);
         $report->method('violations')->willReturn(new \ArrayIterator([$violation1, $violation2]));
 
         $this->reporter->expects($this->exactly(2))
@@ -47,14 +48,13 @@ class SendViolationsAsCommentsTest extends TestCase
                 [$repository, $violation1, $pullRequest]
             );
 
-        $command = new Command\Inspection\SendViolationsAsComments($inspection, $pullRequest);
+        $command = new Command\Inspection\SendViolationsAsComments($inspection);
 
         $this->handler->handle($command);
     }
 
     public function testAnInspectionWithNoReportTriggersNothing()
     {
-        $pullRequest = $this->createMock(PullRequest::class);
         $inspection = $this->createMock(PullRequestInspection::class);
 
         $inspection->method('hasReport')->willReturn(false);
@@ -62,7 +62,7 @@ class SendViolationsAsCommentsTest extends TestCase
         $inspection->expects($this->never())->method('getReport');
         $this->reporter->expects($this->never())->method('report');
 
-        $command = new Command\Inspection\SendViolationsAsComments($inspection, $pullRequest);
+        $command = new Command\Inspection\SendViolationsAsComments($inspection);
 
         $this->handler->handle($command);
     }

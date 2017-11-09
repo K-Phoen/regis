@@ -141,7 +141,7 @@ class CreateSchema extends AbstractMigration
             ->addColumn('file', 'string')
             ->addColumn('line', 'integer')
             ->addColumn('position', 'integer')
-            ->addColumn('description', 'string')
+            ->addColumn('description', 'text')
             ->addForeignKey('analysis_id', 'analysis', 'id')
         ;
 

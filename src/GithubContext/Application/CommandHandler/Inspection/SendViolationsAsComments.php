@@ -25,8 +25,10 @@ class SendViolationsAsComments
             return;
         }
 
+        $pullRequest = $inspection->getPullRequest();
+
         foreach ($inspection->getReport()->violations() as $violation) {
-            $this->reporter->report($repository, $violation, $command->getPullRequest());
+            $this->reporter->report($repository, $violation, $pullRequest);
         }
     }
 }

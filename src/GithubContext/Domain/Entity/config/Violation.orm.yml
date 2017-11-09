@@ -17,7 +17,7 @@ Regis\GithubContext\Domain\Entity\Violation:
         position:
             type: integer
         description:
-            type: string
+            type: text
 
     manyToOne:
         analysis:

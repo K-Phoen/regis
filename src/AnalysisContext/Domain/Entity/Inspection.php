@@ -82,6 +82,6 @@ class Inspection
         $this->finishedAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
         $this->status = self::STATUS_FAILED;
 
-        $this->failureTrace = $e->getMessage().$e->getTraceAsString();
+        $this->failureTrace = $e->getMessage();
     }
 }

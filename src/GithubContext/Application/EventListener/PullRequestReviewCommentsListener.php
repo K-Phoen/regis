@@ -37,9 +37,6 @@ class PullRequestReviewCommentsListener implements EventSubscriberInterface
 
         $inspection = $this->inspectionsRepo->find($domainEvent->getInspectionId());
 
-        $this->commandBus->handle(new Command\Inspection\SendViolationsAsComments(
-            $inspection,
-            $inspection->getPullRequest()
-        ));
+        $this->commandBus->handle(new Command\Inspection\SendViolationsAsComments($inspection));
     }
 }
