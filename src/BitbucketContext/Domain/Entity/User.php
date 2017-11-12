@@ -22,7 +22,7 @@ class User implements UserInterface
     private $ownedTeams;
     private $teams;
 
-    public static function createUser(string $username, int $bitbucketId, string $bitbucketAccessToken): User
+    public static function createUser(string $username, int $bitbucketId, string $bitbucketAccessToken): self
     {
         $user = new static($username);
         $user->bitbucketId = $bitbucketId;

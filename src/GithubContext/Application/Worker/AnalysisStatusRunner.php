@@ -31,12 +31,15 @@ class AnalysisStatusRunner implements ConsumerInterface
         switch ($inspection->getStatus()) {
             case Inspection::STATUS_STARTED:
                 $domainEvent = new Event\InspectionStarted($inspection);
+
                 break;
             case Inspection::STATUS_FINISHED:
                 $domainEvent = new Event\InspectionFinished($inspection);
+
                 break;
             case Inspection::STATUS_FAILED:
                 $domainEvent = new Event\InspectionFailed($inspection);
+
                 break;
             default:
                 throw new \LogicException(sprintf('Unknown inspection status: "%s"', $inspection->getStatus()));

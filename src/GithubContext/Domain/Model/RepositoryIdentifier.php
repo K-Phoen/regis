@@ -9,7 +9,7 @@ class RepositoryIdentifier
     private $owner;
     private $name;
 
-    public static function fromFullName(string $fullName): RepositoryIdentifier
+    public static function fromFullName(string $fullName): self
     {
         $parts = explode('/', $fullName);
 
@@ -20,7 +20,7 @@ class RepositoryIdentifier
         return new static($parts[0], $parts[1]);
     }
 
-    public static function fromArray(array $data): RepositoryIdentifier
+    public static function fromArray(array $data): self
     {
         return new static(
             $data['owner'],

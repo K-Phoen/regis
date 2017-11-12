@@ -11,7 +11,7 @@ class PullRequest
     private $head;
     private $base;
 
-    public static function fromArray(array $data): PullRequest
+    public static function fromArray(array $data): self
     {
         return new static(
             RepositoryIdentifier::fromArray($data['repository_identifier']),

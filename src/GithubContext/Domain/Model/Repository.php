@@ -10,7 +10,7 @@ class Repository
     private $publicUrl;
     private $cloneUrl;
 
-    public static function fromArray(array $data): Repository
+    public static function fromArray(array $data): self
     {
         return new static(
             RepositoryIdentifier::fromArray($data['identifier']),

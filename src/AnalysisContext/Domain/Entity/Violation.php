@@ -19,12 +19,12 @@ class Violation
     /** @var Analysis */
     private $analysis;
 
-    public static function newError(string $file, int $line, int $position, string $description): Violation
+    public static function newError(string $file, int $line, int $position, string $description): self
     {
         return new static(self::ERROR, $file, $line, $position, $description);
     }
 
-    public static function newWarning(string $file, int $line, int $position, string $description): Violation
+    public static function newWarning(string $file, int $line, int $position, string $description): self
     {
         return new static(self::WARNING, $file, $line, $position, $description);
     }

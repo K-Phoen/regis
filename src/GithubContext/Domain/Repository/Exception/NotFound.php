@@ -6,7 +6,7 @@ namespace Regis\GithubContext\Domain\Repository\Exception;
 
 class NotFound extends \RuntimeException
 {
-    public static function forIdentifier(string $identifier): NotFound
+    public static function forIdentifier(string $identifier): self
     {
         return new static(sprintf('Entity not found for identifier "%s"', $identifier));
     }

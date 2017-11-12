@@ -29,7 +29,7 @@ class File
         $this->changes = $changes;
     }
 
-    public function replaceNewContent(Blob $blob): File
+    public function replaceNewContent(Blob $blob): self
     {
         $clone = clone $this;
         $clone->newBlob = $blob;

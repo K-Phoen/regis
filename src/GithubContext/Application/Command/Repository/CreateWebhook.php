@@ -25,7 +25,6 @@ class CreateWebhook
         return $this->repository;
     }
 
-
     public function getCallbackUrl(): string
     {
         return $this->callbackUrl;

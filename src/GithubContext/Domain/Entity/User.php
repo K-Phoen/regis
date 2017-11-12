@@ -24,7 +24,7 @@ class User implements UserInterface
     /** @var GithubDetails */
     private $details;
 
-    public static function createAdmin(string $username, string $password): User
+    public static function createAdmin(string $username, string $password): self
     {
         $user = new static($username);
         $user->changePassword($password);
@@ -33,7 +33,7 @@ class User implements UserInterface
         return $user;
     }
 
-    public static function createUser(string $username, int $githubId, string $githubAccessToken): User
+    public static function createUser(string $username, int $githubId, string $githubAccessToken): self
     {
         $user = new static($username);
         $details = new GithubDetails($user, $githubId, $githubAccessToken);

@@ -29,7 +29,7 @@ abstract class Inspection
 
     protected static function createForRevisions(string $head, string $base): self
     {
-        $inspection = new static;
+        $inspection = new static();
         $inspection->createdAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
         $inspection->status = self::STATUS_SCHEDULED;
         $inspection->base = $base;

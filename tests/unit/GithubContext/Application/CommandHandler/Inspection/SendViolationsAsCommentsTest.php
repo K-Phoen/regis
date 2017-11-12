@@ -21,7 +21,7 @@ class SendViolationsAsCommentsTest extends TestCase
     public function setUp()
     {
         $this->reporter = $this->createMock(Reporter::class);
-        
+
         $this->handler = new CommandHandler\Inspection\SendViolationsAsComments($this->reporter);
     }
 
