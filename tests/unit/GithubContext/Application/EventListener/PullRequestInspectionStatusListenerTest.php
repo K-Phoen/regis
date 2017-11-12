@@ -8,7 +8,7 @@ use Regis\GithubContext\Domain\Model\RepositoryIdentifier;
 use Regis\Kernel\Event\DomainEventWrapper;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface as UrlGenerator;
 use Regis\GithubContext\Application\Event;
-use Regis\GithubContext\Application\EventListener\PullRequestInspectionStatusListener;
+use Regis\GithubContext\Application\EventListener\InspectionResultListener;
 use Regis\GithubContext\Application\Github\Client;
 use Regis\GithubContext\Application\Github\ClientFactory;
 use Regis\GithubContext\Application\Events;
@@ -43,7 +43,7 @@ class PullRequestInspectionStatusListenerTest extends TestCase
     private $repositoryIdentifier;
     /** @var PullRequest */
     private $pr;
-    /** @var PullRequestInspectionStatusListener */
+    /** @var InspectionResultListener */
     private $listener;
 
     public function setUp()
@@ -86,12 +86,12 @@ class PullRequestInspectionStatusListenerTest extends TestCase
             ->with($this->repositoryEntity)
             ->willReturn($this->ghClient);
 
-        $this->listener = new PullRequestInspectionStatusListener($this->ghClientFactory, $this->repoRepository, $this->prInspectionsRepo, $this->urlGenerator);
+        $this->listener = new InspectionResultListener($this->ghClientFactory, $this->repoRepository, $this->prInspectionsRepo, $this->urlGenerator);
     }
 
     public function testItListensToTheRightEvents()
     {
-        $listenedEvents = PullRequestInspectionStatusListener::getSubscribedEvents();
+        $listenedEvents = InspectionResultListener::getSubscribedEvents();
 
         $this->assertArrayHasKey(Events::PULL_REQUEST_OPENED, $listenedEvents);
         $this->assertArrayHasKey(Events::PULL_REQUEST_SYNCED, $listenedEvents);

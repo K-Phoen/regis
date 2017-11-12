@@ -18,6 +18,8 @@ Regis\AnalysisContext\Domain\Entity\Inspection:
             type: string
         failureTrace:
             type: text
+        type:
+            type: text
 
     oneToOne:
         report:

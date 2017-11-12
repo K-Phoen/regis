@@ -5,10 +5,8 @@ declare(strict_types=1);
 namespace Regis\GithubContext\Application\Event;
 
 use Regis\GithubContext\Domain\Model\PullRequest;
-use Regis\GithubContext\Application\Events as GithubEvents;
-use Regis\Kernel\Events;
 
-class PullRequestSynced implements Events
+class PullRequestSynced
 {
     private $pullRequest;
     private $before;
@@ -34,10 +32,5 @@ class PullRequestSynced implements Events
     public function getAfter(): string
     {
         return $this->after;
-    }
-
-    public function getEventName(): string
-    {
-        return GithubEvents::PULL_REQUEST_SYNCED;
     }
 }

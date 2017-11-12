@@ -9,8 +9,9 @@ use Regis\AnalysisContext\Domain\Repository\Inspections;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 use Psr\Log\LoggerInterface as Logger;
 use Regis\AnalysisContext\Application\Command;
-use Regis\Kernel\Event;
-use Regis\Kernel\Events;
+use Regis\AnalysisContext\Application\Event;
+use Regis\AnalysisContext\Application\Events;
+use Regis\Kernel\Event as KernelEvent;
 
 class InspectRevisions
 {
@@ -19,7 +20,7 @@ class InspectRevisions
     private $dispatcher;
     private $logger;
 
-    public function __construct(CommandBus $commandBus, Inspections $inspectionsRepo, EventDispatcher $dispatcher,  Logger $logger)
+    public function __construct(CommandBus $commandBus, Inspections $inspectionsRepo, EventDispatcher $dispatcher, Logger $logger)
     {
         $this->commandBus = $commandBus;
         $this->inspectionsRepo = $inspectionsRepo;
@@ -39,7 +40,7 @@ class InspectRevisions
         $inspection->start();
         $this->inspectionsRepo->save($inspection);
 
-        $this->dispatch(Events::INSPECTION_STARTED, new Event\InspectionStarted($inspectionId));
+        $this->dispatch(new Event\InspectionStarted($inspection));
 
         try {
             $report = $this->commandBus->handle(new Command\RunAnalyses($command->getRepository(), $command->getRevisions()));
@@ -50,7 +51,7 @@ class InspectRevisions
             $this->logger->info('Inspection {inspection_id} finished', [
                 'inspection_id' => $inspectionId,
             ]);
-            $this->dispatch(Events::INSPECTION_FINISHED, new Event\InspectionFinished($inspectionId));
+            $this->dispatch(new Event\InspectionFinished($inspection));
         } catch (\Exception $e) {
             $this->logger->warning('Inspection {inspection_id} failed', [
                 'inspection_id' => $command->getInspectionId(),
@@ -64,12 +65,12 @@ class InspectRevisions
             $inspection->fail($e);
             $this->inspectionsRepo->save($inspection);
 
-            $this->dispatch(Events::INSPECTION_FAILED, new Event\InspectionFailed($inspectionId, $e));
+            $this->dispatch(new Event\InspectionFailed($inspection, $e));
         }
     }
 
-    private function dispatch(string $eventName, Events $event)
+    private function dispatch($event)
     {
-        $this->dispatcher->dispatch($eventName, new Event\DomainEventWrapper($event));
+        $this->dispatcher->dispatch(get_class($event), new KernelEvent\DomainEventWrapper($event));
     }
 }

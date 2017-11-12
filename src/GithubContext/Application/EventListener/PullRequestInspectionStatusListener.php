@@ -4,14 +4,11 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Application\EventListener;
 
-use Regis\GithubContext\Domain\Repository\PullRequestInspections;
+use Regis\Kernel\Event\DomainEventWrapper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface as UrlGenerator;
 
-use Regis\Kernel\Event;
-use Regis\GithubContext\Application\Events as GithubEvents;
-use Regis\GithubContext\Application\Event as GithubEvent;
-use Regis\Kernel\Events;
+use Regis\GithubContext\Application\Event;
 use Regis\GithubContext\Application\Github\Client;
 use Regis\GithubContext\Application\Github\ClientFactory;
 use Regis\GithubContext\Domain\Entity;
@@ -25,32 +22,30 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
 {
     private $githubFactory;
     private $repositoriesRepo;
-    private $inspectionsRepo;
     private $urlGenerator;
 
-    public function __construct(ClientFactory $githubFactory, Repositories $repositoriesRepo, PullRequestInspections $inspectionsRepo, UrlGenerator $urlGenerator)
+    public function __construct(ClientFactory $githubFactory, Repositories $repositoriesRepo, UrlGenerator $urlGenerator)
     {
         $this->githubFactory = $githubFactory;
         $this->repositoriesRepo = $repositoriesRepo;
-        $this->inspectionsRepo = $inspectionsRepo;
         $this->urlGenerator = $urlGenerator;
     }
 
     public static function getSubscribedEvents()
     {
         return [
-            GithubEvents::PULL_REQUEST_OPENED => 'onPullRequestUpdated',
-            GithubEvents::PULL_REQUEST_SYNCED => 'onPullRequestUpdated',
+            Event\PullRequestOpened::class => 'onPullRequestUpdated',
+            Event\PullRequestSynced::class => 'onPullRequestUpdated',
 
-            Events::INSPECTION_STARTED => 'onInspectionStarted',
-            Events::INSPECTION_FINISHED => 'onInspectionFinished',
-            Events::INSPECTION_FAILED => 'onInspectionFailed',
+            Event\InspectionStarted::class => 'onInspectionStarted',
+            Event\InspectionFinished::class => 'onInspectionFinished',
+            Event\InspectionFailed::class => 'onInspectionFailed',
         ];
     }
 
-    public function onPullRequestUpdated(Event\DomainEventWrapper $event)
+    public function onPullRequestUpdated(DomainEventWrapper $event)
     {
-        /** @var GithubEvent\PullRequestOpened|GithubEvent\PullRequestSynced $domainEvent */
+        /** @var Event\PullRequestOpened|Event\PullRequestSynced $domainEvent */
         $domainEvent = $event->getDomainEvent();
 
         $pullRequest = $domainEvent->getPullRequest();
@@ -63,12 +58,11 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         );
     }
 
-    public function onInspectionStarted(Event\DomainEventWrapper $event)
+    public function onInspectionStarted(DomainEventWrapper $event)
     {
         /** @var Event\InspectionStarted $domainEvent */
         $domainEvent = $event->getDomainEvent();
-
-        $inspection = $this->findPrInspection($domainEvent->getInspectionId());
+        $inspection = $domainEvent->getInspection();
 
         $this->setIntegrationStatus(
             $inspection->getRepository(),
@@ -77,12 +71,11 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         );
     }
 
-    public function onInspectionFinished(Event\DomainEventWrapper $event)
+    public function onInspectionFinished(DomainEventWrapper $event)
     {
         /** @var Event\InspectionFinished $domainEvent */
         $domainEvent = $event->getDomainEvent();
-
-        $inspection = $this->findPrInspection($domainEvent->getInspectionId());
+        $inspection = $domainEvent->getInspection();
 
         if (!$inspection->hasReport()) {
             $this->setIntegrationStatus(
@@ -109,12 +102,11 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         );
     }
 
-    public function onInspectionFailed(Event\DomainEventWrapper $event)
+    public function onInspectionFailed(DomainEventWrapper $event)
     {
         /** @var Event\InspectionFailed $domainEvent */
         $domainEvent = $event->getDomainEvent();
-
-        $inspection = $this->findPrInspection($domainEvent->getInspectionId());
+        $inspection = $domainEvent->getInspection();
 
         $this->setIntegrationStatus(
             $inspection->getRepository(),
@@ -131,11 +123,6 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
 
         $client = $this->githubFactory->createForRepository($repository);
         $client->setIntegrationStatus($repository->toIdentifier(), $head, $status);
-    }
-
-    private function findPrInspection(string $inspectionId): Entity\PullRequestInspection
-    {
-        return $this->inspectionsRepo->find($inspectionId);
     }
 
     private function findRepository(string $repositoryId): Entity\Repository

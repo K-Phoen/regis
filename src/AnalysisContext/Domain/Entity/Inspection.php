@@ -16,7 +16,13 @@ class Inspection
     private $status = self::STATUS_SCHEDULED;
     private $startedAt;
     private $finishedAt;
+    private $type;
     private $failureTrace = '';
+
+    public function id()
+    {
+        return $this->id;
+    }
 
     public function status(): string
     {
@@ -50,6 +56,11 @@ class Inspection
     public function finishedAt()
     {
         return $this->finishedAt;
+    }
+
+    public function type(): string
+    {
+        return $this->type;
     }
 
     public function start()

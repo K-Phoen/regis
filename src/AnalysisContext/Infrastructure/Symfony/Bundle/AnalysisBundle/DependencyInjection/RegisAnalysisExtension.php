@@ -17,6 +17,7 @@ class RegisAnalysisExtension extends Extension
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('command_handlers.yml');
+        $loader->load('listeners.yml');
         $loader->load('inspections.yml');
         $loader->load('repositories.yml');
         $loader->load('vcs.yml');
