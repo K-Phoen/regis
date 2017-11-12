@@ -8,11 +8,14 @@ use Doctrine\ORM\EntityManagerInterface;
 
 use Regis\GithubContext\Infrastructure\Repository\DoctrinePullRequestInspections;
 use Regis\GithubContext\Domain\Entity;
+use Symfony\Bridge\Doctrine\RegistryInterface;
 
 class DoctrinePullRequestInspectionsTest extends TestCase
 {
     /** @var EntityManagerInterface */
     private $em;
+    /** @var RegistryInterface */
+    private $registry;
     /** @var ObjectRepository */
     private $doctrineRepository;
     /** @var DoctrinePullRequestInspections */
@@ -20,15 +23,18 @@ class DoctrinePullRequestInspectionsTest extends TestCase
 
     public function setUp()
     {
+        $this->registry = $this->createMock(RegistryInterface::class);
         $this->em = $this->createMock(EntityManagerInterface::class);
         $this->doctrineRepository = $this->createMock(ObjectRepository::class);
+
+        $this->registry->method('getManager')->willReturn($this->em);
 
         $this->em
             ->method('getRepository')
             ->with(Entity\PullRequestInspection::class)
             ->willReturn($this->doctrineRepository);
 
-        $this->inspectionsRepo = new DoctrinePullRequestInspections($this->em);
+        $this->inspectionsRepo = new DoctrinePullRequestInspections($this->registry);
     }
 
     public function testSaveInspection()
