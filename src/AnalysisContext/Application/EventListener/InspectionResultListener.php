@@ -30,7 +30,7 @@ class InspectionResultListener implements EventSubscriberInterface
 
     public function onInspectionStatus(KernelEvent\DomainEventWrapper $event)
     {
-        /** @var Event\InspectionFinished|Event\InspectionFailed $domainEvent */
+        /** @var Event\InspectionStarted|Event\InspectionFinished|Event\InspectionFailed $domainEvent */
         $domainEvent = $event->getDomainEvent();
         $inspection = $domainEvent->getInspection();
 

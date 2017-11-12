@@ -27,7 +27,7 @@ class WebhooksController extends Controller
             $event = $this->get('regis.github.event_transformer')->transform($request);
             $this->info('Received payload of type {type}', [
                 'type' => $request->headers->get('X-GitHub-Event'),
-                'analysed_type' => $event->getEventName(),
+                'domain_event_type' => get_class($event),
                 'payload_id' => $request->headers->get('X-GitHub-Delivery'),
             ]);
         } catch (EventNotHandled $e) {
@@ -40,7 +40,7 @@ class WebhooksController extends Controller
             return new Response();
         }
 
-        $this->get('event_dispatcher')->dispatch($event->getEventName(), new DomainEventWrapper($event));
+        $this->get('event_dispatcher')->dispatch(get_class($event), new DomainEventWrapper($event));
 
         return new Response('', Response::HTTP_ACCEPTED);
     }

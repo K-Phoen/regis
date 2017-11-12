@@ -38,7 +38,7 @@ services:
         volumes:
             - ..:/var/www/html
             - ../var/ssh:/root/.ssh
-        command: './docker/wait-for-it.sh rabbit:5672 -- ./bin/console rabbitmq:consumer -vv --env=dev analysis_inspection'
+        command: './docker/wait-for-it.sh rabbit:5672 -- ./bin/console rabbitmq:consumer -vvv --env=dev analysis_inspection'
 
     github_analysis_status_worker:
         build:
@@ -50,7 +50,7 @@ services:
             - db
         volumes:
             - ..:/var/www/html
-        command: './docker/wait-for-it.sh rabbit:5672 -- ./bin/console rabbitmq:consumer -vv --env=dev github_analysis_status'
+        command: './docker/wait-for-it.sh rabbit:5672 -- ./bin/console rabbitmq:consumer -vvv --env=dev github_analysis_status'
 
     web:
         build:
