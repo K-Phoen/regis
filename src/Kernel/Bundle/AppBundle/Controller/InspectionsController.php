@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Controller;
+namespace Regis\Kernel\Bundle\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
@@ -26,7 +26,7 @@ class InspectionsController extends Controller
 
     public function detailAction(Entity\PullRequestInspection $inspection)
     {
-        return $this->render('@RegisGithub/Inspections/detail.html.twig', [
+        return $this->render('@RegisApp/Inspections/detail.html.twig', [
             'inspection' => $inspection,
         ]);
     }

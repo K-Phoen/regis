@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Controller;
+namespace Regis\Kernel\Bundle\AppBundle\Controller;
 
 use Regis\GithubContext\Domain\Repository\Repositories;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Application\Spec;
 use Regis\GithubContext\Domain\Entity;
-use Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Form;
+use Regis\Kernel\Bundle\AppBundle\Form;
 
 class RepositoriesController extends Controller
 {
@@ -20,7 +20,7 @@ class RepositoriesController extends Controller
     {
         $repositories = $this->get('regis.github.repository.repositories')->matching(new Spec\Repository\AccessibleBy($this->getUser()));
 
-        return $this->render('@RegisGithub/Repositories/list.html.twig', [
+        return $this->render('@RegisApp/Repositories/list.html.twig', [
             'repositories' => $repositories,
         ]);
     }
@@ -29,7 +29,7 @@ class RepositoriesController extends Controller
     {
         $repositories = $this->get('regis.github.repository.repositories')->matching(new Spec\Repository\AccessibleBy($this->getUser()));
 
-        return $this->render('@RegisGithub/Repositories/_last_repositories.html.twig', [
+        return $this->render('@RegisApp/Repositories/_last_repositories.html.twig', [
             'repositories' => $repositories,
         ]);
     }
@@ -39,7 +39,7 @@ class RepositoriesController extends Controller
         // TODO check access rights
         $repository = $this->get('regis.github.repository.repositories')->find($identifier, Repositories::MODE_FETCH_RELATIONS);
 
-        return $this->render('@RegisGithub/Repositories/detail.html.twig', [
+        return $this->render('@RegisApp/Repositories/detail.html.twig', [
             'repository' => $repository,
         ]);
     }
@@ -103,7 +103,7 @@ class RepositoriesController extends Controller
             return $this->redirectToRoute('repositories_list');
         }
 
-        return $this->render('@RegisGithub/Repositories/edit.html.twig', [
+        return $this->render('@RegisApp/Repositories/edit.html.twig', [
             'form' => $form->createView(),
             'repository' => $repository,
         ]);

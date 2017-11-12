@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Controller;
+namespace Regis\Kernel\Bundle\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Application\Spec;
-use Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Form;
+use Regis\Kernel\Bundle\AppBundle\Form;
 
 class TeamsController extends Controller
 {
@@ -17,7 +17,7 @@ class TeamsController extends Controller
     {
         $teams = $this->get('regis.github.repository.teams')->matching(new Spec\Team\AccessibleBy($this->getUser()));
 
-        return $this->render('@RegisGithub/Teams/list.html.twig', [
+        return $this->render('@RegisApp/Teams/list.html.twig', [
             'teams' => $teams,
         ]);
     }
@@ -43,7 +43,7 @@ class TeamsController extends Controller
             return $this->redirectToRoute('teams_list');
         }
 
-        return $this->render('@RegisGithub/Teams/create.html.twig', [
+        return $this->render('@RegisApp/Teams/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }

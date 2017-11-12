@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Controller;
+namespace Regis\Kernel\Bundle\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +15,7 @@ class RepositoryCreatorController extends Controller
 {
     public function newAction()
     {
-        return $this->render('@RegisGithub/Repositories/new.html.twig');
+        return $this->render('@RegisApp/Repositories/new.html.twig');
     }
 
     public function remoteRepositoriesListAction()

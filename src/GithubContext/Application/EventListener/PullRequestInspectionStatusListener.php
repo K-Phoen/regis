@@ -90,7 +90,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         $report = $inspection->getReport();
 
         if ($report->hasErrors() || $report->hasWarnings()) {
-            list($status, $message) = [Client::INTEGRATION_FAILURE, sprintf('Inspection with %d error(s) and %d warning(s).', $report->errorsCount(), $report->warningsCount())];
+            list($status, $message) = [Client::INTEGRATION_FAILURE, sprintf('Inspection finished with %d error(s) and %d warning(s).', $report->errorsCount(), $report->warningsCount())];
         } else {
             list($status, $message) = [Client::INTEGRATION_SUCCESS, 'Inspection successful.'];
         }

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Form;
+namespace Regis\Kernel\Bundle\AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Form;
+namespace Regis\Kernel\Bundle\AppBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\DataMapperInterface;
@@ -42,7 +42,7 @@ class EditRepositoryConfigurationType extends AbstractType implements DataMapper
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'intent' => 'nedit_repository',
+            'intent' => 'edit_repository',
         ]);
     }
 

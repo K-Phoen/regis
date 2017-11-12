@@ -10,7 +10,6 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatche
 use Psr\Log\LoggerInterface as Logger;
 use Regis\AnalysisContext\Application\Command;
 use Regis\AnalysisContext\Application\Event;
-use Regis\AnalysisContext\Application\Events;
 use Regis\Kernel\Event as KernelEvent;
 
 class InspectRevisions

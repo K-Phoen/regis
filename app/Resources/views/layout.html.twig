@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/bootstrap/dist/css/bootstrap.min.css') }}" />
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="{{ asset('bundles/regisgithub/css/dashboard.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/regisgithub/css/diff.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/regisapp/css/dashboard.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/regisapp/css/diff.css') }}">
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -44,7 +44,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            {{ render(controller('RegisGithubBundle:Repositories:lastRepositories')) }}
+            {{ render(controller('RegisAppBundle:Repositories:lastRepositories')) }}
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             {% for type, bag in app.session.flashBag.all %}

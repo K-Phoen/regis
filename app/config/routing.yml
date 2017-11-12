@@ -7,8 +7,8 @@ bitbucket:
 github:
     resource: "@RegisGithubBundle/Resources/config/routing.yml"
 
-github_backend:
-    resource: "@RegisGithubBundle/Resources/config/routing_backend.yml"
+backend:
+    resource: "@RegisAppBundle/Resources/config/routing_backend.yml"
     prefix: /backend
 
 fos_js_routing:

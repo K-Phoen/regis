@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Controller;
+namespace Regis\Kernel\Bundle\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,7 +19,7 @@ class TeamAddMemberController extends Controller
      */
     public function addMemberAction(Entity\Team $team)
     {
-        return $this->render('@RegisGithub/Teams/add_member.html.twig', [
+        return $this->render('@RegisApp/Teams/add_member.html.twig', [
             'team' => $team,
         ]);
     }
