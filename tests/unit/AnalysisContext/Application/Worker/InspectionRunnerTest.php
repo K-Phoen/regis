@@ -35,7 +35,7 @@ class InspectionRunnerTest extends TestCase
 
         $this->commandBus->expects($this->once())
             ->method('handle')
-            ->with($this->callback(function(Command\InspectRevisions $command) {
+            ->with($this->callback(function (Command\InspectRevisions $command) {
                 $this->assertSame(self::INSPECTION_ID, $command->getInspectionId());
                 $this->assertSame(self::REVISIONS_BASE, $command->getRevisions()->getBase());
                 $this->assertSame(self::REVISIONS_HEAD, $command->getRevisions()->getHead());

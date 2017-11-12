@@ -5,7 +5,7 @@ services:
 
     regis.github.repository.pull_request_inspections:
         class: Regis\GithubContext\Infrastructure\Repository\DoctrinePullRequestInspections
-        arguments: [ '@doctrine.orm.entity_manager' ]
+        arguments: [ '@doctrine' ]
 
     regis.github.repository.users:
         class: Regis\GithubContext\Infrastructure\Repository\DoctrineUsers
