@@ -12,6 +12,8 @@ use Regis\AnalysisContext\Domain\Entity\Violation;
 
 class PhpMd implements Inspection
 {
+    const CONFIG_FILE = 'phpmd-ruleset.xml';
+
     /** @var PhpMdRunner */
     private $phpMd;
 
@@ -48,7 +50,7 @@ class PhpMd implements Inspection
     private function locateRuleset(Vcs\Repository $repository): string
     {
         try {
-            return $repository->locateFile('phpmd-ruleset.xml');
+            return $repository->locateFile(self::CONFIG_FILE);
         } catch (Vcs\FileNotFound $e) {
             throw new Exception\ConfigurationNotFound($e->getMessage(), $e->getCode(), $e);
         }

@@ -4,6 +4,7 @@ namespace Tests\Regis\AnalysisContext\Application\Inspection;
 
 use Regis\AnalysisContext\Application\Inspection\PhpMd;
 use Regis\AnalysisContext\Application\Inspection\PhpMdRunner;
+use Regis\AnalysisContext\Application\Vcs;
 use Regis\AnalysisContext\Application\Vcs\Repository;
 use Regis\AnalysisContext\Domain\Entity;
 use Regis\AnalysisContext\Domain\Model\Exception\LineNotInDiff;
@@ -38,6 +39,46 @@ class PhpMdTest extends InspectionTestCase
         $this->phpMd->expects($this->never())->method('execute');
 
         $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $this->diff()));
+
+        $this->assertEmpty($violations);
+    }
+
+    public function testItUsesTheDefaultRulesetIfNoneIsFoundInTheRepository()
+    {
+        $file = $this->file('test.php');
+        $diff = $this->diff([$file]);
+
+        $this->vcsRepository->expects($this->once())
+            ->method('locateFile')
+            ->with(PhpMd::CONFIG_FILE)
+            ->willThrowException(new Vcs\FileNotFound());
+
+        $this->phpMd->expects($this->once())
+            ->method('execute')
+            ->with('test.php', $this->anything(), implode(',', self::DEFAULT_RULESETS))
+            ->willReturn(new \ArrayIterator());
+
+        $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $diff));
+
+        $this->assertEmpty($violations);
+    }
+
+    public function testItUsesTheConfigFileFromTheRepositoryWhenItExists()
+    {
+        $file = $this->file('test.php');
+        $diff = $this->diff([$file]);
+
+        $this->vcsRepository->expects($this->once())
+            ->method('locateFile')
+            ->with(PhpMd::CONFIG_FILE)
+            ->willReturn($configPath = 'config-file-path.xml');
+
+        $this->phpMd->expects($this->once())
+            ->method('execute')
+            ->with('test.php', $this->anything(), $configPath)
+            ->willReturn(new \ArrayIterator());
+
+        $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $diff));
 
         $this->assertEmpty($violations);
     }
