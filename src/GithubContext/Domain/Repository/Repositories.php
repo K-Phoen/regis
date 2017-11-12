@@ -18,7 +18,7 @@ interface Repositories
     public function matching(Specification $spec): \Traversable;
 
     /**
-     * @throws \Regis\Domain\Repository\Exception\NotFound
+     * @throws \Regis\GithubContext\Domain\Repository\Exception\NotFound
      */
     public function find(string $id, $mode = self::MODE_FETCH_NOTHING): Entity\Repository;
 }
