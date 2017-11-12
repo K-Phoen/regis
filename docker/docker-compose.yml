@@ -8,6 +8,8 @@ services:
 
     db:
         image: 'postgres:9.5'
+        ports:
+            - 4242:5432
         volumes:
             - ./postgres/data:/var/lib/postgresql/data/regis_data:rw
             - ./postgres/config:/docker-entrypoint-initdb.d:rw
@@ -26,7 +28,19 @@ services:
             - RABBITMQ_DEFAULT_PASS=admin
             - RABBITMQ_DEFAULT_VHOST=regis_vhost
 
-    worker:
+    inspection_worker:
+        build:
+            context: .
+            dockerfile: Dockerfile-web
+        depends_on:
+            - rabbit
+            - db
+        volumes:
+            - ..:/var/www/html
+            - ../var/ssh:/root/.ssh
+        command: './docker/wait-for-it.sh rabbit:5672 -- ./bin/console rabbitmq:consumer -vvv --env=dev analysis_inspection'
+
+    github_analysis_status_worker:
         build:
             context: .
             dockerfile: Dockerfile-web
@@ -36,8 +50,7 @@ services:
             - db
         volumes:
             - ..:/var/www/html
-            - ../var/ssh:/root/.ssh
-        command: './docker/wait-for-it.sh rabbit:5672 -- ./bin/console rabbitmq:consumer -vvv --env=prod webhook_github_pr_event'
+        command: './docker/wait-for-it.sh rabbit:5672 -- ./bin/console rabbitmq:consumer -vvv --env=dev github_analysis_status'
 
     web:
         build:
@@ -45,7 +58,8 @@ services:
             dockerfile: Dockerfile-web
         depends_on:
             - rabbit
-            - worker
+            - inspection_worker
+            - github_analysis_status_worker
             - db
         ports:
             - '8080:80'

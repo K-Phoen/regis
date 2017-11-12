@@ -1,0 +1,26 @@
+Regis\GithubContext\Domain\Entity\Analysis:
+    type: entity
+    table: analysis
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: UUID }
+
+    fields:
+        type:
+            type: string
+
+    oneToMany:
+        violations:
+          targetEntity: Violation
+          mappedBy: analysis
+          cascade: [ 'persist', 'merge' ]
+
+    manyToOne:
+        report:
+          targetEntity: Report
+          inversedBy: analyses
+          joinColumn:
+            name: report_id
+            referencedColumnName: id

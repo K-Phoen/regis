@@ -3,7 +3,7 @@ imports:
     - { resource: security.yml }
     - { resource: bundles/knpu_oauth2_client.yml }
     - { resource: bundles/kphoen_rulerz.yml }
-    - { resource: bundles/regis_webhooks.yml }
+    - { resource: bundles/regis_analysis.yml }
     - { resource: bundles/old_sound_rabbit_mq.yml }
     - { resource: bundles/snc_redis.yml }
     - { resource: bundles/tactician.yml }
@@ -66,9 +66,15 @@ doctrine:
         auto_generate_proxy_classes: "%kernel.debug%"
         naming_strategy: doctrine.orm.naming_strategy.underscore
         mappings:
-            Regis:
+            Regis\AnalysisContext:
                 type: yml
                 is_bundle: false
-                dir: '%kernel.root_dir%/../src/Regis/Domain/Entity/config'
-                prefix: Regis\Domain\Entity
-                alias: Regis
+                dir: '%kernel.root_dir%/../src/AnalysisContext/Domain/Entity/config'
+                prefix: Regis\AnalysisContext\Domain\Entity
+                alias: RegisAnalysisContext
+            Regis\GithubContext:
+                type: yml
+                is_bundle: false
+                dir: '%kernel.root_dir%/../src/GithubContext/Domain/Entity/config'
+                prefix: Regis\GithubContext\Domain\Entity
+                alias: RegisGithubContext

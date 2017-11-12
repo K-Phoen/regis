@@ -3,11 +3,16 @@
     "license": "MIT",
     "type": "project",
     "autoload": {
-        "psr-4": { "": "src/" },
+        "psr-4": {
+            "Regis\\": "src/"
+        },
         "classmap": [ "app/AppKernel.php", "app/AppCache.php" ]
     },
     "autoload-dev": {
-        "psr-4": { "Tests\\": "tests/" }
+        "psr-4": {
+            "Tests\\Functional\\": "tests/functional",
+            "Tests\\Regis\\": "tests/unit"
+        }
     },
     "config": {
         "platform": {
@@ -25,6 +30,8 @@
         "sensio/distribution-bundle": "^5.0",
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
+
+        "robmorgan/phinx": "^0.9",
 
         "league/tactician-bundle": "~1.0",
         "league/tactician-logger": "^0.10",
@@ -46,6 +53,7 @@
 
         "knpuniversity/oauth2-client-bundle": "^1.12",
         "league/oauth2-github": "^2.0",
+        "stevenmaguire/oauth2-bitbucket": "^2.0",
 
         "friendsofsymfony/jsrouting-bundle": "^1.6",
 
@@ -58,7 +66,6 @@
         "symfony/phpunit-bridge": "^3.0",
         "phpunit/phpunit": "^6.4",
         "m6web/redis-mock": "^2.0",
-        "doctrine/doctrine-fixtures-bundle": "^2.3",
         "phpstan/phpstan-doctrine": "^0.8.0"
     },
     "scripts": {

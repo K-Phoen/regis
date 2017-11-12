@@ -1,0 +1,5 @@
+services:
+    regis.monolog.request_id_processor:
+        class: Regis\Kernel\Monolog\RequestIdProcessor
+        tags:
+            - { name: monolog.processor, method: processRecord }

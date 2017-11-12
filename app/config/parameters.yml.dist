@@ -8,6 +8,9 @@ parameters:
     github_oauth_client_id: ~
     github_oauth_client_secret: ~
 
+    bitbucket_client_id: ~
+    bitbucket_client_secret: ~
+
     # Create one there https://github.com/settings/tokens and give it full
     # access over private repositories (`repo` scope)
     github_api_token: ~
@@ -22,7 +25,7 @@ parameters:
     rabbitmq_vhost: regis_vhost
 
     database_host: ~
-    database_port: ~
+    database_port: 5432
     database_name: ~
     database_user: ~
     database_password: ~

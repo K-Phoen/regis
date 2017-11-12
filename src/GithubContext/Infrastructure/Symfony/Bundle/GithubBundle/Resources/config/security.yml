@@ -1,0 +1,4 @@
+services:
+    regis.github.authenticator:
+        class: Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Security\GithubAuthenticator
+        arguments: [ '@knpu.oauth2.registry', '@tactician.commandbus', '@router' ]

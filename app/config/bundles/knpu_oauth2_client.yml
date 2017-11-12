@@ -5,3 +5,9 @@ knpu_oauth2_client:
             client_id: '%github_oauth_client_id%'
             client_secret: '%github_oauth_client_secret%'
             redirect_route: github_connect_check
+
+        bitbucket:
+            type: bitbucket
+            client_id: '%bitbucket_client_id%'
+            client_secret: '%bitbucket_client_secret%'
+            redirect_route: github_connect_check

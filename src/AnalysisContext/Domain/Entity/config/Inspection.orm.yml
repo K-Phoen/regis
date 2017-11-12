@@ -1,0 +1,30 @@
+Regis\AnalysisContext\Domain\Entity\Inspection:
+    type: entity
+    table: inspection
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: NONE }
+
+    fields:
+        startedAt:
+            type: datetimetz
+            nullable: true
+        finishedAt:
+            type: datetimetz
+            nullable: true
+        status:
+            type: string
+        failureTrace:
+            type: text
+        type:
+            type: text
+
+    oneToOne:
+        report:
+          targetEntity: Report
+          joinColumn:
+              name: report_id
+              referencedColumnName: id
+          cascade: [ 'persist', 'merge' ]

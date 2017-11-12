@@ -1,0 +1,6 @@
+regis_analysis:
+    inspections:
+        phpcs:
+            options: [ '--standard=psr1,psr2' ]
+        phpmd:
+            rulesets: [ 'codesize', 'unusedcode', 'naming', 'controversial', 'design', 'cleancode' ]

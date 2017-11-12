@@ -1,0 +1,12 @@
+home:
+    path: /
+    defaults: { _controller: RegisAppBundle:App:home }
+    methods: GET
+
+login:
+    path: /login
+    defaults: { _controller: RegisAppBundle:Auth:login }
+    methods: GET
+
+logout:
+    path: /logout

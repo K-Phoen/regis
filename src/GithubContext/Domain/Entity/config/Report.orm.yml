@@ -1,0 +1,20 @@
+Regis\GithubContext\Domain\Entity\Report:
+    type: entity
+    table: report
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: UUID }
+
+    fields:
+        status:
+            type: string
+        rawDiff:
+            type: blob
+
+    oneToMany:
+        analyses:
+          targetEntity: Analysis
+          mappedBy: report
+          cascade: [ 'persist', 'merge' ]

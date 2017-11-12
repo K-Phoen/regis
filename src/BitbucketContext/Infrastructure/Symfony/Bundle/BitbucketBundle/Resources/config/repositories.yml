@@ -1,0 +1,4 @@
+services:
+    regis.bitbucket.repository.users:
+        class: Regis\BitbucketContext\Infrastructure\Repository\DoctrineUsers
+        arguments: [ '@doctrine.orm.entity_manager', '@rulerz' ]

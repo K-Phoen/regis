@@ -1,0 +1,14 @@
+bitbucket_webhook:
+    path: /webhook/bitbucket
+    defaults: { _controller: RegisBitbucketBundle:Webhooks:webhook }
+    methods: POST
+
+bitbucket_connect:
+    path: /login/bitbucket
+    defaults: { _controller: RegisBitbucketBundle:Auth:connect }
+    methods: GET
+
+bitbucket_connect_check:
+    path: /login/bitbucket/check
+    defaults: { _controller: RegisBitbucketBundle:Auth:connectCheck }
+    methods: GET

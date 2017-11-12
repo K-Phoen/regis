@@ -1,0 +1,4 @@
+services:
+    regis.github.worker.analysis_status:
+        class: Regis\GithubContext\Application\Worker\AnalysisStatusRunner
+        arguments: ["@regis.github.repository.pull_request_inspections", "@event_dispatcher"]

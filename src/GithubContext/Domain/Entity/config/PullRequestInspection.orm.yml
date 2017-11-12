@@ -1,0 +1,15 @@
+Regis\GithubContext\Domain\Entity\PullRequestInspection:
+    type: entity
+    table: github_pr_inspection
+
+    fields:
+        pullRequestNumber:
+            type: integer
+
+    manyToOne:
+        repository:
+          targetEntity: Repository
+          inversedBy: inspections
+          joinColumn:
+              name: repository_id
+              referencedColumnName: id
