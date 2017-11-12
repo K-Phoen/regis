@@ -12,6 +12,7 @@ web_profiler:
     intercept_redirects: false
 
 monolog:
+    channels: ['bitbucket']
     handlers:
         main:
             type: stream

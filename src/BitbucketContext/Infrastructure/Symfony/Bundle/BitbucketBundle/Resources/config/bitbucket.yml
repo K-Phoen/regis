@@ -1,0 +1,3 @@
+services:
+    regis.bitbucket.event_transformer:
+        class: Regis\BitbucketContext\Application\Bitbucket\EventTransformer
