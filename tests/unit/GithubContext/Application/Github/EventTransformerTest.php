@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
 
 use Regis\GithubContext\Application\Event;
-use Regis\GithubContext\Application\Events;
 use Regis\GithubContext\Application\Github\EventTransformer;
 
 class EventTransformerTest extends TestCase
@@ -33,7 +32,6 @@ class EventTransformerTest extends TestCase
         $event = $this->transformer->transform($this->pullRequestOpenedPayload());
 
         $this->assertInstanceOf(Event\PullRequestOpened::class, $event);
-        $this->assertEquals(Events::PULL_REQUEST_OPENED, $event->getEventName());
 
         $pr = $event->getPullRequest();
 
@@ -52,7 +50,6 @@ class EventTransformerTest extends TestCase
         $event = $this->transformer->transform($this->pullRequestSyncedPayload());
 
         $this->assertInstanceOf(Event\PullRequestSynced::class, $event);
-        $this->assertEquals(Events::PULL_REQUEST_SYNCED, $event->getEventName());
 
         $this->assertEquals('1d6206cb1f76682a9f272e0547721a2aadc58554', $event->getBefore());
         $this->assertEquals('57dee1bee0cf795d2a1dcf8616320618e72807a8', $event->getAfter());
@@ -72,7 +69,6 @@ class EventTransformerTest extends TestCase
     public function testPullRequestClosedEventsAreTransformed()
     {
         $event = $this->transformer->transform($this->pullRequestClosedPayload());
-        $this->assertEquals(Events::PULL_REQUEST_CLOSED, $event->getEventName());
 
         $this->assertInstanceOf(Event\PullRequestClosed::class, $event);
 

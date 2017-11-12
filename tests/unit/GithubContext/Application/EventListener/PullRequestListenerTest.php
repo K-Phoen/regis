@@ -7,7 +7,6 @@ use League\Tactician\CommandBus;
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Application\Event;
 use Regis\GithubContext\Application\EventListener\PullRequestListener;
-use Regis\GithubContext\Application\Events;
 use Regis\GithubContext\Application\Inspection\ViolationsCache;
 use Regis\GithubContext\Domain\Model\PullRequest;
 use Regis\Kernel\Event\DomainEventWrapper;
@@ -30,9 +29,9 @@ class PullRequestListenerTest extends TestCase
     {
         $listenedEvents = PullRequestListener::getSubscribedEvents();
 
-        $this->assertArrayHasKey(Events::PULL_REQUEST_OPENED, $listenedEvents);
-        $this->assertArrayHasKey(Events::PULL_REQUEST_SYNCED, $listenedEvents);
-        $this->assertArrayHasKey(Events::PULL_REQUEST_CLOSED, $listenedEvents);
+        $this->assertArrayHasKey(Event\PullRequestOpened::class, $listenedEvents);
+        $this->assertArrayHasKey(Event\PullRequestSynced::class, $listenedEvents);
+        $this->assertArrayHasKey(Event\PullRequestClosed::class, $listenedEvents);
     }
 
     public function testItSendsTheRightCommandToTheBusWhenAPRIsCreated()

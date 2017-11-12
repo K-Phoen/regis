@@ -7,10 +7,10 @@ use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Regis\AnalysisContext\Application\Command;
 use Regis\AnalysisContext\Application\CommandHandler;
+use Regis\AnalysisContext\Application\Event;
 use Regis\AnalysisContext\Domain\Model;
 use Regis\AnalysisContext\Domain\Entity;
 use Regis\AnalysisContext\Domain\Repository\Inspections;
-use Regis\Kernel\Events;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class InspectRevisionsTest extends TestCase
@@ -80,8 +80,8 @@ class InspectRevisionsTest extends TestCase
         $this->dispatcher->expects($this->exactly(2))
             ->method('dispatch')
             ->withConsecutive(
-                [Events::INSPECTION_STARTED, $this->anything()],
-                [Events::INSPECTION_FINISHED, $this->anything()]
+                [Event\InspectionStarted::class, $this->anything()],
+                [Event\InspectionFinished::class, $this->anything()]
             );
 
         $this->handler->handle(new Command\InspectRevisions(self::INSPECTION_ID, $this->repository, $this->revisions));
@@ -105,8 +105,8 @@ class InspectRevisionsTest extends TestCase
         $this->dispatcher->expects($this->exactly(2))
             ->method('dispatch')
             ->withConsecutive(
-                [Events::INSPECTION_STARTED, $this->anything()],
-                [Events::INSPECTION_FAILED, $this->anything()]
+                [Event\InspectionStarted::class, $this->anything()],
+                [Event\InspectionFailed::class, $this->anything()]
             );
 
         $this->logger->expects($this->once())->method('warning');

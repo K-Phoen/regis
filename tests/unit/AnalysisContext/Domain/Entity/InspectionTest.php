@@ -67,7 +67,7 @@ class InspectionTest extends TestCase
         $this->assertNull($inspection->finishedAt());
         $this->assertSame(Inspection::STATUS_SCHEDULED, $inspection->status());
 
-        $inspection->fail(new \Exception());
+        $inspection->fail(new \Exception('Message'));
 
         $this->assertNotNull($inspection->finishedAt());
         $this->assertSame(Inspection::STATUS_FAILED, $inspection->status());
