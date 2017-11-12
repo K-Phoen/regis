@@ -15,5 +15,6 @@ class RegisAppExtension extends Extension
     {
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('auth_providers.yml');
+        $loader->load('logs.yml');
     }
 }
