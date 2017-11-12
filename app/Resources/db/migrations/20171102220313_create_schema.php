@@ -109,7 +109,7 @@ class CreateSchema extends AbstractMigration
             ->addForeignKey('owner_id', 'user_account', 'id')
             ->addIndex(['identifier', 'type'], [
                 'unique' => true,
-                'name' => 'idx_repo_id_unique'
+                'name' => 'idx_repo_id_unique',
             ])
         ;
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Application;
 
 use Regis\AnalysisContext\Domain\Model;
-use Regis\AnalysisContext\Application\Vcs;
 
 interface Inspection
 {

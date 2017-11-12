@@ -12,7 +12,7 @@ class Diff
     private $files;
     private $rawDiff;
 
-    public static function fromRawDiff(Revisions $revisions, string $rawDiff): Diff
+    public static function fromRawDiff(Revisions $revisions, string $rawDiff): self
     {
         $files = (new DiffParser())->parse($rawDiff);
 

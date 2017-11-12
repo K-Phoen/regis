@@ -265,7 +265,6 @@ class PullRequestInspectionStatusListenerTest extends TestCase
                 })
             );
 
-
         $this->listener->onInspectionFinished($event);
     }
 

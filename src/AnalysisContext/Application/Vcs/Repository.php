@@ -14,6 +14,7 @@ interface Repository
 
     /**
      * Locates a file in the repository.
+     *
      * @note Currently only looks at the repository root.
      *
      * @param string $name The name of the file to locate.

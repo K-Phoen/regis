@@ -10,7 +10,7 @@ class Repository
     private $owner;
     private $name;
 
-    public static function fromArray(array $data): Repository
+    public static function fromArray(array $data): self
     {
         return new static(
             $data['owner'],

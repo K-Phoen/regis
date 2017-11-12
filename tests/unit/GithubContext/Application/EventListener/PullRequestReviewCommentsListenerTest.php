@@ -37,7 +37,6 @@ class PullRequestReviewCommentsListenerTest extends TestCase
             ->method('handle')
             ->with($this->isInstanceOf(Command\Inspection\SendViolationsAsComments::class));
 
-
         $this->listener->onInspectionFinished(new DomainEventWrapper(new Event\InspectionFinished($inspection)));
     }
 }

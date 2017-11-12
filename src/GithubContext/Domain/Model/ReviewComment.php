@@ -12,7 +12,7 @@ class ReviewComment
     private $position;
     private $file;
 
-    public static function fromViolation(Violation $violation): ReviewComment
+    public static function fromViolation(Violation $violation): self
     {
         return new static($violation->file(), $violation->position(), $violation->description());
     }

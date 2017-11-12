@@ -9,7 +9,7 @@ class Revisions
     private $base;
     private $head;
 
-    public static function fromArray(array $data): Revisions
+    public static function fromArray(array $data): self
     {
         return new static($data['base'], $data['head']);
     }
