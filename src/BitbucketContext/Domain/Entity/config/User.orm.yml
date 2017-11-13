@@ -1,26 +1,25 @@
 Regis\BitbucketContext\Domain\Entity\User:
     type: entity
-    table: users
+    table: user_account
 
     id:
         id:
-            type: string
+            type: guid
             generator: { strategy: NONE }
 
     fields:
         username:
             type: string
-            unique: true
-        bitbucketId:
-            type: integer
-            nullable: true
-        bitbucketAccessToken:
-            type: string
-            nullable: true
         roles:
             type: simple_array
 
+    oneToOne:
+        details:
+            targetEntity: BitbucketDetails
+            mappedBy: user
+            cascade: [persist]
+
     oneToMany:
         repositories:
-          targetEntity: Repository
-          mappedBy: owner
+            targetEntity: Repository
+            mappedBy: owner

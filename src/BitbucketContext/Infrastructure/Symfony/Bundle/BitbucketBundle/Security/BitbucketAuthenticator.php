@@ -48,7 +48,7 @@ class BitbucketAuthenticator extends SocialAuthenticator
 
         $command = new Command\User\CreateOrUpdateUser(
             $bitbucketUser->getUsername(),
-            (int) $bitbucketUser->getId(),
+            $bitbucketUser->getId(),
             $credentials->getToken()
         );
 

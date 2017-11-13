@@ -9,11 +9,9 @@ Regis\BitbucketContext\Domain\Entity\BitbucketDetails:
 
     fields:
         remoteId:
-            type: integer
-            nullable: true
+            type: string
         accessToken:
             type: string
-            nullable: true
 
     oneToOne:
         user:

@@ -12,7 +12,7 @@ class AuthController extends Controller
     {
         return $this->get('oauth2.registry')
             ->getClient('bitbucket')
-            ->redirect($scopes = ['repository', 'repository:admin']);
+            ->redirect();
     }
 
     public function connectCheckAction()

@@ -14,3 +14,9 @@ services:
             #- '@regis.bitbucket.client_factory'
         tags:
             - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Inspection\SchedulePullRequest }
+
+    regis.bitbucket.command_handler.users.create_or_update_user:
+        class: Regis\BitbucketContext\Application\CommandHandler\User\CreateOrUpdateUser
+        arguments: [ '@regis.bitbucket.repository.users' ]
+        tags:
+            - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\User\CreateOrUpdateUser }

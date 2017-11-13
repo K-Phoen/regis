@@ -6,3 +6,7 @@ services:
     regis.bitbucket.repository.repositories:
         class: Regis\BitbucketContext\Infrastructure\Repository\DoctrineRepositories
         arguments: ['@doctrine']
+
+    regis.bitbucket.repository.users:
+        class: Regis\BitbucketContext\Infrastructure\Repository\DoctrineUsers
+        arguments: ['@doctrine']

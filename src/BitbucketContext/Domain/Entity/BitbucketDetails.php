@@ -13,7 +13,7 @@ class BitbucketDetails
     private $remoteId;
     private $accessToken;
 
-    public function __construct(User $user, int $remoteId, string $accessToken)
+    public function __construct(User $user, string $remoteId, string $accessToken)
     {
         $this->id = Uuid::create();
         $this->user = $user;
@@ -26,7 +26,7 @@ class BitbucketDetails
         return $this->id;
     }
 
-    public function getRemoteId(): int
+    public function getRemoteId(): string
     {
         return $this->remoteId;
     }

@@ -25,7 +25,7 @@ class User implements UserInterface
     /** @var BitbucketDetails */
     private $details;
 
-    public static function createUser(string $username, int $bitbucketId, string $githubAccessToken): self
+    public static function createUser(string $username, string $bitbucketId, string $githubAccessToken): self
     {
         $user = new static($username);
         $details = new BitbucketDetails($user, $bitbucketId, $githubAccessToken);
@@ -62,6 +62,11 @@ class User implements UserInterface
     public function getBitbucketAccessToken()
     {
         return $this->bitbucketAccessToken;
+    }
+
+    public function changeAccessToken(string $accessToken)
+    {
+        $this->details->changeAccessToken($accessToken);
     }
 
     public function getRepositories(): \Traversable

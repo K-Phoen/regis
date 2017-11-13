@@ -4,9 +4,18 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        regis_db_provider:
+        chain_provider:
+            chain:
+                providers: [regis_bitbucket_provider, regis_github_provider]
+
+        regis_github_provider:
             entity:
                 class: Regis\GithubContext\Domain\Entity\User
+                property: username
+
+        regis_bitbucket_provider:
+            entity:
+                class: Regis\BitbucketContext\Domain\Entity\User
                 property: username
 
     role_hierarchy:
@@ -29,7 +38,7 @@ security:
 
         main:
             pattern: ^/
-            provider: regis_db_provider
+            provider: chain_provider
             switch_user: true
             anonymous: ~
             remember_me:
