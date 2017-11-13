@@ -54,13 +54,13 @@ class PullRequest
         return $this->base;
     }
 
-    public function getRepositoryIdentifier(): RepositoryIdentifier
+    public function getRepository(): RepositoryIdentifier
     {
         return $this->repository;
     }
 
     public function __toString(): string
     {
-        return sprintf('%s#%d', $this->repository->getValue(), $this->number);
+        return sprintf('%s#%d', $this->repository, $this->number);
     }
 }

@@ -1,0 +1,24 @@
+Regis\BitbucketContext\Domain\Entity\BitbucketDetails:
+    type: entity
+    table: user_bitbucket
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: NONE }
+
+    fields:
+        remoteId:
+            type: integer
+            nullable: true
+        accessToken:
+            type: string
+            nullable: true
+
+    oneToOne:
+        user:
+            targetEntity: User
+            inversedBy: details
+            joinColumn:
+              name: user_id
+              referencedColumnName: id

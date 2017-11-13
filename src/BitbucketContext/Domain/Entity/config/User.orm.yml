@@ -2,8 +2,6 @@ Regis\BitbucketContext\Domain\Entity\User:
     type: entity
     table: users
 
-    # tables: user, user_github, user_bitbucket (allow to link a github account
-    # to a user, and same for bitbucket)
     id:
         id:
             type: string
@@ -22,7 +20,7 @@ Regis\BitbucketContext\Domain\Entity\User:
         roles:
             type: simple_array
 
-#    oneToMany:
-#        repositories:
-#          targetEntity: Regis\GithubContext\Domain\Entity\Repository
-#          mappedBy: owner
+    oneToMany:
+        repositories:
+          targetEntity: Repository
+          mappedBy: owner

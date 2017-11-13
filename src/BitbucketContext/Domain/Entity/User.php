@@ -22,11 +22,14 @@ class User implements UserInterface
     private $ownedTeams;
     private $teams;
 
-    public static function createUser(string $username, int $bitbucketId, string $bitbucketAccessToken): self
+    /** @var BitbucketDetails */
+    private $details;
+
+    public static function createUser(string $username, int $bitbucketId, string $githubAccessToken): self
     {
         $user = new static($username);
-        $user->bitbucketId = $bitbucketId;
-        $user->bitbucketAccessToken = $bitbucketAccessToken;
+        $details = new BitbucketDetails($user, $bitbucketId, $githubAccessToken);
+        $user->details = $details;
         $user->roles = ['ROLE_USER'];
 
         return $user;

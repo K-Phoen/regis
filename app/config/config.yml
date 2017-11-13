@@ -72,6 +72,12 @@ doctrine:
                 dir: '%kernel.root_dir%/../src/AnalysisContext/Domain/Entity/config'
                 prefix: Regis\AnalysisContext\Domain\Entity
                 alias: RegisAnalysisContext
+            Regis\BitbucketContext:
+                type: yml
+                is_bundle: false
+                dir: '%kernel.root_dir%/../src/BitbucketContext/Domain/Entity/config'
+                prefix: Regis\BitbucketContext\Domain\Entity
+                alias: RegisBitbucketContext
             Regis\GithubContext:
                 type: yml
                 is_bundle: false

@@ -1,0 +1,6 @@
+services:
+    regis.bitbucket.subscriber.pull_request:
+        class: Regis\BitbucketContext\Application\EventListener\PullRequestListener
+        arguments: ['@tactician.commandbus']
+        tags:
+            - { name: kernel.event_subscriber }
