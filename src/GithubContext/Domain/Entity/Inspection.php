@@ -50,6 +50,11 @@ abstract class Inspection
         return $this->report;
     }
 
+    public function getRepository(): Repository
+    {
+        return $this->repository;
+    }
+
     public function hasReport(): bool
     {
         return $this->report !== null;

@@ -17,3 +17,4 @@ Regis\GithubContext\Domain\Entity\GithubDetails:
         user:
             targetEntity: UserAccount
             cascade: [persist]
+            inversedBy: details

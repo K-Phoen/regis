@@ -10,9 +10,6 @@ class PullRequestInspection extends Inspection
 {
     private $pullRequestNumber;
 
-    /** @var Repository */
-    private $repository;
-
     public static function create(Repository $repository, Model\PullRequest $pullRequest): self
     {
         /** @var $inspection PullRequestInspection */
@@ -32,15 +29,10 @@ class PullRequestInspection extends Inspection
         return $this->pullRequestNumber;
     }
 
-    public function getRepository(): Repository
-    {
-        return $this->repository;
-    }
-
     public function getPullRequest(): Model\PullRequest
     {
         return new Model\PullRequest(
-            $this->repository->toIdentifier(),
+            $this->getRepository()->toIdentifier(),
             $this->pullRequestNumber,
             $this->getHead(),
             $this->getBase()

@@ -23,7 +23,6 @@ Regis\BitbucketContext\Domain\Entity\Repository:
     manyToOne:
         owner:
           targetEntity: UserAccount
-          inversedBy: repositories
           joinColumn:
             name: owner_id
             referencedColumnName: id
