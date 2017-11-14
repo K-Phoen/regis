@@ -17,6 +17,7 @@ class RegisAppExtension extends Extension
         $loader->load('auth_providers.yml');
         $loader->load('command_handlers.yml');
         $loader->load('logs.yml');
+        $loader->load('remote.yml');
         $loader->load('repositories.yml');
         $loader->load('security.yml');
     }

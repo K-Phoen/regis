@@ -9,7 +9,7 @@
         $(repositories).each(function(i, repository) {
             list.append(
                 '<li>' +
-                    '<a class="name" href="'+ repository.publicUrl +'">' + repository.identifier + '</a>'+
+                    '<a class="name" href="'+ repository.publicUrl +'">' + repository.name + '</a>'+
                     '<button type="button" data-identifier="'+repository.identifier+'" class="add-repository btn btn-primary btn-xs">Add</button>' +
                 '</li>'
             );

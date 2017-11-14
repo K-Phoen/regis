@@ -1,0 +1,15 @@
+services:
+    regis.app.remote.github_repositories:
+        class: Regis\AppContext\Infrastructure\Remote\GithubRepositories
+        arguments: [ '@regis.github.client_factory', '@regis.github.repository.users' ]
+        public: false
+
+    regis.app.remote.bitbucket_repositories:
+        class: Regis\AppContext\Infrastructure\Remote\BitbucketRepositories
+        arguments: [ '@regis.bitbucket.client_factory', '@regis.bitbucket.repository.users' ]
+        public: false
+
+    regis.app.remote.repositories:
+        class: Regis\AppContext\Infrastructure\Remote\AggregatedRepositories
+        arguments:
+            - ['@regis.app.remote.bitbucket_repositories', '@regis.app.remote.github_repositories' ]

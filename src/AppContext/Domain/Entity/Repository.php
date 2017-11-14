@@ -11,6 +11,7 @@ use Regis\Kernel\Uuid;
 class Repository
 {
     const TYPE_GITHUB = 'github';
+    const TYPE_BITBUCKET = 'bitbucket';
 
     private $id;
     private $identifier;
