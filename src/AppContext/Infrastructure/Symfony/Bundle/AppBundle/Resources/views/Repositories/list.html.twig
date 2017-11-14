@@ -18,7 +18,7 @@
             <tr>
                 <td>
                     <span class="label label-primary">{{ utils.repository_type(repo) }}</span>
-                    <a href="{{ path('repositories_detail', {identifier: repo.identifier}) }}">{{ repo.identifier }}</a>
+                    <a href="{{ path('repositories_detail', {identifier: repo.identifier}) }}">{{ repo.name }}</a>
                 </td>
                 <td>
                     <div class="btn-group" role="group">

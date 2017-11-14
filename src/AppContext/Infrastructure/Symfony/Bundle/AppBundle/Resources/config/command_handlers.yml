@@ -1,4 +1,10 @@
 services:
+    regis.app.command_handler.repository.create:
+        class: Regis\AppContext\Application\CommandHandler\Repository\Register
+        arguments: [ '@regis.app.repository.repositories', '@regis.random.generator' ]
+        tags:
+            - { name: tactician.handler, command: Regis\AppContext\Application\Command\Repository\Register }
+
     regis.command_handler.repository.disable_inspections:
         class: Regis\AppContext\Application\CommandHandler\Repository\DisableInspections
         arguments: [ '@regis.app.repository.repositories' ]

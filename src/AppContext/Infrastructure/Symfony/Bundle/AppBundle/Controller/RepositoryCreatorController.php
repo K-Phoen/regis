@@ -8,8 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-use Regis\GithubContext\Application\Command;
-use Regis\GithubContext\Domain\Entity;
+use Regis\AppContext\Application\Command;
+use Regis\AppContext\Domain\Entity;
 
 class RepositoryCreatorController extends Controller
 {
@@ -31,7 +31,12 @@ class RepositoryCreatorController extends Controller
 
     public function createAction(Request $request)
     {
-        $command = new Command\Repository\RegisterRepository($this->getGithubUser(), $request->request->get('identifier'));
+        $command = new Command\Repository\Register(
+            $this->getUser(),
+            $request->request->get('type'),
+            $request->request->get('identifier'),
+            $request->request->get('name')
+        );
 
         /** @var Entity\Repository $repository */
         $repository = $this->get('tactician.commandbus')->handle($command);
@@ -39,10 +44,5 @@ class RepositoryCreatorController extends Controller
         $this->addFlash('info', 'Repository added.');
 
         return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
-    }
-
-    private function getGithubUser(): Entity\GithubDetails
-    {
-        return $this->get('regis.github.repository.users')->findByAccountId($this->getUser()->accountId());
     }
 }

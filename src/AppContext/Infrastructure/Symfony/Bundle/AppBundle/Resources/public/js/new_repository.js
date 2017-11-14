@@ -10,7 +10,7 @@
             list.append(
                 '<li>' +
                     '<a class="name" href="'+ repository.publicUrl +'">' + repository.name + '</a>'+
-                    '<button type="button" data-identifier="'+repository.identifier+'" class="add-repository btn btn-primary btn-xs">Add</button>' +
+                    '<button type="button" data-type="'+repository.type+'" data-name="'+repository.name+'" data-identifier="'+repository.identifier+'" class="add-repository btn btn-primary btn-xs">Add</button>' +
                 '</li>'
             );
         });
@@ -30,7 +30,9 @@
 
         $('#repositories-list').on('click', '.add-repository', function() {
             $(this).prop('disabled', true);
+            $('input[name=type]', form).val($(this).data('type'));
             $('input[name=identifier]', form).val($(this).data('identifier'));
+            $('input[name=name]', form).val($(this).data('name'));
             form.submit();
         });
     }

@@ -17,7 +17,9 @@
 </ul>
 
 <form style="display: none" id="repository-create" action="{{ path('repositories_create') }}" method="POST">
+    <input type="hidden" name="type"  />
     <input type="hidden" name="identifier"  />
+    <input type="hidden" name="name"  />
 </form>
 {% endblock %}
 

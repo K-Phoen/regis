@@ -5,7 +5,7 @@
         <li>
             <a href="{{ path('repositories_detail', {identifier: repo.identifier}) }}">
                 <span class="label label-primary">{{ utils.repository_type(repo) }}</span>
-                {{ repo.identifier }}
+                {{ repo.name }}
             </a>
         </li>
     {% else %}

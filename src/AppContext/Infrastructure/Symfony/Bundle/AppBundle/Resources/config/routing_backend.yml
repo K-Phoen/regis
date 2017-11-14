@@ -3,30 +3,6 @@ repositories_list:
     defaults:  { _controller: RegisAppBundle:Repositories:list }
     methods:   GET
 
-repositories_detail:
-    path:      /repositories/{identifier}
-    defaults:  { _controller: RegisAppBundle:Repositories:detail }
-    requirements: { identifier: "[^/]+/[^/]+" }
-    methods:   GET
-
-repositories_setup_webhook:
-    path:      /repositories/{identifier}/webhook/setup
-    defaults:  { _controller: RegisAppBundle:Repositories:setupWebhook }
-    requirements: { identifier: "[^/]+/[^/]+" }
-    methods:   POST
-
-repositories_disable_inspections:
-    path:      /repositories/{identifier}/inspections/disable
-    defaults:  { _controller: RegisAppBundle:Repositories:disableInspections }
-    requirements: { identifier: "[^/]+/[^/]+" }
-    methods:   POST
-
-repositories_enable_inspections:
-    path:      /repositories/{identifier}/inspections/enable
-    defaults:  { _controller: RegisAppBundle:Repositories:enableInspections }
-    requirements: { identifier: "[^/]+/[^/]+" }
-    methods:   POST
-
 repositories_new:
     path:      /repositories/new
     defaults:  { _controller: RegisAppBundle:RepositoryCreator:new }
@@ -46,7 +22,7 @@ repositories_remote_list:
 repositories_edit:
     path:      /repositories/{identifier}/edit
     defaults:  { _controller: RegisAppBundle:Repositories:edit }
-    requirements: { identifier: "[^/]+/[^/]+" }
+    requirements: { identifier: "[^/]+(/[^/]+)?" }
     methods:   GET|POST
 
 inspection_retry:
@@ -120,3 +96,27 @@ teams_repository_search:
     defaults:  { _controller: RegisAppBundle:TeamAddRepository:repositorySearch }
     methods:   GET
     options:   { expose: true }
+
+repositories_detail:
+    path:      /repositories/{identifier}
+    defaults:  { _controller: RegisAppBundle:Repositories:detail }
+    requirements: { identifier: "[^/]+(/[^/]+)?" }
+    methods:   GET
+
+repositories_setup_webhook:
+    path:      /repositories/{identifier}/webhook/setup
+    defaults:  { _controller: RegisAppBundle:Repositories:setupWebhook }
+    requirements: { identifier: "[^/]+(/[^/]+)?" }
+    methods:   POST
+
+repositories_disable_inspections:
+    path:      /repositories/{identifier}/inspections/disable
+    defaults:  { _controller: RegisAppBundle:Repositories:disableInspections }
+    requirements: { identifier: "[^/]+(/[^/]+)?" }
+    methods:   POST
+
+repositories_enable_inspections:
+    path:      /repositories/{identifier}/inspections/enable
+    defaults:  { _controller: RegisAppBundle:Repositories:enableInspections }
+    requirements: { identifier: "[^/]+(/[^/]+)?" }
+    methods:   POST

@@ -65,7 +65,9 @@
 {% macro repository_type(repo) %}
     {% spaceless %}
         {% if repo.type == 'github' %}
-            GitHub
+            Github
+        {% elseif repo.type == 'bitbucket' %}
+            Bitbucket
         {% else %}
             Unknown ({{ repo.type }})
         {% endif %}

@@ -16,6 +16,8 @@ Regis\AppContext\Domain\Entity\Repository:
             type: string
         type:
             type: string
+        name:
+            type: string
         sharedSecret:
             type: string
         isInspectionEnabled:

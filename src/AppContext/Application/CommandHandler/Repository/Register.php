@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Application\CommandHandler\Repository;
+namespace Regis\AppContext\Application\CommandHandler\Repository;
 
-use Regis\GithubContext\Application\Command;
+use Regis\AppContext\Application\Command;
 use Regis\GithubContext\Application\Random\Generator as RandomGenerator;
-use Regis\GithubContext\Domain\Entity;
-use Regis\GithubContext\Domain\Repository\Repositories;
-use Regis\GithubContext\Domain\Repository\Exception;
+use Regis\AppContext\Domain\Entity;
+use Regis\AppContext\Domain\Repository\Repositories;
+use Regis\AppContext\Domain\Repository\Exception;
 
-class RegisterRepository
+class Register
 {
     private $repositoriesRepo;
     private $randomGenerator;
@@ -21,7 +21,7 @@ class RegisterRepository
         $this->randomGenerator = $generator;
     }
 
-    public function handle(Command\Repository\RegisterRepository $command)
+    public function handle(Command\Repository\Register $command)
     {
         try {
             return $this->repositoriesRepo->find($command->getIdentifier());
@@ -30,7 +30,13 @@ class RegisterRepository
         }
 
         $sharedSecret = $command->getSharedSecret() ?: $this->randomGenerator->randomString();
-        $repository = new Entity\Repository($command->getOwner(), $command->getIdentifier(), $sharedSecret);
+        $repository = new Entity\Repository(
+            $command->getOwner(),
+            $command->getType(),
+            $command->getIdentifier(),
+            $command->getName(),
+            $sharedSecret
+        );
 
         $this->repositoriesRepo->save($repository);
 

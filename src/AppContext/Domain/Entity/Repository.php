@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Regis\AppContext\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
-use Regis\GithubContext\Domain\Model;
-use Regis\Kernel\Uuid;
+use Regis\Kernel;
 
 class Repository
 {
@@ -15,7 +14,8 @@ class Repository
 
     private $id;
     private $identifier;
-    private $type = self::TYPE_GITHUB;
+    private $name;
+    private $type;
     private $sharedSecret;
     private $isInspectionEnabled = true;
     /** @var ArrayCollection */
@@ -24,10 +24,12 @@ class Repository
     private $teams;
     private $owner;
 
-    public function __construct(User $owner, string $identifier = null, string $sharedSecret = null)
+    public function __construct(Kernel\User $owner, string $type, string $identifier, string $name, string $sharedSecret = null)
     {
-        $this->id = Uuid::create();
+        $this->id = Kernel\Uuid::create();
         $this->owner = $owner;
+        $this->type = $type;
+        $this->name = $name;
         $this->identifier = $identifier;
         $this->sharedSecret = $sharedSecret;
         $this->inspections = new ArrayCollection();
@@ -44,29 +46,19 @@ class Repository
         return $this->type;
     }
 
-    public function getOwnerUsername(): string
-    {
-        return $this->toIdentifier()->getOwner();
-    }
-
-    public function toIdentifier(): Model\RepositoryIdentifier
-    {
-        return Model\RepositoryIdentifier::fromFullName($this->identifier);
-    }
-
     public function getIdentifier(): string
     {
         return $this->identifier;
     }
 
-    public function getOwner(): User
-    {
-        return $this->owner;
-    }
-
     public function getName(): string
     {
-        return $this->toIdentifier()->getName();
+        return $this->name;
+    }
+
+    public function getOwner(): Kernel\User
+    {
+        return $this->owner;
     }
 
     public function getSharedSecret(): string

@@ -1,10 +1,4 @@
 services:
-    regis.github.command_handler.repository.create:
-        class: Regis\GithubContext\Application\CommandHandler\Repository\RegisterRepository
-        arguments: [ '@regis.github.repository.repositories', '@regis.random.generator' ]
-        tags:
-            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Repository\RegisterRepository }
-
     regis.github.command_handler.repository.define_shared_secret:
         class: Regis\GithubContext\Application\CommandHandler\Repository\DefineSharedSecret
         arguments: [ '@regis.github.repository.repositories' ]
