@@ -27,4 +27,15 @@ class DoctrineUsers implements Repository\Users
 
         return $user;
     }
+
+    public function findByAccountId(string $id): Entity\BitbucketDetails
+    {
+        $user = $this->entityManager()->getRepository(Entity\BitbucketDetails::class)->findOneBy(['user' => $id]);
+
+        if ($user === null) {
+            throw Repository\Exception\NotFound::forIdentifier((string) $id);
+        }
+
+        return $user;
+    }
 }

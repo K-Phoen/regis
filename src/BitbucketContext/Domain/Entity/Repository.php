@@ -20,7 +20,7 @@ class Repository
     private $inspections;
     private $owner;
 
-    public function __construct(Kernel\User $owner, string $identifier)
+    public function __construct(BitbucketDetails $owner, string $identifier)
     {
         $this->id = Kernel\Uuid::create();
         $this->owner = $owner;
@@ -43,7 +43,7 @@ class Repository
         return $this->identifier;
     }
 
-    public function getOwner(): Kernel\User
+    public function getOwner(): BitbucketDetails
     {
         return $this->owner;
     }

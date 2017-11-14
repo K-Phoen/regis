@@ -10,6 +10,8 @@ Regis\BitbucketContext\Domain\Entity\BitbucketDetails:
     fields:
         remoteId:
             type: string
+        username:
+            type: string
         accessToken:
             type: string
 

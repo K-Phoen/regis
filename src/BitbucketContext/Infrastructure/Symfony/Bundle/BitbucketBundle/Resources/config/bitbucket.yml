@@ -1,3 +1,9 @@
 services:
     regis.bitbucket.event_transformer:
         class: Regis\BitbucketContext\Application\Bitbucket\EventTransformer
+
+    regis.bitbucket.client_factory:
+        class: Regis\BitbucketContext\Infrastructure\Bitbucket\ClientFactory
+        arguments: ["@logger"]
+        tags:
+            - { name: monolog.logger, channel: bitbucket }

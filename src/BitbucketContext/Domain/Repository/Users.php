@@ -11,4 +11,5 @@ interface Users
     public function save(Entity\BitbucketDetails $user);
 
     public function findByBitbucketId(string $id): Entity\BitbucketDetails;
+    public function findByAccountId(string $id): Entity\BitbucketDetails;
 }

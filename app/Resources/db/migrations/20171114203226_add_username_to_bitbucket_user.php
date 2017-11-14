@@ -1,8 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 use Phinx\Migration\AbstractMigration;
 
-class ChangeBitbucketRemoteIdToString extends AbstractMigration
+class AddUsernameToBitbucketUser extends AbstractMigration
 {
     /**
      * {@inheritdoc}
@@ -11,7 +13,7 @@ class ChangeBitbucketRemoteIdToString extends AbstractMigration
     {
         $usersBitbucket = $this->table('user_bitbucket', ['id' => false, 'primary_key' => ['id']]);
 
-        $usersBitbucket->changeColumn('remote_id', 'string');
+        $usersBitbucket->addColumn('username', 'string');
 
         $usersBitbucket->save();
     }
