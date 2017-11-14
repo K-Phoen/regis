@@ -1,0 +1,26 @@
+Regis\AppContext\Domain\Entity\User:
+    type: entity
+    table: user_account
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: NONE }
+
+    fields:
+        roles:
+            type: simple_array
+
+    oneToMany:
+        repositories:
+            targetEntity: Repository
+            mappedBy: owner
+
+        ownedTeams:
+            targetEntity: Team
+            mappedBy: owner
+
+    manyToMany:
+        teams:
+            targetEntity: Team
+            mappedBy: members

@@ -8,7 +8,7 @@ use Psr\Log\LoggerInterface as Logger;
 use Regis\GithubContext\Application\Github\IntegrationStatus;
 
 use Regis\GithubContext\Application\Github\Client as GithubClient;
-use Regis\GithubContext\Domain\Entity\User;
+use Regis\GithubContext\Domain\Entity\GithubDetails;
 use Regis\GithubContext\Domain\Model;
 
 class Client implements GithubClient
@@ -18,7 +18,7 @@ class Client implements GithubClient
     private $logger;
     private $authenticated = false;
 
-    public function __construct(\Github\Client $client, User $user, Logger $logger)
+    public function __construct(\Github\Client $client, GithubDetails $user, Logger $logger)
     {
         $this->client = $client;
         $this->user = $user;
@@ -29,8 +29,8 @@ class Client implements GithubClient
     {
         $this->assertAuthenticated();
 
-        $this->logger->info('Fetching repositories list for user {username}', [
-            'username' => $this->user->getUsername(),
+        $this->logger->info('Fetching repositories list for user {id}', [
+            'id' => $this->user->accountId(),
         ]);
         $api = $this->client->currentUser();
         $paginator = new \Github\ResultPager($this->client);
@@ -49,7 +49,7 @@ class Client implements GithubClient
         $this->assertAuthenticated();
 
         $this->logger->info('Fetching pull request {pull_request}', [
-            'repository_owner' => $this->user->getUsername(),
+            'repository_owner_id' => $this->user->accountId(),
             'pull_request' => $number,
             'repository' => $repository->getIdentifier(),
         ]);
@@ -141,7 +141,7 @@ class Client implements GithubClient
     private function assertAuthenticated()
     {
         if (!$this->authenticated) {
-            $this->client->authenticate($this->user->getGithubAccessToken(), '', \Github\Client::AUTH_URL_TOKEN);
+            $this->client->authenticate($this->user->getAccessToken(), '', \Github\Client::AUTH_URL_TOKEN);
             $this->authenticated = true;
         }
     }

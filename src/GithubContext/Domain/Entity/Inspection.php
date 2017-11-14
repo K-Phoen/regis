@@ -17,6 +17,7 @@ abstract class Inspection
 
     private $id;
     private $report;
+    private $repository;
     private $status;
     private $createdAt;
     private $startedAt;
@@ -27,9 +28,10 @@ abstract class Inspection
 
     abstract public function getType(): string;
 
-    protected static function createForRevisions(string $head, string $base): self
+    protected static function createForRevisions(Repository $repository, string $head, string $base): self
     {
         $inspection = new static();
+        $inspection->repository = $repository;
         $inspection->createdAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
         $inspection->status = self::STATUS_SCHEDULED;
         $inspection->base = $base;

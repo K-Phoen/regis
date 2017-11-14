@@ -1,0 +1,33 @@
+Regis\AppContext\Domain\Entity\Team:
+    type: entity
+    table: team
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: NONE }
+
+    fields:
+        name:
+            type: string
+
+    manyToOne:
+        owner:
+          targetEntity: User
+          inversedBy: ownedTeams
+          joinColumn:
+            name: owner_id
+            referencedColumnName: id
+
+    manyToMany:
+        repositories:
+            targetEntity: Repository
+            inversedBy: teams
+            joinTable:
+                name: team_repository
+
+        members:
+            targetEntity: User
+            inversedBy: teams
+            joinTable:
+                name: team_user

@@ -23,11 +23,6 @@ class Analysis
     private $errorsCount;
     private $warningsCount;
 
-    public function __construct(array $violations = [])
-    {
-        $this->violations = new ArrayCollection($violations);
-    }
-
     public function id(): string
     {
         return $this->id;

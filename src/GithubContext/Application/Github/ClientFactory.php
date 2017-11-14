@@ -10,5 +10,5 @@ interface ClientFactory
 {
     public function createForRepository(Entity\Repository $repository): Client;
 
-    public function createForUser(Entity\User $user): Client;
+    public function createForUser(Entity\GithubDetails $user): Client;
 }

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Application\Command\Repository;
 
-use Regis\GithubContext\Domain\Entity\User;
+use Regis\GithubContext\Domain\Entity\GithubDetails;
 
 class RegisterRepository
 {
@@ -12,14 +12,14 @@ class RegisterRepository
     private $identifier;
     private $sharedSecret;
 
-    public function __construct(User $owner, string $identifier, string $sharedSecret = null)
+    public function __construct(GithubDetails $owner, string $identifier, string $sharedSecret = null)
     {
         $this->owner = $owner;
         $this->identifier = $identifier;
         $this->sharedSecret = $sharedSecret;
     }
 
-    public function getOwner(): User
+    public function getOwner(): GithubDetails
     {
         return $this->owner;
     }

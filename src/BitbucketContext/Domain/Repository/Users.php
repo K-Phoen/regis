@@ -8,9 +8,7 @@ use Regis\BitbucketContext\Domain\Entity;
 
 interface Users
 {
-    public function save(Entity\User $user);
+    public function save(Entity\BitbucketDetails $user);
 
-    public function findByBitbucketId(string $id): Entity\User;
-
-    public function findById(string $id): Entity\User;
+    public function findByBitbucketId(string $id): Entity\BitbucketDetails;
 }

@@ -10,15 +10,10 @@ Regis\GithubContext\Domain\Entity\GithubDetails:
     fields:
         remoteId:
             type: integer
-            nullable: true
         accessToken:
             type: string
-            nullable: true
 
     oneToOne:
         user:
-            targetEntity: User
-            inversedBy: details
-            joinColumn:
-              name: user_id
-              referencedColumnName: id
+            targetEntity: UserAccount
+            cascade: [persist]

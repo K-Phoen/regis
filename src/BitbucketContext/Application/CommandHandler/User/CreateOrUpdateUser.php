@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Regis\BitbucketContext\Application\CommandHandler\User;
 
 use Regis\BitbucketContext\Application\Command;
-use Regis\BitbucketContext\Domain\Entity\User;
+use Regis\BitbucketContext\Domain\Entity\BitbucketDetails;
+use Regis\BitbucketContext\Domain\Entity\UserAccount;
 use Regis\BitbucketContext\Domain\Repository;
 
 class CreateOrUpdateUser
@@ -23,7 +24,7 @@ class CreateOrUpdateUser
             $user = $this->usersRepo->findByBitbucketId($command->getBitbucketId());
             $user->changeAccessToken($command->getAccessToken());
         } catch (Repository\Exception\NotFound $e) {
-            $user = User::createUser($command->getUsername(), $command->getBitbucketId(), $command->getAccessToken());
+            $user = new BitbucketDetails(new UserAccount(), $command->getBitbucketId(), $command->getAccessToken());
         }
 
         $this->usersRepo->save($user);

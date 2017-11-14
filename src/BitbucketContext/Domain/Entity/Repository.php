@@ -6,7 +6,7 @@ namespace Regis\BitbucketContext\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Regis\BitbucketContext\Domain\Model;
-use Regis\Kernel\Uuid;
+use Regis\Kernel;
 
 class Repository
 {
@@ -15,21 +15,17 @@ class Repository
     private $id;
     private $identifier;
     private $type = self::TYPE_BITBUCKET;
-    private $sharedSecret = '';
     private $isInspectionEnabled = true;
     /** @var ArrayCollection */
     private $inspections;
-    /** @var ArrayCollection */
-    private $teams;
     private $owner;
 
-    public function __construct(User $owner, string $identifier = null, string $sharedSecret = null)
+    public function __construct(Kernel\User $owner, string $identifier)
     {
-        $this->id = Uuid::create();
+        $this->id = Kernel\Uuid::create();
         $this->owner = $owner;
         $this->identifier = $identifier;
         $this->inspections = new ArrayCollection();
-        $this->teams = new ArrayCollection();
     }
 
     public function getType(): string
@@ -47,7 +43,7 @@ class Repository
         return $this->identifier;
     }
 
-    public function getOwner(): User
+    public function getOwner(): Kernel\User
     {
         return $this->owner;
     }
@@ -55,11 +51,6 @@ class Repository
     public function getInspections(): \Traversable
     {
         return $this->inspections;
-    }
-
-    public function getTeams(): \Traversable
-    {
-        return $this->teams;
     }
 
     public function isInspectionEnabled(): bool

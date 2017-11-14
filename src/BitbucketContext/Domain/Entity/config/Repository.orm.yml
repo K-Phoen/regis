@@ -16,20 +16,13 @@ Regis\BitbucketContext\Domain\Entity\Repository:
             type: string
         type:
             type: string
-        sharedSecret:
-            type: string
         isInspectionEnabled:
             type: boolean
             options: { default: 1 }
-#
-#    manyToMany:
-#        teams:
-#            targetEntity: Team
-#            mappedBy: repositories
 
     manyToOne:
         owner:
-          targetEntity: User
+          targetEntity: UserAccount
           inversedBy: repositories
           joinColumn:
             name: owner_id

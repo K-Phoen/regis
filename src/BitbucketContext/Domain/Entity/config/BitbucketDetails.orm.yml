@@ -15,8 +15,5 @@ Regis\BitbucketContext\Domain\Entity\BitbucketDetails:
 
     oneToOne:
         user:
-            targetEntity: User
-            inversedBy: details
-            joinColumn:
-              name: user_id
-              referencedColumnName: id
+            targetEntity: UserAccount
+            cascade: [persist]

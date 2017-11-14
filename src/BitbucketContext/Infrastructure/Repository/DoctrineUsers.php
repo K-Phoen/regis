@@ -11,40 +11,18 @@ class DoctrineUsers implements Repository\Users
 {
     use RepositoryHelper;
 
-    public function save(Entity\User $user)
+    public function save(Entity\BitbucketDetails $user)
     {
         $this->entityManager()->persist($user);
         $this->entityManager()->flush();
     }
 
-    public function findByBitbucketId(string $id): Entity\User
+    public function findByBitbucketId(string $id): Entity\BitbucketDetails
     {
-        /** @var $repo \Doctrine\ORM\EntityRepository */
-        $repo = $this->entityManager()->getRepository(Entity\User::class);
-        $qb = $repo->createQueryBuilder('u');
-
-        $qb
-            ->innerJoin('u.details', 'details')
-            ->andWhere('details.remoteId = :bitbucketId')
-            ->setParameters([
-                'bitbucketId' => $id,
-            ])
-        ;
-        $user = $qb->getQuery()->getOneOrNullResult();
+        $user = $this->entityManager()->getRepository(Entity\BitbucketDetails::class)->findOneBy(['remoteId' => $id]);
 
         if ($user === null) {
             throw Repository\Exception\NotFound::forIdentifier((string) $id);
-        }
-
-        return $user;
-    }
-
-    public function findById(string $id): Entity\User
-    {
-        $user = $this->em->getRepository(Entity\User::class)->find($id);
-
-        if ($user === null) {
-            throw Repository\Exception\NotFound::forIdentifier($id);
         }
 
         return $user;

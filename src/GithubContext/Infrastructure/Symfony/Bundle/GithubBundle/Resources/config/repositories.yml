@@ -10,7 +10,3 @@ services:
     regis.github.repository.users:
         class: Regis\GithubContext\Infrastructure\Repository\DoctrineUsers
         arguments: [ '@doctrine.orm.entity_manager', '@rulerz' ]
-
-    regis.github.repository.teams:
-        class: Regis\GithubContext\Infrastructure\Repository\DoctrineTeams
-        arguments: [ '@doctrine.orm.entity_manager', '@rulerz' ]

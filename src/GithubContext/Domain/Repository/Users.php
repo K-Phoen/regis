@@ -10,9 +10,10 @@ use Regis\GithubContext\Domain\Entity;
 
 interface Users
 {
-    public function save(Entity\User $user);
+    public function save(Entity\GithubDetails $user);
 
-    public function findByGithubId(int $id): Entity\User;
+    public function findByGithubId(int $id): Entity\GithubDetails;
+    public function findByAccountId(string $id): Entity\GithubDetails;
 
     public function findById(string $id): Entity\User;
 

@@ -17,6 +17,7 @@ use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 
 use Regis\BitbucketContext\Application\Command;
+use Regis\Kernel;
 
 class BitbucketAuthenticator extends SocialAuthenticator
 {
@@ -52,7 +53,10 @@ class BitbucketAuthenticator extends SocialAuthenticator
             $credentials->getToken()
         );
 
-        return $this->commandBus->handle($command);
+        /** @var Kernel\User $userProfile */
+        $userProfile = $this->commandBus->handle($command);
+
+        return $userProvider->loadUserByUsername($userProfile->accountId());
     }
 
     private function getBitbucketClient(): BitbucketClient

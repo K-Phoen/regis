@@ -24,7 +24,7 @@ class DoctrineUsers implements Repository\Users
         $this->rulerz = $rulerz;
     }
 
-    public function save(Entity\User $user)
+    public function save(Entity\GithubDetails $user)
     {
         $this->em->persist($user);
         $this->em->flush();
@@ -39,20 +39,20 @@ class DoctrineUsers implements Repository\Users
         return $this->rulerz->filterSpec($qb, $spec);
     }
 
-    public function findByGithubId(int $id): Entity\User
+    public function findByGithubId(int $id): Entity\GithubDetails
     {
-        /** @var $repo \Doctrine\ORM\EntityRepository */
-        $repo = $this->em->getRepository(Entity\User::class);
-        $qb = $repo->createQueryBuilder('u');
+        $user = $this->em->getRepository(Entity\GithubDetails::class)->findOneBy(['remoteId' => $id]);
 
-        $qb
-            ->innerJoin('u.details', 'details')
-            ->andWhere('details.remoteId = :githubId')
-            ->setParameters([
-                'githubId' => $id,
-            ])
-        ;
-        $user = $qb->getQuery()->getOneOrNullResult();
+        if ($user === null) {
+            throw Repository\Exception\NotFound::forIdentifier((string) $id);
+        }
+
+        return $user;
+    }
+
+    public function findByAccountId(string $id): Entity\GithubDetails
+    {
+        $user = $this->em->getRepository(Entity\GithubDetails::class)->findOneBy(['user' => $id]);
 
         if ($user === null) {
             throw Repository\Exception\NotFound::forIdentifier((string) $id);

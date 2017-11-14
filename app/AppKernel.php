@@ -28,8 +28,7 @@ class AppKernel extends Kernel
             new Regis\AnalysisContext\Infrastructure\Symfony\Bundle\AnalysisBundle\RegisAnalysisBundle(),
             new Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\RegisGithubBundle(),
             new Regis\BitbucketContext\Infrastructure\Symfony\Bundle\BitbucketBundle\RegisBitbucketBundle(),
-
-            new Regis\Kernel\Bundle\AppBundle\RegisAppBundle(),
+            new Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\RegisAppBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

@@ -4,19 +4,19 @@ declare(strict_types=1);
 
 namespace Regis\BitbucketContext\Domain\Entity;
 
-use Regis\Kernel\Uuid;
+use Regis\Kernel;
 
-class BitbucketDetails
+class BitbucketDetails implements Kernel\User
 {
     private $id;
     private $user;
     private $remoteId;
     private $accessToken;
 
-    public function __construct(User $user, string $remoteId, string $accessToken)
+    public function __construct(Kernel\User $user, string $remoteId, string $accessToken)
     {
-        $this->id = Uuid::create();
-        $this->user = $user;
+        $this->id = Kernel\Uuid::create();
+        $this->user = new UserAccount();
         $this->remoteId = $remoteId;
         $this->accessToken = $accessToken;
     }
@@ -29,6 +29,11 @@ class BitbucketDetails
     public function getRemoteId(): string
     {
         return $this->remoteId;
+    }
+
+    public function accountId(): string
+    {
+        return $this->user->accountId();
     }
 
     public function getAccessToken(): string
