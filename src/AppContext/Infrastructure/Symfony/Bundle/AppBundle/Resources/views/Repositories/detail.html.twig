@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <th>GitHub Webhook URL</th>
-            <td><code>{{ url('github_webhook') }}</code></td>
+            <td><code>{{ url(repository.type~'_webhook') }}</code></td>
         </tr>
         <tr>
             <th>Actions</th>
