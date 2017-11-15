@@ -9,7 +9,7 @@ Regis\BitbucketContext\Domain\Entity\Inspection:
         type: string
 
     discriminatorMap:
-        github_pr: PullRequestInspection
+        bitbucket_pr: PullRequestInspection
 
     id:
         id:
@@ -40,3 +40,8 @@ Regis\BitbucketContext\Domain\Entity\Inspection:
 #          joinColumn:
 #              name: report_id
 #              referencedColumnName: id
+
+    manyToOne:
+        repository:
+          targetEntity: Repository
+          inversedBy: inspections

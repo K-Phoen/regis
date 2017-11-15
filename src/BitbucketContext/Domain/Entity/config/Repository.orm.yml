@@ -29,5 +29,5 @@ Regis\BitbucketContext\Domain\Entity\Repository:
 
     oneToMany:
         inspections:
-          targetEntity: PullRequestInspection
+          targetEntity: Inspection
           mappedBy: repository

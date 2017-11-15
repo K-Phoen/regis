@@ -8,7 +8,7 @@ use Regis\Kernel\Uuid;
 
 abstract class Inspection
 {
-    const TYPE_GITHUB_PR = 'github_pr';
+    const TYPE_BITBUCKET_PR = 'bitbucket_pr';
 
     const STATUS_SCHEDULED = 'scheduled';
     const STATUS_STARTED = 'started';
@@ -17,6 +17,7 @@ abstract class Inspection
 
     private $id;
     private $report;
+    private $repository;
     private $status;
     private $createdAt;
     private $startedAt;
@@ -27,9 +28,10 @@ abstract class Inspection
 
     abstract public function getType(): string;
 
-    protected static function createForRevisions(string $head, string $base): self
+    protected static function createForRevisions(Repository $repository, string $head, string $base): self
     {
         $inspection = new static();
+        $inspection->repository = $repository;
         $inspection->createdAt = new \DateTimeImmutable('now', new \DateTimeZone('UTC'));
         $inspection->status = self::STATUS_SCHEDULED;
         $inspection->base = $base;
@@ -46,6 +48,11 @@ abstract class Inspection
     public function getReport(): Report
     {
         return $this->report;
+    }
+
+    public function getRepository(): Repository
+    {
+        return $this->repository;
     }
 
     public function hasReport(): bool

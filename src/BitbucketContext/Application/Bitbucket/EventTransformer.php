@@ -59,7 +59,7 @@ class EventTransformer
     private function transformPullRequest(array $payload): Model\PullRequest
     {
         return new Model\PullRequest(
-            new Model\RepositoryIdentifier($payload['repository']['full_name']),
+            new Model\RepositoryIdentifier($payload['repository']['uuid']),
             (int) $payload['pullrequest']['id'],
             $payload['pullrequest']['source']['commit']['hash'],
             $payload['pullrequest']['destination']['commit']['hash']

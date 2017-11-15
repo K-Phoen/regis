@@ -5,11 +5,3 @@ Regis\BitbucketContext\Domain\Entity\PullRequestInspection:
     fields:
         pullRequestNumber:
             type: integer
-
-    manyToOne:
-        repository:
-          targetEntity: Repository
-          inversedBy: inspections
-          joinColumn:
-              name: repository_id
-              referencedColumnName: id

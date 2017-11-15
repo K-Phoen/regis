@@ -47,8 +47,7 @@ class SchedulePullRequest
         $this->producer->publish(json_encode([
             'inspection_id' => $inspection->getId(),
             'repository' => [
-                'owner' => $repository->getOwnerUsername(),
-                'name' => $repository->getName(),
+                'identifier' => $repository->getIdentifier(),
                 'clone_url' => $this->findRepositoryCloneUrl($repository, $pullRequest),
             ],
             'revisions' => [
