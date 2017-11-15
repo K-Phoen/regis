@@ -13,7 +13,7 @@ class GithubDetails implements Kernel\User
     private $remoteId;
     private $accessToken;
 
-    public function __construct(Kernel\User $user, int $remoteId, string $accessToken)
+    public function __construct(UserAccount $user, int $remoteId, string $accessToken)
     {
         $this->id = Kernel\Uuid::create();
         $this->user = $user;

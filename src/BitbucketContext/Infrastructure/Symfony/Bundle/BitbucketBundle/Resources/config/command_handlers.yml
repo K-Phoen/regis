@@ -1,17 +1,11 @@
 services:
-    regis.bitbucket.command_handler.repository.create:
-        class: Regis\BitbucketContext\Application\CommandHandler\Repository\Register
-        arguments: ['@regis.bitbucket.repository.repositories']
-        tags:
-            - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Repository\Register }
-
     regis.bitbucket.command_handler.inspections.schedule:
         class: Regis\BitbucketContext\Application\CommandHandler\Inspection\SchedulePullRequest
         arguments:
             - '@old_sound_rabbit_mq.analysis_inspection_producer'
             - '@regis.bitbucket.repository.repositories'
             - '@regis.bitbucket.repository.pull_request_inspections'
-            #- '@regis.bitbucket.client_factory'
+            - '@regis.bitbucket.client_factory'
         tags:
             - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Inspection\SchedulePullRequest }
 

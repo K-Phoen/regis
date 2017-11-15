@@ -14,10 +14,10 @@ class BitbucketDetails implements Kernel\User
     private $remoteId;
     private $accessToken;
 
-    public function __construct(Kernel\User $user, string $remoteId, string $username, string $accessToken)
+    public function __construct(UserAccount $user, string $remoteId, string $username, string $accessToken)
     {
         $this->id = Kernel\Uuid::create();
-        $this->user = new UserAccount();
+        $this->user = $user;
         $this->remoteId = $remoteId;
         $this->username = $username;
         $this->accessToken = $accessToken;
@@ -41,6 +41,11 @@ class BitbucketDetails implements Kernel\User
     public function accountId(): string
     {
         return $this->user->accountId();
+    }
+
+    public function account(): UserAccount
+    {
+        return $this->user;
     }
 
     public function getAccessToken(): string

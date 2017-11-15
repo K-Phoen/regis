@@ -23,7 +23,7 @@ class Repository
     public function __construct(BitbucketDetails $owner, string $identifier)
     {
         $this->id = Kernel\Uuid::create();
-        $this->owner = $owner;
+        $this->owner = $owner->account();
         $this->identifier = $identifier;
         $this->inspections = new ArrayCollection();
     }
@@ -45,7 +45,7 @@ class Repository
 
     public function getOwner(): BitbucketDetails
     {
-        return $this->owner;
+        return $this->owner->getDetails();
     }
 
     public function getInspections(): \Traversable

@@ -6,3 +6,9 @@ Regis\BitbucketContext\Domain\Entity\UserAccount:
         id:
             type: guid
             generator: { strategy: NONE }
+
+    oneToOne:
+        details:
+            targetEntity: BitbucketDetails
+            mappedBy: user
+

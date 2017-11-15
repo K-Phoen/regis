@@ -9,6 +9,7 @@ use Regis\Kernel;
 class UserAccount implements Kernel\User
 {
     private $id;
+    private $details;
 
     public function __construct()
     {
@@ -18,5 +19,10 @@ class UserAccount implements Kernel\User
     public function accountId(): string
     {
         return $this->id;
+    }
+
+    public function getDetails(): BitbucketDetails
+    {
+        return $this->details;
     }
 }

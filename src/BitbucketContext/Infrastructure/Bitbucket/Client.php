@@ -29,8 +29,8 @@ class Client implements BitbucketClient
 
     public function listRepositories(): \Traversable
     {
-        $this->logger->info('Fetching repositories list for user {id}', [
-            'id' => $this->user->accountId(),
+        $this->logger->info('Fetching repositories list for user {owner_id}', [
+            'owner_id' => $this->user->accountId(),
         ]);
 
         /** @var Repositories $repositories */
@@ -44,6 +44,30 @@ class Client implements BitbucketClient
         }
     }
 
+    public function getCloneUrl(Model\RepositoryIdentifier $repository): string
+    {
+        $this->logger->info('Finding clone URL for repository {repository_id}', [
+            'repository_id' => $repository->value(),
+            'owner_id' => $this->user->accountId(),
+        ]);
+
+        /** @var Repositories $repositories */
+        $repositories = $this->client->api('Repositories');
+        $response = $repositories->all($this->user->getUsername(), [
+            'q' => sprintf('uuid="%s"', $repository->value()),
+        ]);
+
+        $decodedResponse = json_decode($response->getContent(), true);
+
+        if (count($decodedResponse['values']) !== 1) {
+            throw new \RuntimeException('Expected a single result.');
+        }
+
+        $repositoryModel = $this->hydrateRepository($decodedResponse['values'][0]);
+
+        return $repositoryModel->getCloneUrl();
+    }
+
     private function parseRepositories(array $response)
     {
         foreach ($response['values'] as $item) {
@@ -51,16 +75,21 @@ class Client implements BitbucketClient
                 continue;
             }
 
-            $cloneEndpoint = array_filter($item['links']['clone'], function (array $endpoint) {
-                return $endpoint['name'] === 'https';
-            });
-
-            yield new Model\Repository(
-                new Model\RepositoryIdentifier($item['uuid']),
-                $item['name'],
-                $cloneEndpoint[0]['href'],
-                $item['links']['html']['href']
-            );
+            yield $this->hydrateRepository($item);
         }
+    }
+
+    private function hydrateRepository(array $data)
+    {
+        $cloneEndpoint = array_filter($data['links']['clone'], function (array $endpoint) {
+            return $endpoint['name'] === 'https';
+        });
+
+        return new Model\Repository(
+            new Model\RepositoryIdentifier($data['uuid']),
+            $data['name'],
+            $cloneEndpoint[0]['href'],
+            $data['links']['html']['href']
+        );
     }
 }

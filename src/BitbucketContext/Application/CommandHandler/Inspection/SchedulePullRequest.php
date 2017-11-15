@@ -19,12 +19,12 @@ class SchedulePullRequest
     private $inspectionsRepo;
     private $clientFactory;
 
-    public function __construct(ProducerInterface $producer, Repository\Repositories $repositoriesRepo, Repository\PullRequestInspections $inspectionsRepo)
+    public function __construct(ProducerInterface $producer, Repository\Repositories $repositoriesRepo, Repository\PullRequestInspections $inspectionsRepo, ClientFactory $clientFactory)
     {
         $this->producer = $producer;
         $this->repositoriesRepo = $repositoriesRepo;
         $this->inspectionsRepo = $inspectionsRepo;
-        //$this->clientFactory = $clientFactory;
+        $this->clientFactory = $clientFactory;
     }
 
     public function handle(Command\Inspection\SchedulePullRequest $command)
@@ -48,7 +48,7 @@ class SchedulePullRequest
             'inspection_id' => $inspection->getId(),
             'repository' => [
                 'identifier' => $repository->getIdentifier(),
-                'clone_url' => $this->findRepositoryCloneUrl($repository, $pullRequest),
+                'clone_url' => $this->findRepositoryCloneUrl($repository),
             ],
             'revisions' => [
                 'base' => $pullRequest->getBase(),
@@ -57,13 +57,10 @@ class SchedulePullRequest
         ]));
     }
 
-    private function findRepositoryCloneUrl(Entity\Repository $repository, PullRequest $pullRequest): string
+    private function findRepositoryCloneUrl(Entity\Repository $repository): string
     {
-        return '';
         $bitbucketClient = $this->clientFactory->createForRepository($repository);
 
-        $prDetails = $bitbucketClient->getPullRequestDetails($repository->toIdentifier(), $pullRequest->getNumber());
-
-        return $prDetails['head']['repo']['private'] ? $prDetails['head']['repo']['ssh_url'] : $prDetails['head']['repo']['clone_url'];
+        return $bitbucketClient->getCloneUrl($repository->toIdentifier());
     }
 }
