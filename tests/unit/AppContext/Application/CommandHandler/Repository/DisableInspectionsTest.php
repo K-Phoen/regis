@@ -7,6 +7,7 @@ use Regis\AppContext\Application\Command;
 use Regis\AppContext\Application\CommandHandler;
 use Regis\AppContext\Domain\Entity;
 use Regis\AppContext\Domain\Repository;
+use Regis\Kernel;
 
 class DisableInspectionsTest extends TestCase
 {
@@ -23,8 +24,8 @@ class DisableInspectionsTest extends TestCase
 
     public function testItRemovesTheUserFromTheTeam()
     {
-        $owner = $this->createMock(Entity\User::class);
-        $repo = new Entity\Repository($owner, 'super/repo');
+        $owner = $this->createMock(Kernel\User::class);
+        $repo = new Entity\Repository($owner, Entity\Repository::TYPE_GITHUB, 'super/repo', 'repo name');
 
         $command = new Command\Repository\DisableInspections($repo);
 

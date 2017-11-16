@@ -24,7 +24,7 @@ class EnableInspectionsTest extends TestCase
     public function testItRemovesTheUserFromTheTeam()
     {
         $owner = $this->createMock(Entity\User::class);
-        $repo = new Entity\Repository($owner, 'super/repo');
+        $repo = new Entity\Repository($owner, Entity\Repository::TYPE_GITHUB, 'super/repo', 'repo name');
 
         $command = new Command\Repository\EnableInspections($repo);
 
