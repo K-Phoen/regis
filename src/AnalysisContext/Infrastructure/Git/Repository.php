@@ -6,11 +6,12 @@ namespace Regis\AnalysisContext\Infrastructure\Git;
 
 use Gitonomy\Git as Gitonomy;
 
-use Regis\AnalysisContext\Application\Vcs;
+use Regis\AnalysisContext\Application\Vcs\FileNotFound;
+use Regis\AnalysisContext\Application\Vcs\Repository as VcsRepository;
 use Regis\AnalysisContext\Domain\Model\Git as Model;
 use Symfony\Component\Filesystem\Filesystem;
 
-class Repository implements Vcs\Repository
+class Repository implements VcsRepository
 {
     /** @var Gitonomy\Repository */
     private $repository;
@@ -33,12 +34,13 @@ class Repository implements Vcs\Repository
     public function locateFile(string $name): string
     {
         $repositoryPath = $this->repository->getPath();
+        $filePath = $repositoryPath.'/'.$name;
 
-        if (!$this->filesystem->exists($name)) {
-            throw Vcs\FileNotFound::inRepository($repositoryPath, $name);
+        if (!$this->filesystem->exists($filePath)) {
+            throw FileNotFound::inRepository($repositoryPath, $name);
         }
 
-        return $repositoryPath.'/'.$name;
+        return $filePath;
     }
 
     public function getDiff(Model\Revisions $revisions): Model\Diff

@@ -82,13 +82,13 @@ class Client implements BitbucketClient
     private function hydrateRepository(array $data)
     {
         $cloneEndpoint = array_filter($data['links']['clone'], function (array $endpoint) {
-            return $endpoint['name'] === 'https';
+            return $endpoint['name'] === 'ssh';
         });
 
         return new Model\Repository(
             new Model\RepositoryIdentifier($data['uuid']),
             $data['name'],
-            $cloneEndpoint[0]['href'],
+            current($cloneEndpoint)['href'],
             $data['links']['html']['href']
         );
     }
