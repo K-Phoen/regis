@@ -26,8 +26,6 @@ abstract class Inspection
     private $head;
     private $failureTrace = '';
 
-    abstract public function getType(): string;
-
     protected static function createForRevisions(Repository $repository, string $head, string $base): self
     {
         $inspection = new static();

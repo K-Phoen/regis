@@ -19,11 +19,6 @@ class PullRequestInspection extends Inspection
         return $inspection;
     }
 
-    public function getType(): string
-    {
-        return self::TYPE_BITBUCKET_PR;
-    }
-
     public function getPullRequestNumber(): int
     {
         return $this->pullRequestNumber;
