@@ -17,11 +17,6 @@ class Analysis
     private $errorsCount;
     private $warningsCount;
 
-    public function id(): string
-    {
-        return $this->id;
-    }
-
     /**
      * @return Violation[]
      */

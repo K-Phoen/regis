@@ -8,9 +8,12 @@ use Predis\ClientInterface as RedisClient;
 use Regis\GithubContext\Application\Inspection\ViolationsCache;
 use Regis\GithubContext\Domain\Entity;
 use Regis\GithubContext\Domain\Model;
+use Tests\Regis\Helper\ObjectManipulationHelper;
 
 class ViolationsCacheTest extends TestCase
 {
+    use ObjectManipulationHelper;
+
     /** @var RedisClient */
     private $redis;
 
@@ -31,7 +34,13 @@ class ViolationsCacheTest extends TestCase
 
         $repositoryIdentifier = Model\RepositoryIdentifier::fromFullName('K-Phoen/test');
 
-        $this->violation = new Entity\Violation(Entity\Violation::WARNING, 'file.php', 42, 4, 'Test violation');
+        $this->violation = new Entity\Violation();
+        $this->setPrivateValue($this->violation, 'severity', Entity\Violation::WARNING);
+        $this->setPrivateValue($this->violation, 'file', 'file.php');
+        $this->setPrivateValue($this->violation, 'line', 42);
+        $this->setPrivateValue($this->violation, 'position', 4);
+        $this->setPrivateValue($this->violation, 'description', 'Test violation');
+
         $this->pullRequest = new Model\PullRequest($repositoryIdentifier, 2, 'head-sha', 'base-sha');
     }
 

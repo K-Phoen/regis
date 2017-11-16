@@ -19,15 +19,6 @@ class Violation
     /** @var Analysis */
     private $analysis;
 
-    public function __construct(int $severity, string $file, int $line, int $position, string $description)
-    {
-        $this->severity = $severity;
-        $this->file = $file;
-        $this->line = $line;
-        $this->position = $position;
-        $this->description = $description;
-    }
-
     public function analysis(): Analysis
     {
         return $this->analysis;

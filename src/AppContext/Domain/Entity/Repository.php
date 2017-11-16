@@ -41,6 +41,11 @@ class Repository
         $this->sharedSecret = $sharedSecret;
     }
 
+    public function getId(): string
+    {
+        return $this->type;
+    }
+
     public function getType(): string
     {
         return $this->type;

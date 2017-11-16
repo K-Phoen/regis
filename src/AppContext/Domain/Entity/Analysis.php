@@ -16,17 +16,12 @@ class Analysis
     private $type;
     private $report;
 
-    /** @var Violation[] */
-    private $violations = [];
+    /** @var ArrayCollection<Violation> */
+    private $violations;
 
     private $violationsMap;
     private $errorsCount;
     private $warningsCount;
-
-    public function __construct(array $violations = [])
-    {
-        $this->violations = new ArrayCollection($violations);
-    }
 
     public function id(): string
     {

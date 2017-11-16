@@ -2,118 +2,72 @@
 
 namespace Tests\Regis\GithubContext\Domain\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use PHPUnit\Framework\TestCase;
 use Regis\GithubContext\Domain\Entity\Analysis;
 use Regis\GithubContext\Domain\Entity\Violation;
+use Tests\Regis\Helper\ObjectManipulationHelper;
 
 class AnalysisTest extends TestCase
 {
+    use ObjectManipulationHelper;
+
     public function testItHasErrorsIfAtLeastOneViolationIsAnError()
     {
-        $error = $this->error('file', 42, 9);
-        $analysis = new Analysis([$error]);
+        $error = $this->error();
+        $analysis = $this->analysis([$error], 1);
 
         $this->assertTrue($analysis->hasErrors());
+        $this->assertEquals(1, $analysis->errorsCount());
         $this->assertFalse($analysis->hasWarnings());
+        $this->assertEquals(0, $analysis->warningsCount());
     }
 
     public function testItHasWarningsIfAtLeastOneViolationIsAWarning()
     {
-        $warning = $this->warning('file', 42, 9);
-        $analysis = new Analysis([$warning]);
+        $warning = $this->warning();
+        $analysis = $this->analysis([$warning], 0, 1);
 
         $this->assertTrue($analysis->hasWarnings());
+        $this->assertEquals(1, $analysis->warningsCount());
         $this->assertFalse($analysis->hasErrors());
+        $this->assertEquals(0, $analysis->errorsCount());
     }
 
-    public function testWarningCount()
+    public function testViolationsAreAccessibleAsAList()
     {
-        $error = $this->error('file', 42, 9);
-        $warning = $this->warning('file', 42, 9);
-        $warning2 = $this->warning('other file', 42, 9);
-        $analysis = new Analysis([$error, $warning, $warning2]);
+        $violations = [$this->warning(), $this->warning()];
+        $analysis = $this->analysis($violations);
 
-        $this->assertEquals(2, $analysis->warningsCount());
+        $this->assertEquals($violations, $analysis->violations());
     }
 
-    public function testErrorCount()
+    private function analysis(array $violations = [], int $errorsCount = 0, int $warningsCount = 0): Analysis
     {
-        $error = $this->error('file', 42, 9);
-        $error2 = $this->error('other file', 42, 9);
-        $warning = $this->warning('file', 42, 9);
-        $analysis = new Analysis([$error, $error2, $warning]);
+        $analysis = new Analysis();
+        $this->setPrivateValue($analysis, 'violations', new ArrayCollection($violations));
+        $this->setPrivateValue($analysis, 'warningsCount', $warningsCount);
+        $this->setPrivateValue($analysis, 'errorsCount', $errorsCount);
 
-        $this->assertEquals(2, $analysis->errorsCount());
+        return $analysis;
     }
 
-    /**
-     * @dataProvider analysisProvider
-     */
-    public function testAnalysisStatus(Analysis $analysis, string $expectedStatus)
-    {
-        $this->assertEquals($expectedStatus, $analysis->status());
-    }
-
-    public function analysisProvider()
-    {
-        $error = $this->error('file', 42, 9);
-        $warning = $this->warning('file', 42, 9);
-
-        $analysisWithOnlyWarning = new Analysis([$warning]);
-        $analysisWithOnlyError = new Analysis([$error]);
-        $analysisWithBoth = new Analysis([$error, $warning]);
-
-        $analysisWithoutViolations = new Analysis();
-
-        return [
-            [$analysisWithoutViolations, Analysis::STATUS_OK],
-            [$analysisWithOnlyWarning, Analysis::STATUS_WARNING],
-            [$analysisWithOnlyError, Analysis::STATUS_ERROR],
-            [$analysisWithBoth, Analysis::STATUS_ERROR],
-        ];
-    }
-
-    public function testViolationsCanBeRetrievedByFileAndLine()
-    {
-        $error = $this->error('file', 42, 9);
-        $error2 = $this->error('other file', 42, 9);
-        $warning = $this->warning('file', 42, 9);
-        $warning2 = $this->warning('file', 43, 9);
-
-        $analysis = new Analysis([$error, $error2, $warning, $warning2]);
-
-        $this->assertEmpty($analysis->violationsAtLine('inexistent file', 42));
-        $this->assertEmpty($analysis->violationsAtLine('file', 20));
-
-        $this->assertSame([$error, $warning], $analysis->violationsAtLine('file', 42));
-        $this->assertSame([$error2], $analysis->violationsAtLine('other file', 42));
-        $this->assertSame([$warning2], $analysis->violationsAtLine('file', 43));
-
-        $this->assertSame([$error, $error2, $warning, $warning2], $analysis->violations());
-    }
-
-    private function error(string $file, int $line, int $position): Violation
+    private function error(): Violation
     {
         $violation = $this->createMock(Violation::class);
 
         $violation->method('isWarning')->willReturn(false);
         $violation->method('isError')->willReturn(true);
-        $violation->method('file')->willReturn($file);
-        $violation->method('line')->willReturn($line);
-        $violation->method('position')->willReturn($position);
 
         return $violation;
     }
 
-    private function warning(string $file, int $line, int $position): Violation
+    private function warning(): Violation
     {
         $violation = $this->createMock(Violation::class);
 
         $violation->method('isWarning')->willReturn(true);
         $violation->method('isError')->willReturn(false);
-        $violation->method('file')->willReturn($file);
-        $violation->method('line')->willReturn($line);
-        $violation->method('position')->willReturn($position);
 
         return $violation;
     }

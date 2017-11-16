@@ -44,9 +44,7 @@ class Report
     {
         /** @var Analysis $analysis */
         foreach ($this->analyses as $analysis) {
-            foreach ($analysis->violations() as $violation) {
-                yield $violation;
-            }
+            yield from $analysis->violations();
         }
     }
 
