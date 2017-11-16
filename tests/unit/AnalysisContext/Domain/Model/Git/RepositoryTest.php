@@ -10,13 +10,10 @@ class RepositoryTest extends TestCase
     public function testItCanBeConstructedFromAnArray()
     {
         $repository = Git\Repository::fromArray([
-            'owner' => 'K-Phoen',
-            'name' => 'test',
+            'identifier' => 'K-Phoen/test',
             'clone_url' => 'clone url',
         ]);
 
-        $this->assertEquals('K-Phoen', $repository->getOwner());
-        $this->assertEquals('test', $repository->getName());
         $this->assertEquals('clone url', $repository->getCloneUrl());
         $this->assertEquals('K-Phoen/test', $repository->getIdentifier());
         $this->assertEquals('K-Phoen/test', (string) $repository);
@@ -24,11 +21,11 @@ class RepositoryTest extends TestCase
 
     public function testItCanBeTransformedToAnArray()
     {
-        $repository = new Git\Repository('K-Phoen', 'test', 'clone url');
-        $data = $repository->toArray();
+        $repository = new Git\Repository('K-Phoen/test', 'clone url');
 
-        $this->assertEquals('K-Phoen', $data['owner']);
-        $this->assertEquals('test', $data['name']);
-        $this->assertEquals('clone url', $data['clone_url']);
+        $this->assertEquals([
+            'identifier' => 'K-Phoen/test',
+            'clone_url' => 'clone url',
+        ], $repository->toArray());
     }
 }
