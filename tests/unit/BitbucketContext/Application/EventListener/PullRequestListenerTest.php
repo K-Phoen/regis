@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\BitbucketContext\Application\EventListener;
 
 use PHPUnit\Framework\TestCase;
@@ -13,7 +15,6 @@ use Regis\Kernel\Event\DomainEventWrapper;
 class PullRequestListenerTest extends TestCase
 {
     private $bus;
-    private $violationsCache;
     private $listener;
 
     public function setUp()

@@ -6,7 +6,7 @@ namespace Regis\BitbucketContext\Application\Event;
 
 use Regis\BitbucketContext\Domain\Model\PullRequest;
 
-class PullRequestUpdated
+class PullRequestRejected
 {
     private $pullRequest;
 
@@ -19,5 +19,4 @@ class PullRequestUpdated
     {
         return $this->pullRequest;
     }
-
 }

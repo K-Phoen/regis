@@ -16,6 +16,7 @@ class EventTransformer
 {
     const ACTION_OPEN_PULL_REQUEST = 'pullrequest:created';
     const ACTION_MERGE_PULL_REQUEST = 'pullrequest:fulfilled';
+    const ACTION_REJECT_PULL_REQUEST = 'pullrequest:rejected';
     const ACTION_UPDATE_PULL_REQUEST = 'pullrequest:updated';
 
     public function transform(Request $request)
@@ -30,6 +31,8 @@ class EventTransformer
                 return $this->transformPullRequestUpdated($payload);
             case self::ACTION_MERGE_PULL_REQUEST:
                 return $this->transformPullRequestMerged($payload);
+            case self::ACTION_REJECT_PULL_REQUEST:
+                return $this->transformPullRequestRejected($payload);
             default:
                 throw new Exception\EventNotHandled(sprintf('Event of type "%s" not handled.', $eventType));
         }
@@ -49,11 +52,18 @@ class EventTransformer
         return new Event\PullRequestMerged($pullRequest);
     }
 
+    private function transformPullRequestRejected(array $payload): Event\PullRequestRejected
+    {
+        $pullRequest = $this->transformPullRequest($payload);
+
+        return new Event\PullRequestRejected($pullRequest);
+    }
+
     private function transformPullRequestUpdated(array $payload): Event\PullRequestUpdated
     {
         $pullRequest = $this->transformPullRequest($payload);
 
-        return new Event\PullRequestUpdated($pullRequest, $payload['before'], $payload['after']);
+        return new Event\PullRequestUpdated($pullRequest);
     }
 
     private function transformPullRequest(array $payload): Model\PullRequest
