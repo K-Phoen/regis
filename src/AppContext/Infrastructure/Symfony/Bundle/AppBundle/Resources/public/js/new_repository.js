@@ -43,9 +43,9 @@
         terms = terms.toLowerCase();
 
         $(repositories).each(function (i, repo) {
-            var repoIdentifier = repo.identifier.toLowerCase();
+            var repoName = repo.name.toLowerCase();
 
-            if (repoIdentifier.indexOf(terms) !== -1) {
+            if (repoName.indexOf(terms) !== -1) {
                 matches.push(repo);
             }
         });

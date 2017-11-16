@@ -14,6 +14,7 @@ class WebhooksController extends Controller
 {
     public function webhookAction(Request $request)
     {
+        // TODO check that the repository is known
         try {
             $event = $this->get('regis.bitbucket.event_transformer')->transform($request);
             $this->info('Received payload of type {type}', [
