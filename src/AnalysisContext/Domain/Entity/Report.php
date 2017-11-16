@@ -26,7 +26,7 @@ class Report
         $this->rawDiff = $rawDiff;
     }
 
-    public function getId(): string
+    public function id(): string
     {
         return $this->id;
     }
@@ -47,6 +47,9 @@ class Report
         }
     }
 
+    /**
+     * @return Analysis[]
+     */
     public function analyses(): array
     {
         return $this->analyses->toArray();

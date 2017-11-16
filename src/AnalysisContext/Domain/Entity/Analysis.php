@@ -15,7 +15,6 @@ class Analysis
     private $warningsCount = 0;
     private $errorsCount = 0;
     private $type;
-    private $status = self::STATUS_OK;
 
     /** @var Violation[] */
     private $violations = [];
@@ -32,27 +31,22 @@ class Analysis
         $this->violations[] = $violation;
 
         if ($violation->isError()) {
-            $this->status = self::STATUS_ERROR;
             $this->errorsCount += 1;
         }
 
         if ($violation->isWarning()) {
             $this->warningsCount += 1;
         }
+    }
 
-        if ($this->status !== self::STATUS_ERROR && $violation->isWarning()) {
-            $this->status = self::STATUS_WARNING;
-        }
+    public function id(): string
+    {
+        return $this->id;
     }
 
     public function type(): string
     {
         return $this->type;
-    }
-
-    public function status(): string
-    {
-        return $this->status;
     }
 
     public function warningsCount(): int
