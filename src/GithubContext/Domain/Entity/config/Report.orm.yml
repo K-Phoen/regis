@@ -7,6 +7,12 @@ Regis\GithubContext\Domain\Entity\Report:
             type: guid
             generator: { strategy: UUID }
 
+    fields:
+        warningsCount:
+            type: integer
+        errorsCount:
+            type: integer
+
     oneToMany:
         analyses:
           targetEntity: Analysis

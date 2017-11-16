@@ -13,7 +13,9 @@ class Report
     const STATUS_ERROR = 'error';
 
     private $id;
-    /** @var ArrayCollection */
+    private $warningsCount = 0;
+    private $errorsCount = 0;
+    /** @var ArrayCollection<Analysis> */
     private $analyses;
     private $status = self::STATUS_OK;
     private $rawDiff;
@@ -33,6 +35,9 @@ class Report
     {
         $this->analyses->add($analysis);
 
+        $this->errorsCount += $analysis->errorsCount();
+        $this->warningsCount += $analysis->warningsCount();
+
         if ($analysis->hasErrors()) {
             $this->status = self::STATUS_ERROR;
         }
@@ -50,6 +55,16 @@ class Report
     public function status(): string
     {
         return $this->status;
+    }
+
+    public function warningsCount(): int
+    {
+        return $this->warningsCount;
+    }
+
+    public function errorsCount(): int
+    {
+        return $this->errorsCount;
     }
 
     public function violations(): \Traversable

@@ -90,33 +90,21 @@ class Analysis
 
     public function hasErrors(): bool
     {
-        return $this->errorsCount() !== 0;
-    }
-
-    public function errorsCount(): int
-    {
-        if ($this->errorsCount !== null) {
-            return $this->errorsCount;
-        }
-
-        return $this->errorsCount = array_reduce($this->violations(), function (int $count, Violation $violation) {
-            return $count + $violation->isError();
-        }, 0);
+        return $this->errorsCount !== 0;
     }
 
     public function hasWarnings(): bool
     {
-        return $this->warningsCount() !== 0;
+        return $this->warningsCount !== 0;
     }
 
     public function warningsCount(): int
     {
-        if ($this->warningsCount !== null) {
-            return $this->warningsCount;
-        }
+        return $this->warningsCount;
+    }
 
-        return $this->warningsCount = array_reduce($this->violations(), function (int $count, Violation $violation) {
-            return $count + $violation->isWarning();
-        }, 0);
+    public function errorsCount(): int
+    {
+        return $this->errorsCount;
     }
 }

@@ -114,6 +114,8 @@ class CreateSchema extends AbstractMigration
         $reports
             ->addColumn('id', 'uuid')
             ->addColumn('status', 'string')
+            ->addColumn('errors_count', 'integer', ['default' => 0])
+            ->addColumn('warnings_count', 'integer', ['default' => 0])
             ->addColumn('raw_diff', 'text')
         ;
 
@@ -121,6 +123,8 @@ class CreateSchema extends AbstractMigration
             ->addColumn('id', 'uuid')
             ->addColumn('report_id', 'uuid')
             ->addColumn('type', 'text')
+            ->addColumn('errors_count', 'integer', ['default' => 0])
+            ->addColumn('warnings_count', 'integer', ['default' => 0])
             ->addForeignKey('report_id', 'report', 'id')
         ;
 

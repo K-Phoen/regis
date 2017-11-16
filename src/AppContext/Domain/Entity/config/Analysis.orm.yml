@@ -10,6 +10,10 @@ Regis\AppContext\Domain\Entity\Analysis:
     fields:
         type:
             type: string
+        warningsCount:
+            type: integer
+        errorsCount:
+            type: integer
 
     oneToMany:
         violations:
