@@ -6,7 +6,6 @@ namespace Regis\GithubContext\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Regis\GithubContext\Domain\Model;
-use Regis\Kernel\Uuid;
 
 class Repository
 {
@@ -19,16 +18,9 @@ class Repository
     private $isInspectionEnabled = true;
     /** @var ArrayCollection */
     private $inspections;
-    private $owner;
 
-    public function __construct(GithubDetails $owner, string $identifier = null, string $sharedSecret = null)
-    {
-        $this->id = Uuid::create();
-        $this->owner = $owner->account();
-        $this->identifier = $identifier;
-        $this->sharedSecret = $sharedSecret;
-        $this->inspections = new ArrayCollection();
-    }
+    /** @var UserAccount */
+    private $owner;
 
     public function newSharedSecret(string $sharedSecret)
     {

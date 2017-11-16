@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Regis\GithubContext\Infrastructure\Repository;
+namespace Tests\Regis\AppContext\Infrastructure\Repository;
 
 use PHPUnit\Framework\TestCase;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
@@ -10,8 +10,8 @@ use Doctrine\ORM\QueryBuilder;
 use RulerZ\RulerZ;
 use RulerZ\Spec\Specification;
 
-use Regis\GithubContext\Domain\Entity;
-use Regis\GithubContext\Infrastructure\Repository\DoctrineTeams;
+use Regis\AppContext\Domain\Entity;
+use Regis\AppContext\Infrastructure\Repository\DoctrineTeams;
 
 class DoctrineTeamsTest extends TestCase
 {
@@ -70,7 +70,7 @@ class DoctrineTeamsTest extends TestCase
     }
 
     /**
-     * @expectedException \Regis\GithubContext\Domain\Repository\Exception\UniqueConstraintViolation
+     * @expectedException \Regis\AppContext\Domain\Repository\Exception\UniqueConstraintViolation
      */
     public function testSaveTeamWrapsUniqueConstraintsViolations()
     {
@@ -97,7 +97,7 @@ class DoctrineTeamsTest extends TestCase
     }
 
     /**
-     * @expectedException \Regis\GithubContext\Domain\Repository\Exception\NotFound
+     * @expectedException \Regis\AppContext\Domain\Repository\Exception\NotFound
      */
     public function testFindWhenTheTeamDoesNotExist()
     {

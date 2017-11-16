@@ -12,9 +12,12 @@ use Regis\GithubContext\Application\Github\ClientFactory;
 use Regis\GithubContext\Domain\Entity;
 use Regis\GithubContext\Domain\Model;
 use Regis\GithubContext\Domain\Repository;
+use Tests\Regis\Helper\ObjectManipulationHelper;
 
 class SchedulePullRequestTest extends TestCase
 {
+    use ObjectManipulationHelper;
+
     private $producer;
     private $repositoriesRepo;
     private $inspectionsRepo;
@@ -39,7 +42,8 @@ class SchedulePullRequestTest extends TestCase
         $this->repositoryIdentifier = Model\RepositoryIdentifier::fromFullName('repository/test');
         $this->pullRequest = $this->createMock(Model\PullRequest::class);
         $this->pullRequest->method('getRepositoryIdentifier')->willReturn($this->repositoryIdentifier);
-        $this->repository = new Entity\Repository($this->createMock(Entity\User::class), $this->repositoryIdentifier->getIdentifier());
+        $this->repository = new Entity\Repository();
+        $this->setPrivateValue($this->repository, 'identifier', 'repository/test');
 
         $this->repositoriesRepo->method('find')->with($this->repositoryIdentifier)->willReturn($this->repository);
 
@@ -119,8 +123,7 @@ class SchedulePullRequestTest extends TestCase
                 ], $payload['revisions']);
 
                 $this->assertEquals([
-                    'owner' => $this->repositoryIdentifier->getOwner(),
-                    'name' => $this->repositoryIdentifier->getName(),
+                    'identifier' => $this->repositoryIdentifier->getIdentifier(),
                     'clone_url' => 'clone-url',
                 ], $payload['repository']);
 

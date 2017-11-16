@@ -1,7 +1,7 @@
 services:
     regis.app.repository.users:
         class: Regis\AppContext\Infrastructure\Repository\DoctrineUsers
-        arguments: [ '@doctrine' ]
+        arguments: [ '@doctrine', '@rulerz' ]
 
     regis.app.repository.repositories:
         class: Regis\AppContext\Infrastructure\Repository\DoctrineRepositories

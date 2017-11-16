@@ -6,8 +6,8 @@ use PHPUnit\Framework\TestCase;
 use Github\Client as VendorClient;
 use Psr\Log\LoggerInterface;
 
+use Regis\GithubContext\Domain\Entity\GithubDetails;
 use Regis\GithubContext\Domain\Entity\Repository;
-use Regis\GithubContext\Domain\Entity\User;
 use Regis\GithubContext\Infrastructure\Github\Client;
 use Regis\GithubContext\Infrastructure\Github\ClientFactory;
 
@@ -27,7 +27,7 @@ class ClientFactoryTest extends TestCase
     public function testCreateForRepository()
     {
         $repository = $this->createMock(Repository::class);
-        $owner = $this->createMock(User::class);
+        $owner = $this->createMock(GithubDetails::class);
 
         $repository->expects($this->once())
             ->method('getOwner')

@@ -14,7 +14,6 @@ class Seed01User extends AbstractSeed
         $users->insert([
             [
                 'id' => 'd67ff369-704b-4315-a75f-b67f5bc9cc5a',
-                'username' => 'K-Phoen',
                 'roles' => 'ROLE_USER',
             ],
         ]);

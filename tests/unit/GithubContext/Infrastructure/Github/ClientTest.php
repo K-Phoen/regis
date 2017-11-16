@@ -9,7 +9,7 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 use Regis\GithubContext\Application\Github\IntegrationStatus;
-use Regis\GithubContext\Domain\Entity\User;
+use Regis\GithubContext\Domain\Entity\GithubDetails;
 use Regis\GithubContext\Domain\Model\PullRequest;
 use Regis\GithubContext\Domain\Model\Repository;
 use Regis\GithubContext\Domain\Model\RepositoryIdentifier;
@@ -41,9 +41,9 @@ class ClientTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->user = $this->createMock(User::class);
+        $this->user = $this->createMock(GithubDetails::class);
 
-        $this->user->method('getGithubAccessToken')->willReturn(self::API_TOKEN);
+        $this->user->method('getAccessToken')->willReturn(self::API_TOKEN);
 
         $this->prApi = $this->createMock(Api\PullRequest::class);
         $this->repoApi = $this->createMock(Api\Repo::class);

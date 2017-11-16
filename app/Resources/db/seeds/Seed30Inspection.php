@@ -14,6 +14,7 @@ class Seed30Inspection extends AbstractSeed
         $inspections->insert([
             [
                 'id' => 'fca728fc-9be0-40a1-a7d3-94f3fe4e118a',
+                'repository_id' => 'f733e45a-6fc7-404b-879d-656d68e0498d',
                 'report_id' => null,
                 'created_at' => '2017-11-08 21:36:00',
                 'started_at' => null,
@@ -30,7 +31,6 @@ class Seed30Inspection extends AbstractSeed
             [
                 'id' => 'f733e45a-6fc7-404b-879d-656d68e0498d',
                 'pull_request_number' => 14,
-                'repository_id' => '2017-11-08 21:36:00',
             ],
         ]);
 

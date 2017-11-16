@@ -1,7 +1,7 @@
 services:
     regis.github.repository.repositories:
         class: Regis\GithubContext\Infrastructure\Repository\DoctrineRepositories
-        arguments: [ '@doctrine.orm.entity_manager', '@rulerz' ]
+        arguments: ['@doctrine.orm.entity_manager']
 
     regis.github.repository.pull_request_inspections:
         class: Regis\GithubContext\Infrastructure\Repository\DoctrinePullRequestInspections
@@ -9,4 +9,4 @@ services:
 
     regis.github.repository.users:
         class: Regis\GithubContext\Infrastructure\Repository\DoctrineUsers
-        arguments: [ '@doctrine.orm.entity_manager', '@rulerz' ]
+        arguments: ['@doctrine.orm.entity_manager']

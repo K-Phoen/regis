@@ -14,8 +14,4 @@ interface Users
 
     public function findByGithubId(int $id): Entity\GithubDetails;
     public function findByAccountId(string $id): Entity\GithubDetails;
-
-    public function findById(string $id): Entity\User;
-
-    public function matching(Specification $spec): \Traversable;
 }

@@ -16,7 +16,7 @@ class Analysis
     private $type;
     private $report;
 
-    /** @var Violation[] */
+    /** @var ArrayCollection<Violation> */
     private $violations = [];
 
     private $violationsMap;
