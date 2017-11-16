@@ -14,8 +14,6 @@ Regis\BitbucketContext\Domain\Entity\Repository:
     fields:
         identifier:
             type: string
-        type:
-            type: string
         isInspectionEnabled:
             type: boolean
             options: { default: 1 }

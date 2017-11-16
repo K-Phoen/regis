@@ -6,32 +6,17 @@ namespace Regis\BitbucketContext\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Regis\BitbucketContext\Domain\Model;
-use Regis\Kernel;
 
 class Repository
 {
-    const TYPE_BITBUCKET = 'bitbucket';
-
     private $id;
     private $identifier;
-    private $type = self::TYPE_BITBUCKET;
     private $isInspectionEnabled = true;
     /** @var ArrayCollection */
     private $inspections;
+
+    /** @var UserAccount */
     private $owner;
-
-    public function __construct(BitbucketDetails $owner, string $identifier)
-    {
-        $this->id = Kernel\Uuid::create();
-        $this->owner = $owner->account();
-        $this->identifier = $identifier;
-        $this->inspections = new ArrayCollection();
-    }
-
-    public function getType(): string
-    {
-        return $this->type;
-    }
 
     public function toIdentifier(): Model\RepositoryIdentifier
     {
