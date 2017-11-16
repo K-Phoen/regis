@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AppContext\Application\CommandHandler\Team;
 
 use PHPUnit\Framework\TestCase;

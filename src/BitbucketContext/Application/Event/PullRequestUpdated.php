@@ -19,5 +19,4 @@ class PullRequestUpdated
     {
         return $this->pullRequest;
     }
-
 }

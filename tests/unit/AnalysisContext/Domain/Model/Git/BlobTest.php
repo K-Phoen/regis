@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Domain\Model\Git;
 
 use PHPUnit\Framework\TestCase;
@@ -11,8 +13,8 @@ class BlobTest extends TestCase
     {
         $blob = new Git\Blob('hash', 'content', 'text/plain');
 
-        $this->assertEquals('hash', $blob->getHash());
-        $this->assertEquals('content', $blob->getContent());
-        $this->assertEquals('text/plain', $blob->getMimetype());
+        $this->assertSame('hash', $blob->getHash());
+        $this->assertSame('content', $blob->getContent());
+        $this->assertSame('text/plain', $blob->getMimetype());
     }
 }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Application\EventListener;
 
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;

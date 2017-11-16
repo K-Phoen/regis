@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Regis\GithubContext\Application\Github;
 
 use Symfony\Component\HttpFoundation\Request;
-
 use Regis\GithubContext\Application\Event;
 use Regis\GithubContext\Domain\Model;
 

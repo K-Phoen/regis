@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace Regis\BitbucketContext\Application\CommandHandler\Inspection;
 
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
-
 use Regis\BitbucketContext\Application\Command;
 use Regis\BitbucketContext\Application\Bitbucket\ClientFactory;
 use Regis\BitbucketContext\Domain\Entity;
-use Regis\BitbucketContext\Domain\Model\PullRequest;
 use Regis\BitbucketContext\Domain\Repository;
 
 class SchedulePullRequest

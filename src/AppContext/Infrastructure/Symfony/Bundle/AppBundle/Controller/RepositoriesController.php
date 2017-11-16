@@ -7,7 +7,6 @@ namespace Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-
 use Regis\AppContext\Application\Command;
 use Regis\AppContext\Application\Spec;
 use Regis\AppContext\Domain\Entity;

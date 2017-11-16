@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Infrastructure\PhpMd;
 
 use PHPUnit\Framework\TestCase;

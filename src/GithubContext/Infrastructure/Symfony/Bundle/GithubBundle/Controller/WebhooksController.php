@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
-
 use Regis\GithubContext\Application\Github\Exception\EventNotHandled;
 use Regis\GithubContext\Application\Github\Exception\PayloadSignature;
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Regis\AppContext\Application\Command\Repository;
 
 use RulerZ\Spec\Specification;
-
 use Regis\AppContext\Application\Command;
 use Regis\AppContext\Application\Spec\Repository;
 use Regis\AppContext\Domain\Entity;

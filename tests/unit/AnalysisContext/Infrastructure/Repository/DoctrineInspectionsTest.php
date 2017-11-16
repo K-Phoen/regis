@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Infrastructure\Repository;
 
 use PHPUnit\Framework\TestCase;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-
 use Regis\AnalysisContext\Infrastructure\Repository\DoctrineInspections;
 use Regis\AnalysisContext\Domain\Entity;
 

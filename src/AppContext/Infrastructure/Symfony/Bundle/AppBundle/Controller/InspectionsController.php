@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Domain\Entity as GhEntity;
 use Regis\AppContext\Domain\Entity;

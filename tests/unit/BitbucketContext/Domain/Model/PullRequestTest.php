@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\BitbucketContext\Domain\Entity;
 
 use PHPUnit\Framework\TestCase;
 use Regis\BitbucketContext\Domain\Model\PullRequest;
-use Regis\BitbucketContext\Domain\Model\Repository;
 use Regis\BitbucketContext\Domain\Model\RepositoryIdentifier;
 
 class PullRequestTest extends TestCase

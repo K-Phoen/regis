@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Regis\BitbucketContext\Application\Bitbucket;
 
 use Symfony\Component\HttpFoundation\Request;
-
 use Regis\BitbucketContext\Application\Event;
 use Regis\BitbucketContext\Domain\Model;
 

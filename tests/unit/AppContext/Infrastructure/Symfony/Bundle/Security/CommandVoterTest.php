@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Security;
 
 use PHPUnit\Framework\TestCase;
@@ -7,7 +9,6 @@ use RulerZ\RulerZ;
 use RulerZ\Spec\Specification;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\VoterInterface;
-
 use Regis\AppContext\Domain\Entity;
 use Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Security\CommandVoter;
 
@@ -39,7 +40,7 @@ class CommandVoterTest extends TestCase
 
         $result = $this->voter->vote($this->token, $subject, [$attribute]);
 
-        $this->assertEquals(VoterInterface::ACCESS_ABSTAIN, $result);
+        $this->assertSame(VoterInterface::ACCESS_ABSTAIN, $result);
     }
 
     public function testItDeniesTheAccessIfTheCommandDoesNotExist()
@@ -48,7 +49,7 @@ class CommandVoterTest extends TestCase
 
         $result = $this->voter->vote($this->token, $subject, ['COMMAND_THAT_DOES_NOT_EXIST']);
 
-        $this->assertEquals(VoterInterface::ACCESS_DENIED, $result);
+        $this->assertSame(VoterInterface::ACCESS_DENIED, $result);
     }
 
     public function testItAllowsTheAccessIfTheCommandIsNotSecure()
@@ -57,7 +58,7 @@ class CommandVoterTest extends TestCase
 
         $result = $this->voter->vote($this->token, $subject, ['COMMAND_TEAM::CREATE']);
 
-        $this->assertEquals(VoterInterface::ACCESS_GRANTED, $result);
+        $this->assertSame(VoterInterface::ACCESS_GRANTED, $result);
     }
 
     public function testItDelegatesTheAuthorisationCheckToRulerZForCommandsSecuredBySpecification()
@@ -73,7 +74,7 @@ class CommandVoterTest extends TestCase
 
         $result = $this->voter->vote($this->token, $subject, ['COMMAND_TEAM::ADD_REPOSITORY']);
 
-        $this->assertEquals(VoterInterface::ACCESS_GRANTED, $result);
+        $this->assertSame(VoterInterface::ACCESS_GRANTED, $result);
     }
 
     public function unsupportedAttributesProvider()

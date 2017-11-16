@@ -6,7 +6,6 @@ namespace Regis\GithubContext\Infrastructure\Github;
 
 use Psr\Log\LoggerInterface as Logger;
 use Regis\GithubContext\Application\Github\IntegrationStatus;
-
 use Regis\GithubContext\Application\Github\Client as GithubClient;
 use Regis\GithubContext\Domain\Entity\GithubDetails;
 use Regis\GithubContext\Domain\Model;

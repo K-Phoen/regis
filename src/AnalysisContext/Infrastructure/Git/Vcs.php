@@ -6,7 +6,6 @@ namespace Regis\AnalysisContext\Infrastructure\Git;
 
 use Gitonomy\Git as Gitonomy;
 use Psr\Log\LoggerInterface as Logger;
-
 use Regis\AnalysisContext\Application\Vcs\Git;
 use Regis\AnalysisContext\Domain\Model;
 use Symfony\Component\Filesystem\Filesystem;

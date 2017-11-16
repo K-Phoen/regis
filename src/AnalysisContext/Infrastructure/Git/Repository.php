@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Infrastructure\Git;
 
 use Gitonomy\Git as Gitonomy;
-
 use Regis\AnalysisContext\Application\Vcs\FileNotFound;
 use Regis\AnalysisContext\Application\Vcs\Repository as VcsRepository;
 use Regis\AnalysisContext\Domain\Model\Git as Model;

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Domain\Model\Git;
 
 use PHPUnit\Framework\TestCase;
@@ -14,16 +16,16 @@ class RepositoryTest extends TestCase
             'clone_url' => 'clone url',
         ]);
 
-        $this->assertEquals('clone url', $repository->getCloneUrl());
-        $this->assertEquals('K-Phoen/test', $repository->getIdentifier());
-        $this->assertEquals('K-Phoen/test', (string) $repository);
+        $this->assertSame('clone url', $repository->getCloneUrl());
+        $this->assertSame('K-Phoen/test', $repository->getIdentifier());
+        $this->assertSame('K-Phoen/test', (string) $repository);
     }
 
     public function testItCanBeTransformedToAnArray()
     {
         $repository = new Git\Repository('K-Phoen/test', 'clone url');
 
-        $this->assertEquals([
+        $this->assertSame([
             'identifier' => 'K-Phoen/test',
             'clone_url' => 'clone url',
         ], $repository->toArray());

@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Security;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
-
 use Regis\AppContext\Domain\Entity\User;
 use Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Security\Context;
 

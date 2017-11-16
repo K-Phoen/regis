@@ -7,7 +7,6 @@ namespace Regis\BitbucketContext\Infrastructure\Bitbucket;
 use Bitbucket\API\Http\Response\Pager;
 use Bitbucket\API\Repositories;
 use Psr\Log\LoggerInterface as Logger;
-
 use Bitbucket\API\Api as VendorClient;
 use Regis\BitbucketContext\Application\Bitbucket\Client as BitbucketClient;
 use Regis\BitbucketContext\Domain\Entity\BitbucketDetails;

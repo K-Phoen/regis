@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Domain\Entity;
 
 use PHPUnit\Framework\TestCase;
@@ -30,20 +32,20 @@ class AnalysisTest extends TestCase
         $report = new Report('dummy diff');
         $analysis = new Analysis($report, 'test');
 
-        $this->assertEquals(0, $analysis->errorsCount());
-        $this->assertEquals(0, $analysis->warningsCount());
+        $this->assertSame(0, $analysis->errorsCount());
+        $this->assertSame(0, $analysis->warningsCount());
 
         $analysis->addViolation($warning);
-        $this->assertEquals(0, $analysis->errorsCount());
-        $this->assertEquals(1, $analysis->warningsCount());
+        $this->assertSame(0, $analysis->errorsCount());
+        $this->assertSame(1, $analysis->warningsCount());
 
         $analysis->addViolation($error);
-        $this->assertEquals(1, $analysis->errorsCount());
-        $this->assertEquals(1, $analysis->warningsCount());
+        $this->assertSame(1, $analysis->errorsCount());
+        $this->assertSame(1, $analysis->warningsCount());
 
         $analysis->addViolation($warning);
-        $this->assertEquals(1, $analysis->errorsCount());
-        $this->assertEquals(2, $analysis->warningsCount());
+        $this->assertSame(1, $analysis->errorsCount());
+        $this->assertSame(2, $analysis->warningsCount());
     }
 
     public function testItKnowsIfThereAreWarningsAndErrors()

@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AppContext\Application\Command\Team;
 
 use PHPUnit\Framework\TestCase;
 use RulerZ\Spec\Specification;
-
 use Regis\AppContext\Application\Command;
 use Regis\AppContext\Domain\Entity;
 

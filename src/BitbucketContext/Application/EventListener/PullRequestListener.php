@@ -7,7 +7,6 @@ namespace Regis\BitbucketContext\Application\EventListener;
 use League\Tactician\CommandBus;
 use Regis\Kernel\Event\DomainEventWrapper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
 use Regis\BitbucketContext\Application\Event;
 use Regis\BitbucketContext\Application\Command;
 

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\GithubContext\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
@@ -11,8 +13,8 @@ class ReviewCommentTest extends TestCase
     {
         $comment = new ReviewComment('file.php', 2, 'comment content');
 
-        $this->assertEquals('file.php', $comment->getFile());
-        $this->assertEquals(2, $comment->getPosition());
-        $this->assertEquals('comment content', $comment->getContent());
+        $this->assertSame('file.php', $comment->getFile());
+        $this->assertSame(2, $comment->getPosition());
+        $this->assertSame('comment content', $comment->getContent());
     }
 }

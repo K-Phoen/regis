@@ -6,7 +6,6 @@ namespace Tests\Regis\BitbucketContext\Application\Github;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-
 use Regis\BitbucketContext\Application\Event;
 use Regis\BitbucketContext\Application\Bitbucket\EventTransformer;
 
@@ -37,13 +36,13 @@ class EventTransformerTest extends TestCase
 
         $pr = $event->getPullRequest();
 
-        $this->assertEquals(2, $pr->getNumber());
-        $this->assertEquals('777d3ce2ebf9', $pr->getHead());
-        $this->assertEquals('ba36390280a1', $pr->getBase());
+        $this->assertSame(2, $pr->getNumber());
+        $this->assertSame('777d3ce2ebf9', $pr->getHead());
+        $this->assertSame('ba36390280a1', $pr->getBase());
 
         $repo = $pr->getRepository();
 
-        $this->assertEquals('{7ebc3569-bee1-48be-a539-b9f097d6ff1f}', $repo->value());
+        $this->assertSame('{7ebc3569-bee1-48be-a539-b9f097d6ff1f}', $repo->value());
     }
 
     public function testPullRequestUpdatedEventsAreTransformed()
@@ -54,13 +53,13 @@ class EventTransformerTest extends TestCase
 
         $pr = $event->getPullRequest();
 
-        $this->assertEquals(2, $pr->getNumber());
-        $this->assertEquals('5ddd1517368d', $pr->getHead());
-        $this->assertEquals('ba36390280a1', $pr->getBase());
+        $this->assertSame(2, $pr->getNumber());
+        $this->assertSame('5ddd1517368d', $pr->getHead());
+        $this->assertSame('ba36390280a1', $pr->getBase());
 
         $repo = $pr->getRepository();
 
-        $this->assertEquals('{7ebc3569-bee1-48be-a539-b9f097d6ff1f}', $repo->value());
+        $this->assertSame('{7ebc3569-bee1-48be-a539-b9f097d6ff1f}', $repo->value());
     }
 
     public function testPullRequestRejectedEventsAreTransformed()
@@ -71,13 +70,13 @@ class EventTransformerTest extends TestCase
 
         $pr = $event->getPullRequest();
 
-        $this->assertEquals(2, $pr->getNumber());
-        $this->assertEquals('5ddd1517368d', $pr->getHead());
-        $this->assertEquals('ba36390280a1', $pr->getBase());
+        $this->assertSame(2, $pr->getNumber());
+        $this->assertSame('5ddd1517368d', $pr->getHead());
+        $this->assertSame('ba36390280a1', $pr->getBase());
 
         $repo = $pr->getRepository();
 
-        $this->assertEquals('{7ebc3569-bee1-48be-a539-b9f097d6ff1f}', $repo->value());
+        $this->assertSame('{7ebc3569-bee1-48be-a539-b9f097d6ff1f}', $repo->value());
     }
 
     private function pullRequestOpenedPayload(): Request

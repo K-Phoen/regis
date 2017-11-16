@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Application\Inspection;
 
 use Regis\AnalysisContext\Application\Inspection\PhpMd;
@@ -31,7 +33,7 @@ class PhpMdTest extends InspectionTestCase
 
     public function testItHasAType()
     {
-        $this->assertEquals('phpmd', $this->inspection->getType());
+        $this->assertSame('phpmd', $this->inspection->getType());
     }
 
     public function testWithNoAddedFiles()
@@ -141,21 +143,21 @@ class PhpMdTest extends InspectionTestCase
         /** @var Entity\Violation $firstViolation */
         $firstViolation = $violations[0];
         $this->assertInstanceOf(Entity\Violation::class, $firstViolation);
-        $this->assertEquals(Entity\Violation::WARNING, $firstViolation->severity());
+        $this->assertSame(Entity\Violation::WARNING, $firstViolation->severity());
         $this->assertTrue($firstViolation->isWarning());
         $this->assertFalse($firstViolation->isError());
-        $this->assertEquals('test.php', $firstViolation->file());
-        $this->assertEquals('some warning message', $firstViolation->description());
-        $this->assertEquals(24 + 1, $firstViolation->position());
+        $this->assertSame('test.php', $firstViolation->file());
+        $this->assertSame('some warning message', $firstViolation->description());
+        $this->assertSame(24 + 1, $firstViolation->position());
 
         /** @var Entity\Violation $secondViolation */
         $secondViolation = $violations[1];
         $this->assertInstanceOf(Entity\Violation::class, $secondViolation);
-        $this->assertEquals(Entity\Violation::ERROR, $secondViolation->severity());
+        $this->assertSame(Entity\Violation::ERROR, $secondViolation->severity());
         $this->assertFalse($secondViolation->isWarning());
         $this->assertTrue($secondViolation->isError());
-        $this->assertEquals('test.php', $secondViolation->file());
-        $this->assertEquals('some error message', $secondViolation->description());
-        $this->assertEquals(42 + 1, $secondViolation->position());
+        $this->assertSame('test.php', $secondViolation->file());
+        $this->assertSame('some error message', $secondViolation->description());
+        $this->assertSame(42 + 1, $secondViolation->position());
     }
 }

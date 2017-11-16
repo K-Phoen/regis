@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Security;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException as SymfonyAccessDenied;
-
 use Regis\Kernel\Security\Exception\AccessDenied;
 use Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Security\AccessDeniedListener;
 

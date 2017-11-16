@@ -16,7 +16,6 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Domain\Git;
 
 use Gitonomy\Git\Parser\ParserBase;
-
 use Regis\AnalysisContext\Domain\Model\Git\Blob;
 use Regis\AnalysisContext\Domain\Model\Git\Diff;
 

@@ -7,7 +7,6 @@ namespace Regis\GithubContext\Application\EventListener;
 use Regis\Kernel\Event\DomainEventWrapper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface as UrlGenerator;
-
 use Regis\GithubContext\Application\Event;
 use Regis\GithubContext\Application\Github\Client;
 use Regis\GithubContext\Application\Github\ClientFactory;

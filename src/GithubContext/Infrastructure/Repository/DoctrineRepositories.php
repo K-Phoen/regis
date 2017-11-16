@@ -7,7 +7,6 @@ namespace Regis\GithubContext\Infrastructure\Repository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
-
 use Regis\GithubContext\Domain\Entity;
 use Regis\GithubContext\Domain\Repository;
 

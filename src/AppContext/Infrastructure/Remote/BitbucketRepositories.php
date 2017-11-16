@@ -10,7 +10,6 @@ use Regis\BitbucketContext\Application\Bitbucket\ClientFactory as BitbucketClien
 use Regis\BitbucketContext\Domain\Repository as BitbucketRepository;
 use Regis\BitbucketContext\Domain\Model as BitbucketModel;
 use Regis\BitbucketContext\Domain\Repository\Exception as BitbucketException;
-
 use Regis\Kernel;
 
 class BitbucketRepositories implements Repositories

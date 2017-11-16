@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Security;
 
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
-
 use Regis\Kernel\Security\Context as SecurityContext;
 use Regis\AppContext\Domain\Entity;
 

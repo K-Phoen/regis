@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Domain\Entity;
 
 use PHPUnit\Framework\TestCase;
@@ -23,19 +25,19 @@ class ReportTest extends TestCase
         $errorAnalysis = $this->analysisMock(Analysis::STATUS_ERROR);
         $report = new Report('raw diff');
 
-        $this->assertEquals(Report::STATUS_OK, $report->status());
+        $this->assertSame(Report::STATUS_OK, $report->status());
 
         $report->addAnalysis($okAnalysis);
-        $this->assertEquals(Analysis::STATUS_OK, $report->status());
+        $this->assertSame(Analysis::STATUS_OK, $report->status());
 
         $report->addAnalysis($warningAnalysis);
-        $this->assertEquals(Analysis::STATUS_WARNING, $report->status());
+        $this->assertSame(Analysis::STATUS_WARNING, $report->status());
 
         $report->addAnalysis($errorAnalysis);
-        $this->assertEquals(Analysis::STATUS_ERROR, $report->status());
+        $this->assertSame(Analysis::STATUS_ERROR, $report->status());
 
         $report->addAnalysis($warningAnalysis2);
-        $this->assertEquals(Analysis::STATUS_ERROR, $report->status());
+        $this->assertSame(Analysis::STATUS_ERROR, $report->status());
     }
 
     public function testItCountsTheErrorsAndWarnings()
@@ -45,20 +47,20 @@ class ReportTest extends TestCase
         $errorAnalysis = $this->analysisMock(Analysis::STATUS_ERROR, 2);
         $report = new Report('raw diff');
 
-        $this->assertEquals(0, $report->warningsCount());
-        $this->assertEquals(0, $report->errorsCount());
+        $this->assertSame(0, $report->warningsCount());
+        $this->assertSame(0, $report->errorsCount());
 
         $report->addAnalysis($okAnalysis);
-        $this->assertEquals(0, $report->warningsCount());
-        $this->assertEquals(0, $report->errorsCount());
+        $this->assertSame(0, $report->warningsCount());
+        $this->assertSame(0, $report->errorsCount());
 
         $report->addAnalysis($warningAnalysis);
-        $this->assertEquals(3, $report->warningsCount());
-        $this->assertEquals(0, $report->errorsCount());
+        $this->assertSame(3, $report->warningsCount());
+        $this->assertSame(0, $report->errorsCount());
 
         $report->addAnalysis($errorAnalysis);
-        $this->assertEquals(3, $report->warningsCount());
-        $this->assertEquals(2, $report->errorsCount());
+        $this->assertSame(3, $report->warningsCount());
+        $this->assertSame(2, $report->errorsCount());
     }
 
     private function analysisMock(string $status, int $errorsCount = 0, int $warningsCount = 0): Analysis

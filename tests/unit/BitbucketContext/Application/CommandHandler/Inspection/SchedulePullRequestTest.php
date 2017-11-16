@@ -6,7 +6,6 @@ namespace Tests\Regis\BitbucketContext\Application\CommandHandler\Inspection;
 
 use PHPUnit\Framework\TestCase;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
-
 use Regis\BitbucketContext\Application\Command;
 use Regis\BitbucketContext\Application\CommandHandler;
 use Regis\BitbucketContext\Application\Bitbucket\Client;
@@ -112,7 +111,7 @@ class SchedulePullRequestTest extends TestCase
                     'base' => 'base sha',
                 ], $payload['revisions']);
 
-                $this->assertEquals([
+                $this->assertSame([
                     'identifier' => $this->repositoryIdentifier->value(),
                     'clone_url' => 'clone-url',
                 ], $payload['repository']);

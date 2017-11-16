@@ -6,7 +6,6 @@ namespace Regis\AnalysisContext\Application\EventListener;
 
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
 use Regis\Kernel\Event as KernelEvent;
 use Regis\AnalysisContext\Application\Event;
 

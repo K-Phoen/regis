@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use RulerZ\RulerZ;
 use RulerZ\Spec\Specification;
-
 use Regis\AppContext\Domain\Entity;
 use Regis\AppContext\Domain\Repository;
 

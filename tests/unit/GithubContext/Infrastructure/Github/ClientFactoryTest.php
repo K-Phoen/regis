@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\GithubContext\Infrastructure\Github;
 
 use PHPUnit\Framework\TestCase;
 use Github\Client as VendorClient;
 use Psr\Log\LoggerInterface;
-
 use Regis\GithubContext\Domain\Entity\GithubDetails;
 use Regis\GithubContext\Domain\Entity\Repository;
 use Regis\GithubContext\Infrastructure\Github\Client;

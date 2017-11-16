@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AppContext\Application\CommandHandler\Middleware;
 
 use PHPUnit\Framework\TestCase;
 use RulerZ\RulerZ;
 use RulerZ\Spec\Specification;
-
 use Regis\AppContext\Domain\Entity\User;
 use Regis\Kernel\Security\Context;
 use Regis\AppContext\Application\Command;

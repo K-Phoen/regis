@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AppContext\Domain\Entity;
 
 use PHPUnit\Framework\TestCase;
@@ -28,14 +30,14 @@ class RepositoryTest extends TestCase
         $this->assertEmpty($repository->getInspections());
         $this->assertEmpty($repository->getTeams());
     }
-    
+
     public function testTheSharedSecretCanBeDefinedAndUpdated()
     {
         $owner = $this->createMock(Kernel\User::class);
         $repository = new Repository($owner, Repository::TYPE_GITHUB, 'repo-identifier', 'name', 'shared secret');
 
         $this->assertSame('shared secret', $repository->getSharedSecret());
-        
+
         $repository->newSharedSecret('new secret');
         $this->assertSame('new secret', $repository->getSharedSecret());
     }

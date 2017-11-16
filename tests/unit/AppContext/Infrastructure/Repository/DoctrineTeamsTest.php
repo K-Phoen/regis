@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AppContext\Infrastructure\Repository;
 
 use PHPUnit\Framework\TestCase;
@@ -9,7 +11,6 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use RulerZ\RulerZ;
 use RulerZ\Spec\Specification;
-
 use Regis\AppContext\Domain\Entity;
 use Regis\AppContext\Infrastructure\Repository\DoctrineTeams;
 

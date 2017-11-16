@@ -6,7 +6,6 @@ namespace Regis\AppContext\Application\CommandHandler\Middleware;
 
 use League\Tactician\Middleware;
 use RulerZ\RulerZ;
-
 use Regis\AppContext\Application\Command\SecureCommandBySpecification;
 use Regis\AppContext\Application\Command\SecureCommand;
 use Regis\Kernel\Security\Context as SecurityContext;

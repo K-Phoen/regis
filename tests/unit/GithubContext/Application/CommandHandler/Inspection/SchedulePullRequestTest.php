@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\GithubContext\Application\CommandHandler\Inspection;
 
 use PHPUnit\Framework\TestCase;
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
-
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Application\CommandHandler;
 use Regis\GithubContext\Application\Github\Client;
@@ -122,7 +123,7 @@ class SchedulePullRequestTest extends TestCase
                     'base' => 'base-revision',
                 ], $payload['revisions']);
 
-                $this->assertEquals([
+                $this->assertSame([
                     'identifier' => $this->repositoryIdentifier->getIdentifier(),
                     'clone_url' => 'clone-url',
                 ], $payload['repository']);

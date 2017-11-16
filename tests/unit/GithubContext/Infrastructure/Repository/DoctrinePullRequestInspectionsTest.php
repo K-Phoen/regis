@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\GithubContext\Infrastructure\Repository;
 
 use PHPUnit\Framework\TestCase;
 use Doctrine\Common\Persistence\ObjectRepository;
 use Doctrine\ORM\EntityManagerInterface;
-
 use Regis\GithubContext\Infrastructure\Repository\DoctrinePullRequestInspections;
 use Regis\GithubContext\Domain\Entity;
 use Symfony\Bridge\Doctrine\RegistryInterface;

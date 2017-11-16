@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Domain\Model\Git\Diff;
 
 use PHPUnit\Framework\TestCase;
@@ -17,10 +19,10 @@ class ChangeTest extends TestCase
             $lines = []
         );
 
-        $this->assertEquals($oldStart, $change->getRangeOldStart());
-        $this->assertEquals($oldCount, $change->getRangeOldCount());
-        $this->assertEquals($newStart, $change->getRangeNewStart());
-        $this->assertEquals($newCount, $change->getRangeNewCount());
-        $this->assertEquals($lines, $change->getLines());
+        $this->assertSame($oldStart, $change->getRangeOldStart());
+        $this->assertSame($oldCount, $change->getRangeOldCount());
+        $this->assertSame($newStart, $change->getRangeNewStart());
+        $this->assertSame($newCount, $change->getRangeNewCount());
+        $this->assertSame($lines, $change->getLines());
     }
 }

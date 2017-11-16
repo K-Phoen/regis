@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Domain\Model\Git;
 
 use PHPUnit\Framework\TestCase;
@@ -19,9 +21,9 @@ class DiffTest extends TestCase
 
         $diff = new Git\Diff($revisions, [], 'raw diff');
 
-        $this->assertEquals('base sha', $diff->getBase());
-        $this->assertEquals('head sha', $diff->getHead());
-        $this->assertEquals('raw diff', $diff->getRawDiff());
+        $this->assertSame('base sha', $diff->getBase());
+        $this->assertSame('head sha', $diff->getHead());
+        $this->assertSame('raw diff', $diff->getRawDiff());
     }
 
     public function testGetAddedPhpFiles()
@@ -33,7 +35,7 @@ class DiffTest extends TestCase
         $phpFile = $this->phpFile();
         $diff = new Git\Diff($this->revisions(), [$binaryFile, $deletedFile, $renamedFile, $textFile, $phpFile], 'raw diff');
 
-        $this->assertEquals([$phpFile], iterator_to_array($diff->getAddedPhpFiles()));
+        $this->assertSame([$phpFile], iterator_to_array($diff->getAddedPhpFiles()));
     }
 
     public function testGetAddedTextFilesExcludesBinaryFiles()
@@ -42,8 +44,8 @@ class DiffTest extends TestCase
         $textFile = $this->textFile();
         $diff = new Git\Diff($this->revisions(), [$binaryFile, $textFile], 'raw diff');
 
-        $this->assertEquals([$textFile], iterator_to_array($diff->getAddedTextFiles()));
-        $this->assertEquals([$binaryFile, $textFile], $diff->getFiles());
+        $this->assertSame([$textFile], iterator_to_array($diff->getAddedTextFiles()));
+        $this->assertSame([$binaryFile, $textFile], $diff->getFiles());
     }
 
     public function testGetAddedTextFilesExcludesRenamedFiles()
@@ -52,8 +54,8 @@ class DiffTest extends TestCase
         $textFile = $this->textFile();
         $diff = new Git\Diff($this->revisions(), [$renamedFile, $textFile], 'raw diff');
 
-        $this->assertEquals([$textFile], iterator_to_array($diff->getAddedTextFiles()));
-        $this->assertEquals([$renamedFile, $textFile], $diff->getFiles());
+        $this->assertSame([$textFile], iterator_to_array($diff->getAddedTextFiles()));
+        $this->assertSame([$renamedFile, $textFile], $diff->getFiles());
     }
 
     public function testGetAddedTextFilesExcludesDeletedFiles()
@@ -62,8 +64,8 @@ class DiffTest extends TestCase
         $textFile = $this->textFile();
         $diff = new Git\Diff($this->revisions(), [$deletedFile, $textFile], 'raw diff');
 
-        $this->assertEquals([$textFile], iterator_to_array($diff->getAddedTextFiles()));
-        $this->assertEquals([$deletedFile, $textFile], $diff->getFiles());
+        $this->assertSame([$textFile], iterator_to_array($diff->getAddedTextFiles()));
+        $this->assertSame([$deletedFile, $textFile], $diff->getFiles());
     }
 
     private function revisions(): Git\Revisions

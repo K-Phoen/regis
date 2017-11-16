@@ -8,7 +8,6 @@ use RulerZ\RulerZ;
 use RulerZ\Spec\Specification;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Authorization\Voter\Voter;
-
 use Regis\AppContext\Domain\Entity;
 use Regis\AppContext\Application\Command;
 

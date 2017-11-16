@@ -10,7 +10,6 @@ use Regis\GithubContext\Application\Github\ClientFactory as GithubClientFactory;
 use Regis\GithubContext\Domain\Model as GithubModel;
 use Regis\GithubContext\Domain\Repository as GithubRepository;
 use Regis\GithubContext\Domain\Repository\Exception as GithubException;
-
 use Regis\Kernel;
 
 class GithubRepositories implements Repositories

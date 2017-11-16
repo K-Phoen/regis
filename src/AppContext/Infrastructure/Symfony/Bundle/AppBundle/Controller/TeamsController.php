@@ -6,7 +6,6 @@ namespace Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-
 use Regis\AppContext\Application\Spec;
 use Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Form;
 use Regis\GithubContext\Application\Command;

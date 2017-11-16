@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Infrastructure\Vcs;
 
 use PHPUnit\Framework\TestCase;
 use Gitonomy\Git as Gitonomy;
-
 use Regis\AnalysisContext\Domain\Model\Git as Model;
 use Regis\AnalysisContext\Infrastructure\Git\Repository;
 use Symfony\Component\Filesystem\Filesystem;
@@ -43,7 +44,7 @@ class RepositoryTest extends TestCase
         $this->assertInstanceOf(Model\Diff::class, $diff);
         $this->assertCount(4, $diff->getFiles());
 
-        $this->assertEquals([
+        $this->assertSame([
             'src/Regis/Application/Inspection/PhpMd.php',
             'tests/Regis/Application/Inspection/CodeSnifferTest.php',
             'tests/Regis/Application/Inspection/InspectionTestCase.php',
@@ -52,6 +53,6 @@ class RepositoryTest extends TestCase
             return $file->getNewName();
         }, $diff->getFiles()));
 
-        $this->assertNotEquals('dummy content', $diff->getFiles()[0]->getNewContent());
+        $this->assertNotSame('dummy content', $diff->getFiles()[0]->getNewContent());
     }
 }

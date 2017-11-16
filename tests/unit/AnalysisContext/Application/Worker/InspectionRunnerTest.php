@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Application\Worker;
 
 use PHPUnit\Framework\TestCase;
 use League\Tactician\CommandBus;
 use PhpAmqpLib\Message\AMQPMessage;
-
 use Regis\AnalysisContext\Application\Worker\InspectionRunner;
 use Regis\AnalysisContext\Application\Command;
 

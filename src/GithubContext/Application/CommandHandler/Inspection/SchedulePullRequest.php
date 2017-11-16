@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Regis\GithubContext\Application\CommandHandler\Inspection;
 
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
-
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Application\Github\ClientFactory;
 use Regis\GithubContext\Domain\Entity;

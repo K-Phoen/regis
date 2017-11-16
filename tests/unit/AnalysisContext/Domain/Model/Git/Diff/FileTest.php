@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Domain\Model\Git\Diff;
 
 use PHPUnit\Framework\TestCase;
@@ -102,7 +104,7 @@ class FileTest extends TestCase
     {
         $files = (new DiffParser())->parse($diffContent);
 
-        $this->assertEquals($expectedPosition, $files[0]->findPositionForLine($line));
+        $this->assertSame($expectedPosition, $files[0]->findPositionForLine($line));
     }
 
     public function positionProvider(): array

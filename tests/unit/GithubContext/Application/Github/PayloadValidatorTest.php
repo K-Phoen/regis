@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\GithubContext\Application\Github;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-
 use Regis\GithubContext\Application\Github\Exception\PayloadSignature;
 use Regis\GithubContext\Application\Github\PayloadValidator;
 use Regis\GithubContext\Domain\Entity;

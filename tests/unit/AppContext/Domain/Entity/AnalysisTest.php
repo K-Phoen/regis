@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AppContext\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -18,9 +20,9 @@ class AnalysisTest extends TestCase
         $analysis = $this->analysis([$error], 1);
 
         $this->assertTrue($analysis->hasErrors());
-        $this->assertEquals(1, $analysis->errorsCount());
+        $this->assertSame(1, $analysis->errorsCount());
         $this->assertFalse($analysis->hasWarnings());
-        $this->assertEquals(0, $analysis->warningsCount());
+        $this->assertSame(0, $analysis->warningsCount());
     }
 
     public function testItHasWarningsIfAtLeastOneViolationIsAWarning()
@@ -29,9 +31,9 @@ class AnalysisTest extends TestCase
         $analysis = $this->analysis([$warning], 0, 1);
 
         $this->assertTrue($analysis->hasWarnings());
-        $this->assertEquals(1, $analysis->warningsCount());
+        $this->assertSame(1, $analysis->warningsCount());
         $this->assertFalse($analysis->hasErrors());
-        $this->assertEquals(0, $analysis->errorsCount());
+        $this->assertSame(0, $analysis->errorsCount());
     }
 
     /**
@@ -39,7 +41,7 @@ class AnalysisTest extends TestCase
      */
     public function testAnalysisStatus(Analysis $analysis, string $expectedStatus)
     {
-        $this->assertEquals($expectedStatus, $analysis->status());
+        $this->assertSame($expectedStatus, $analysis->status());
     }
 
     public function analysisProvider()

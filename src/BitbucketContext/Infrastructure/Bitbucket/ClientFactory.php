@@ -35,7 +35,7 @@ class ClientFactory implements BitbucketClientFactory
         $bitbucket = new Api([], $this->httpClient);
         $bitbucket->getClient()->addListener(
             new OAuth2Listener(
-                ['access_token'  => $user->getAccessToken()]
+                ['access_token' => $user->getAccessToken()]
             )
         );
 

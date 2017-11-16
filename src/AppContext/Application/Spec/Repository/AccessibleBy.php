@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Regis\AppContext\Application\Spec\Repository;
 
 use RulerZ\Spec\ComposedSpecification;
-
 use Regis\AppContext\Domain\Entity;
 
 class AccessibleBy extends ComposedSpecification
