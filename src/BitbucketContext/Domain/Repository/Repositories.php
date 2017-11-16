@@ -8,8 +8,6 @@ use Regis\BitbucketContext\Domain\Entity;
 
 interface Repositories
 {
-    public function save(Entity\Repository $team);
-
     /**
      * @throws \Regis\BitbucketContext\Domain\Repository\Exception\NotFound
      */

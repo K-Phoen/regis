@@ -11,12 +11,6 @@ class DoctrineRepositories implements Repository\Repositories
 {
     use RepositoryHelper;
 
-    public function save(Entity\Repository $inspections)
-    {
-        $this->entityManager()->persist($inspections);
-        $this->entityManager()->flush();
-    }
-
     public function find(string $id): Entity\Repository
     {
         $inspection = $this->entityManager()->getRepository(Entity\Repository::class)->findOneBy(['identifier' => $id]);
