@@ -38,6 +38,11 @@ class Analysis
         return $this->type;
     }
 
+    public function report(): Report
+    {
+        return $this->report;
+    }
+
     public function status(): string
     {
         if ($this->hasErrors()) {
