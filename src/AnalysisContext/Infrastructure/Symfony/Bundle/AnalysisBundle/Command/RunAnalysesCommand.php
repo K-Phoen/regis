@@ -27,14 +27,9 @@ class RunAnalysesCommand extends ContainerAwareCommand
             ->setName('regis:analyses:run')
             ->setDescription('Runs the analyses on the given repository and revisions and displays the result.')
             ->addOption(
-                'repository-owner', 'o',
+                'repository-identifier', null,
                 InputOption::VALUE_REQUIRED,
-                'Name of the repository owner.'
-            )
-            ->addOption(
-                'repository-name', 'r',
-                InputOption::VALUE_REQUIRED,
-                'Name of the repository.'
+                'Identifier of the repository..'
             )
             ->addOption(
                 'clone-url', null,
@@ -61,12 +56,8 @@ class RunAnalysesCommand extends ContainerAwareCommand
     {
         $io = new SymfonyStyle($input, $output);
 
-        if (!$input->getOption('repository-owner')) {
-            $input->setOption('repository-owner', $io->ask('Repository owner?'));
-        }
-
-        if (!$input->getOption('repository-name')) {
-            $input->setOption('repository-name', $io->ask('Repository name?'));
+        if (!$input->getOption('repository-identifier')) {
+            $input->setOption('repository-identifier', $io->ask('Repository identifier?'));
         }
 
         if (!$input->getOption('clone-url')) {
@@ -89,8 +80,7 @@ class RunAnalysesCommand extends ContainerAwareCommand
     {
         $revision = new Git\Revisions($input->getOption('base'), $input->getOption('head'));
         $repository = new Git\Repository(
-            $input->getOption('repository-owner'),
-            $input->getOption('repository-name'),
+            $input->getOption('repository-identifier'),
             $input->getOption('clone-url')
         );
 

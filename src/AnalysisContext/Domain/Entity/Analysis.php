@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Regis\AnalysisContext\Domain\Entity;
 
+use Regis\Kernel;
+
 class Analysis
 {
     const STATUS_OK = 'ok';
@@ -21,6 +23,7 @@ class Analysis
 
     public function __construct(Report $report, string $type)
     {
+        $this->id = Kernel\Uuid::create();
         $this->report = $report;
         $this->type = $type;
     }

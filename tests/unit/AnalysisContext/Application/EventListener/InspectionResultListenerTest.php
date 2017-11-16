@@ -8,9 +8,12 @@ use Regis\AnalysisContext\Application\EventListener\InspectionResultListener;
 use Regis\AnalysisContext\Application\Event;
 use Regis\AnalysisContext\Domain\Entity\Inspection;
 use Regis\Kernel\Event\DomainEventWrapper;
+use Tests\Regis\Helper\ObjectManipulationHelper;
 
 class InspectionResultListenerTest extends TestCase
 {
+    use ObjectManipulationHelper;
+
     private $producer;
     private $listener;
 
@@ -32,12 +35,12 @@ class InspectionResultListenerTest extends TestCase
 
     public function testItPublishesAnEventWhenAnInspectionChangesItsStatus()
     {
-        $inspection = $this->createMock(Inspection::class);
+        $inspection = new Inspection();
+        $this->setPrivateValue($inspection, 'id', 'inspection-id');
+        $this->setPrivateValue($inspection, 'type', 'github_pr');
+
         $domainEvent = new Event\InspectionFinished($inspection);
         $event = new DomainEventWrapper($domainEvent);
-
-        $inspection->method('id')->willReturn('inspection-id');
-        $inspection->method('type')->willReturn('github_pr');
 
         $this->producer->expects($this->once())
             ->method('publish')

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Regis\Kernel;
 
 class Report
 {
@@ -22,6 +23,7 @@ class Report
 
     public function __construct(string $rawDiff)
     {
+        $this->id = Kernel\Uuid::create();
         $this->analyses = new ArrayCollection();
         $this->rawDiff = $rawDiff;
     }
@@ -45,14 +47,6 @@ class Report
         if ($this->status !== self::STATUS_ERROR && $analysis->hasWarnings()) {
             $this->status = self::STATUS_WARNING;
         }
-    }
-
-    /**
-     * @return Analysis[]
-     */
-    public function analyses(): array
-    {
-        return $this->analyses->toArray();
     }
 
     public function status(): string

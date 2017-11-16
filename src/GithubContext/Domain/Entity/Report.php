@@ -10,7 +10,7 @@ class Report
 {
     private $id;
 
-    /** @var ArrayCollection */
+    /** @var ArrayCollection<Analysis> */
     private $analyses;
     private $warningsCount;
     private $errorsCount;
@@ -18,11 +18,6 @@ class Report
     public function getId(): string
     {
         return $this->id;
-    }
-
-    public function analyses(): \Traversable
-    {
-        return $this->analyses;
     }
 
     public function violations(): \Traversable

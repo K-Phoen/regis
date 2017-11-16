@@ -9,6 +9,20 @@ use Regis\AnalysisContext\Domain\Entity\Report;
 
 class AnalysisTest extends TestCase
 {
+    public function testAnIdentifierIsGenerated()
+    {
+        $analysis = new Analysis(new Report('dummy diff'), 'test');
+
+        $this->assertNotEmpty($analysis->id());
+    }
+
+    public function testTheTypeIsSaved()
+    {
+        $analysis = new Analysis(new Report('dummy diff'), 'test');
+
+        $this->assertSame('test', $analysis->type());
+    }
+
     public function testTheErrorsAndWarningsCountsEvolvesWhenAddingViolations()
     {
         $error = Violation::newError('file', 42, 9, 'description');
