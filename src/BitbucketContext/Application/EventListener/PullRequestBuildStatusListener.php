@@ -40,7 +40,7 @@ class PullRequestBuildStatusListener implements EventSubscriberInterface
 
         $this->setBuildStatus(
             $inspection->getRepository(),
-            BuildStatus::inProgress($inspection->getId(),'Inspection started…', $this->getInspectionUrl($inspection)),
+            BuildStatus::inProgress($inspection->getHead(),'Inspection started…', $this->getInspectionUrl($inspection)),
             $inspection->getHead()
         );
     }
@@ -54,7 +54,7 @@ class PullRequestBuildStatusListener implements EventSubscriberInterface
         if (!$inspection->hasReport()) {
             $this->setBuildStatus(
                 $inspection->getRepository(),
-                BuildStatus::failed($inspection->getId(), 'Internal error.', $this->getInspectionUrl($inspection)),
+                BuildStatus::failed($inspection->getHead(), 'Internal error.', $this->getInspectionUrl($inspection)),
                 $inspection->getHead()
             );
 
@@ -71,7 +71,7 @@ class PullRequestBuildStatusListener implements EventSubscriberInterface
 
         $this->setBuildStatus(
             $inspection->getRepository(),
-            new BuildStatus($inspection->getId(), $state, $message, $this->getInspectionUrl($inspection)),
+            new BuildStatus($inspection->getHead(), $state, $message, $this->getInspectionUrl($inspection)),
             $inspection->getHead()
         );
     }
@@ -84,7 +84,7 @@ class PullRequestBuildStatusListener implements EventSubscriberInterface
 
         $this->setBuildStatus(
             $inspection->getRepository(),
-            BuildStatus::failed($inspection->getId(), 'Inspection failed.', $this->getInspectionUrl($inspection)),
+            BuildStatus::failed($inspection->getHead(), 'Inspection failed.', $this->getInspectionUrl($inspection)),
             $inspection->getHead()
         );
     }

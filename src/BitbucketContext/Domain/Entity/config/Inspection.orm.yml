@@ -33,13 +33,13 @@ Regis\BitbucketContext\Domain\Entity\Inspection:
             type: string
         failureTrace:
             type: text
-#
-#    oneToOne:
-#        report:
-#          targetEntity: Report
-#          joinColumn:
-#              name: report_id
-#              referencedColumnName: id
+
+    oneToOne:
+        report:
+          targetEntity: Report
+          joinColumn:
+              name: report_id
+              referencedColumnName: id
 
     manyToOne:
         repository:

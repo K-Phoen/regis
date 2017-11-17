@@ -10,24 +10,24 @@ class BuildStatus
     const STATE_INPROGRESS = 'INPROGRESS';
     const STATE_FAILED = 'FAILED';
 
-    private $inspectionId;
+    private $key;
     private $state;
     private $description;
     private $targetUrl;
 
-    public static function inProgress(string $inspectionId, string $description, string $url): self
+    public static function inProgress(string $key, string $description, string $url): self
     {
-        return new static($inspectionId, self::STATE_INPROGRESS, $description, $url);
+        return new static($key, self::STATE_INPROGRESS, $description, $url);
     }
 
-    public static function failed(string $inspectionId, string $description, string $url): self
+    public static function failed(string $key, string $description, string $url): self
     {
-        return new static($inspectionId, self::STATE_FAILED, $description, $url);
+        return new static($key, self::STATE_FAILED, $description, $url);
     }
 
     public function __construct(string $inspectionId, string $state, string $description, string $url)
     {
-        $this->inspectionId = $inspectionId;
+        $this->key = $inspectionId;
         $this->state = $state;
         $this->description = $description;
         $this->targetUrl = $url;
@@ -35,7 +35,7 @@ class BuildStatus
 
     public function key(): string
     {
-        return 'regis-'.$this->inspectionId;
+        return 'regis-'.$this->key;
     }
 
     public function state(): string
