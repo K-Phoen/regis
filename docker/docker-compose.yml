@@ -52,6 +52,18 @@ services:
             - ..:/var/www/html
         command: './docker/wait-for-it.sh rabbit:5672 -- ./bin/console rabbitmq:consumer -vvv --env=dev github_analysis_status'
 
+    bitbucket_analysis_status_worker:
+        build:
+            context: .
+            dockerfile: Dockerfile-web
+        depends_on:
+            - rabbit
+            - redis
+            - db
+        volumes:
+            - ..:/var/www/html
+        command: './docker/wait-for-it.sh rabbit:5672 -- ./bin/console rabbitmq:consumer -vvv --env=dev bitbucket_analysis_status'
+
     web:
         build:
             context: .

@@ -43,3 +43,12 @@ old_sound_rabbit_mq:
                 routing_keys: [ analysis.github_pr.status ]
             callback: regis.github.worker.analysis_status
             enable_logger: true
+
+        bitbucket_analysis_status:
+            connection: default
+            exchange_options: {name: 'analysis-status', type: direct}
+            queue_options:
+                name: 'bitbucket-analysis-status'
+                routing_keys: [ analysis.bitbucket_pr.status ]
+            callback: regis.bitbucket.worker.analysis_status
+            enable_logger: true

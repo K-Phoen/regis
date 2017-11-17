@@ -13,4 +13,6 @@ interface Client
     public function getCloneUrl(Model\RepositoryIdentifier $repository): string;
 
     public function getPullRequest(Model\RepositoryIdentifier $repository, int $number): Model\PullRequest;
+
+    public function setBuildStatus(Model\RepositoryIdentifier $repository, BuildStatus $status, string $revision);
 }

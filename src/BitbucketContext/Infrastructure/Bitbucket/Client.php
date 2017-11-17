@@ -8,6 +8,7 @@ use Bitbucket\API\Http\Response\Pager;
 use Bitbucket\API\Repositories;
 use Psr\Log\LoggerInterface as Logger;
 use Bitbucket\API\Api as VendorClient;
+use Regis\BitbucketContext\Application\Bitbucket\BuildStatus;
 use Regis\BitbucketContext\Application\Bitbucket\Client as BitbucketClient;
 use Regis\BitbucketContext\Domain\Entity\BitbucketDetails;
 use Regis\BitbucketContext\Domain\Model;
@@ -86,6 +87,29 @@ class Client implements BitbucketClient
             $decodedResponse['source']['commit']['hash'],
             $decodedResponse['destination']['commit']['hash']
         );
+    }
+
+    public function setBuildStatus(Model\RepositoryIdentifier $repository, BuildStatus $status, string $revision)
+    {
+        $this->logger->info('Setting build status to {state} for repository {repository}', [
+            'repository' => $repository->value(),
+            'head' => $revision,
+            'description' => $status->description(),
+            'state' => $status->state(),
+        ]);
+
+        $parameters = [
+            'state' => $status->state(),
+            'key' => sha1($status->key()), // a valid key has at most 40 characters
+            'name' => 'Regis',
+            'url' => $status->url(),
+            'description' => $status->description(),
+        ];
+
+        /** @var Repositories\Commits\BuildStatuses $buildStatuses */
+        $buildStatuses = $this->client->api('Repositories\\Commits\\BuildStatuses');
+
+        $buildStatuses->create($this->user->getUsername(), $repository->value(), $revision, $parameters);
     }
 
     private function parseRepositories(array $response)

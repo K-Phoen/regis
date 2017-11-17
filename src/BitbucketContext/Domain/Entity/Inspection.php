@@ -8,8 +8,6 @@ use Regis\Kernel\Uuid;
 
 abstract class Inspection
 {
-    const TYPE_BITBUCKET_PR = 'bitbucket_pr';
-
     const STATUS_SCHEDULED = 'scheduled';
     const STATUS_STARTED = 'started';
     const STATUS_FINISHED = 'finished';
