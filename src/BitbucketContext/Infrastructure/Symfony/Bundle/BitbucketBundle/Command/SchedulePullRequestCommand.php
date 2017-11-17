@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Command;
+namespace Regis\BitbucketContext\Infrastructure\Symfony\Bundle\BitbucketBundle\Command;
 
-use Regis\GithubContext\Domain\Model;
+use Regis\BitbucketContext\Domain\Model;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Regis\GithubContext\Application\Command;
-use Regis\GithubContext\Domain\Entity;
+use Regis\BitbucketContext\Application\Command;
+use Regis\BitbucketContext\Domain\Entity;
 
 class SchedulePullRequestCommand extends ContainerAwareCommand
 {
@@ -21,8 +21,8 @@ class SchedulePullRequestCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('regis:github:schedule-pull-request')
-            ->setDescription('Schedules the given GitHub pull request for inspection.')
+            ->setName('regis:bitbucket:schedule-pull-request')
+            ->setDescription('Schedules the given Bitbucket pull request for inspection.')
             ->addOption(
                 'repository', 'r',
                 InputOption::VALUE_REQUIRED,
@@ -59,7 +59,7 @@ class SchedulePullRequestCommand extends ContainerAwareCommand
     {
         $repositoryEntity = $this->findRepository($input->getOption('repository'));
 
-        $output->writeln(sprintf('Fetching details for GitHub PR #%d', (int) $input->getOption('pull-request')));
+        $output->writeln(sprintf('Fetching details for Bitbucket PR #%d', (int) $input->getOption('pull-request')));
         $pullRequest = $this->findPrDetails($repositoryEntity, (int) $input->getOption('pull-request'));
 
         $output->writeln(sprintf('Scheduling inspection PR #%d (base: %s, HEAD: %s)', $pullRequest->getNumber(), $pullRequest->getBase(), $pullRequest->getHead()));
@@ -72,19 +72,13 @@ class SchedulePullRequestCommand extends ContainerAwareCommand
 
     private function findRepository($identifier): Entity\Repository
     {
-        return $this->getContainer()->get('regis.github.repository.repositories')->find($identifier);
+        return $this->getContainer()->get('regis.bitbucket.repository.repositories')->find($identifier);
     }
 
     private function findPrDetails(Entity\Repository $repository, int $prNumber): Model\PullRequest
     {
-        $githubClient = $this->getContainer()->get('regis.github.client_factory')->createForRepository($repository);
-        $prDetails = $githubClient->getPullRequestDetails($repository->toIdentifier(), $prNumber);
+        $bitbucketClient = $this->getContainer()->get('regis.bitbucket.client_factory')->createForRepository($repository);
 
-        return new Model\PullRequest(
-            $repository->toIdentifier(),
-            $prNumber,
-            $prDetails['head']['sha'],
-            $prDetails['base']['sha']
-        );
+        return $bitbucketClient->getPullRequest($repository->toIdentifier(), $prNumber);
     }
 }

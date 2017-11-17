@@ -17,7 +17,6 @@ class Client implements BitbucketClient
     private $client;
     private $user;
     private $logger;
-    private $authenticated = false;
 
     public function __construct(VendorClient $client, BitbucketDetails $user, Logger $logger)
     {
@@ -65,6 +64,28 @@ class Client implements BitbucketClient
         $repositoryModel = $this->hydrateRepository($decodedResponse['values'][0]);
 
         return $repositoryModel->getCloneUrl();
+    }
+
+    public function getPullRequest(Model\RepositoryIdentifier $repository, int $number): Model\PullRequest
+    {
+        $this->logger->info('Fetching pull request {number} for repository {repository_id}', [
+            'repository_id' => $repository->value(),
+            'number' => $number,
+            'owner_id' => $this->user->accountId(),
+        ]);
+
+        /** @var Repositories\PullRequests $pullRequests */
+        $pullRequests = $this->client->api('Repositories\\PullRequests');
+
+        $response = $pullRequests->get($this->user->getUsername(), $repository->value(), $number);
+        $decodedResponse = json_decode($response->getContent(), true);
+
+        return new Model\PullRequest(
+            $repository,
+            $number,
+            $decodedResponse['source']['commit']['hash'],
+            $decodedResponse['destination']['commit']['hash']
+        );
     }
 
     private function parseRepositories(array $response)
