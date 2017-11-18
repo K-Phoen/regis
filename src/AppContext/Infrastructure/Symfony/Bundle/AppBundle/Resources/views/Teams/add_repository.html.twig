@@ -30,7 +30,7 @@
             <ul id="team-repo-list">
                 {% for repo in team.repositories %}
                     <li>
-                        <span class="name">{{ repo.identifier }}</span>
+                        <span class="name">{{ repo.name }}</span>
                         <button type="button" data-identifier="{{ repo.identifier }}" class="remove-repo btn btn-danger btn-xs">Remove</button>
                     </li>
                 {% else %}
@@ -52,6 +52,6 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-    <script src="{{ asset('bundles/regisbackend/js/team_add_repository.js') }}"></script>
-    <script src="{{ asset('bundles/regisbackend/js/team_remove_repository.js') }}"></script>
+    <script src="{{ asset('bundles/regisapp/js/team_add_repository.js') }}"></script>
+    <script src="{{ asset('bundles/regisapp/js/team_remove_repository.js') }}"></script>
 {% endblock %}

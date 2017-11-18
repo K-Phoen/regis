@@ -20,6 +20,14 @@ Regis\AppContext\Domain\Entity\User:
             targetEntity: Team
             mappedBy: owner
 
+    oneToOne:
+        githubProfile:
+            targetEntity: GithubProfile
+            mappedBy: user
+        bitbucketProfile:
+            targetEntity: BitbucketProfile
+            mappedBy: user
+
     manyToMany:
         teams:
             targetEntity: Team

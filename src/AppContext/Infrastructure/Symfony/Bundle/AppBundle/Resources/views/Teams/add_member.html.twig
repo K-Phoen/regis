@@ -30,7 +30,7 @@
             <ul id="members-list">
                 {% for member in team.members %}
                     <li>
-                        <span class="name">{{ member.username }} – {{ member.email }}</span>
+                        <span class="name">{{ member.username }}</span>
                         <button type="button" data-identifier="{{ member.id }}" class="remove-user btn btn-danger btn-xs">Remove</button>
                     </li>
                 {% else %}
@@ -52,6 +52,6 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
 
-    <script src="{{ asset('bundles/regisbackend/js/team_add_member.js') }}"></script>
-    <script src="{{ asset('bundles/regisbackend/js/team_remove_member.js') }}"></script>
+    <script src="{{ asset('bundles/regisapp/js/team_add_member.js') }}"></script>
+    <script src="{{ asset('bundles/regisapp/js/team_remove_member.js') }}"></script>
 {% endblock %}

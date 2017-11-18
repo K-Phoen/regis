@@ -17,7 +17,7 @@ class Matches extends AbstractSpecification
 
     public function getRule()
     {
-        return 'username LIKE :search';
+        return 'githubProfile.username LIKE :search OR bitbucketProfile.username LIKE :search';
     }
 
     public function getParameters()

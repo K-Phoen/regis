@@ -14,6 +14,8 @@ class User implements Kernel\User, UserInterface
     private $repositories;
     private $ownedTeams;
     private $teams;
+    private $githubProfile;
+    private $bitbucketProfile;
 
     public function accountId(): string
     {
@@ -23,6 +25,22 @@ class User implements Kernel\User, UserInterface
     public function getId(): string
     {
         return $this->id;
+    }
+
+    /**
+     * @return GithubProfile|null
+     */
+    public function getGithubProfile()
+    {
+        return $this->githubProfile;
+    }
+
+    /**
+     * @return BitbucketProfile|null
+     */
+    public function getBitbucketProfile()
+    {
+        return $this->bitbucketProfile;
     }
 
     public function getRepositories(): \Traversable

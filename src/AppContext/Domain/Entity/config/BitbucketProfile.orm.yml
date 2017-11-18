@@ -1,0 +1,20 @@
+Regis\AppContext\Domain\Entity\BitbucketProfile:
+    type: entity
+    table: user_bitbucket
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: NONE }
+
+    fields:
+        username:
+            type: string
+
+    oneToOne:
+        user:
+            targetEntity: User
+            inversedBy: bitbucketProfile
+            joinColumn:
+                name: user_id
+                referencedColumnName: id

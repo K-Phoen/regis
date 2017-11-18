@@ -8,7 +8,7 @@
         $(repositories).each(function(i, repo) {
             resultsLlist.append(
                 '<li>' +
-                    repo.identifier +
+                    repo.name +
                     '<button type="button" data-identifier="'+repo.identifier+'" class="add-repository btn btn-primary btn-xs">Add</button>' +
                 '</li>'
             );

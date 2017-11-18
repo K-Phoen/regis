@@ -38,6 +38,7 @@ class CreateOrUpdateUserTest extends TestCase
             ->with($this->callback(function (Entity\GithubDetails $user) {
                 $this->assertSame(42, $user->getRemoteId());
                 $this->assertSame('access token', $user->getAccessToken());
+                $this->assertSame('user', $user->getUsername());
 
                 return true;
             }));

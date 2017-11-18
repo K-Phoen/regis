@@ -8,8 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Regis\AppContext\Application\Spec;
-use Regis\GithubContext\Application\Command;
-use Regis\GithubContext\Domain\Entity;
+use Regis\AppContext\Application\Command;
+use Regis\AppContext\Domain\Entity;
 
 class TeamAddRepositoryController extends Controller
 {
@@ -58,11 +58,12 @@ class TeamAddRepositoryController extends Controller
         if (empty($q)) {
             $results = [];
         } else {
-            $results = $this->get('regis.github.repository.repositories')->matching(new Spec\Repository\Matches($q));
+            $results = $this->get('regis.app.repository.repositories')->matching(new Spec\Repository\Matches($q));
             // TODO eurk
             $results = array_map(function (Entity\Repository $repo) {
                 return [
                     'identifier' => $repo->getIdentifier(),
+                    'name' => $repo->getName(),
                 ];
             }, iterator_to_array($results));
         }

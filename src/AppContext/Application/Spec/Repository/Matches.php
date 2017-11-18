@@ -17,7 +17,7 @@ class Matches extends AbstractSpecification
 
     public function getRule()
     {
-        return 'identifier LIKE :search';
+        return 'identifier LIKE :search OR name LIKE :search';
     }
 
     public function getParameters()

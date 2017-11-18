@@ -10,6 +10,8 @@ Regis\GithubContext\Domain\Entity\GithubDetails:
     fields:
         remoteId:
             type: integer
+        username:
+            type: string
         accessToken:
             type: string
 

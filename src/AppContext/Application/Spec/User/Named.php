@@ -17,7 +17,7 @@ class Named extends AbstractSpecification
 
     public function getRule()
     {
-        return 'username = :username';
+        return 'githubProfile.username = :username OR bitbucketProfile.username = :username';
     }
 
     public function getParameters()

@@ -8,8 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Regis\AppContext\Application\Spec;
-use Regis\GithubContext\Application\Command;
-use Regis\GithubContext\Domain\Entity;
+use Regis\AppContext\Application\Command;
+use Regis\AppContext\Domain\Entity;
 
 class TeamAddMemberController extends Controller
 {
@@ -61,7 +61,7 @@ class TeamAddMemberController extends Controller
         if (empty($q)) {
             $results = [];
         } else {
-            $results = $this->get('regis.github.repository.users')->matching(new Spec\User\Matches($q));
+            $results = $this->get('regis.app.repository.users')->matching(new Spec\User\Matches($q));
             // TODO eurk
             $results = array_map(function (Entity\User $user) {
                 return [

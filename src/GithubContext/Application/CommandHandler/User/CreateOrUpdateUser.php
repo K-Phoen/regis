@@ -24,7 +24,7 @@ class CreateOrUpdateUser
             $user = $this->usersRepo->findByGithubId($command->getGithubId());
             $user->changeAccessToken($command->getAccessToken());
         } catch (Repository\Exception\NotFound $e) {
-            $user = new GithubDetails(new UserAccount(), $command->getGithubId(), $command->getAccessToken());
+            $user = new GithubDetails(new UserAccount(), $command->getUsername(), $command->getGithubId(), $command->getAccessToken());
         }
 
         $this->usersRepo->save($user);

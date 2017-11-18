@@ -13,18 +13,19 @@ class GithubDetailsTest extends TestCase
     public function testItGeneratesAnIdentifierAndStoreTheInitialData()
     {
         $userAccount = new UserAccount();
-        $githubDetails = new GithubDetails($userAccount, 42, 'access token');
+        $githubDetails = new GithubDetails($userAccount, 'username', 42, 'access token');
 
         $this->assertNotEmpty($githubDetails->getId());
         $this->assertSame($userAccount, $githubDetails->account());
         $this->assertSame(42, $githubDetails->getRemoteId());
         $this->assertSame('access token', $githubDetails->getAccessToken());
+        $this->assertSame('username', $githubDetails->getUsername());
         $this->assertSame($userAccount->accountId(), $githubDetails->accountId());
     }
 
     public function testTheAccessTokenCanBeChanged()
     {
-        $githubDetails = new GithubDetails(new UserAccount(), 42, 'access token');
+        $githubDetails = new GithubDetails(new UserAccount(), 'username', 42, 'access token');
 
         $this->assertSame('access token', $githubDetails->getAccessToken());
 
@@ -39,7 +40,7 @@ class GithubDetailsTest extends TestCase
      */
     public function testTheAccessTokenCanNotBeEmpty()
     {
-        $githubDetails = new GithubDetails(new UserAccount(), 42, 'access token');
+        $githubDetails = new GithubDetails(new UserAccount(), 'username', 42, 'access token');
 
         $githubDetails->changeAccessToken('');
     }

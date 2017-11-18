@@ -55,6 +55,7 @@ class CreateSchema extends AbstractMigration
             ->addColumn('id', 'uuid')
             ->addColumn('user_id', 'uuid')
             ->addColumn('remote_id', 'integer')
+            ->addColumn('username', 'string')
             ->addColumn('access_token', 'string')
             ->addForeignKey('user_id', 'user_account', 'id')
         ;
