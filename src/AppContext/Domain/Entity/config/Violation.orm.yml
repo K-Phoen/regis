@@ -14,8 +14,6 @@ Regis\AppContext\Domain\Entity\Violation:
             type: string
         line:
             type: integer
-        position:
-            type: integer
         description:
             type: text
 

@@ -16,7 +16,7 @@ class AnalysisTest extends TestCase
 
     public function testItHasErrorsIfAtLeastOneViolationIsAnError()
     {
-        $error = $this->error('file', 42, 9);
+        $error = $this->error('file', 42);
         $analysis = $this->analysis([$error], 1);
 
         $this->assertTrue($analysis->hasErrors());
@@ -27,7 +27,7 @@ class AnalysisTest extends TestCase
 
     public function testItHasWarningsIfAtLeastOneViolationIsAWarning()
     {
-        $warning = $this->warning('file', 42, 9);
+        $warning = $this->warning('file', 42);
         $analysis = $this->analysis([$warning], 0, 1);
 
         $this->assertTrue($analysis->hasWarnings());
@@ -46,8 +46,8 @@ class AnalysisTest extends TestCase
 
     public function analysisProvider()
     {
-        $error = $this->error('file', 42, 9);
-        $warning = $this->warning('file', 42, 9);
+        $error = $this->error('file', 42);
+        $warning = $this->warning('file', 42);
 
         $analysisWithOnlyWarning = $this->analysis([$warning], 0, 1);
         $analysisWithOnlyError = $this->analysis([$error], 1);
@@ -65,10 +65,10 @@ class AnalysisTest extends TestCase
 
     public function testViolationsCanBeRetrievedByFileAndLine()
     {
-        $error = $this->error('file', 42, 9);
-        $error2 = $this->error('other file', 42, 9);
-        $warning = $this->warning('file', 42, 9);
-        $warning2 = $this->warning('file', 43, 9);
+        $error = $this->error('file', 42);
+        $error2 = $this->error('other file', 42);
+        $warning = $this->warning('file', 42);
+        $warning2 = $this->warning('file', 43);
 
         $analysis = $this->analysis([$error, $error2, $warning, $warning2]);
 
@@ -92,28 +92,24 @@ class AnalysisTest extends TestCase
         return $analysis;
     }
 
-    private function error(string $file, int $line, int $position): Violation
+    private function error(string $file, int $line): Violation
     {
         $violation = $this->createMock(Violation::class);
 
-        $violation->method('isWarning')->willReturn(false);
         $violation->method('isError')->willReturn(true);
         $violation->method('file')->willReturn($file);
         $violation->method('line')->willReturn($line);
-        $violation->method('position')->willReturn($position);
 
         return $violation;
     }
 
-    private function warning(string $file, int $line, int $position): Violation
+    private function warning(string $file, int $line): Violation
     {
         $violation = $this->createMock(Violation::class);
 
-        $violation->method('isWarning')->willReturn(true);
         $violation->method('isError')->willReturn(false);
         $violation->method('file')->willReturn($file);
         $violation->method('line')->willReturn($line);
-        $violation->method('position')->willReturn($position);
 
         return $violation;
     }

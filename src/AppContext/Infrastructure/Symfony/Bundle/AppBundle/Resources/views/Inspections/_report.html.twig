@@ -58,7 +58,7 @@
                             <td colspan="2"></td>
                             <td class="diff-comment">
                                 <p>
-                                    <span class="label label-primary">{{ utils.analysis_type(violation.analysis) }}</span>
+                                    <span class="label {{ violation.isError ? 'label-danger' : 'label-warning' }}">{{ utils.analysis_type(violation.analysis) }}</span>
                                     {{ violation.description }}
                                 </p>
                             </td>
