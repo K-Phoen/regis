@@ -25,9 +25,9 @@ class BuildStatus
         return new static($key, self::STATE_FAILED, $description, $url);
     }
 
-    public function __construct(string $inspectionId, string $state, string $description, string $url)
+    public function __construct(string $key, string $state, string $description, string $url)
     {
-        $this->key = $inspectionId;
+        $this->key = $key;
         $this->state = $state;
         $this->description = $description;
         $this->targetUrl = $url;
