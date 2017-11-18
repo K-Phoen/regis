@@ -50,19 +50,12 @@ class Client implements BitbucketClient
             'owner_id' => $this->user->accountId(),
         ]);
 
-        /** @var Repositories $repositories */
-        $repositories = $this->client->api('Repositories');
-        $response = $repositories->all($this->user->getUsername(), [
-            'q' => sprintf('uuid="%s"', $repository->value()),
-        ]);
+        /** @var Repositories\Repository $repositories */
+        $repositories = $this->client->api('Repositories\\Repository');
+        $response = $repositories->get($this->user->getUsername(), $repository->value());
 
         $decodedResponse = json_decode($response->getContent(), true);
-
-        if (count($decodedResponse['values']) !== 1) {
-            throw new \RuntimeException('Expected a single result.');
-        }
-
-        $repositoryModel = $this->hydrateRepository($decodedResponse['values'][0]);
+        $repositoryModel = $this->hydrateRepository($decodedResponse);
 
         return $repositoryModel->getCloneUrl();
     }
