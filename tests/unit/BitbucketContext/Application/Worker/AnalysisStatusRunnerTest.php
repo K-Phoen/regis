@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use Regis\BitbucketContext\Application\Worker\AnalysisStatusRunner;
 use Regis\BitbucketContext\Domain\Entity\PullRequestInspection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
-use Regis\BitbucketContext\Application\Command;
 use Regis\Kernel\Event\DomainEventWrapper;
 use Regis\BitbucketContext\Domain\Entity\Inspection;
 use Regis\BitbucketContext\Domain\Repository\PullRequestInspections;
