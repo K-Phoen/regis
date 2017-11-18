@@ -17,10 +17,10 @@ class ReviewComment
         return new static($violation->file(), $violation->line(), $violation->description());
     }
 
-    public function __construct(string $file, int $position, string $content)
+    public function __construct(string $file, int $line, string $content)
     {
         $this->file = $file;
-        $this->line = $position;
+        $this->line = $line;
         $this->content = $content;
     }
 

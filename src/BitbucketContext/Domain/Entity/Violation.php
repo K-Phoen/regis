@@ -6,9 +6,6 @@ namespace Regis\BitbucketContext\Domain\Entity;
 
 class Violation
 {
-    const WARNING = 10;
-    const ERROR = 20;
-
     private $id;
     private $severity;
     private $file;
@@ -26,16 +23,6 @@ class Violation
     public function severity(): int
     {
         return $this->severity;
-    }
-
-    public function isError(): bool
-    {
-        return $this->severity === self::ERROR;
-    }
-
-    public function isWarning(): bool
-    {
-        return $this->severity === self::WARNING;
     }
 
     public function description(): string
