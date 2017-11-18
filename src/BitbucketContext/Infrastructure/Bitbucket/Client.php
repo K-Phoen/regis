@@ -43,6 +43,30 @@ class Client implements BitbucketClient
         }
     }
 
+    public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment)
+    {
+        $this->logger->info('Sending review comment for PR {pull_request} -- {commit_id}@{path}:{position} -- {comment}', [
+            'owner_id' => $this->user->accountId(),
+            'repository_id' => $pullRequest->getRepository()->value(),
+            'pull_request' => $pullRequest->getNumber(),
+            'commit_id' => $pullRequest->getHead(),
+            'path' => $comment->file(),
+            'line' => $comment->line(),
+            'comment' => $comment->content(),
+        ]);
+
+        $this->client->getClient()->setApiVersion('1.0')->post(
+            sprintf('repositories/%s/%s/pullrequests/%d/comments/', $this->user->getUsername(), $pullRequest->getRepository()->value(), $pullRequest->getNumber()),
+            [
+                'anchor' => $pullRequest->getHead(),
+                'dest_rev' => $pullRequest->getBase(),
+                'line_to' => $comment->line(),
+                'filename' => $comment->file(),
+                'content' => $comment->content(),
+            ]
+        );
+    }
+
     public function getCloneUrl(Model\RepositoryIdentifier $repository): string
     {
         $this->logger->info('Finding clone URL for repository {repository_id}', [

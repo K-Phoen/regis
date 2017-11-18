@@ -12,7 +12,6 @@ class Violation
     private $id;
     private $severity;
     private $file;
-    private $position;
     private $line;
     private $description;
 
@@ -49,18 +48,8 @@ class Violation
         return $this->file;
     }
 
-    public function position(): int
-    {
-        return $this->position;
-    }
-
     public function line(): int
     {
         return $this->line;
-    }
-
-    public function __toString(): string
-    {
-        return sprintf('%s:%d -- %s', $this->file, $this->position, $this->description);
     }
 }

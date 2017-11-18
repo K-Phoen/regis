@@ -15,4 +15,6 @@ interface Client
     public function getPullRequest(Model\RepositoryIdentifier $repository, int $number): Model\PullRequest;
 
     public function setBuildStatus(Model\RepositoryIdentifier $repository, BuildStatus $status, string $revision);
+
+    public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment);
 }

@@ -14,3 +14,9 @@ services:
         arguments: [ '@regis.bitbucket.repository.users' ]
         tags:
             - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\User\CreateOrUpdateUser }
+    
+    regis.bitbucket.command_handler.inspections.send_pr_comments:
+        class: Regis\BitbucketContext\Application\CommandHandler\Inspection\SendViolationsAsComments
+        arguments: [ '@regis.bitbucket.violation_reporter.duplication_guard' ]
+        tags:
+            - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Inspection\SendViolationsAsComments }

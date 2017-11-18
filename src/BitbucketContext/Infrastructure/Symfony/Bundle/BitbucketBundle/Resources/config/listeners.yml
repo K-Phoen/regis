@@ -12,3 +12,9 @@ services:
             - '@router'
         tags:
             - { name: kernel.event_subscriber }
+
+    regis.bitbucket.subscriber.pull_request_review_comments:
+        class: Regis\BitbucketContext\Application\EventListener\PullRequestReviewCommentsListener
+        arguments: ['@tactician.commandbus']
+        tags:
+            - { name: kernel.event_subscriber }

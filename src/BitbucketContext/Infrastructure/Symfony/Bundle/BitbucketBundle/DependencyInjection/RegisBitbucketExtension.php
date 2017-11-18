@@ -18,6 +18,7 @@ class RegisBitbucketExtension extends Extension
         $loader->load('command_handlers.yml');
         $loader->load('listeners.yml');
         $loader->load('repositories.yml');
+        $loader->load('reporters.yml');
         $loader->load('security.yml');
         $loader->load('workers.yml');
     }
