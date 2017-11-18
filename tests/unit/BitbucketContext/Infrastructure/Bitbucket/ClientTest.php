@@ -8,6 +8,7 @@ use Buzz\Message\MessageInterface;
 use PHPUnit\Framework\TestCase;
 use Bitbucket\API\Api as VendorClient;
 use Psr\Log\LoggerInterface;
+use Regis\AppContext\Domain\Model\Repository;
 use Regis\BitbucketContext\Application\Bitbucket\BuildStatus;
 use Regis\BitbucketContext\Domain\Entity\BitbucketDetails;
 use Regis\BitbucketContext\Domain\Model\RepositoryIdentifier;
@@ -92,6 +93,40 @@ class ClientTest extends TestCase
         $this->assertSame(42, $pullRequest->getNumber());
         $this->assertSame('source_hash', $pullRequest->getHead());
         $this->assertSame('destination_hash', $pullRequest->getBase());
+    }
+
+    public function testGetCloneUrl()
+    {
+        $repositoriesApi = $this->createMock(Repositories\Repository::class);
+        $this->vendorClient->method('api')->with('Repositories\\Repository')->willReturn($repositoriesApi);
+
+        $apiResponse = $this->response([
+            'uuid' => self::REPOSITORY_ID,
+            'name' => 'repository-name',
+            'links' => [
+                'clone' => [
+                    [
+                        'name' => 'https',
+                        'href' => 'https-clone-url'
+                    ],
+                    [
+                        'name' => 'ssh',
+                        'href' => 'ssh-clone-url'
+                    ],
+                ],
+                'html' => [
+                    'href' => 'public-url'
+                ],
+            ],
+        ]);
+
+        $repositoriesApi->expects($this->once())
+            ->method('get')
+            ->with(self::USERNAME, self::REPOSITORY_ID)
+            ->willReturn($apiResponse);
+
+        $cloneUrl = $this->client->getCloneUrl(new RepositoryIdentifier(self::REPOSITORY_ID));
+        $this->assertSame('ssh-clone-url', $cloneUrl);
     }
 
     private function response(array $content): MessageInterface
