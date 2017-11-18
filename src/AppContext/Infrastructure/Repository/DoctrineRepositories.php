@@ -50,11 +50,9 @@ class DoctrineRepositories implements Repository\Repositories
 
         if ($mode === self::MODE_FETCH_RELATIONS) {
             $qb
-                ->addSelect(['i', 'report', 'a', 'v'])
+                ->addSelect(['i', 'report'])
                 ->leftJoin('r.inspections', 'i')
                 ->leftJoin('i.report', 'report')
-                ->leftJoin('report.analyses', 'a')
-                ->leftJoin('a.violations', 'v')
                 ->orderBy('i.createdAt', 'DESC');
         }
 
