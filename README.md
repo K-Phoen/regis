@@ -44,7 +44,7 @@ keys. They are usually stored in `./var/ssh`.
 You can then declare a key to GitHub using the following command:
 
 ```
-./bin/console regis:deploy-key:add --owner=K-Phoen --repository=regis-test --public-key=./var/ssh/id_rsa_test_regis.pub
+./bin/console regis:github:add-deploy-key --owner=K-Phoen --repository=regis-test --public-key=./var/ssh/id_rsa_test_regis.pub
 ```
 
 License
