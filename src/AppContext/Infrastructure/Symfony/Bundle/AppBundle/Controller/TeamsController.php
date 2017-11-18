@@ -8,13 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Regis\AppContext\Application\Spec;
 use Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Form;
-use Regis\GithubContext\Application\Command;
+use Regis\AppContext\Application\Command;
 
 class TeamsController extends Controller
 {
     public function listAction()
     {
-        $teams = $this->get('regis.github.repository.teams')->matching(new Spec\Team\AccessibleBy($this->getUser()));
+        $teams = $this->get('regis.app.repository.teams')->matching(new Spec\Team\AccessibleBy($this->getUser()));
 
         return $this->render('@RegisApp/Teams/list.html.twig', [
             'teams' => $teams,
