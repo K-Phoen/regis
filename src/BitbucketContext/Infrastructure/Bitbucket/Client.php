@@ -56,7 +56,7 @@ class Client implements BitbucketClient
         $response = $deployKeys->create($this->user->getUsername(), $repository->value(), $key, $title);
 
         // TODO an error is returned by bitbucket if the deploy key already exists
-        $decodedResponse = $this->decodeResponse($response);
+        $this->decodeResponse($response);
     }
 
     public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment)

@@ -64,6 +64,22 @@ class ClientTest extends TestCase
         $this->client->setBuildStatus(new RepositoryIdentifier(self::REPOSITORY_ID), $status, $revision);
     }
 
+    public function testAddDeployKey()
+    {
+        $keyContent = 'key-content';
+        $keyTitle = 'key-title';
+        $deployKeysApi = $this->createMock(Repositories\Deploykeys::class);
+
+        $this->vendorClient->method('api')->with('Repositories\\Deploykeys')->willReturn($deployKeysApi);
+
+        $deployKeysApi->expects($this->once())
+            ->method('create')
+            ->with(self::USERNAME, self::REPOSITORY_ID, $keyContent, $keyTitle)
+            ->willReturn($this->response([]));
+
+        $this->client->addDeployKey(new RepositoryIdentifier(self::REPOSITORY_ID), $keyTitle, $keyContent);
+    }
+
     public function testSendComment()
     {
         $pullRequest = new PullRequest(new RepositoryIdentifier(self::REPOSITORY_ID), 42, 'head sha', 'base sha');
