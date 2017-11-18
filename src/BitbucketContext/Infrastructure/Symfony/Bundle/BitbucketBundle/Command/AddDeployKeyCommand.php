@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Command;
+namespace Regis\BitbucketContext\Infrastructure\Symfony\Bundle\BitbucketBundle\Command;
 
+use Regis\BitbucketContext\Domain\Model\RepositoryIdentifier;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Regis\GithubContext\Application\Command;
+use Regis\BitbucketContext\Application\Command;
 
 class AddDeployKeyCommand extends ContainerAwareCommand
 {
@@ -19,13 +20,8 @@ class AddDeployKeyCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('regis:github:add-deploy-key')
-            ->setDescription('Add a read-only deploy key to a Github repository.')
-            ->addOption(
-                'owner', 'o',
-                InputOption::VALUE_REQUIRED,
-                'Owner of the repository.'
-            )
+            ->setName('regis:bitbucket:add-deploy-key')
+            ->setDescription('Add a read-only deploy key to a Bitbucket repository.')
             ->addOption(
                 'repository', 'r',
                 InputOption::VALUE_REQUIRED,
@@ -46,10 +42,6 @@ class AddDeployKeyCommand extends ContainerAwareCommand
     {
         $io = new SymfonyStyle($input, $output);
 
-        if (!$input->getOption('owner')) {
-            $input->setOption('owner', $io->ask('Who is the repository owner? (user or organization)'));
-        }
-
         if (!$input->getOption('repository')) {
             $input->setOption('repository', $io->ask('On which repository should the webhook be added?'));
         }
@@ -64,7 +56,6 @@ class AddDeployKeyCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $owner = $input->getOption('owner');
         $repo = $input->getOption('repository');
         $key = $input->getOption('public-key');
 
@@ -73,7 +64,7 @@ class AddDeployKeyCommand extends ContainerAwareCommand
         }
 
         $command = new Command\Repository\AddDeployKey(
-            $owner, $repo, file_get_contents($key)
+            new RepositoryIdentifier($repo), file_get_contents($key)
         );
         $this->getContainer()->get('tactician.commandbus')->handle($command);
     }

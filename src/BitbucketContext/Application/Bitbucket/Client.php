@@ -17,4 +17,6 @@ interface Client
     public function setBuildStatus(Model\RepositoryIdentifier $repository, BuildStatus $status, string $revision);
 
     public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment);
+
+    public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key);
 }

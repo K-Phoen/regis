@@ -6,6 +6,7 @@ namespace Regis\BitbucketContext\Infrastructure\Bitbucket;
 
 use Bitbucket\API\Http\Response\Pager;
 use Bitbucket\API\Repositories;
+use Buzz\Message\MessageInterface;
 use Psr\Log\LoggerInterface as Logger;
 use Bitbucket\API\Api as VendorClient;
 use Regis\BitbucketContext\Application\Bitbucket\BuildStatus;
@@ -41,6 +42,21 @@ class Client implements BitbucketClient
 
             yield from $this->parseRepositories($content);
         }
+    }
+
+    public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key)
+    {
+        $this->logger->info('Adding new deploy key for repository {repository} -- {key_title}', [
+            'repository' => $repository->value(),
+            'key_title' => $title,
+        ]);
+
+        /** @var Repositories\Deploykeys $deployKeys */
+        $deployKeys = $this->client->api('Repositories\\Deploykeys');
+        $response = $deployKeys->create($this->user->getUsername(), $repository->value(), $key, $title);
+
+        // TODO an error is returned by bitbucket if the deploy key already exists
+        $decodedResponse = $this->decodeResponse($response);
     }
 
     public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment)
@@ -152,5 +168,20 @@ class Client implements BitbucketClient
             current($cloneEndpoint)['href'],
             $data['links']['html']['href']
         );
+    }
+
+    private function decodeResponse(MessageInterface $response): array
+    {
+        $payload = $response->getContent();
+        $decodedResponse = json_decode($payload, true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new \RuntimeException(sprintf("Error while decoding Bitbucket response: \"%s\". Payload:\n%s", json_last_error_msg(), $payload));
+        }
+
+        if (isset($decodedResponse['type']) && $decodedResponse['type'] === 'error') {
+            throw new \RuntimeException(sprintf('Bitbucket client error: "%s"', $decodedResponse['error']['message']));
+        }
+
+        return $decodedResponse;
     }
 }

@@ -20,3 +20,9 @@ services:
         arguments: [ '@regis.bitbucket.violation_reporter.duplication_guard' ]
         tags:
             - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Inspection\SendViolationsAsComments }
+
+    regis.bitbucket.command_handler.repository.add_deploy_key:
+        class: Regis\BitbucketContext\Application\CommandHandler\Repository\AddDeployKey
+        arguments: [ '@regis.bitbucket.client_factory', '@regis.bitbucket.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Repository\AddDeployKey }
