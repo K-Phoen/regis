@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\Regis\BitbucketContext\Infrastructure\Github;
 
+use Bitbucket\API\Http\ClientInterface;
 use Buzz\Message\MessageInterface;
 use PHPUnit\Framework\TestCase;
 use Bitbucket\API\Api as VendorClient;
 use Psr\Log\LoggerInterface;
-use Regis\AppContext\Domain\Model\Repository;
 use Regis\BitbucketContext\Application\Bitbucket\BuildStatus;
 use Regis\BitbucketContext\Domain\Entity\BitbucketDetails;
 use Regis\BitbucketContext\Domain\Model\RepositoryIdentifier;
 use Regis\BitbucketContext\Domain\Model\PullRequest;
 use Regis\BitbucketContext\Infrastructure\Bitbucket\Client;
 use Bitbucket\API\Repositories;
+use Regis\BitbucketContext\Domain\Model\ReviewComment;
 
 class ClientTest extends TestCase
 {
@@ -61,6 +62,32 @@ class ClientTest extends TestCase
             ]);
 
         $this->client->setBuildStatus(new RepositoryIdentifier(self::REPOSITORY_ID), $status, $revision);
+    }
+
+    public function testSendComment()
+    {
+        $pullRequest = new PullRequest(new RepositoryIdentifier(self::REPOSITORY_ID), 42, 'head sha', 'base sha');
+        $comment = new ReviewComment('file.php', 2, 'content');
+
+        $httpClient = $this->createMock(ClientInterface::class);
+        $httpClient->method('setApiVersion')->willReturnSelf();
+
+        $this->vendorClient->method('getClient')->willReturn($httpClient);
+
+        $httpClient->expects($this->once())
+            ->method('post')
+            ->with(
+                sprintf('repositories/%s/%s/pullrequests/%d/comments/', self::USERNAME, self::REPOSITORY_ID, 42),
+                [
+                    'anchor' => 'head sha',
+                    'dest_rev' => 'base sha',
+                    'line_to' => 2,
+                    'filename' => 'file.php',
+                    'content' => 'content',
+                ]
+            );
+
+        $this->client->sendComment($pullRequest, $comment);
     }
 
     public function testGetPullRequest()
