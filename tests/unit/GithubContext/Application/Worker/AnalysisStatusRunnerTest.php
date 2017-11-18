@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use Regis\GithubContext\Application\Worker\AnalysisStatusRunner;
 use Regis\GithubContext\Domain\Entity\PullRequestInspection;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
-use Regis\GithubContext\Application\Command;
 use Regis\Kernel\Event\DomainEventWrapper;
 use Regis\GithubContext\Domain\Entity\Inspection;
 use Regis\GithubContext\Domain\Repository\PullRequestInspections;

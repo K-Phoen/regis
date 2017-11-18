@@ -150,15 +150,15 @@ class ClientTest extends TestCase
                 'clone' => [
                     [
                         'name' => 'https',
-                        'href' => 'https-clone-url'
+                        'href' => 'https-clone-url',
                     ],
                     [
                         'name' => 'ssh',
-                        'href' => 'ssh-clone-url'
+                        'href' => 'ssh-clone-url',
                     ],
                 ],
                 'html' => [
-                    'href' => 'public-url'
+                    'href' => 'public-url',
                 ],
             ],
         ]);

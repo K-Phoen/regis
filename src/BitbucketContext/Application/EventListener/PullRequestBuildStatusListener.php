@@ -40,7 +40,7 @@ class PullRequestBuildStatusListener implements EventSubscriberInterface
 
         $this->setBuildStatus(
             $inspection->getRepository(),
-            BuildStatus::inProgress($inspection->getHead(),'Inspection started…', $this->getInspectionUrl($inspection)),
+            BuildStatus::inProgress($inspection->getHead(), 'Inspection started…', $this->getInspectionUrl($inspection)),
             $inspection->getHead()
         );
     }
