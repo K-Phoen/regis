@@ -16,8 +16,7 @@ class AnalysisTest extends TestCase
 
     public function testItHasErrorsIfAtLeastOneViolationIsAnError()
     {
-        $error = $this->error();
-        $analysis = $this->analysis([$error], 1);
+        $analysis = $this->analysis(1);
 
         $this->assertTrue($analysis->hasErrors());
         $this->assertSame(1, $analysis->errorsCount());
@@ -27,8 +26,7 @@ class AnalysisTest extends TestCase
 
     public function testItHasWarningsIfAtLeastOneViolationIsAWarning()
     {
-        $warning = $this->warning();
-        $analysis = $this->analysis([$warning], 0, 1);
+        $analysis = $this->analysis(0, 1);
 
         $this->assertTrue($analysis->hasWarnings());
         $this->assertSame(1, $analysis->warningsCount());
@@ -38,13 +36,13 @@ class AnalysisTest extends TestCase
 
     public function testViolationsAreAccessibleAsAList()
     {
-        $violations = [$this->warning(), $this->warning()];
-        $analysis = $this->analysis($violations);
+        $violations = [$this->violation(), $this->violation()];
+        $analysis = $this->analysis(2, 0, $violations);
 
         $this->assertSame($violations, $analysis->violations());
     }
 
-    private function analysis(array $violations = [], int $errorsCount = 0, int $warningsCount = 0): Analysis
+    private function analysis(int $errorsCount = 0, int $warningsCount = 0, array $violations = []): Analysis
     {
         $analysis = new Analysis();
         $this->setPrivateValue($analysis, 'violations', new ArrayCollection($violations));
@@ -54,23 +52,8 @@ class AnalysisTest extends TestCase
         return $analysis;
     }
 
-    private function error(): Violation
+    private function violation(): Violation
     {
-        $violation = $this->createMock(Violation::class);
-
-        $violation->method('isWarning')->willReturn(false);
-        $violation->method('isError')->willReturn(true);
-
-        return $violation;
-    }
-
-    private function warning(): Violation
-    {
-        $violation = $this->createMock(Violation::class);
-
-        $violation->method('isWarning')->willReturn(true);
-        $violation->method('isError')->willReturn(false);
-
-        return $violation;
+        return $this->createMock(Violation::class);
     }
 }

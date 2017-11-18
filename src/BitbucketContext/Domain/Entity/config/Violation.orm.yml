@@ -8,8 +8,6 @@ Regis\BitbucketContext\Domain\Entity\Violation:
             generator: { strategy: UUID }
 
     fields:
-        severity:
-            type: smallint
         file:
             type: string
         line:

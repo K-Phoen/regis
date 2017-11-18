@@ -7,7 +7,6 @@ namespace Regis\BitbucketContext\Domain\Entity;
 class Violation
 {
     private $id;
-    private $severity;
     private $file;
     private $line;
     private $description;
@@ -18,11 +17,6 @@ class Violation
     public function analysis(): Analysis
     {
         return $this->analysis;
-    }
-
-    public function severity(): int
-    {
-        return $this->severity;
     }
 
     public function description(): string

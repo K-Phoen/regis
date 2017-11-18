@@ -37,9 +37,7 @@ class ViolationsCacheTest extends TestCase
         $repositoryIdentifier = Model\RepositoryIdentifier::fromFullName('K-Phoen/test');
 
         $this->violation = new Entity\Violation();
-        $this->setPrivateValue($this->violation, 'severity', Entity\Violation::WARNING);
         $this->setPrivateValue($this->violation, 'file', 'file.php');
-        $this->setPrivateValue($this->violation, 'line', 42);
         $this->setPrivateValue($this->violation, 'position', 4);
         $this->setPrivateValue($this->violation, 'description', 'Test violation');
 
