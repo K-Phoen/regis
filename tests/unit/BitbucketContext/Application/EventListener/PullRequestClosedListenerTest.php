@@ -9,7 +9,6 @@ use League\Tactician\CommandBus;
 use Regis\BitbucketContext\Application\Command;
 use Regis\BitbucketContext\Application\Event;
 use Regis\BitbucketContext\Application\EventListener\PullRequestClosedListener;
-use Regis\BitbucketContext\Application\EventListener\PullRequestListener;
 use Regis\BitbucketContext\Domain\Model\PullRequest;
 use Regis\Kernel\Event\DomainEventWrapper;
 
