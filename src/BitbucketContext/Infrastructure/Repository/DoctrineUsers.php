@@ -22,7 +22,7 @@ class DoctrineUsers implements Repository\Users
         $user = $this->entityManager()->getRepository(Entity\BitbucketDetails::class)->findOneBy(['remoteId' => $id]);
 
         if ($user === null) {
-            throw Repository\Exception\NotFound::forIdentifier((string) $id);
+            throw Repository\Exception\NotFound::forIdentifier($id);
         }
 
         return $user;
@@ -33,7 +33,7 @@ class DoctrineUsers implements Repository\Users
         $user = $this->entityManager()->getRepository(Entity\BitbucketDetails::class)->findOneBy(['user' => $id]);
 
         if ($user === null) {
-            throw Repository\Exception\NotFound::forIdentifier((string) $id);
+            throw Repository\Exception\NotFound::forIdentifier($id);
         }
 
         return $user;

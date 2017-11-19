@@ -40,7 +40,7 @@ class DoctrineUsers implements Repository\Users
         $user = $this->em->getRepository(Entity\GithubDetails::class)->findOneBy(['user' => $id]);
 
         if ($user === null) {
-            throw Repository\Exception\NotFound::forIdentifier((string) $id);
+            throw Repository\Exception\NotFound::forIdentifier($id);
         }
 
         return $user;
