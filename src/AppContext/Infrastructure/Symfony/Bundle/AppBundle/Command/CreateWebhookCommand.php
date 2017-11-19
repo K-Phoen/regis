@@ -2,16 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Command;
+namespace Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Command;
 
-use Regis\GithubContext\Domain\Model\RepositoryIdentifier;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Regis\GithubContext\Application\Command;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Regis\AppContext\Domain\Entity;
 
 class CreateWebhookCommand extends ContainerAwareCommand
 {
@@ -21,12 +20,12 @@ class CreateWebhookCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('regis:github:create-webhook')
-            ->setDescription('Create a webhook using GitHub API')
+            ->setName('regis:setup-webhook')
+            ->setDescription('Setup a webhook for the given repository.')
             ->addOption(
                 'repository', 'r',
                 InputOption::VALUE_REQUIRED,
-                'The repository on which the hook will be created.'
+                'ID of the repository  on which the hook will be created.'
             )
         ;
     }
@@ -48,13 +47,25 @@ class CreateWebhookCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $absoluteUrl = $this->getContainer()->get('router')->generate('github_webhook', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $repository = $this->findRepository($input->getOption('repository'));
 
-        $command = new Command\Repository\CreateWebhook(
-            RepositoryIdentifier::fromFullName($input->getOption('repository')),
-            $absoluteUrl
+        $this->getContainer()->get('regis.app.remote.actions')->createWebhook(
+            $repository,
+            $this->generateWebhookUrl($repository)
         );
+    }
 
-        $this->getContainer()->get('tactician.commandbus')->handle($command);
+    private function generateWebhookUrl(Entity\Repository $repository): string
+    {
+        return $this->getContainer()->get('router')->generate(
+            $repository->getType().'_webhook',
+            [],
+            UrlGeneratorInterface::ABSOLUTE_URL
+        );
+    }
+
+    private function findRepository(string $id): Entity\Repository
+    {
+        return $this->getContainer()->get('regis.app.repository.repositories')->find($id);
     }
 }
