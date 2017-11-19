@@ -58,6 +58,14 @@ body {
     padding: 30px;
 }
 
+.separator {
+    margin-top: 5rem;
+    margin-bottom: 5rem;
+    border-top: 1px solid white;
+    width: 50%;
+    left: 25%;
+    position: relative;
+}
 
 /*
  * Header
@@ -104,6 +112,29 @@ body {
     }
 }
 
+/*
+ * Intro
+ */
+
+.intro .login {
+    display: block;
+}
+
+/*
+ * Features
+ */
+
+.features {
+    margin-top: 5rem;
+}
+
+.features h4 {
+    font-weight: bold;
+}
+
+.features .logo {
+    font-size: 10rem;
+}
 
 /*
  * Cover
@@ -158,6 +189,6 @@ body {
     .masthead,
     .mastfoot,
     .cover-container {
-        width: 700px;
+        width: 900px;
     }
 }

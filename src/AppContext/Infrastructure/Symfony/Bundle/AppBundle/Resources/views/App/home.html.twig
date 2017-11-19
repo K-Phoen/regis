@@ -1,14 +1,64 @@
 {% extends '::layout_home.html.twig' %}
 
 {% block content %}
-<h1 class="cover-heading">Regis</h1>
+<div class="container-fluid">
+    <div class="row intro">
+        <p class="lead">
+            Let Regis inspect your pull requests for style violations and other boring
+            details… you should be the one to do the real code review!
+        </p>
+        <p class="lead login">
+            <a href="{{ path('github_connect') }}" class="btn btn-lg btn-default">
+                <i class="fa fa-github" aria-hidden="true"></i>
+                Login with GitHub
+            </a>
+        </p>
+        <p class="lead login">
+            <a href="{{ path('bitbucket_connect') }}" class="btn btn-lg btn-default">
+                <i class="fa fa-bitbucket" aria-hidden="true"></i>
+                Login with Bitbucket
+            </a>
+        </p>
+    </div>
 
-<p class="lead">
-    Let Regis inspect your pull requests for style violations and other boring
-    details… you should be the one to do the real code review!
-</p>
-<p class="lead">
-    <a href="{{ path('github_connect') }}" class="btn btn-lg btn-default">Login with GitHub</a>
-    <a href="{{ path('bitbucket_connect') }}" class="btn btn-lg btn-default">Login with Bitbucket</a>
-</p>
+    <div class="row separator"></div>
+
+    <div class="row features">
+        <div class="col-lg-4">
+            <p class="logo">
+                <i class="fa fa-code-fork" aria-hidden="true"></i>
+            </p>
+
+            <h4>Pull requests integration</h4>
+
+            <p>
+                Push your code to GitHub or Bitbucket and let Regis analyze it.
+            </p>
+        </div>
+
+        <div class="col-lg-4">
+            <p class="logo">
+                <i class="fa fa-cogs" aria-hidden="true"></i>
+            </p>
+
+            <h4>Your configuration</h4>
+
+            <p>
+                Regis will use your configuration and follow your rules, not the other way around.
+            </p>
+        </div>
+        
+        <div class="col-lg-4">
+            <p class="logo">
+                <i class="fa fa-comments-o" aria-hidden="true"></i>
+            </p>
+
+            <h4>Automatic reviews</h4>
+
+            <p>
+                To make code reviews easieer, violations are reported directly in pull requests changesets.
+            </p>
+        </div>
+    </div>
+</div>
 {% endblock %}
