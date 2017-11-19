@@ -79,7 +79,7 @@ class Client implements BitbucketClient
                 'pullrequest:updated',
                 'pullrequest:rejected',
                 'pullrequest:fulfilled',
-            ]
+            ],
         ]);
 
         // TODO an error is returned by bitbucket if the deploy key already exists

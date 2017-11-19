@@ -82,7 +82,7 @@ class ClientTest extends TestCase
                     'pullrequest:updated',
                     'pullrequest:rejected',
                     'pullrequest:fulfilled',
-                ]
+                ],
             ])
             ->willReturn($this->response([]));
 

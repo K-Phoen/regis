@@ -28,4 +28,3 @@ class GithubActions implements Actions
         $this->bus->handle($command);
     }
 }
-
