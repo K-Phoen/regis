@@ -64,6 +64,31 @@ class ClientTest extends TestCase
         $this->client->setBuildStatus(new RepositoryIdentifier(self::REPOSITORY_ID), $status, $revision);
     }
 
+    public function testCreateWebhook()
+    {
+        $hookUrl = 'hook-url';
+        $hooksApi = $this->createMock(Repositories\Hooks::class);
+
+        $this->vendorClient->method('api')->with('Repositories\\Hooks')->willReturn($hooksApi);
+
+        $hooksApi->expects($this->once())
+            ->method('create')
+            ->with(self::USERNAME, self::REPOSITORY_ID, [
+                'description' => 'Regis webhook',
+                'url' => $hookUrl,
+                'active' => true,
+                'events' => [
+                    'pullrequest:created',
+                    'pullrequest:updated',
+                    'pullrequest:rejected',
+                    'pullrequest:fulfilled',
+                ]
+            ])
+            ->willReturn($this->response([]));
+
+        $this->client->createWebhook(new RepositoryIdentifier(self::REPOSITORY_ID), $hookUrl);
+    }
+
     public function testAddDeployKey()
     {
         $keyContent = 'key-content';

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\AppContext\Infrastructure\Remote;
 
+use Regis\AppContext\Application\Remote\Repositories;
 use Regis\AppContext\Domain\Model;
 use Regis\AppContext\Domain\Entity;
 use Regis\BitbucketContext\Application\Bitbucket\ClientFactory as BitbucketClientFactory;

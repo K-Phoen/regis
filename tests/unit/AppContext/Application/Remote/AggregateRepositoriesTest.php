@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Tests\Regis\AppContext\Infrastructure\Remote;
+namespace Tests\Regis\AppContext\Application\Remote;
 
 use PHPUnit\Framework\TestCase;
 use Regis\AppContext\Domain\Entity\User;
-use Regis\AppContext\Infrastructure\Remote\AggregatedRepositories;
-use Regis\AppContext\Infrastructure\Remote\Repositories;
+use Regis\AppContext\Application\Remote\AggregatedRepositories;
+use Regis\AppContext\Application\Remote\Repositories;
 
 class AggregateRepositoriesTest extends TestCase
 {

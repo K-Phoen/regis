@@ -7,7 +7,7 @@ namespace Tests\Regis\AppContext\Infrastructure\Remote;
 use PHPUnit\Framework\TestCase;
 use Regis\AppContext\Domain\Entity\User;
 use Regis\AppContext\Infrastructure\Remote\BitbucketRepositories;
-use Regis\AppContext\Infrastructure\Remote\Repositories;
+use Regis\AppContext\Application\Remote\Repositories;
 use Regis\BitbucketContext\Application\Bitbucket\ClientFactory as BitbucketClientFactory;
 use Regis\BitbucketContext\Application\Bitbucket\Client as BitbucketClient;
 use Regis\BitbucketContext\Domain\Entity\BitbucketDetails;

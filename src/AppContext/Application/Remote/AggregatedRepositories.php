@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Regis\AppContext\Infrastructure\Remote;
+namespace Regis\AppContext\Application\Remote;
 
 use Regis\Kernel;
 
