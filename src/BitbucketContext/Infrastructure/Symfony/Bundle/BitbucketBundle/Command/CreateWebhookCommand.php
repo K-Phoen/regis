@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\Command;
+namespace Regis\BitbucketContext\Infrastructure\Symfony\Bundle\BitbucketBundle\Command;
 
-use Regis\GithubContext\Domain\Model\RepositoryIdentifier;
+use Regis\BitbucketContext\Domain\Model\RepositoryIdentifier;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Regis\GithubContext\Application\Command;
+use Regis\BitbucketContext\Application\Command;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class CreateWebhookCommand extends ContainerAwareCommand
@@ -21,8 +21,8 @@ class CreateWebhookCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('regis:github:create-webhook')
-            ->setDescription('Create a webhook using GitHub API')
+            ->setName('regis:bitbucket:create-webhook')
+            ->setDescription('Create a webhook using Bitbucket API')
             ->addOption(
                 'repository', 'r',
                 InputOption::VALUE_REQUIRED,
@@ -48,10 +48,10 @@ class CreateWebhookCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $absoluteUrl = $this->getContainer()->get('router')->generate('github_webhook', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $absoluteUrl = $this->getContainer()->get('router')->generate('bitbucket_webhook', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
         $command = new Command\Repository\CreateWebhook(
-            RepositoryIdentifier::fromFullName($input->getOption('repository')),
+            new RepositoryIdentifier($input->getOption('repository')),
             $absoluteUrl
         );
 

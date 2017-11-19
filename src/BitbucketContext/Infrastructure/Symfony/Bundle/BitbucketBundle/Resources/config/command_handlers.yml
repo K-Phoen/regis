@@ -1,4 +1,10 @@
 services:
+    regis.bitbucket.command_handler.repository.create_webhook:
+        class: Regis\BitbucketContext\Application\CommandHandler\Repository\CreateWebhook
+        arguments: [ '@regis.bitbucket.client_factory', '@regis.bitbucket.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Repository\CreateWebhook }
+
     regis.bitbucket.command_handler.inspections.schedule:
         class: Regis\BitbucketContext\Application\CommandHandler\Inspection\SchedulePullRequest
         arguments:

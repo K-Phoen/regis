@@ -47,6 +47,7 @@ class Client implements BitbucketClient
     public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key)
     {
         $this->logger->info('Adding new deploy key for repository {repository} -- {key_title}', [
+            'owner_id' => $this->user->accountId(),
             'repository' => $repository->value(),
             'key_title' => $title,
         ]);
@@ -54,6 +55,32 @@ class Client implements BitbucketClient
         /** @var Repositories\Deploykeys $deployKeys */
         $deployKeys = $this->client->api('Repositories\\Deploykeys');
         $response = $deployKeys->create($this->user->getUsername(), $repository->value(), $key, $title);
+
+        // TODO an error is returned by bitbucket if the deploy key already exists
+        $this->decodeResponse($response);
+    }
+
+    public function createWebhook(Model\RepositoryIdentifier $repository, string $url)
+    {
+        $this->logger->info('Creating webhook for repository {repository}: {url}', [
+            'owner_id' => $this->user->accountId(),
+            'repository' => $repository->value(),
+            'url' => $url,
+        ]);
+
+        /** @var Repositories\Hooks $hooks */
+        $hooks = $this->client->api('Repositories\\Hooks');
+        $response = $hooks->create($this->user->getUsername(), $repository->value(), [
+            'description' => 'Regis webhook',
+            'url' => $url,
+            'active' => true,
+            'events' => [
+                'pullrequest:created',
+                'pullrequest:updated',
+                'pullrequest:rejected',
+                'pullrequest:fulfilled',
+            ]
+        ]);
 
         // TODO an error is returned by bitbucket if the deploy key already exists
         $this->decodeResponse($response);

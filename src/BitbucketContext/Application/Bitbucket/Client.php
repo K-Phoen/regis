@@ -19,4 +19,6 @@ interface Client
     public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment);
 
     public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key);
+
+    public function createWebhook(Model\RepositoryIdentifier $repository, string $url);
 }
