@@ -50,4 +50,4 @@ You can then declare a key to GitHub using the following command:
 License
 -------
 
-This project is under the [MIT](LICENSE) license.
+This project is under the [GNU AGPLv3](LICENSE) license.
