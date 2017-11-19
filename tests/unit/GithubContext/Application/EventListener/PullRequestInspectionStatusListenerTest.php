@@ -24,6 +24,7 @@ class PullRequestInspectionStatusListenerTest extends TestCase
 
     const WITH_ERRORS = 1;
     const WITH_WARNINGS = 2;
+    const WITH_NO_REPORT = 4;
 
     /** @var ClientFactory */
     private $ghClientFactory;
@@ -224,6 +225,29 @@ class PullRequestInspectionStatusListenerTest extends TestCase
         $this->listener->onInspectionFinished($event);
     }
 
+    public function testItSendsASpecialStatusWhenAnInspectionFinishesWithNoReport()
+    {
+        $inspection = $this->createInspection(self::WITH_NO_REPORT);
+        $domainEvent = new Event\InspectionFinished($inspection);
+        $event = new DomainEventWrapper($domainEvent);
+
+        $this->ghClient->expects($this->once())
+            ->method('setIntegrationStatus')
+            ->with(
+                $this->repositoryIdentifier,
+                self::INSPECTION_HEAD,
+                $this->callback(function (IntegrationStatus $status) {
+                    $this->assertSame(Client::INTEGRATION_FAILURE, $status->getState());
+                    $this->assertContains('Internal error', $status->getDescription());
+                    $this->assertSame(self::INSPECTION_URL, $status->getTargetUrl());
+
+                    return true;
+                })
+            );
+
+        $this->listener->onInspectionFinished($event);
+    }
+
     public function testItSetsTheIntegrationStatusAsFailedWhenAnInspectionFinishesWithWarnings()
     {
         $inspection = $this->createInspection(self::WITH_WARNINGS);
@@ -277,8 +301,13 @@ class PullRequestInspectionStatusListenerTest extends TestCase
 
         $inspection->method('getHead')->willReturn(self::INSPECTION_HEAD);
         $inspection->method('getRepository')->willReturn($this->repositoryEntity);
-        $inspection->method('hasReport')->willReturn(true);
-        $inspection->method('getReport')->willReturn($report);
+
+        if (($flags & self::WITH_NO_REPORT) !== 0) {
+            $inspection->method('hasReport')->willReturn(false);
+        } else {
+            $inspection->method('hasReport')->willReturn(true);
+            $inspection->method('getReport')->willReturn($report);
+        }
 
         return $inspection;
     }
