@@ -80,4 +80,9 @@ class BitbucketDetails implements Kernel\User
         $this->refreshToken = $refreshToken;
         $this->accessTokenExpiration = $expirationDate;
     }
+
+    public function isAccessTokenObsolete(\DateTimeImmutable $at): bool
+    {
+        return $this->accessTokenExpiration <= $at;
+    }
 }

@@ -46,7 +46,6 @@ class BitbucketAuthenticator extends SocialAuthenticator
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
         /** @var AccessToken $credentials */
-        //var_dump($credentials);exit;
         $bitbucketUser = $this->getBitbucketClient()->fetchUserFromToken($credentials);
 
         $command = new Command\User\CreateOrUpdateUser(
