@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Application\Worker;
 
 use PHPUnit\Framework\TestCase;
 use League\Tactician\CommandBus;
 use PhpAmqpLib\Message\AMQPMessage;
-
 use Regis\AnalysisContext\Application\Worker\InspectionRunner;
 use Regis\AnalysisContext\Application\Command;
 
@@ -15,8 +16,7 @@ class InspectionRunnerTest extends TestCase
     const REVISIONS_HEAD = '9a18f878a4de4688d0938461bc05bf985c35a236';
     const REVISIONS_BASE = '4750665fa7efb4dbfadc0b23812f944a7e25fb66';
     const REPOSITORY_CLONE_URL = 'git@github.com:K-Phoen/regis-test.git';
-    const REPOSITORY_OWNER = 'K-Phoen';
-    const REPOSITORY_NAME = 'regis-test';
+    const REPOSITORY_IDENTIFIER = 'K-Phoen/regis-test';
 
     private $commandBus;
     private $worker;
@@ -40,8 +40,7 @@ class InspectionRunnerTest extends TestCase
                 $this->assertSame(self::REVISIONS_BASE, $command->getRevisions()->getBase());
                 $this->assertSame(self::REVISIONS_HEAD, $command->getRevisions()->getHead());
                 $this->assertSame(self::REPOSITORY_CLONE_URL, $command->getRepository()->getCloneUrl());
-                $this->assertSame(self::REPOSITORY_NAME, $command->getRepository()->getName());
-                $this->assertSame(self::REPOSITORY_OWNER, $command->getRepository()->getOwner());
+                $this->assertSame(self::REPOSITORY_IDENTIFIER, $command->getRepository()->getIdentifier());
 
                 return true;
             }));
@@ -55,8 +54,7 @@ class InspectionRunnerTest extends TestCase
             'inspection_id' => self::INSPECTION_ID,
             'repository' => [
                 'clone_url' => self::REPOSITORY_CLONE_URL,
-                'owner' => self::REPOSITORY_OWNER,
-                'name' => self::REPOSITORY_NAME,
+                'identifier' => self::REPOSITORY_IDENTIFIER,
             ],
             'revisions' => [
                 'base' => self::REVISIONS_BASE,

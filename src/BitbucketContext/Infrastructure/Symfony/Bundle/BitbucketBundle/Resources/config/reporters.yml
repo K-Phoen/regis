@@ -1,0 +1,15 @@
+services:
+    regis.bitbucket.violation_reporter.bitbucket:
+        class: Regis\BitbucketContext\Application\Reporter\Bitbucket
+        arguments: [ '@regis.bitbucket.client_factory' ]
+        public: false
+
+    regis.bitbucket.violation_reporter.duplication_guard:
+        class: Regis\BitbucketContext\Application\Reporter\DuplicationGuard
+        arguments: [ '@regis.bitbucket.violation_reporter.bitbucket', '@regis.bitbucket.violations_cache' ]
+        public: false
+
+    regis.bitbucket.violations_cache:
+        class: Regis\BitbucketContext\Application\Inspection\ViolationsCache
+        arguments: [ '@snc_redis.violations' ]
+        public: false

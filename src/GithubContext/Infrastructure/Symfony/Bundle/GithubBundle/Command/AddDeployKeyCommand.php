@@ -9,7 +9,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-
 use Regis\GithubContext\Application\Command;
 
 class AddDeployKeyCommand extends ContainerAwareCommand
@@ -20,8 +19,8 @@ class AddDeployKeyCommand extends ContainerAwareCommand
     protected function configure()
     {
         $this
-            ->setName('regis:deploy-key:add')
-            ->setDescription('Add a read-only deploy key to a repository.')
+            ->setName('regis:github:add-deploy-key')
+            ->setDescription('Add a read-only deploy key to a Github repository.')
             ->addOption(
                 'owner', 'o',
                 InputOption::VALUE_REQUIRED,

@@ -7,31 +7,27 @@ namespace Regis\AnalysisContext\Domain\Model\Git;
 class Repository
 {
     private $cloneUrl;
-    private $owner;
-    private $name;
+    private $identifier;
 
     public static function fromArray(array $data): self
     {
         return new static(
-            $data['owner'],
-            $data['name'],
+            $data['identifier'],
             $data['clone_url']
         );
     }
 
-    public function __construct(string $owner, string $name, string $cloneUrl)
+    public function __construct(string $identifier, string $cloneUrl)
     {
         $this->cloneUrl = $cloneUrl;
-        $this->owner = $owner;
-        $this->name = $name;
+        $this->identifier = $identifier;
     }
 
     public function toArray()
     {
         return [
+            'identifier' => $this->identifier,
             'clone_url' => $this->cloneUrl,
-            'owner' => $this->owner,
-            'name' => $this->name,
         ];
     }
 
@@ -40,23 +36,13 @@ class Repository
         return $this->cloneUrl;
     }
 
-    public function getOwner(): string
-    {
-        return $this->owner;
-    }
-
-    public function getName(): string
-    {
-        return $this->name;
-    }
-
     public function getIdentifier(): string
     {
-        return sprintf('%s/%s', $this->owner, $this->name);
+        return $this->identifier;
     }
 
     public function __toString(): string
     {
-        return $this->getIdentifier();
+        return $this->identifier;
     }
 }

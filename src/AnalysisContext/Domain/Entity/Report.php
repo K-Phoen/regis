@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Regis\Kernel;
 
 class Report
 {
@@ -13,18 +14,21 @@ class Report
     const STATUS_ERROR = 'error';
 
     private $id;
-    /** @var ArrayCollection */
+    private $warningsCount = 0;
+    private $errorsCount = 0;
+    /** @var ArrayCollection<Analysis> */
     private $analyses;
     private $status = self::STATUS_OK;
     private $rawDiff;
 
     public function __construct(string $rawDiff)
     {
+        $this->id = Kernel\Uuid::create();
         $this->analyses = new ArrayCollection();
         $this->rawDiff = $rawDiff;
     }
 
-    public function getId(): string
+    public function id(): string
     {
         return $this->id;
     }
@@ -32,6 +36,9 @@ class Report
     public function addAnalysis(Analysis $analysis)
     {
         $this->analyses->add($analysis);
+
+        $this->errorsCount += $analysis->errorsCount();
+        $this->warningsCount += $analysis->warningsCount();
 
         if ($analysis->hasErrors()) {
             $this->status = self::STATUS_ERROR;
@@ -42,14 +49,19 @@ class Report
         }
     }
 
-    public function analyses(): array
-    {
-        return $this->analyses->toArray();
-    }
-
     public function status(): string
     {
         return $this->status;
+    }
+
+    public function warningsCount(): int
+    {
+        return $this->warningsCount;
+    }
+
+    public function errorsCount(): int
+    {
+        return $this->errorsCount;
     }
 
     public function violations(): \Traversable

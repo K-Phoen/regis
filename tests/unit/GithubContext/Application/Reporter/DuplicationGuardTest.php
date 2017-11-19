@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\GithubContext\Application\Reporter;
 
 use PHPUnit\Framework\TestCase;

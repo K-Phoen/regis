@@ -7,6 +7,7 @@ namespace Regis\BitbucketContext\Infrastructure\Symfony\Bundle\BitbucketBundle\S
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Client\Provider\BitbucketClient;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
+use League\OAuth2\Client\Token\AccessToken;
 use League\Tactician\CommandBus;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,8 +16,8 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
-
 use Regis\BitbucketContext\Application\Command;
+use Regis\Kernel;
 
 class BitbucketAuthenticator extends SocialAuthenticator
 {
@@ -44,15 +45,21 @@ class BitbucketAuthenticator extends SocialAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+        /** @var AccessToken $credentials */
         $bitbucketUser = $this->getBitbucketClient()->fetchUserFromToken($credentials);
 
         $command = new Command\User\CreateOrUpdateUser(
             $bitbucketUser->getUsername(),
-            (int) $bitbucketUser->getId(),
-            $credentials->getToken()
+            $bitbucketUser->getId(),
+            $credentials->getToken(),
+            $credentials->getRefreshToken(),
+            (new \DateTimeImmutable())->setTimestamp($credentials->getExpires())
         );
 
-        return $this->commandBus->handle($command);
+        /** @var Kernel\User $userProfile */
+        $userProfile = $this->commandBus->handle($command);
+
+        return $userProvider->loadUserByUsername($userProfile->accountId());
     }
 
     private function getBitbucketClient(): BitbucketClient

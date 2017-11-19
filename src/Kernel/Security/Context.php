@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Regis\Kernel\Security;
 
-use Regis\GithubContext\Domain\Entity;
+use Regis\AppContext\Domain\Entity;
 
 interface Context
 {

@@ -10,7 +10,7 @@
 
 {% macro inspection_type(inspection) %}
     {% spaceless %}
-    {% if inspection.type == 'github_pr' %}
+    {% if inspection.type == 'github_pr' or inspection.type == 'bitbucket_pr' %}
         PR
     {% else %}
         Unknown ({{ inspection.type }})
@@ -65,7 +65,9 @@
 {% macro repository_type(repo) %}
     {% spaceless %}
         {% if repo.type == 'github' %}
-            GitHub
+            Github
+        {% elseif repo.type == 'bitbucket' %}
+            Bitbucket
         {% else %}
             Unknown ({{ repo.type }})
         {% endif %}

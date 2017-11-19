@@ -1,0 +1,116 @@
+repositories_list:
+    path:      /repositories
+    defaults:  { _controller: RegisAppBundle:Repositories:list }
+    methods:   GET
+
+repositories_new:
+    path:      /repositories/new
+    defaults:  { _controller: RegisAppBundle:RepositoryCreator:new }
+    methods:   GET
+
+repositories_create:
+    path:      /repositories/create
+    defaults:  { _controller: RegisAppBundle:RepositoryCreator:create }
+    methods:   POST
+
+repositories_remote_list:
+    path:      /repositories/remote
+    defaults:  { _controller: RegisAppBundle:RepositoryCreator:remoteRepositoriesList }
+    methods:   GET
+    options:   { expose: true }
+
+inspection_retry:
+    path:      /inspections/{id}/retry
+    defaults:  { _controller: RegisAppBundle:Inspections:retry }
+    methods:   POST
+
+inspection_detail:
+    path:      /inspections/{id}
+    defaults:  { _controller: RegisAppBundle:Inspections:detail }
+    methods:   GET
+
+teams_list:
+    path:      /teams
+    defaults:  { _controller: RegisAppBundle:Teams:list }
+    methods:   GET
+
+teams_new:
+    path:      /teams/new
+    defaults:  { _controller: RegisAppBundle:Teams:create }
+    methods:   GET
+
+teams_create:
+    path:      /teams/create
+    defaults:  { _controller: RegisAppBundle:Teams:create }
+    methods:   POST
+
+teams_members_new:
+    path:      /teams/{id}/members/add
+    defaults:  { _controller: RegisAppBundle:TeamAddMember:addMember }
+    methods:   GET
+
+teams_members_create:
+    path:      /teams/{id}/members/create
+    defaults:  { _controller: RegisAppBundle:TeamAddMember:submitMembership }
+    methods:   POST
+
+teams_members_remove:
+    path:      /teams/{id}/members/remove
+    defaults:  { _controller: RegisAppBundle:TeamAddMember:removeMembership }
+    methods:   POST
+
+teams_leave:
+    path:      /teams/{id}/leave
+    defaults:  { _controller: RegisAppBundle:TeamAddMember:leave }
+    methods:   POST
+
+teams_user_search:
+    path:      /teams/users
+    defaults:  { _controller: RegisAppBundle:TeamAddMember:userSearch }
+    methods:   GET
+    options:   { expose: true }
+
+teams_repositories_new:
+    path:      /teams/{id}/repositories/add
+    defaults:  { _controller: RegisAppBundle:TeamAddRepository:addRepository }
+    methods:   GET
+
+teams_repositories_create:
+    path:      /teams/{id}/repositories/create
+    defaults:  { _controller: RegisAppBundle:TeamAddRepository:submitRepository }
+    methods:   POST
+
+teams_repositories_remove:
+    path:      /teams/{id}/repositories/remove
+    defaults:  { _controller: RegisAppBundle:TeamAddRepository:removeRepository }
+    methods:   POST
+
+teams_repository_search:
+    path:      /teams/repositories
+    defaults:  { _controller: RegisAppBundle:TeamAddRepository:repositorySearch }
+    methods:   GET
+    options:   { expose: true }
+
+repositories_detail:
+    path:      /repositories/{identifier}
+    defaults:  { _controller: RegisAppBundle:Repositories:detail }
+    requirements: { identifier: "[^/]+(/[^/]+)?" }
+    methods:   GET
+
+repositories_setup_webhook:
+    path:      /repositories/{identifier}/webhook/setup
+    defaults:  { _controller: RegisAppBundle:Repositories:setupWebhook }
+    requirements: { identifier: "[^/]+(/[^/]+)?" }
+    methods:   POST
+
+repositories_disable_inspections:
+    path:      /repositories/{identifier}/inspections/disable
+    defaults:  { _controller: RegisAppBundle:Repositories:disableInspections }
+    requirements: { identifier: "[^/]+(/[^/]+)?" }
+    methods:   POST
+
+repositories_enable_inspections:
+    path:      /repositories/{identifier}/inspections/enable
+    defaults:  { _controller: RegisAppBundle:Repositories:enableInspections }
+    requirements: { identifier: "[^/]+(/[^/]+)?" }
+    methods:   POST

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Infrastructure\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
-
 use Regis\AnalysisContext\Domain\Entity;
 use Regis\AnalysisContext\Domain\Repository;
 

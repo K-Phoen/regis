@@ -7,10 +7,6 @@ Regis\GithubContext\Domain\Entity\Analysis:
             type: guid
             generator: { strategy: UUID }
 
-    fields:
-        type:
-            type: string
-
     oneToMany:
         violations:
           targetEntity: Violation

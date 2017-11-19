@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\GithubContext\Application\Github;
 
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\HttpFoundation\Request;
-
 use Regis\GithubContext\Application\Event;
 use Regis\GithubContext\Application\Github\EventTransformer;
 
@@ -35,14 +36,14 @@ class EventTransformerTest extends TestCase
 
         $pr = $event->getPullRequest();
 
-        $this->assertEquals(2, $pr->getNumber());
-        $this->assertEquals('57dee1bee0cf795d2a1dcf8616320618e72807a8', $pr->getHead());
-        $this->assertEquals('1d6206cb1f76682a9f272e0547721a2aadc58554', $pr->getBase());
+        $this->assertSame(2, $pr->getNumber());
+        $this->assertSame('57dee1bee0cf795d2a1dcf8616320618e72807a8', $pr->getHead());
+        $this->assertSame('1d6206cb1f76682a9f272e0547721a2aadc58554', $pr->getBase());
 
         $repo = $pr->getRepositoryIdentifier();
 
-        $this->assertEquals('test', $repo->getName());
-        $this->assertEquals('K-Phoen', $repo->getOwner());
+        $this->assertSame('test', $repo->getName());
+        $this->assertSame('K-Phoen', $repo->getOwner());
     }
 
     public function testPullRequestSyncedEventsAreTransformed()
@@ -51,19 +52,19 @@ class EventTransformerTest extends TestCase
 
         $this->assertInstanceOf(Event\PullRequestSynced::class, $event);
 
-        $this->assertEquals('1d6206cb1f76682a9f272e0547721a2aadc58554', $event->getBefore());
-        $this->assertEquals('57dee1bee0cf795d2a1dcf8616320618e72807a8', $event->getAfter());
+        $this->assertSame('1d6206cb1f76682a9f272e0547721a2aadc58554', $event->getBefore());
+        $this->assertSame('57dee1bee0cf795d2a1dcf8616320618e72807a8', $event->getAfter());
 
         $pr = $event->getPullRequest();
 
-        $this->assertEquals(2, $pr->getNumber());
-        $this->assertEquals('57dee1bee0cf795d2a1dcf8616320618e72807a8', $pr->getHead());
-        $this->assertEquals('1d6206cb1f76682a9f272e0547721a2aadc58554', $pr->getBase());
+        $this->assertSame(2, $pr->getNumber());
+        $this->assertSame('57dee1bee0cf795d2a1dcf8616320618e72807a8', $pr->getHead());
+        $this->assertSame('1d6206cb1f76682a9f272e0547721a2aadc58554', $pr->getBase());
 
         $repo = $pr->getRepositoryIdentifier();
 
-        $this->assertEquals('test', $repo->getName());
-        $this->assertEquals('K-Phoen', $repo->getOwner());
+        $this->assertSame('test', $repo->getName());
+        $this->assertSame('K-Phoen', $repo->getOwner());
     }
 
     public function testPullRequestClosedEventsAreTransformed()
@@ -74,14 +75,14 @@ class EventTransformerTest extends TestCase
 
         $pr = $event->getPullRequest();
 
-        $this->assertEquals(2, $pr->getNumber());
-        $this->assertEquals('57dee1bee0cf795d2a1dcf8616320618e72807a8', $pr->getHead());
-        $this->assertEquals('1d6206cb1f76682a9f272e0547721a2aadc58554', $pr->getBase());
+        $this->assertSame(2, $pr->getNumber());
+        $this->assertSame('57dee1bee0cf795d2a1dcf8616320618e72807a8', $pr->getHead());
+        $this->assertSame('1d6206cb1f76682a9f272e0547721a2aadc58554', $pr->getBase());
 
         $repo = $pr->getRepositoryIdentifier();
 
-        $this->assertEquals('test', $repo->getName());
-        $this->assertEquals('K-Phoen', $repo->getOwner());
+        $this->assertSame('test', $repo->getName());
+        $this->assertSame('K-Phoen', $repo->getOwner());
     }
 
     private function pullRequestOpenedPayload(): Request

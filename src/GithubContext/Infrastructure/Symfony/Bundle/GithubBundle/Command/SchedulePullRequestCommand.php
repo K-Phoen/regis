@@ -10,7 +10,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Domain\Entity;
 
@@ -49,7 +48,7 @@ class SchedulePullRequestCommand extends ContainerAwareCommand
         }
 
         if (!$input->getOption('pull-request')) {
-            $input->setOption('pull-request', $io->ask('Repository identifier?'));
+            $input->setOption('pull-request', $io->ask('Pull request number?'));
         }
     }
 

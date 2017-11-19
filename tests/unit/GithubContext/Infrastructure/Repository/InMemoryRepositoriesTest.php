@@ -1,37 +1,23 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\GithubContext\Infrastructure\Repository;
 
 use PHPUnit\Framework\TestCase;
 use Regis\GithubContext\Infrastructure\Repository\InMemoryRepositories;
 use Regis\GithubContext\Domain\Entity;
-use RulerZ\RulerZ;
-use RulerZ\Spec\Specification;
+use Tests\Regis\Helper\ObjectManipulationHelper;
 
 class InMemoryRepositoriesTest extends TestCase
 {
+    use ObjectManipulationHelper;
+
     private $owner;
-    private $rulerz;
 
     public function setUp()
     {
-        $this->rulerz = $this->createMock(RulerZ::class);
-        $this->owner = $this->createMock(Entity\User::class);
-    }
-
-    public function testMatching()
-    {
-        $spec = $this->createMock(Specification::class);
-
-        $repo = new InMemoryRepositories($this->rulerz, $originalData = [/* not relevant here */]);
-        $results = new \ArrayIterator(['not relevant']);
-
-        $this->rulerz->expects($this->once())
-            ->method('filterSpec')
-            ->with($originalData, $spec)
-            ->willReturn($results);
-
-        $this->assertSame($results, $repo->matching($spec));
+        $this->owner = $this->createMock(Entity\UserAccount::class);
     }
 
     /**
@@ -39,18 +25,14 @@ class InMemoryRepositoriesTest extends TestCase
      */
     public function testFindThrowAnExceptionIfTheEntityDoesNotExist()
     {
-        $repo = new InMemoryRepositories($this->rulerz, [
-            new Entity\Repository($this->owner, 'some identifier', 'shared secret'),
-        ]);
+        $repo = new InMemoryRepositories([$this->getRepository()]);
 
         $repo->find('some identifier that does not exist');
     }
 
     public function testFindReturnsTheEntityIfItExists()
     {
-        $repo = new InMemoryRepositories($this->rulerz, [
-            new Entity\Repository($this->owner, 'some identifier', 'shared secret'),
-        ]);
+        $repo = new InMemoryRepositories([$this->getRepository()]);
 
         $entity = $repo->find('some identifier');
 
@@ -61,11 +43,21 @@ class InMemoryRepositoriesTest extends TestCase
 
     public function testARepositoryCanBeSaved()
     {
-        $repo = new InMemoryRepositories($this->rulerz, []);
+        $repo = new InMemoryRepositories([]);
 
-        $entity = new Entity\Repository($this->owner, 'some identifier', 'shared secret');
+        $entity = $this->getRepository();
         $repo->save($entity);
 
         $this->assertSame($entity, $repo->find('some identifier'));
+    }
+
+    private function getRepository(): Entity\Repository
+    {
+        $repository = new Entity\Repository();
+        $this->setPrivateValue($repository, 'owner', $this->owner);
+        $this->setPrivateValue($repository, 'identifier', 'some identifier');
+        $this->setPrivateValue($repository, 'sharedSecret', 'shared secret');
+
+        return $repository;
     }
 }

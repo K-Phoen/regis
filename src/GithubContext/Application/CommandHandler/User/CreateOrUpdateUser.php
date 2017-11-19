@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Regis\GithubContext\Application\CommandHandler\User;
 
 use Regis\GithubContext\Application\Command;
-use Regis\GithubContext\Domain\Entity\User;
+use Regis\GithubContext\Domain\Entity\GithubDetails;
+use Regis\GithubContext\Domain\Entity\UserAccount;
 use Regis\GithubContext\Domain\Repository;
 
 class CreateOrUpdateUser
@@ -21,9 +22,9 @@ class CreateOrUpdateUser
     {
         try {
             $user = $this->usersRepo->findByGithubId($command->getGithubId());
-            $user->changeGithubAccessToken($command->getAccessToken());
+            $user->changeAccessToken($command->getAccessToken());
         } catch (Repository\Exception\NotFound $e) {
-            $user = User::createUser($command->getUsername(), $command->getGithubId(), $command->getAccessToken());
+            $user = new GithubDetails(new UserAccount(), $command->getUsername(), $command->getGithubId(), $command->getAccessToken());
         }
 
         $this->usersRepo->save($user);

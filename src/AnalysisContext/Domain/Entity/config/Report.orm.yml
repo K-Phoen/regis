@@ -5,11 +5,15 @@ Regis\AnalysisContext\Domain\Entity\Report:
     id:
         id:
             type: guid
-            generator: { strategy: UUID }
+            generator: { strategy: NONE }
 
     fields:
         status:
             type: string
+        warningsCount:
+            type: integer
+        errorsCount:
+            type: integer
         rawDiff:
             type: blob
 

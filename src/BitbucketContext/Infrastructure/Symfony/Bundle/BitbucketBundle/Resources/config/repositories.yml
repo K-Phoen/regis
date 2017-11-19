@@ -1,4 +1,12 @@
 services:
+    regis.bitbucket.repository.pull_request_inspections:
+        class: Regis\BitbucketContext\Infrastructure\Repository\DoctrinePullRequestInspections
+        arguments: ['@doctrine']
+
+    regis.bitbucket.repository.repositories:
+        class: Regis\BitbucketContext\Infrastructure\Repository\DoctrineRepositories
+        arguments: ['@doctrine']
+
     regis.bitbucket.repository.users:
         class: Regis\BitbucketContext\Infrastructure\Repository\DoctrineUsers
-        arguments: [ '@doctrine.orm.entity_manager', '@rulerz' ]
+        arguments: ['@doctrine']

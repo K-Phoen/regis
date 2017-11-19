@@ -4,18 +4,12 @@ security:
 
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        regis_db_provider:
-            entity:
-                class: Regis\GithubContext\Domain\Entity\User
-                property: username
+        regis_user_provider:
+            id: regis.app.user_account_provider
 
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
         ROLE_SUPER_ADMIN: [ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
-
-
-    encoders:
-          Regis\Domain\Entity\User: bcrypt
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -29,7 +23,7 @@ security:
 
         main:
             pattern: ^/
-            provider: regis_db_provider
+            provider: regis_user_provider
             switch_user: true
             anonymous: ~
             remember_me:

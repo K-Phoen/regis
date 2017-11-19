@@ -1,0 +1,12 @@
+services:
+    regis.app.repository.users:
+        class: Regis\AppContext\Infrastructure\Repository\DoctrineUsers
+        arguments: [ '@doctrine', '@rulerz' ]
+
+    regis.app.repository.repositories:
+        class: Regis\AppContext\Infrastructure\Repository\DoctrineRepositories
+        arguments: [ '@doctrine.orm.entity_manager', '@rulerz' ]
+
+    regis.app.repository.teams:
+        class: Regis\AppContext\Infrastructure\Repository\DoctrineTeams
+        arguments: [ '@doctrine.orm.entity_manager', '@rulerz' ]

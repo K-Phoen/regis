@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\GithubContext\Application\CommandHandler\User;
 
 use PHPUnit\Framework\TestCase;
@@ -33,11 +35,10 @@ class CreateOrUpdateUserTest extends TestCase
 
         $this->usersRepo->expects($this->once())
             ->method('save')
-            ->with($this->callback(function (Entity\User $user) {
-                $this->assertEquals(['ROLE_USER'], $user->getRoles());
+            ->with($this->callback(function (Entity\GithubDetails $user) {
+                $this->assertSame(42, $user->getRemoteId());
+                $this->assertSame('access token', $user->getAccessToken());
                 $this->assertSame('user', $user->getUsername());
-                $this->assertSame(42, $user->getGithubId());
-                $this->assertSame('access token', $user->getGithubAccessToken());
 
                 return true;
             }));
@@ -47,7 +48,7 @@ class CreateOrUpdateUserTest extends TestCase
 
     public function testItUpdatesTheUserIfItAlreadyExist()
     {
-        $user = $this->createMock(Entity\User::class);
+        $user = $this->createMock(Entity\GithubDetails::class);
         $command = new Command\User\CreateOrUpdateUser('user', 42, 'access token');
 
         $this->usersRepo
@@ -60,7 +61,7 @@ class CreateOrUpdateUserTest extends TestCase
             ->with($user);
 
         $user->expects($this->once())
-            ->method('changeGithubAccessToken')
+            ->method('changeAccessToken')
             ->with('access token');
 
         $this->handler->handle($command);

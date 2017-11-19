@@ -1,0 +1,29 @@
+Regis\AppContext\Domain\Entity\Analysis:
+    type: entity
+    table: analysis
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: UUID }
+
+    fields:
+        type:
+            type: string
+        warningsCount:
+            type: integer
+        errorsCount:
+            type: integer
+
+    oneToMany:
+        violations:
+          targetEntity: Violation
+          mappedBy: analysis
+
+    manyToOne:
+        report:
+          targetEntity: Report
+          inversedBy: analyses
+          joinColumn:
+            name: report_id
+            referencedColumnName: id

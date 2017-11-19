@@ -1,0 +1,23 @@
+Regis\AppContext\Domain\Entity\Report:
+    type: entity
+    table: report
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: UUID }
+
+    fields:
+        status:
+            type: string
+        rawDiff:
+            type: blob
+        warningsCount:
+            type: integer
+        errorsCount:
+            type: integer
+
+    oneToMany:
+        analyses:
+          targetEntity: Analysis
+          mappedBy: report

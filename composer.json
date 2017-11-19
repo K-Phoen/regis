@@ -44,6 +44,7 @@
 
         "php-http/guzzle6-adapter": "^1.1",
         "knplabs/github-api": "^2.6",
+        "gentle/bitbucket-api": "^1.1",
         "gitonomy/gitlib": "^1.0",
 
         "php-amqplib/rabbitmq-bundle": "^1.10",

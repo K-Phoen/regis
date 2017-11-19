@@ -1,0 +1,25 @@
+Regis\BitbucketContext\Domain\Entity\BitbucketDetails:
+    type: entity
+    table: user_bitbucket
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: NONE }
+
+    fields:
+        remoteId:
+            type: string
+        username:
+            type: string
+        accessToken:
+            type: string
+        refreshToken:
+            type: string
+        accessTokenExpiration:
+            type: datetime
+
+    oneToOne:
+        user:
+            targetEntity: UserAccount
+            cascade: [persist]

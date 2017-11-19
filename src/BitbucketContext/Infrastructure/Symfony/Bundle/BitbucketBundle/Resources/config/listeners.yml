@@ -1,0 +1,26 @@
+services:
+    regis.bitbucket.subscriber.pull_request:
+        class: Regis\BitbucketContext\Application\EventListener\PullRequestListener
+        arguments: ['@tactician.commandbus']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    regis.bitbucket.subscriber.pull_request_inspection_status:
+        class: Regis\BitbucketContext\Application\EventListener\PullRequestBuildStatusListener
+        arguments:
+            - '@regis.bitbucket.client_factory'
+            - '@router'
+        tags:
+            - { name: kernel.event_subscriber }
+
+    regis.bitbucket.subscriber.pull_request_review_comments:
+        class: Regis\BitbucketContext\Application\EventListener\PullRequestReviewCommentsListener
+        arguments: ['@tactician.commandbus']
+        tags:
+            - { name: kernel.event_subscriber }
+
+    regis.bitbucket.subscriber.pull_request_closed:
+        class: Regis\BitbucketContext\Application\EventListener\PullRequestClosedListener
+        arguments: ['@tactician.commandbus']
+        tags:
+            - { name: kernel.event_subscriber }

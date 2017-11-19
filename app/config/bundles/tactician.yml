@@ -9,7 +9,7 @@ services:
             - { name: monolog.logger, channel: command_bus }
 
     regis.tactician.middleware.security:
-        class: Regis\GithubContext\Application\CommandHandler\Middleware\Security
+        class: Regis\AppContext\Application\CommandHandler\Middleware\Security
         arguments: [ '@rulerz', '@regis.security.context' ]
         tags:
             - { name: monolog.logger, channel: command_bus }

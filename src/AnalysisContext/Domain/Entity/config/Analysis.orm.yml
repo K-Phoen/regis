@@ -5,11 +5,15 @@ Regis\AnalysisContext\Domain\Entity\Analysis:
     id:
         id:
             type: guid
-            generator: { strategy: UUID }
+            generator: { strategy: NONE }
 
     fields:
         type:
             type: string
+        warningsCount:
+            type: integer
+        errorsCount:
+            type: integer
 
     oneToMany:
         violations:

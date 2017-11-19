@@ -1,0 +1,14 @@
+{% import '::utils.html.twig' as utils %}
+
+<ul class="nav nav-sidebar">
+    {% for repo in repositories %}
+        <li>
+            <a href="{{ path('repositories_detail', {identifier: repo.identifier}) }}">
+                <span class="label label-primary">{{ utils.repository_type(repo) }}</span>
+                {{ repo.name }}
+            </a>
+        </li>
+    {% else %}
+        <li>No repositories yet, <a href="{{ path('repositories_new') }}">Add one!</a></li>
+    {% endfor %}
+</ul>

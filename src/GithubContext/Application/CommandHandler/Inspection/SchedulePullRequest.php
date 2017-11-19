@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Regis\GithubContext\Application\CommandHandler\Inspection;
 
 use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
-
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Application\Github\ClientFactory;
 use Regis\GithubContext\Domain\Entity;
@@ -47,8 +46,7 @@ class SchedulePullRequest
         $this->producer->publish(json_encode([
             'inspection_id' => $inspection->getId(),
             'repository' => [
-                'owner' => $repository->getOwnerUsername(),
-                'name' => $repository->getName(),
+                'identifier' => $repository->getIdentifier(),
                 'clone_url' => $this->findRepositoryCloneUrl($repository, $pullRequest),
             ],
             'revisions' => [

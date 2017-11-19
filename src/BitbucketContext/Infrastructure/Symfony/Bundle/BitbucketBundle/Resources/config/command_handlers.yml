@@ -1,0 +1,40 @@
+services:
+    regis.bitbucket.command_handler.repository.create_webhook:
+        class: Regis\BitbucketContext\Application\CommandHandler\Repository\CreateWebhook
+        arguments: [ '@regis.bitbucket.client_factory', '@regis.bitbucket.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Repository\CreateWebhook }
+
+    regis.bitbucket.command_handler.inspections.schedule:
+        class: Regis\BitbucketContext\Application\CommandHandler\Inspection\SchedulePullRequest
+        arguments:
+            - '@old_sound_rabbit_mq.analysis_inspection_producer'
+            - '@regis.bitbucket.repository.repositories'
+            - '@regis.bitbucket.repository.pull_request_inspections'
+            - '@regis.bitbucket.client_factory'
+        tags:
+            - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Inspection\SchedulePullRequest }
+
+    regis.bitbucket.command_handler.users.create_or_update_user:
+        class: Regis\BitbucketContext\Application\CommandHandler\User\CreateOrUpdateUser
+        arguments: [ '@regis.bitbucket.repository.users' ]
+        tags:
+            - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\User\CreateOrUpdateUser }
+    
+    regis.bitbucket.command_handler.inspections.send_pr_comments:
+        class: Regis\BitbucketContext\Application\CommandHandler\Inspection\SendViolationsAsComments
+        arguments: [ '@regis.bitbucket.violation_reporter.duplication_guard' ]
+        tags:
+            - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Inspection\SendViolationsAsComments }
+
+    regis.bitbucket.command_handler.inspections.clear_violations_cache:
+        class: Regis\BitbucketContext\Application\CommandHandler\Inspection\ClearViolationsCache
+        arguments: [ '@regis.bitbucket.violations_cache' ]
+        tags:
+            - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Inspection\ClearViolationsCache }
+
+    regis.bitbucket.command_handler.repository.add_deploy_key:
+        class: Regis\BitbucketContext\Application\CommandHandler\Repository\AddDeployKey
+        arguments: [ '@regis.bitbucket.client_factory', '@regis.bitbucket.repository.repositories' ]
+        tags:
+            - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Repository\AddDeployKey }

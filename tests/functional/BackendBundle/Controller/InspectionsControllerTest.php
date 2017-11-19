@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Functional\BackendBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Client;
-
 use Regis\GithubContext\Domain\Entity;
 use Tests\Functional\WebTestCase;
 

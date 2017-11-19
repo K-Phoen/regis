@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Domain\Model\Git\Diff;
 
 use PHPUnit\Framework\TestCase;
@@ -15,10 +17,10 @@ class LineTest extends TestCase
         $this->assertTrue($line->isAddition());
         $this->assertFalse($line->isDeletion());
         $this->assertFalse($line->isContext());
-        $this->assertEquals(2, $line->getPosition());
-        $this->assertEquals(42, $line->getNumber());
-        $this->assertEquals(Change::LINE_ADD, $line->getChangeType());
-        $this->assertEquals('line content', $line->getContent());
+        $this->assertSame(2, $line->getPosition());
+        $this->assertSame(42, $line->getNumber());
+        $this->assertSame(Change::LINE_ADD, $line->getChangeType());
+        $this->assertSame('line content', $line->getContent());
     }
 
     public function testDeletedLine()
@@ -28,7 +30,7 @@ class LineTest extends TestCase
         $this->assertTrue($line->isDeletion());
         $this->assertFalse($line->isContext());
         $this->assertFalse($line->isAddition());
-        $this->assertEquals(Change::LINE_REMOVE, $line->getChangeType());
+        $this->assertSame(Change::LINE_REMOVE, $line->getChangeType());
     }
 
     public function testContextLine()
@@ -38,6 +40,6 @@ class LineTest extends TestCase
         $this->assertTrue($line->isContext());
         $this->assertFalse($line->isAddition());
         $this->assertFalse($line->isDeletion());
-        $this->assertEquals(Change::LINE_CONTEXT, $line->getChangeType());
+        $this->assertSame(Change::LINE_CONTEXT, $line->getChangeType());
     }
 }

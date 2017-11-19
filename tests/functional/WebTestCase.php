@@ -1,13 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase as BaseTestCase;
 use Symfony\Component\BrowserKit\Cookie;
 use Symfony\Component\Security\Guard\Token\PostAuthenticationGuardToken;
-
-use Regis\GithubContext\Application\Spec;
+use Regis\AppContext\Application\Spec;
 
 abstract class WebTestCase extends BaseTestCase
 {
@@ -15,7 +16,7 @@ abstract class WebTestCase extends BaseTestCase
     {
         $container = $client->getContainer();
         $session = $container->get('session');
-        $user = current($container->get('regis.github.repository.users')->matching(new Spec\User\Named($username)));
+        $user = current($container->get('regis.app.repository.users')->matching(new Spec\User\Named($username)));
 
         $firewall = 'main';
         $token = new PostAuthenticationGuardToken($user, 'github', $user->getRoles());

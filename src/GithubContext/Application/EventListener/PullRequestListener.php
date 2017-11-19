@@ -7,7 +7,6 @@ namespace Regis\GithubContext\Application\EventListener;
 use League\Tactician\CommandBus;
 use Regis\Kernel\Event\DomainEventWrapper;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-
 use Regis\GithubContext\Application\Event;
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Application\Inspection\ViolationsCache;

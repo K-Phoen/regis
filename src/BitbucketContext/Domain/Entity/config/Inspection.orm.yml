@@ -1,0 +1,47 @@
+Regis\BitbucketContext\Domain\Entity\Inspection:
+    type: entity
+    table: inspection
+
+    inheritanceType: joined
+
+    discriminatorColumn:
+        name: type
+        type: string
+
+    discriminatorMap:
+        bitbucket_pr: PullRequestInspection
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: NONE }
+
+    fields:
+        createdAt:
+            type: datetimetz
+        startedAt:
+            type: datetimetz
+            nullable: true
+        finishedAt:
+            type: datetimetz
+            nullable: true
+        status:
+            type: string
+        base:
+            type: string
+        head:
+            type: string
+        failureTrace:
+            type: text
+
+    oneToOne:
+        report:
+          targetEntity: Report
+          joinColumn:
+              name: report_id
+              referencedColumnName: id
+
+    manyToOne:
+        repository:
+          targetEntity: Repository
+          inversedBy: inspections

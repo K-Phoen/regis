@@ -1,0 +1,31 @@
+Regis\BitbucketContext\Domain\Entity\Repository:
+    type: entity
+    table: repository
+
+    discriminatorColumn:
+        name: type
+        type: string
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: NONE }
+
+    fields:
+        identifier:
+            type: string
+        isInspectionEnabled:
+            type: boolean
+            options: { default: 1 }
+
+    manyToOne:
+        owner:
+          targetEntity: UserAccount
+          joinColumn:
+            name: owner_id
+            referencedColumnName: id
+
+    oneToMany:
+        inspections:
+          targetEntity: Inspection
+          mappedBy: repository

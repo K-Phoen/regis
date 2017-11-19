@@ -1,0 +1,7 @@
+Regis\BitbucketContext\Domain\Entity\PullRequestInspection:
+    type: entity
+    table: bitbucket_pr_inspection
+
+    fields:
+        pullRequestNumber:
+            type: integer

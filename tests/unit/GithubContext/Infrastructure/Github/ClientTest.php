@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\GithubContext\Infrastructure\Github;
 
 use PHPUnit\Framework\TestCase;
@@ -7,9 +9,8 @@ use Github\Api;
 use Github\Client as VendorClient;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Log\LoggerInterface;
-
 use Regis\GithubContext\Application\Github\IntegrationStatus;
-use Regis\GithubContext\Domain\Entity\User;
+use Regis\GithubContext\Domain\Entity\GithubDetails;
 use Regis\GithubContext\Domain\Model\PullRequest;
 use Regis\GithubContext\Domain\Model\Repository;
 use Regis\GithubContext\Domain\Model\RepositoryIdentifier;
@@ -41,9 +42,9 @@ class ClientTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
         $this->logger = $this->createMock(LoggerInterface::class);
-        $this->user = $this->createMock(User::class);
+        $this->user = $this->createMock(GithubDetails::class);
 
-        $this->user->method('getGithubAccessToken')->willReturn(self::API_TOKEN);
+        $this->user->method('getAccessToken')->willReturn(self::API_TOKEN);
 
         $this->prApi = $this->createMock(Api\PullRequest::class);
         $this->repoApi = $this->createMock(Api\Repo::class);
@@ -175,13 +176,13 @@ class ClientTest extends TestCase
         $this->assertCount(2, $repositories);
 
         $this->assertInstanceOf(Repository::class, $repositories[0]);
-        $this->assertEquals('first/repo', $repositories[0]->getIdentifier());
-        $this->assertEquals('first/repo → html_url', $repositories[0]->getPublicUrl());
-        $this->assertEquals('first/repo → ssh_url', $repositories[0]->getCloneUrl());
+        $this->assertSame('first/repo', $repositories[0]->getIdentifier());
+        $this->assertSame('first/repo → html_url', $repositories[0]->getPublicUrl());
+        $this->assertSame('first/repo → ssh_url', $repositories[0]->getCloneUrl());
 
         $this->assertInstanceOf(Repository::class, $repositories[1]);
-        $this->assertEquals('second/repo', $repositories[1]->getIdentifier());
-        $this->assertEquals('second/repo → html_url', $repositories[1]->getPublicUrl());
-        $this->assertEquals('second/repo → clone_url', $repositories[1]->getCloneUrl());
+        $this->assertSame('second/repo', $repositories[1]->getIdentifier());
+        $this->assertSame('second/repo → html_url', $repositories[1]->getPublicUrl());
+        $this->assertSame('second/repo → clone_url', $repositories[1]->getCloneUrl());
     }
 }

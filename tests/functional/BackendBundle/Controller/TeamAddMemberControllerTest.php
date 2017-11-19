@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Functional\BackendBundle\Controller;
 
 use Tests\Functional\WebTestCase;
@@ -27,12 +29,12 @@ class TeamAddMemberControllerTest extends WebTestCase
         ]);
 
         $this->assertTrue($client->getResponse()->isSuccessful());
-        $this->assertEquals('application/json', $client->getResponse()->headers->get('Content-Type'));
+        $this->assertSame('application/json', $client->getResponse()->headers->get('Content-Type'));
 
         $results = json_decode($client->getResponse()->getContent(), true);
         $emails = array_column($results['users'], 'id');
 
-        $this->assertEquals($expectedUserIds, $emails);
+        $this->assertSame($expectedUserIds, $emails);
     }
 
     public function searchProvider()

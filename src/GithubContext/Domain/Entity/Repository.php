@@ -6,7 +6,6 @@ namespace Regis\GithubContext\Domain\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Regis\GithubContext\Domain\Model;
-use Regis\Kernel\Uuid;
 
 class Repository
 {
@@ -19,19 +18,9 @@ class Repository
     private $isInspectionEnabled = true;
     /** @var ArrayCollection */
     private $inspections;
-    /** @var ArrayCollection */
-    private $teams;
-    private $owner;
 
-    public function __construct(User $owner, string $identifier = null, string $sharedSecret = null)
-    {
-        $this->id = Uuid::create();
-        $this->owner = $owner;
-        $this->identifier = $identifier;
-        $this->sharedSecret = $sharedSecret;
-        $this->inspections = new ArrayCollection();
-        $this->teams = new ArrayCollection();
-    }
+    /** @var UserAccount */
+    private $owner;
 
     public function newSharedSecret(string $sharedSecret)
     {
@@ -58,9 +47,9 @@ class Repository
         return $this->identifier;
     }
 
-    public function getOwner(): User
+    public function getOwner(): GithubDetails
     {
-        return $this->owner;
+        return $this->owner->getDetails();
     }
 
     public function getName(): string
@@ -76,11 +65,6 @@ class Repository
     public function getInspections(): \Traversable
     {
         return $this->inspections;
-    }
-
-    public function getTeams(): \Traversable
-    {
-        return $this->teams;
     }
 
     public function isInspectionEnabled(): bool

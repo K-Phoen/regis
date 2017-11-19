@@ -1,0 +1,23 @@
+services:
+    regis.bitbucket.event_transformer:
+        class: Regis\BitbucketContext\Application\Bitbucket\EventTransformer
+
+    regis.bitbucket.base_client_factory:
+        class: Regis\BitbucketContext\Infrastructure\Bitbucket\ClientFactory
+        public: false
+        arguments: ["@logger"]
+        tags:
+            - { name: monolog.logger, channel: bitbucket }
+
+    regis.bitbucket.refresh_token_aware_client_factory:
+        class: Regis\BitbucketContext\Infrastructure\Bitbucket\RefreshTokenAwareClientFactory
+        arguments:
+            - "@tactician.commandbus"
+            - "@regis.bitbucket.base_client_factory"
+            - "@knpu.oauth2.client.bitbucket"
+            - "@logger"
+        public: false
+        tags:
+            - { name: monolog.logger, channel: bitbucket }
+
+    regis.bitbucket.client_factory: "@regis.bitbucket.refresh_token_aware_client_factory"

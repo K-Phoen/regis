@@ -1,0 +1,13 @@
+Regis\GithubContext\Domain\Entity\UserAccount:
+    type: entity
+    table: user_account
+
+    id:
+        id:
+            type: guid
+            generator: { strategy: NONE }
+
+    oneToOne:
+        details:
+            targetEntity: GithubDetails
+            mappedBy: user

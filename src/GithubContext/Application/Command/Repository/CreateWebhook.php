@@ -12,7 +12,7 @@ class CreateWebhook
     private $callbackUrl;
 
     /**
-     * @param string $callbackUrl Absolute URL.
+     * @param string $callbackUrl absolute URL
      */
     public function __construct(RepositoryIdentifier $repository, string $callbackUrl)
     {

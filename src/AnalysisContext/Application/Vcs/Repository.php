@@ -17,9 +17,9 @@ interface Repository
      *
      * @note Currently only looks at the repository root.
      *
-     * @param string $name The name of the file to locate.
+     * @param string $name the name of the file to locate
      *
-     * @return string Absolute path to the file.
+     * @return string absolute path to the file
      *
      * @throws FileNotFound
      */

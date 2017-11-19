@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Infrastructure\CodeSniffer;
 
 use PHPUnit\Framework\TestCase;

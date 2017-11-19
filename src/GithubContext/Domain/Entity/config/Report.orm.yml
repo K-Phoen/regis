@@ -8,10 +8,10 @@ Regis\GithubContext\Domain\Entity\Report:
             generator: { strategy: UUID }
 
     fields:
-        status:
-            type: string
-        rawDiff:
-            type: blob
+        warningsCount:
+            type: integer
+        errorsCount:
+            type: integer
 
     oneToMany:
         analyses:

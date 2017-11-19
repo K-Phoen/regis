@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Domain\Model\Git;
 
 use PHPUnit\Framework\TestCase;
@@ -14,8 +16,8 @@ class RevisionsTest extends TestCase
             'head' => 'head sha',
         ]);
 
-        $this->assertEquals('base sha', $revisions->getBase());
-        $this->assertEquals('head sha', $revisions->getHead());
+        $this->assertSame('base sha', $revisions->getBase());
+        $this->assertSame('head sha', $revisions->getHead());
     }
 
     public function testItCanBeTransformedToAnArray()
@@ -23,7 +25,7 @@ class RevisionsTest extends TestCase
         $revisions = new Git\Revisions('base sha', 'head sha');
         $data = $revisions->toArray();
 
-        $this->assertEquals('base sha', $data['base']);
-        $this->assertEquals('head sha', $data['head']);
+        $this->assertSame('base sha', $data['base']);
+        $this->assertSame('head sha', $data['head']);
     }
 }

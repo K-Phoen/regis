@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Tests\Regis\AnalysisContext\Domain\Entity;
 
 use PHPUnit\Framework\TestCase;
@@ -9,54 +11,59 @@ use Regis\AnalysisContext\Domain\Entity\Report;
 
 class AnalysisTest extends TestCase
 {
-    public function testTheStatusEvolvesWhenAddingViolations()
+    public function testAnIdentifierIsGenerated()
     {
-        $error = Violation::newError('file', 42, 9, 'description');
-        $warning = Violation::newWarning('file', 42, 9, 'description');
-        $report = $this->createMock(Report::class);
-        $analysis = new Analysis($report, 'test');
+        $analysis = new Analysis(new Report('dummy diff'), 'test');
 
-        $this->assertEquals(Analysis::STATUS_OK, $analysis->status());
-
-        $analysis->addViolation($warning);
-        $this->assertEquals(Analysis::STATUS_WARNING, $analysis->status());
-
-        $analysis->addViolation($error);
-        $this->assertEquals(Analysis::STATUS_ERROR, $analysis->status());
-
-        $analysis->addViolation($warning);
-        $this->assertEquals(Analysis::STATUS_ERROR, $analysis->status());
+        $this->assertNotEmpty($analysis->id());
     }
 
-    public function testItHasErrorsIfAtLeastOneViolationIsAnError()
+    public function testTheTypeIsSaved()
+    {
+        $analysis = new Analysis(new Report('dummy diff'), 'test');
+
+        $this->assertSame('test', $analysis->type());
+    }
+
+    public function testTheErrorsAndWarningsCountsEvolvesWhenAddingViolations()
     {
         $error = Violation::newError('file', 42, 9, 'description');
         $warning = Violation::newWarning('file', 42, 9, 'description');
-        $report = $this->createMock(Report::class);
+        $report = new Report('dummy diff');
+        $analysis = new Analysis($report, 'test');
+
+        $this->assertSame(0, $analysis->errorsCount());
+        $this->assertSame(0, $analysis->warningsCount());
+
+        $analysis->addViolation($warning);
+        $this->assertSame(0, $analysis->errorsCount());
+        $this->assertSame(1, $analysis->warningsCount());
+
+        $analysis->addViolation($error);
+        $this->assertSame(1, $analysis->errorsCount());
+        $this->assertSame(1, $analysis->warningsCount());
+
+        $analysis->addViolation($warning);
+        $this->assertSame(1, $analysis->errorsCount());
+        $this->assertSame(2, $analysis->warningsCount());
+    }
+
+    public function testItKnowsIfThereAreWarningsAndErrors()
+    {
+        $error = Violation::newError('file', 42, 9, 'description');
+        $warning = Violation::newWarning('file', 42, 9, 'description');
+        $report = new Report('dummy diff');
         $analysis = new Analysis($report, 'test');
 
         $this->assertFalse($analysis->hasErrors());
-
-        $analysis->addViolation($warning);
-        $this->assertFalse($analysis->hasErrors());
-
-        $analysis->addViolation($error);
-        $this->assertTrue($analysis->hasErrors());
-    }
-
-    public function testItHasWarningsIfAtLeastOneViolationIsAWarning()
-    {
-        $error = Violation::newError('file', 42, 9, 'description');
-        $warning = Violation::newWarning('file', 42, 9, 'description');
-        $report = $this->createMock(Report::class);
-        $analysis = new Analysis($report, 'test');
-
-        $this->assertFalse($analysis->hasWarnings(), 'A new analysis has no warnings');
-
-        $analysis->addViolation($error);
         $this->assertFalse($analysis->hasWarnings());
 
         $analysis->addViolation($warning);
+        $this->assertFalse($analysis->hasErrors());
+        $this->assertTrue($analysis->hasWarnings());
+
+        $analysis->addViolation($error);
+        $this->assertTrue($analysis->hasErrors());
         $this->assertTrue($analysis->hasWarnings());
     }
 }

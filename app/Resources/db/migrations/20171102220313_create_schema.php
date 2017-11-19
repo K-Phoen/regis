@@ -7,25 +7,7 @@ use Phinx\Migration\AbstractMigration;
 class CreateSchema extends AbstractMigration
 {
     /**
-     * Change Method.
-     *
-     * Write your reversible migrations using this method.
-     *
-     * More information on writing migrations is available here:
-     * http://docs.phinx.org/en/latest/migrations.html#the-abstractmigration-class
-     *
-     * The following commands can be used in this method and Phinx will
-     * automatically reverse them when rolling back:
-     *
-     *    createTable
-     *    renameTable
-     *    addColumn
-     *    renameColumn
-     *    addIndex
-     *    addForeignKey
-     *
-     * Remember to call "create()" or "update()" and NOT "save()" when working
-     * with the Table class.
+     * {@inheritdoc}
      */
     public function change()
     {
@@ -41,11 +23,11 @@ class CreateSchema extends AbstractMigration
         $repositoriesTeams = $this->table('team_repository', ['id' => false, 'primary_key' => ['repository_id', 'team_id']]);
         $usersGithub = $this->table('user_github', ['id' => false, 'primary_key' => ['id']]);
         $usersBitbucket = $this->table('user_bitbucket', ['id' => false, 'primary_key' => ['id']]);
+        $bitbucketPrInspections = $this->table('bitbucket_pr_inspection', ['id' => false, 'primary_key' => ['id']]);
 
         $users
             ->addColumn('id', 'uuid')
-            ->addColumn('username', 'string')
-            ->addColumn('roles', 'text')
+            ->addColumn('roles', 'text', ['default' => 'ROLE_USER'])
         ;
 
         $teams
@@ -73,6 +55,7 @@ class CreateSchema extends AbstractMigration
             ->addColumn('id', 'uuid')
             ->addColumn('user_id', 'uuid')
             ->addColumn('remote_id', 'integer')
+            ->addColumn('username', 'string')
             ->addColumn('access_token', 'string')
             ->addForeignKey('user_id', 'user_account', 'id')
         ;
@@ -80,13 +63,17 @@ class CreateSchema extends AbstractMigration
         $usersBitbucket
             ->addColumn('id', 'uuid')
             ->addColumn('user_id', 'uuid')
-            ->addColumn('remote_id', 'integer')
+            ->addColumn('remote_id', 'string')
+            ->addColumn('username', 'string')
             ->addColumn('access_token', 'string')
+            ->addColumn('refresh_token', 'string')
+            ->addColumn('access_token_expiration', 'datetime', ['timezone' => true])
             ->addForeignKey('user_id', 'user_account', 'id')
         ;
 
         $inspections
             ->addColumn('id', 'uuid')
+            ->addColumn('repository_id', 'uuid')
             ->addColumn('report_id', 'uuid', ['null' => true])
             ->addColumn('created_at', 'datetime', ['timezone' => true])
             ->addColumn('started_at', 'datetime', ['timezone' => true, 'null' => true])
@@ -97,12 +84,14 @@ class CreateSchema extends AbstractMigration
             ->addColumn('type', 'string')
             ->addColumn('failure_trace', 'text')
             ->addForeignKey('report_id', 'report', 'id')
+            ->addForeignKey('repository_id', 'repository', 'id')
         ;
 
         $repositories
             ->addColumn('id', 'uuid')
             ->addColumn('identifier', 'string')
             ->addColumn('type', 'string')
+            ->addColumn('name', 'string')
             ->addColumn('owner_id', 'uuid')
             ->addColumn('shared_secret', 'text')
             ->addColumn('is_inspection_enabled', 'boolean')
@@ -116,14 +105,20 @@ class CreateSchema extends AbstractMigration
         $githubPrInspections
             ->addColumn('id', 'uuid')
             ->addColumn('pull_request_number', 'integer')
-            ->addColumn('repository_id', 'uuid')
             ->addForeignKey('id', 'inspection', 'id')
-            ->addForeignKey('repository_id', 'repository', 'id')
+        ;
+
+        $bitbucketPrInspections
+            ->addColumn('id', 'uuid')
+            ->addColumn('pull_request_number', 'integer')
+            ->addForeignKey('id', 'inspection', 'id')
         ;
 
         $reports
             ->addColumn('id', 'uuid')
             ->addColumn('status', 'string')
+            ->addColumn('errors_count', 'integer', ['default' => 0])
+            ->addColumn('warnings_count', 'integer', ['default' => 0])
             ->addColumn('raw_diff', 'text')
         ;
 
@@ -131,6 +126,8 @@ class CreateSchema extends AbstractMigration
             ->addColumn('id', 'uuid')
             ->addColumn('report_id', 'uuid')
             ->addColumn('type', 'text')
+            ->addColumn('errors_count', 'integer', ['default' => 0])
+            ->addColumn('warnings_count', 'integer', ['default' => 0])
             ->addForeignKey('report_id', 'report', 'id')
         ;
 
@@ -155,6 +152,7 @@ class CreateSchema extends AbstractMigration
         $reports->create();
         $inspections->create();
         $githubPrInspections->create();
+        $bitbucketPrInspections->create();
         $analyses->create();
         $violations->create();
     }

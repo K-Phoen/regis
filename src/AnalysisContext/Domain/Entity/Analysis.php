@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Regis\AnalysisContext\Domain\Entity;
 
+use Regis\Kernel;
+
 class Analysis
 {
     const STATUS_OK = 'ok';
@@ -12,14 +14,16 @@ class Analysis
 
     private $id;
     private $report;
+    private $warningsCount = 0;
+    private $errorsCount = 0;
     private $type;
-    private $status = self::STATUS_OK;
 
     /** @var Violation[] */
     private $violations = [];
 
     public function __construct(Report $report, string $type)
     {
+        $this->id = Kernel\Uuid::create();
         $this->report = $report;
         $this->type = $type;
     }
@@ -30,12 +34,17 @@ class Analysis
         $this->violations[] = $violation;
 
         if ($violation->isError()) {
-            $this->status = self::STATUS_ERROR;
+            $this->errorsCount += 1;
         }
 
-        if ($this->status !== self::STATUS_ERROR && $violation->isWarning()) {
-            $this->status = self::STATUS_WARNING;
+        if ($violation->isWarning()) {
+            $this->warningsCount += 1;
         }
+    }
+
+    public function id(): string
+    {
+        return $this->id;
     }
 
     public function type(): string
@@ -43,9 +52,14 @@ class Analysis
         return $this->type;
     }
 
-    public function status(): string
+    public function warningsCount(): int
     {
-        return $this->status;
+        return $this->warningsCount;
+    }
+
+    public function errorsCount(): int
+    {
+        return $this->errorsCount;
     }
 
     /**
@@ -58,17 +72,11 @@ class Analysis
 
     public function hasErrors(): bool
     {
-        return $this->status === self::STATUS_ERROR;
+        return $this->errorsCount !== 0;
     }
 
     public function hasWarnings(): bool
     {
-        foreach ($this->violations as $violation) {
-            if ($violation->isWarning()) {
-                return true;
-            }
-        }
-
-        return false;
+        return $this->warningsCount !== 0;
     }
 }
