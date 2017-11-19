@@ -28,20 +28,18 @@ use Symfony\Component\Process\Process;
 class CodeSniffer implements CodeSnifferRunner
 {
     private $phpcsBin;
-    private $codeSnifferConfig;
 
-    public function __construct(string $phpCsBin, array $codeSnifferConfig = [])
+    public function __construct(string $phpCsBin)
     {
         $this->phpcsBin = $phpCsBin;
-        $this->codeSnifferConfig = $codeSnifferConfig;
     }
 
-    public function execute(string $fileName, string $fileContent): array
+    public function execute(string $fileName, string $fileContent, string $standards): array
     {
         $process = new Process(sprintf(
-            '%s %s --report=json --stdin-path=%s',
+            '%s --standard=%s --report=json --stdin-path=%s',
             escapeshellarg($this->phpcsBin),
-            implode(' ', $this->codeSnifferConfig['options']),
+            $standards,
             escapeshellarg($fileName)
         ));
 

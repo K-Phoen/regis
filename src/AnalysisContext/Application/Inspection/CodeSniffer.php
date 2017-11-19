@@ -30,11 +30,15 @@ use Regis\AnalysisContext\Domain\Entity\Violation;
 
 class CodeSniffer implements Inspection
 {
-    private $codeSniffer;
+    const CONFIG_FILE = 'phpcs.xml';
 
-    public function __construct(CodeSnifferRunner $codeSniffer)
+    private $codeSniffer;
+    private $config;
+
+    public function __construct(CodeSnifferRunner $codeSniffer, array $codeSnifferConfig = [])
     {
         $this->codeSniffer = $codeSniffer;
+        $this->config = $codeSnifferConfig;
     }
 
     public function getType(): string
@@ -44,13 +48,28 @@ class CodeSniffer implements Inspection
 
     public function inspectDiff(Vcs\Repository $repository, Model\Diff $diff): \Traversable
     {
+        try {
+            $standards = $this->locateRuleset($repository);
+        } catch (Exception\ConfigurationNotFound $e) {
+            $standards = implode(',', $this->config['standards']);
+        }
+
         /** @var Model\Diff\File $file */
         foreach ($diff->getAddedPhpFiles() as $file) {
-            $report = $this->codeSniffer->execute($file->getNewName(), $file->getNewContent());
+            $report = $this->codeSniffer->execute($file->getNewName(), $file->getNewContent(), $standards);
 
             foreach ($report['files'] as $fileReport) {
                 yield from $this->buildViolations($file, $fileReport);
             }
+        }
+    }
+
+    private function locateRuleset(Vcs\Repository $repository): string
+    {
+        try {
+            return $repository->locateFile(self::CONFIG_FILE);
+        } catch (Vcs\FileNotFound $e) {
+            throw new Exception\ConfigurationNotFound($e->getMessage(), $e->getCode(), $e);
         }
     }
 

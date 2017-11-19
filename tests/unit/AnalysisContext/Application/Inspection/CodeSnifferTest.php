@@ -25,11 +25,14 @@ namespace Tests\Regis\AnalysisContext\Application\Inspection;
 use Regis\AnalysisContext\Application\Inspection\CodeSniffer;
 use Regis\AnalysisContext\Application\Inspection\CodeSnifferRunner;
 use Regis\AnalysisContext\Application\Vcs\Repository;
+use Regis\AnalysisContext\Application\Vcs;
 use Regis\AnalysisContext\Domain\Entity;
 use Regis\AnalysisContext\Domain\Model\Exception\LineNotInDiff;
 
 class CodeSnifferTest extends InspectionTestCase
 {
+    const DEFAULT_STANDARDS = ['psr1', 'psr2'];
+
     private $codeSniffer;
     private $vcsRepository;
 
@@ -41,7 +44,9 @@ class CodeSnifferTest extends InspectionTestCase
         $this->codeSniffer = $this->createMock(CodeSnifferRunner::class);
         $this->vcsRepository = $this->createMock(Repository::class);
 
-        $this->inspection = new CodeSniffer($this->codeSniffer);
+        $this->inspection = new CodeSniffer($this->codeSniffer, [
+            'standards' => self::DEFAULT_STANDARDS,
+        ]);
     }
 
     public function testItHasAType()
@@ -69,6 +74,46 @@ class CodeSnifferTest extends InspectionTestCase
             ->willReturn([
                 'files' => [],
             ]);
+
+        $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $diff));
+
+        $this->assertEmpty($violations);
+    }
+
+    public function testItUsesTheDefaultRulesetIfNoneIsFoundInTheRepository()
+    {
+        $file = $this->file('test.php');
+        $diff = $this->diff([$file]);
+
+        $this->vcsRepository->expects($this->once())
+            ->method('locateFile')
+            ->with(CodeSniffer::CONFIG_FILE)
+            ->willThrowException(new Vcs\FileNotFound());
+
+        $this->codeSniffer->expects($this->once())
+            ->method('execute')
+            ->with('test.php', $this->anything(), implode(',', self::DEFAULT_STANDARDS))
+            ->willReturn(['files' => []]);
+
+        $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $diff));
+
+        $this->assertEmpty($violations);
+    }
+
+    public function testItUsesTheConfigFileFromTheRepositoryWhenItExists()
+    {
+        $file = $this->file('test.php');
+        $diff = $this->diff([$file]);
+
+        $this->vcsRepository->expects($this->once())
+            ->method('locateFile')
+            ->with(CodeSniffer::CONFIG_FILE)
+            ->willReturn($configPath = 'config-file-path.xml');
+
+        $this->codeSniffer->expects($this->once())
+            ->method('execute')
+            ->with('test.php', $this->anything(), $configPath)
+            ->willReturn(['files' => []]);
 
         $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $diff));
 

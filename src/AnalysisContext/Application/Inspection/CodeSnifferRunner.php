@@ -24,5 +24,5 @@ namespace Regis\AnalysisContext\Application\Inspection;
 
 interface CodeSnifferRunner
 {
-    public function execute(string $fileName, string $fileContent): array;
+    public function execute(string $fileName, string $fileContent, string $standards): array;
 }

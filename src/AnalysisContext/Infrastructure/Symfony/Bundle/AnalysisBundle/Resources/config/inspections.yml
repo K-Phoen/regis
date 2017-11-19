@@ -12,7 +12,7 @@ services:
 
     regis.inspection.code_sniffer:
         class: Regis\AnalysisContext\Application\Inspection\CodeSniffer
-        arguments: [ '@regis.tools.code_sniffer' ]
+        arguments: [ '@regis.tools.code_sniffer', '%regis.config.inspections.phpcs%' ]
         public: false
 
     regis.inspection.phpmd:
@@ -22,7 +22,7 @@ services:
 
     regis.tools.code_sniffer:
         class: Regis\AnalysisContext\Infrastructure\CodeSniffer\CodeSniffer
-        arguments: [ '%phpcs_binary%', '%regis.config.inspections.phpcs%' ]
+        arguments: ['%phpcs_binary%']
         public: false
 
     regis.tools.phpstan:
