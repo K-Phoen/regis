@@ -914,8 +914,6 @@ PAYLOAD
         );
     }
 
-
-
     private function requestWithContent(string $type, string $content): Request
     {
         return Request::create(
