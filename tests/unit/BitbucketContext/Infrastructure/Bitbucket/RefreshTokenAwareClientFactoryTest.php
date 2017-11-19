@@ -85,6 +85,7 @@ class RefreshTokenAwareClientFactoryTest extends TestCase
         $user->method('isAccessTokenObsolete')->with($this->isInstanceOf(\DateTimeImmutable::class))->willReturn(true);
         $user->method('getAccessTokenExpiration')->willReturn(new \DateTimeImmutable());
         $user->method('getRefreshToken')->willReturn('old refresh token');
+        $user->method('getRemoteId')->willReturn('remote-id');
 
         $accessToken->method('getToken')->willReturn('new access token');
         $accessToken->method('getRefreshToken')->willReturn('new refresh token');
@@ -104,6 +105,7 @@ class RefreshTokenAwareClientFactoryTest extends TestCase
             ->with($this->callback(function (Command\User\CreateOrUpdateUser $command) use ($newExpire) {
                 $this->assertSame('new access token', $command->getAccessToken());
                 $this->assertSame('new refresh token', $command->getRefreshToken());
+                $this->assertSame('remote-id', $command->getBitbucketId());
                 $this->assertSame($newExpire, $command->getAccessTokenExpirationDate()->getTimestamp());
 
                 return true;
