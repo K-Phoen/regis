@@ -1,6 +1,6 @@
 {
     "name": "kphoen/regis",
-    "license": "MIT",
+    "license": "AGPL-3.0",
     "type": "project",
     "autoload": {
         "psr-4": {
