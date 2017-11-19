@@ -17,6 +17,12 @@ services:
         tags:
             - { name: tactician.handler, command: Regis\AppContext\Application\Command\Repository\EnableInspections }
 
+    regis.command_handler.repository.create_webhook:
+        class: Regis\AppContext\Application\CommandHandler\Remote\CreateWebhook
+        arguments: [ '@regis.app.remote.actions' ]
+        tags:
+            - { name: tactician.handler, command: Regis\AppContext\Application\Command\Remote\CreateWebhook }
+
     regis.command_handler.teams.create:
         class: Regis\AppContext\Application\CommandHandler\Team\Create
         arguments: [ '@regis.app.repository.teams' ]

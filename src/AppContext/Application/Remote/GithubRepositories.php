@@ -2,9 +2,8 @@
 
 declare(strict_types=1);
 
-namespace Regis\AppContext\Infrastructure\Remote;
+namespace Regis\AppContext\Application\Remote;
 
-use Regis\AppContext\Application\Remote\Repositories;
 use Regis\AppContext\Domain\Model;
 use Regis\AppContext\Domain\Entity;
 use Regis\GithubContext\Application\Github\ClientFactory as GithubClientFactory;

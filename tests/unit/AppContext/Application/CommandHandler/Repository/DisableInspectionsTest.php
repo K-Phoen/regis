@@ -24,7 +24,7 @@ class DisableInspectionsTest extends TestCase
         $this->handler = new CommandHandler\Repository\DisableInspections($this->repositoriesRepo);
     }
 
-    public function testItRemovesTheUserFromTheTeam()
+    public function testItDisablesTheInspection()
     {
         $owner = $this->createMock(Kernel\User::class);
         $repo = new Entity\Repository($owner, Entity\Repository::TYPE_GITHUB, 'super/repo', 'repo name');

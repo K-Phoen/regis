@@ -45,11 +45,9 @@ class RepositoriesController extends Controller
     {
         // TODO check access rights
 
-        $absoluteUrl = $this->get('router')->generate('github_webhook', [], UrlGeneratorInterface::ABSOLUTE_URL);
+        $absoluteUrl = $this->generateUrl($repository->getType().'_webhook', [], UrlGeneratorInterface::ABSOLUTE_URL);
 
-        $command = new Command\Repository\CreateWebhook($repository->toIdentifier(), $absoluteUrl);
-
-        $this->get('tactician.commandbus')->handle($command);
+        $this->get('tactician.commandbus')->handle(new Command\Remote\CreateWebhook($repository, $absoluteUrl));
 
         $this->addFlash('info', 'Webhook setup.');
 
@@ -58,9 +56,7 @@ class RepositoriesController extends Controller
 
     public function disableInspectionsAction(Entity\Repository $repository)
     {
-        $command = new Command\Repository\DisableInspections($repository);
-
-        $this->get('tactician.commandbus')->handle($command);
+        $this->get('tactician.commandbus')->handle(new Command\Repository\DisableInspections($repository));
 
         $this->addFlash('info', 'Inspections disabled.');
 
@@ -69,9 +65,7 @@ class RepositoriesController extends Controller
 
     public function enableInspectionsAction(Entity\Repository $repository)
     {
-        $command = new Command\Repository\EnableInspections($repository);
-
-        $this->get('tactician.commandbus')->handle($command);
+        $this->get('tactician.commandbus')->handle(new Command\Repository\EnableInspections($repository));
 
         $this->addFlash('info', 'Inspections enabled.');
 

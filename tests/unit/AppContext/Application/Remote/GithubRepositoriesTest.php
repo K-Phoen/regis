@@ -6,7 +6,7 @@ namespace Tests\Regis\AppContext\Infrastructure\Remote;
 
 use PHPUnit\Framework\TestCase;
 use Regis\AppContext\Domain\Entity\User;
-use Regis\AppContext\Infrastructure\Remote\GithubRepositories;
+use Regis\AppContext\Application\Remote\GithubRepositories;
 use Regis\AppContext\Application\Remote\Repositories;
 use Regis\GithubContext\Application\Github\ClientFactory as GithubClientFactory;
 use Regis\GithubContext\Application\Github\Client as GithubClient;
