@@ -34,11 +34,12 @@ class Phpstan implements PhpstanRunner
         $this->phpstanBin = $phpCsBin;
     }
 
-    public function execute(string $fileName): \Traversable
+    public function execute(string $fileName, string $configFile = null): \Traversable
     {
         $process = new Process(sprintf(
-            '%s analyse --no-progress --level=7 --errorFormat=checkstyle %s',
+            '%s analyse --no-progress %s --errorFormat=checkstyle %s',
             escapeshellarg($this->phpstanBin),
+            $configFile !== null ? '--configuration='.escapeshellarg($configFile) : '--level=7',
             escapeshellarg($fileName)
         ));
         $process->run();

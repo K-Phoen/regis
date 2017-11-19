@@ -24,5 +24,5 @@ namespace Regis\AnalysisContext\Application\Inspection;
 
 interface PhpstanRunner
 {
-    public function execute(string $fileName): \Traversable;
+    public function execute(string $fileName, string $configFile = null): \Traversable;
 }

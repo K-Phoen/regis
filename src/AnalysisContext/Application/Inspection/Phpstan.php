@@ -30,6 +30,8 @@ use Regis\AnalysisContext\Domain\Entity\Violation;
 
 class Phpstan implements Inspection
 {
+    const CONFIG_FILE = 'phpstan.neon';
+
     private $phpstan;
 
     public function __construct(PhpstanRunner $phpstan)
@@ -44,9 +46,15 @@ class Phpstan implements Inspection
 
     public function inspectDiff(Vcs\Repository $repository, Model\Diff $diff): \Traversable
     {
+        try {
+            $configFile = $this->locateConfigFile($repository);
+        } catch (Exception\ConfigurationNotFound $e) {
+            $configFile = null;
+        }
+
         /** @var Model\Diff\File $file */
         foreach ($diff->getAddedPhpFiles() as $file) {
-            $report = $this->phpstan->execute($file->getNewName());
+            $report = $this->phpstan->execute($file->getNewName(), $configFile);
 
             foreach ($report as $entry) {
                 try {
@@ -55,6 +63,15 @@ class Phpstan implements Inspection
                     continue;
                 }
             }
+        }
+    }
+
+    private function locateConfigFile(Vcs\Repository $repository): string
+    {
+        try {
+            return $repository->locateFile(self::CONFIG_FILE);
+        } catch (Vcs\FileNotFound $e) {
+            throw new Exception\ConfigurationNotFound($e->getMessage(), $e->getCode(), $e);
         }
     }
 
