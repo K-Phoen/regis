@@ -76,7 +76,7 @@ class RefreshTokenAwareClientFactory implements BitbucketClientFactory
 
         $command = new Command\User\CreateOrUpdateUser(
             $user->getUsername(),
-            $user->getId(),
+            $user->getRemoteId(),
             $newToken->getToken(),
             $newToken->getRefreshToken(),
             (new \DateTimeImmutable())->setTimestamp($newToken->getExpires())

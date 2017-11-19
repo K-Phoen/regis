@@ -139,7 +139,7 @@ class Client implements BitbucketClient
         $repositories = $this->client->api('Repositories\\Repository');
         $response = $repositories->get($this->user->getUsername(), $repository->value());
 
-        $decodedResponse = json_decode($response->getContent(), true);
+        $decodedResponse = $this->decodeResponse($response);
         $repositoryModel = $this->hydrateRepository($decodedResponse);
 
         return $repositoryModel->getCloneUrl();
