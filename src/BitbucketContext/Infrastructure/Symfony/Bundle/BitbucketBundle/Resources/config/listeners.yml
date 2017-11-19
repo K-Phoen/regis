@@ -18,3 +18,9 @@ services:
         arguments: ['@tactician.commandbus']
         tags:
             - { name: kernel.event_subscriber }
+
+    regis.bitbucket.subscriber.pull_request_closed:
+        class: Regis\BitbucketContext\Application\EventListener\PullRequestClosedListener
+        arguments: ['@tactician.commandbus']
+        tags:
+            - { name: kernel.event_subscriber }

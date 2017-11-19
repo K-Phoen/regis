@@ -21,6 +21,12 @@ services:
         tags:
             - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Inspection\SendViolationsAsComments }
 
+    regis.bitbucket.command_handler.inspections.clear_violations_cache:
+        class: Regis\BitbucketContext\Application\CommandHandler\Inspection\ClearViolationsCache
+        arguments: [ '@regis.bitbucket.violations_cache' ]
+        tags:
+            - { name: tactician.handler, command: Regis\BitbucketContext\Application\Command\Inspection\ClearViolationsCache }
+
     regis.bitbucket.command_handler.repository.add_deploy_key:
         class: Regis\BitbucketContext\Application\CommandHandler\Repository\AddDeployKey
         arguments: [ '@regis.bitbucket.client_factory', '@regis.bitbucket.repository.repositories' ]
