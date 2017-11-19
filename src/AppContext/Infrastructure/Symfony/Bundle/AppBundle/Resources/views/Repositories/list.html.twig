@@ -10,7 +10,6 @@
         <thead>
             <tr>
                 <th>Repository</th>
-                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -20,24 +19,17 @@
                     <span class="label label-primary">{{ utils.repository_type(repo) }}</span>
                     <a href="{{ path('repositories_detail', {identifier: repo.identifier}) }}">{{ repo.name }}</a>
                 </td>
-                <td>
-                    <div class="btn-group" role="group">
-                        <a href="{{ path('repositories_edit', {identifier: repo.identifier}) }}" class="btn btn-default">
-                            <i class="glyphicon glyphicon-pencil"></i>
-                        </a>
-                    </div>
-                </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="2">No repository yet, <a href="{{ path('repositories_new') }}" class="btn btn-sm btn-primary">add one!</a></td>
+                <td>No repository yet, <a href="{{ path('repositories_new') }}" class="btn btn-sm btn-primary">add one!</a></td>
             </tr>
         {% endfor %}
         </tbody>
 
         <tfoot>
             <tr>
-                <td colspan="2"><a href="{{ path('repositories_new') }}" class="btn btn-primary">Add new</a></td>
+                <td><a href="{{ path('repositories_new') }}" class="btn btn-primary">Add new</a></td>
             </tr>
         </tfoot>
     </table>

@@ -1,10 +1,4 @@
 services:
-    regis.github.command_handler.repository.define_shared_secret:
-        class: Regis\GithubContext\Application\CommandHandler\Repository\DefineSharedSecret
-        arguments: [ '@regis.github.repository.repositories' ]
-        tags:
-            - { name: tactician.handler, command: Regis\GithubContext\Application\Command\Repository\DefineSharedSecret }
-
     regis.github.command_handler.repository.create_webhook:
         class: Regis\GithubContext\Application\CommandHandler\Repository\CreateWebhook
         arguments: [ '@regis.github.client_factory', '@regis.github.repository.repositories' ]

@@ -3,12 +3,7 @@
 {% import '::utils.html.twig' as utils %}
 
 {% block content %}
-<h1 class="page-header">
-    « {{ repository.name }} »
-    <a href="{{ path('repositories_edit', {identifier: repository.identifier}) }}" class="btn btn-default pull-right">
-        <i class="glyphicon glyphicon-pencil"></i>
-    </a>
-</h1>
+<h1 class="page-header">« {{ repository.name }} »</h1>
 
 <h2>Configuration</h2>
 

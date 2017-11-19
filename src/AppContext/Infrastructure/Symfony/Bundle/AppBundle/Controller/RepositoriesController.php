@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Regis\AppContext\Application\Command;
 use Regis\AppContext\Application\Spec;
 use Regis\AppContext\Domain\Entity;
 use Regis\AppContext\Domain\Repository\Repositories;
-use Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Form;
 
 class RepositoriesController extends Controller
 {
@@ -78,33 +76,5 @@ class RepositoriesController extends Controller
         $this->addFlash('info', 'Inspections enabled.');
 
         return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
-    }
-
-    public function editAction(Request $request, Entity\Repository $repository)
-    {
-        // TODO check access rights
-        $form = $form = $this->createForm(Form\EditRepositoryConfigurationType::class, $repository, [
-            'action' => $this->generateUrl('repositories_edit', ['identifier' => $repository->getIdentifier()]),
-        ]);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $command = new Command\Repository\DefineSharedSecret(
-                $repository,
-                $form->get('sharedSecret')->getData()
-            );
-
-            $this->get('tactician.commandbus')->handle($command);
-
-            $this->addFlash('info', 'Repository updated.');
-
-            return $this->redirectToRoute('repositories_list');
-        }
-
-        return $this->render('@RegisApp/Repositories/edit.html.twig', [
-            'form' => $form->createView(),
-            'repository' => $repository,
-        ]);
     }
 }

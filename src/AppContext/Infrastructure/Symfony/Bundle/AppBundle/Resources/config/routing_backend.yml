@@ -19,12 +19,6 @@ repositories_remote_list:
     methods:   GET
     options:   { expose: true }
 
-repositories_edit:
-    path:      /repositories/{identifier}/edit
-    defaults:  { _controller: RegisAppBundle:Repositories:edit }
-    requirements: { identifier: "[^/]+(/[^/]+)?" }
-    methods:   GET|POST
-
 inspection_retry:
     path:      /inspections/{id}/retry
     defaults:  { _controller: RegisAppBundle:Inspections:retry }
