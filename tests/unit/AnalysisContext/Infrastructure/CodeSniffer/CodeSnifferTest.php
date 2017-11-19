@@ -27,16 +27,16 @@ use Regis\AnalysisContext\Infrastructure\CodeSniffer\CodeSniffer;
 
 class CodeSnifferTest extends TestCase
 {
+    const STANDARDS = 'psr1,psr2';
+
     /**
      * @dataProvider filesDataProvider
      */
     public function testReportsAreGenerated(string $fileName, string $fileContent, array $expectedReports)
     {
-        $phpcs = new CodeSniffer(APP_ROOT_DIR.'/vendor/bin/phpcs', [
-            'options' => ['--standard=psr1,psr2'],
-        ]);
+        $phpcs = new CodeSniffer(APP_ROOT_DIR.'/vendor/bin/phpcs');
 
-        $this->assertSame($expectedReports, $phpcs->execute($fileName, $fileContent));
+        $this->assertSame($expectedReports, $phpcs->execute($fileName, $fileContent, self::STANDARDS));
     }
 
     public function filesDataProvider()

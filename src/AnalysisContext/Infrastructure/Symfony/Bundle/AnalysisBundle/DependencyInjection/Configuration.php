@@ -47,7 +47,7 @@ class Configuration implements ConfigurationInterface
                     ->children()
                         ->arrayNode('phpcs')
                             ->children()
-                                ->arrayNode('options')
+                                ->arrayNode('standards')
                                     ->prototype('scalar')->end()
                                 ->end()
                             ->end()

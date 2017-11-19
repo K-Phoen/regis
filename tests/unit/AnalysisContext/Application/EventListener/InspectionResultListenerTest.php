@@ -44,22 +44,35 @@ class InspectionResultListenerTest extends TestCase
         $this->listener = new InspectionResultListener($this->producer);
     }
 
-    public function testItListensToTheRightEvents()
+    public function eventClassProvider()
+    {
+        return [
+            [Event\InspectionFinished::class],
+            [Event\InspectionStarted::class],
+            [Event\InspectionFailed::class],
+        ];
+    }
+
+    /**
+     * @dataProvider eventClassProvider
+     */
+    public function testItListensToTheRightEvents(string $eventClass)
     {
         $listenedEvents = InspectionResultListener::getSubscribedEvents();
 
-        $this->assertArrayHasKey(Event\InspectionStarted::class, $listenedEvents);
-        $this->assertArrayHasKey(Event\InspectionFinished::class, $listenedEvents);
-        $this->assertArrayHasKey(Event\InspectionFailed::class, $listenedEvents);
+        $this->assertArrayHasKey($eventClass, $listenedEvents);
     }
 
-    public function testItPublishesAnEventWhenAnInspectionChangesItsStatus()
+    /**
+     * @dataProvider eventClassProvider
+     */
+    public function testItPublishesAnEventWhenAnInspectionChangesItsStatus(string $eventClass)
     {
         $inspection = new Inspection();
         $this->setPrivateValue($inspection, 'id', 'inspection-id');
         $this->setPrivateValue($inspection, 'type', 'github_pr');
 
-        $domainEvent = new Event\InspectionFinished($inspection);
+        $domainEvent = new $eventClass($inspection, new \Exception());
         $event = new DomainEventWrapper($domainEvent);
 
         $this->producer->expects($this->once())

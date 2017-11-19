@@ -54,8 +54,6 @@ class CodeSniffer implements Inspection
             $standards = implode(',', $this->config['standards']);
         }
 
-        var_dump($standards);
-
         /** @var Model\Diff\File $file */
         foreach ($diff->getAddedPhpFiles() as $file) {
             $report = $this->codeSniffer->execute($file->getNewName(), $file->getNewContent(), $standards);
