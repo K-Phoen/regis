@@ -26,7 +26,8 @@ class CreateOrUpdateUserTest extends TestCase
 
     public function testItCreatesANewUserIfItDoesNotAlreadyExist()
     {
-        $command = new Command\User\CreateOrUpdateUser('user', 'remote-id', 'access token');
+        $accessTokenExpiration = new \DateTimeImmutable();
+        $command = new Command\User\CreateOrUpdateUser('user', 'remote-id', 'access token', 'refresh token', $accessTokenExpiration);
 
         $this->usersRepo
             ->method('findByBitbucketId')
@@ -35,9 +36,11 @@ class CreateOrUpdateUserTest extends TestCase
 
         $this->usersRepo->expects($this->once())
             ->method('save')
-            ->with($this->callback(function (Entity\BitbucketDetails $user) {
+            ->with($this->callback(function (Entity\BitbucketDetails $user) use ($accessTokenExpiration) {
                 $this->assertSame('remote-id', $user->getRemoteId());
                 $this->assertSame('access token', $user->getAccessToken());
+                $this->assertSame('refresh token', $user->getRefreshToken());
+                $this->assertSame($accessTokenExpiration, $user->getAccessTokenExpiration());
 
                 return true;
             }));
@@ -48,7 +51,8 @@ class CreateOrUpdateUserTest extends TestCase
     public function testItUpdatesTheUserIfItAlreadyExist()
     {
         $user = $this->createMock(Entity\BitbucketDetails::class);
-        $command = new Command\User\CreateOrUpdateUser('user', 'remote-id', 'access token');
+        $accessTokenExpiration = new \DateTimeImmutable();
+        $command = new Command\User\CreateOrUpdateUser('user', 'remote-id', 'access token', 'refresh token', $accessTokenExpiration);
 
         $this->usersRepo
             ->method('findByBitbucketId')
@@ -61,7 +65,7 @@ class CreateOrUpdateUserTest extends TestCase
 
         $user->expects($this->once())
             ->method('changeAccessToken')
-            ->with('access token');
+            ->with('access token', $accessTokenExpiration, 'refresh token');
 
         $this->handler->handle($command);
     }

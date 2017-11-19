@@ -13,25 +13,34 @@ class BitbucketDetailsTest extends TestCase
     public function testItGeneratesAnIdentifierAndStoreTheInitialData()
     {
         $userAccount = new UserAccount();
-        $details = new BitbucketDetails($userAccount, 'remote-id', 'username', 'access token');
+        $accessTokenExpiration = new \DateTimeImmutable();
+        $details = new BitbucketDetails($userAccount, 'remote-id', 'username', 'access token', 'refresh token', $accessTokenExpiration);
 
         $this->assertNotEmpty($details->getId());
         $this->assertSame($userAccount, $details->account());
         $this->assertSame('remote-id', $details->getRemoteId());
         $this->assertSame('username', $details->getUsername());
         $this->assertSame('access token', $details->getAccessToken());
+        $this->assertSame('refresh token', $details->getRefreshToken());
+        $this->assertSame($accessTokenExpiration, $details->getAccessTokenExpiration());
         $this->assertSame($userAccount->accountId(), $details->accountId());
     }
 
     public function testTheAccessTokenCanBeChanged()
     {
-        $details = new BitbucketDetails(new UserAccount(), 'remote-id', 'username', 'access token');
+        $accessTokenExpiration = new \DateTimeImmutable();
+        $newAccessTokenExpiration = new \DateTimeImmutable();
+        $details = new BitbucketDetails(new UserAccount(), 'remote-id', 'username', 'access token', 'refresh token', $accessTokenExpiration);
 
         $this->assertSame('access token', $details->getAccessToken());
+        $this->assertSame('refresh token', $details->getRefreshToken());
+        $this->assertSame($accessTokenExpiration, $details->getAccessTokenExpiration());
 
-        $details->changeAccessToken('new access token');
+        $details->changeAccessToken('new access token', $newAccessTokenExpiration, 'new refresh token');
 
         $this->assertSame('new access token', $details->getAccessToken());
+        $this->assertSame('new refresh token', $details->getRefreshToken());
+        $this->assertSame($newAccessTokenExpiration, $details->getAccessTokenExpiration());
     }
 
     /**
@@ -40,8 +49,21 @@ class BitbucketDetailsTest extends TestCase
      */
     public function testTheAccessTokenCanNotBeEmpty()
     {
-        $details = new BitbucketDetails(new UserAccount(), 'remote-id', 'username', 'access token');
+        $accessTokenExpiration = new \DateTimeImmutable();
+        $details = new BitbucketDetails(new UserAccount(), 'remote-id', 'username', 'access token', 'refresh token', $accessTokenExpiration);
 
-        $details->changeAccessToken('');
+        $details->changeAccessToken('', new \DateTimeImmutable(), 'new refresh token');
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage The new refresh token can not be empty
+     */
+    public function testTheRefreshTokenCanNotBeEmpty()
+    {
+        $accessTokenExpiration = new \DateTimeImmutable();
+        $details = new BitbucketDetails(new UserAccount(), 'remote-id', 'username', 'access token', 'refresh token', $accessTokenExpiration);
+
+        $details->changeAccessToken('access token', new \DateTimeImmutable(), '');
     }
 }

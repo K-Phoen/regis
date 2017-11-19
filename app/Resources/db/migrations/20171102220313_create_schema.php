@@ -66,6 +66,8 @@ class CreateSchema extends AbstractMigration
             ->addColumn('remote_id', 'string')
             ->addColumn('username', 'string')
             ->addColumn('access_token', 'string')
+            ->addColumn('refresh_token', 'string')
+            ->addColumn('access_token_expiration', 'datetime', ['timezone' => true])
             ->addForeignKey('user_id', 'user_account', 'id')
         ;
 

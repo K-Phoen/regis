@@ -22,9 +22,16 @@ class CreateOrUpdateUser
     {
         try {
             $user = $this->usersRepo->findByBitbucketId($command->getBitbucketId());
-            $user->changeAccessToken($command->getAccessToken());
+            $user->changeAccessToken($command->getAccessToken(), $command->getAccessTokenExpirationDate(), $command->getRefreshToken());
         } catch (Repository\Exception\NotFound $e) {
-            $user = new BitbucketDetails(new UserAccount(), $command->getBitbucketId(), $command->getUsername(), $command->getAccessToken());
+            $user = new BitbucketDetails(
+                new UserAccount(),
+                $command->getBitbucketId(),
+                $command->getUsername(),
+                $command->getAccessToken(),
+                $command->getRefreshToken(),
+                $command->getAccessTokenExpirationDate()
+            );
         }
 
         $this->usersRepo->save($user);

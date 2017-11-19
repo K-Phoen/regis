@@ -7,6 +7,7 @@ namespace Regis\BitbucketContext\Infrastructure\Symfony\Bundle\BitbucketBundle\S
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use KnpU\OAuth2ClientBundle\Client\Provider\BitbucketClient;
 use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
+use League\OAuth2\Client\Token\AccessToken;
 use League\Tactician\CommandBus;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -44,12 +45,16 @@ class BitbucketAuthenticator extends SocialAuthenticator
 
     public function getUser($credentials, UserProviderInterface $userProvider)
     {
+        /** @var AccessToken $credentials */
+        //var_dump($credentials);exit;
         $bitbucketUser = $this->getBitbucketClient()->fetchUserFromToken($credentials);
 
         $command = new Command\User\CreateOrUpdateUser(
             $bitbucketUser->getUsername(),
             $bitbucketUser->getId(),
-            $credentials->getToken()
+            $credentials->getToken(),
+            $credentials->getRefreshToken(),
+            (new \DateTimeImmutable())->setTimestamp($credentials->getExpires())
         );
 
         /** @var Kernel\User $userProfile */
