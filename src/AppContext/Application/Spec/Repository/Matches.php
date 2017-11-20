@@ -33,12 +33,12 @@ class Matches extends AbstractSpecification
         $this->search = $search;
     }
 
-    public function getRule()
+    public function getRule(): string
     {
         return 'identifier LIKE :search OR name LIKE :search';
     }
 
-    public function getParameters()
+    public function getParameters(): array
     {
         return ['search' => sprintf('%%%s%%', $this->search)];
     }

@@ -34,7 +34,7 @@ class ClearViolationsCache
         $this->violationsCache = $violationsCache;
     }
 
-    public function handle(Command\Inspection\ClearViolationsCache $command)
+    public function handle(Command\Inspection\ClearViolationsCache $command): void
     {
         $this->violationsCache->clear($command->getPullRequest());
     }

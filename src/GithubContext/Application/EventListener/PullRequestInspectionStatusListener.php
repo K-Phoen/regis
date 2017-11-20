@@ -48,7 +48,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         $this->urlGenerator = $urlGenerator;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             Event\PullRequestOpened::class => 'onPullRequestUpdated',
@@ -60,7 +60,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         ];
     }
 
-    public function onPullRequestUpdated(DomainEventWrapper $event)
+    public function onPullRequestUpdated(DomainEventWrapper $event): void
     {
         /** @var Event\PullRequestOpened|Event\PullRequestSynced $domainEvent */
         $domainEvent = $event->getDomainEvent();
@@ -75,7 +75,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         );
     }
 
-    public function onInspectionStarted(DomainEventWrapper $event)
+    public function onInspectionStarted(DomainEventWrapper $event): void
     {
         /** @var Event\InspectionStarted $domainEvent */
         $domainEvent = $event->getDomainEvent();
@@ -88,7 +88,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         );
     }
 
-    public function onInspectionFinished(DomainEventWrapper $event)
+    public function onInspectionFinished(DomainEventWrapper $event): void
     {
         /** @var Event\InspectionFinished $domainEvent */
         $domainEvent = $event->getDomainEvent();
@@ -107,9 +107,9 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         $report = $inspection->getReport();
 
         if ($report->hasErrors() || $report->hasWarnings()) {
-            list($status, $message) = [Client::INTEGRATION_FAILURE, sprintf('Inspection finished with %d error(s) and %d warning(s).', $report->errorsCount(), $report->warningsCount())];
+            [$status, $message] = [Client::INTEGRATION_FAILURE, sprintf('Inspection finished with %d error(s) and %d warning(s).', $report->errorsCount(), $report->warningsCount())];
         } else {
-            list($status, $message) = [Client::INTEGRATION_SUCCESS, 'Inspection successful.'];
+            [$status, $message] = [Client::INTEGRATION_SUCCESS, 'Inspection successful.'];
         }
 
         $this->setIntegrationStatus(
@@ -119,7 +119,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         );
     }
 
-    public function onInspectionFailed(DomainEventWrapper $event)
+    public function onInspectionFailed(DomainEventWrapper $event): void
     {
         /** @var Event\InspectionFailed $domainEvent */
         $domainEvent = $event->getDomainEvent();
@@ -132,7 +132,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
         );
     }
 
-    private function setIntegrationStatus(Entity\Repository $repository, string $head, IntegrationStatus $status)
+    private function setIntegrationStatus(Entity\Repository $repository, string $head, IntegrationStatus $status): void
     {
         if (!$repository->isInspectionEnabled()) {
             return;

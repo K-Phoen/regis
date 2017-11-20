@@ -40,7 +40,7 @@ class AddDeployKey
         $this->repositoriesRepo = $repositoriesRepo;
     }
 
-    public function handle(Command\Repository\AddDeployKey $command)
+    public function handle(Command\Repository\AddDeployKey $command): void
     {
         /** @var Entity\Repository $repository */
         $repository = $this->repositoriesRepo->find($command->getRepository()->value());

@@ -29,7 +29,7 @@ class DoctrineUsers implements Repository\Users
 {
     use RepositoryHelper;
 
-    public function save(Entity\BitbucketDetails $user)
+    public function save(Entity\BitbucketDetails $user): void
     {
         $this->entityManager()->persist($user);
         $this->entityManager()->flush();

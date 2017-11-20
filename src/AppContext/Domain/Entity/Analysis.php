@@ -90,7 +90,7 @@ class Analysis
         return $this->violationsMap[sprintf('%s:%d', $file, $line)];
     }
 
-    private function buildViolationsMap()
+    private function buildViolationsMap(): void
     {
         $this->violationsMap = [];
 

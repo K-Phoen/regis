@@ -33,12 +33,12 @@ class Named extends AbstractSpecification
         $this->username = $username;
     }
 
-    public function getRule()
+    public function getRule(): string
     {
         return 'githubProfile.username = :username OR bitbucketProfile.username = :username';
     }
 
-    public function getParameters()
+    public function getParameters(): array
     {
         return ['username' => $this->username];
     }

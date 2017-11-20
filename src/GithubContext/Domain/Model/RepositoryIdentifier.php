@@ -52,7 +52,7 @@ class RepositoryIdentifier
         $this->name = $name;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'owner' => $this->owner,

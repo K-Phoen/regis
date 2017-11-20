@@ -36,7 +36,7 @@ class SchedulePullRequestCommand extends ContainerAwareCommand
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('regis:github:schedule-pull-request')
@@ -57,7 +57,7 @@ class SchedulePullRequestCommand extends ContainerAwareCommand
     /**
      * {@inheritdoc}
      */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output): void
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -73,7 +73,7 @@ class SchedulePullRequestCommand extends ContainerAwareCommand
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $repositoryEntity = $this->findRepository($input->getOption('repository'));
 

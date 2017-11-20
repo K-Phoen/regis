@@ -28,7 +28,7 @@ use Symfony\Component\Config\Definition\ConfigurationInterface;
 
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('regis_webhooks');
@@ -38,7 +38,7 @@ class Configuration implements ConfigurationInterface
         return $treeBuilder;
     }
 
-    private function addInspectionsSection(ArrayNodeDefinition $rootNode)
+    private function addInspectionsSection(ArrayNodeDefinition $rootNode): void
     {
         $rootNode
             ->children()

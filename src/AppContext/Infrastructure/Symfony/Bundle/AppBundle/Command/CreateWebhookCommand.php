@@ -35,7 +35,7 @@ class CreateWebhookCommand extends ContainerAwareCommand
     /**
      * {@inheritdoc}
      */
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->setName('regis:setup-webhook')
@@ -51,7 +51,7 @@ class CreateWebhookCommand extends ContainerAwareCommand
     /**
      * {@inheritdoc}
      */
-    protected function interact(InputInterface $input, OutputInterface $output)
+    protected function interact(InputInterface $input, OutputInterface $output): void
     {
         $io = new SymfonyStyle($input, $output);
 
@@ -63,7 +63,7 @@ class CreateWebhookCommand extends ContainerAwareCommand
     /**
      * {@inheritdoc}
      */
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): void
     {
         $repository = $this->findRepository($input->getOption('repository'));
 

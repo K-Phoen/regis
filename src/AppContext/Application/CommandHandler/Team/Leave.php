@@ -34,7 +34,7 @@ class Leave
         $this->teamsRepo = $teamsRepo;
     }
 
-    public function handle(Command\Team\Leave $command)
+    public function handle(Command\Team\Leave $command): void
     {
         $team = $command->getTeam();
         $team->removeMember($command->getUser());

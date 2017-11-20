@@ -53,7 +53,7 @@ class RemoveRepository implements Command\SecureCommandBySpecification
         return new Team\IsOwner($user);
     }
 
-    public function getTargetToSecure()
+    public function getTargetToSecure(): Entity\Team
     {
         return $this->team;
     }

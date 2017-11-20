@@ -33,6 +33,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Regis\BitbucketContext\Application\Command;
 use Regis\Kernel;
@@ -61,7 +62,7 @@ class BitbucketAuthenticator extends SocialAuthenticator
         return $this->fetchAccessToken($this->getBitbucketClient());
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function getUser($credentials, UserProviderInterface $userProvider): UserInterface
     {
         /** @var AccessToken $credentials */
         $bitbucketUser = $this->getBitbucketClient()->fetchUserFromToken($credentials);
@@ -96,7 +97,7 @@ class BitbucketAuthenticator extends SocialAuthenticator
     /**
      * {@inheritdoc}
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         // TODO fixme
         return new Response('', Response::HTTP_FORBIDDEN);
@@ -105,7 +106,7 @@ class BitbucketAuthenticator extends SocialAuthenticator
     /**
      * {@inheritdoc}
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): Response
     {
         return new RedirectResponse($this->router->generate('repositories_list'));
     }

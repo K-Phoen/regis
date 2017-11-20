@@ -26,7 +26,7 @@ use Ramsey\Uuid\Uuid as UtilsUuid;
 
 class Uuid
 {
-    public static function create()
+    public static function create(): string
     {
         return UtilsUuid::uuid4()->toString();
     }

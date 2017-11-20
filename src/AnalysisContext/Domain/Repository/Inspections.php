@@ -26,7 +26,7 @@ use Regis\AnalysisContext\Domain\Entity;
 
 interface Inspections
 {
-    public function save(Entity\Inspection $inspection);
+    public function save(Entity\Inspection $inspection): void;
 
     public function find(string $id): Entity\Inspection;
 }

@@ -41,7 +41,7 @@ class PullRequestBuildStatusListener implements EventSubscriberInterface
         $this->urlGenerator = $urlGenerator;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             Event\InspectionStarted::class => 'onInspectionStarted',
@@ -50,7 +50,7 @@ class PullRequestBuildStatusListener implements EventSubscriberInterface
         ];
     }
 
-    public function onInspectionStarted(DomainEventWrapper $event)
+    public function onInspectionStarted(DomainEventWrapper $event): void
     {
         /** @var Event\InspectionStarted $domainEvent */
         $domainEvent = $event->getDomainEvent();
@@ -63,7 +63,7 @@ class PullRequestBuildStatusListener implements EventSubscriberInterface
         );
     }
 
-    public function onInspectionFinished(DomainEventWrapper $event)
+    public function onInspectionFinished(DomainEventWrapper $event): void
     {
         /** @var Event\InspectionFinished $domainEvent */
         $domainEvent = $event->getDomainEvent();
@@ -82,9 +82,9 @@ class PullRequestBuildStatusListener implements EventSubscriberInterface
         $report = $inspection->getReport();
 
         if ($report->hasErrors() || $report->hasWarnings()) {
-            list($state, $message) = [BuildStatus::STATE_FAILED, sprintf('Inspection finished with %d error(s) and %d warning(s).', $report->errorsCount(), $report->warningsCount())];
+            [$state, $message] = [BuildStatus::STATE_FAILED, sprintf('Inspection finished with %d error(s) and %d warning(s).', $report->errorsCount(), $report->warningsCount())];
         } else {
-            list($state, $message) = [BuildStatus::STATE_SUCCESSFUL, 'Inspection successful.'];
+            [$state, $message] = [BuildStatus::STATE_SUCCESSFUL, 'Inspection successful.'];
         }
 
         $this->setBuildStatus(
@@ -94,7 +94,7 @@ class PullRequestBuildStatusListener implements EventSubscriberInterface
         );
     }
 
-    public function onInspectionFailed(DomainEventWrapper $event)
+    public function onInspectionFailed(DomainEventWrapper $event): void
     {
         /** @var Event\InspectionFailed $domainEvent */
         $domainEvent = $event->getDomainEvent();
@@ -107,7 +107,7 @@ class PullRequestBuildStatusListener implements EventSubscriberInterface
         );
     }
 
-    private function setBuildStatus(Entity\Repository $repository, BuildStatus $status, string $head)
+    private function setBuildStatus(Entity\Repository $repository, BuildStatus $status, string $head): void
     {
         if (!$repository->isInspectionEnabled()) {
             return;

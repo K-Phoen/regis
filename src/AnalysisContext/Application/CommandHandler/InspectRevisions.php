@@ -45,7 +45,7 @@ class InspectRevisions
         $this->logger = $logger;
     }
 
-    public function handle(Command\InspectRevisions $command)
+    public function handle(Command\InspectRevisions $command): void
     {
         $inspectionId = $command->getInspectionId();
         $inspection = $this->inspectionsRepo->find($inspectionId);
@@ -86,7 +86,7 @@ class InspectRevisions
         }
     }
 
-    private function dispatch($event)
+    private function dispatch($event): void
     {
         $this->dispatcher->dispatch(get_class($event), new KernelEvent\DomainEventWrapper($event));
     }

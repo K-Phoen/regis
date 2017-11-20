@@ -28,7 +28,7 @@ use Regis\Kernel\Security\Exception\AccessDenied as RegisAccessDenied;
 
 class AccessDeniedListener
 {
-    public function onKernelException(GetResponseForExceptionEvent $event)
+    public function onKernelException(GetResponseForExceptionEvent $event): void
     {
         $exception = $event->getException();
 

@@ -36,7 +36,7 @@ class DoctrineInspections implements Repository\Inspections
         $this->em = $em;
     }
 
-    public function save(Entity\Inspection $inspections)
+    public function save(Entity\Inspection $inspections): void
     {
         $this->em->persist($inspections);
         $this->em->flush();

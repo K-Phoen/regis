@@ -41,7 +41,7 @@ class Repository
         $this->identifier = $identifier;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'identifier' => $this->identifier,

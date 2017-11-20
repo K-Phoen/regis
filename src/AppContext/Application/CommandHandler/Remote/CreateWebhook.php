@@ -34,7 +34,7 @@ class CreateWebhook
         $this->actionsRouter = $actionsRouter;
     }
 
-    public function handle(Command\Remote\CreateWebhook $command)
+    public function handle(Command\Remote\CreateWebhook $command): void
     {
         $this->actionsRouter->createWebhook($command->getRepository(), $command->getUrl());
     }

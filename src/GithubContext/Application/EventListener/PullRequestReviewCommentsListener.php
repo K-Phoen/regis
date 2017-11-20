@@ -37,14 +37,14 @@ class PullRequestReviewCommentsListener implements EventSubscriberInterface
         $this->commandBus = $commandBus;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             Event\InspectionFinished::class => 'onInspectionFinished',
         ];
     }
 
-    public function onInspectionFinished(DomainEventWrapper $event)
+    public function onInspectionFinished(DomainEventWrapper $event): void
     {
         /** @var Event\InspectionFinished $domainEvent */
         $domainEvent = $event->getDomainEvent();

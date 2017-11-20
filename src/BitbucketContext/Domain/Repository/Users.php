@@ -26,7 +26,7 @@ use Regis\BitbucketContext\Domain\Entity;
 
 interface Users
 {
-    public function save(Entity\BitbucketDetails $user);
+    public function save(Entity\BitbucketDetails $user): void;
 
     public function findByBitbucketId(string $id): Entity\BitbucketDetails;
 

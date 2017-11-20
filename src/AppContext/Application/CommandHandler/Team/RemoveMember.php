@@ -36,7 +36,7 @@ class RemoveMember
         $this->usersRepo = $usersRepo;
     }
 
-    public function handle(Command\Team\RemoveMember $command)
+    public function handle(Command\Team\RemoveMember $command): void
     {
         $member = $this->usersRepo->findById($command->getMemberId());
 

@@ -24,6 +24,7 @@ namespace Regis\AppContext\Application\Spec\Team;
 
 use RulerZ\Spec\ComposedSpecification;
 use Regis\AppContext\Domain\Entity;
+use RulerZ\Spec\Specification;
 
 class AccessibleBy extends ComposedSpecification
 {
@@ -34,7 +35,7 @@ class AccessibleBy extends ComposedSpecification
         $this->user = $user;
     }
 
-    protected function getSpecification()
+    protected function getSpecification(): Specification
     {
         return (new IsOwner($this->user))->orX(new IsMember($this->user));
     }

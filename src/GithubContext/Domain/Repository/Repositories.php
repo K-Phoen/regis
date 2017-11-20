@@ -26,7 +26,7 @@ use Regis\GithubContext\Domain\Entity;
 
 interface Repositories
 {
-    public function save(Entity\Repository $team);
+    public function save(Entity\Repository $team): void;
 
     /**
      * @throws \Regis\GithubContext\Domain\Repository\Exception\NotFound

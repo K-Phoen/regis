@@ -94,18 +94,12 @@ abstract class Inspection
         return $this->createdAt;
     }
 
-    /**
-     * @return \DateTimeInterface|null
-     */
-    public function getStartedAt()
+    public function getStartedAt(): ?\DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    /**
-     * @return \DateTimeInterface|null
-     */
-    public function getFinishedAt()
+    public function getFinishedAt(): ?\DateTimeInterface
     {
         return $this->finishedAt;
     }

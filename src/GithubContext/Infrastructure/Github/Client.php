@@ -74,7 +74,7 @@ class Client implements GithubClient
         return $this->client->pullRequest()->show($repository->getOwner(), $repository->getName(), $number);
     }
 
-    public function setIntegrationStatus(Model\RepositoryIdentifier $repository, string $head, IntegrationStatus $status)
+    public function setIntegrationStatus(Model\RepositoryIdentifier $repository, string $head, IntegrationStatus $status): void
     {
         $this->assertAuthenticated();
         $this->logger->info('Creating integration status for repository {repository_identifer}', [
@@ -96,7 +96,7 @@ class Client implements GithubClient
         $this->client->repo()->statuses()->create($repository->getOwner(), $repository->getName(), $head, $parameters);
     }
 
-    public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key, string $type)
+    public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key, string $type): void
     {
         $this->assertAuthenticated();
 
@@ -112,7 +112,7 @@ class Client implements GithubClient
         ]);
     }
 
-    public function createWebhook(Model\RepositoryIdentifier $repository, string $url, $secret = null)
+    public function createWebhook(Model\RepositoryIdentifier $repository, string $url, $secret = null): void
     {
         $this->assertAuthenticated();
 
@@ -133,7 +133,7 @@ class Client implements GithubClient
         ]);
     }
 
-    public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment)
+    public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment): void
     {
         $this->assertAuthenticated();
 
@@ -155,7 +155,7 @@ class Client implements GithubClient
         ]);
     }
 
-    private function assertAuthenticated()
+    private function assertAuthenticated(): void
     {
         if (!$this->authenticated) {
             $this->client->authenticate($this->user->getAccessToken(), '', \Github\Client::AUTH_URL_TOKEN);

@@ -36,7 +36,7 @@ class CreateOrUpdateUser
         $this->usersRepo = $usersRepo;
     }
 
-    public function handle(Command\User\CreateOrUpdateUser $command)
+    public function handle(Command\User\CreateOrUpdateUser $command): GithubDetails
     {
         try {
             $user = $this->usersRepo->findByGithubId($command->getGithubId());

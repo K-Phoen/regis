@@ -26,7 +26,7 @@ use Regis\GithubContext\Domain\Entity;
 
 interface Users
 {
-    public function save(Entity\GithubDetails $user);
+    public function save(Entity\GithubDetails $user): void;
 
     public function findByGithubId(int $id): Entity\GithubDetails;
 

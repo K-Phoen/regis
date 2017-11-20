@@ -36,7 +36,7 @@ class DoctrineUsers implements Repository\Users
         $this->em = $em;
     }
 
-    public function save(Entity\GithubDetails $user)
+    public function save(Entity\GithubDetails $user): void
     {
         $this->em->persist($user);
         $this->em->flush();

@@ -32,11 +32,11 @@ interface Client
 
     public function getPullRequest(Model\RepositoryIdentifier $repository, int $number): Model\PullRequest;
 
-    public function setBuildStatus(Model\RepositoryIdentifier $repository, BuildStatus $status, string $revision);
+    public function setBuildStatus(Model\RepositoryIdentifier $repository, BuildStatus $status, string $revision): void;
 
-    public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment);
+    public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment): void;
 
-    public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key);
+    public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key): void;
 
-    public function createWebhook(Model\RepositoryIdentifier $repository, string $url);
+    public function createWebhook(Model\RepositoryIdentifier $repository, string $url): void;
 }

@@ -36,7 +36,7 @@ class ActionsRouter implements Actions
         $this->implementations = $implementations;
     }
 
-    public function createWebhook(Entity\Repository $repository, string $hookUrl)
+    public function createWebhook(Entity\Repository $repository, string $hookUrl): void
     {
         $this->implementation($repository->getType())->createWebhook($repository, $hookUrl);
     }

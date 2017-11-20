@@ -27,5 +27,5 @@ use Regis\BitbucketContext\Domain\Model;
 
 interface Reporter
 {
-    public function report(Entity\Repository $repository, Model\ReviewComment $comment, Model\PullRequest $pullRequest);
+    public function report(Entity\Repository $repository, Model\ReviewComment $comment, Model\PullRequest $pullRequest): void;
 }

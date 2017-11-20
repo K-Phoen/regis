@@ -61,7 +61,7 @@ class Register
         return $this->name;
     }
 
-    public function getSharedSecret()
+    public function getSharedSecret(): ?string
     {
         return $this->sharedSecret;
     }

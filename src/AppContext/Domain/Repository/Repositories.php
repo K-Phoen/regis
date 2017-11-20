@@ -30,7 +30,7 @@ interface Repositories
     public const MODE_FETCH_NOTHING = 0;
     public const MODE_FETCH_RELATIONS = 1;
 
-    public function save(Entity\Repository $team);
+    public function save(Entity\Repository $team): void;
 
     public function matching(Specification $spec): \Traversable;
 

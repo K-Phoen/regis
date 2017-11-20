@@ -51,7 +51,7 @@ class Report
         return $this->id;
     }
 
-    public function addAnalysis(Analysis $analysis)
+    public function addAnalysis(Analysis $analysis): void
     {
         $this->analyses->add($analysis);
 

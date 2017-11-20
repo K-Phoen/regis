@@ -40,7 +40,7 @@ class Repository
     /** @var UserAccount */
     private $owner;
 
-    public function newSharedSecret(string $sharedSecret)
+    public function newSharedSecret(string $sharedSecret): void
     {
         $this->sharedSecret = $sharedSecret;
     }
@@ -90,12 +90,12 @@ class Repository
         return $this->isInspectionEnabled;
     }
 
-    public function disableInspection()
+    public function disableInspection(): void
     {
         $this->isInspectionEnabled = false;
     }
 
-    public function enableInspection()
+    public function enableInspection(): void
     {
         $this->isInspectionEnabled = true;
     }

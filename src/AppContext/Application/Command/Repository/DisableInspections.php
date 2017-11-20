@@ -46,7 +46,7 @@ class DisableInspections implements Command\SecureCommandBySpecification
         return new Repository\IsOwner($user);
     }
 
-    public function getTargetToSecure()
+    public function getTargetToSecure(): Entity\Repository
     {
         return $this->repository;
     }

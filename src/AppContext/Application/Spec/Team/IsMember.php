@@ -34,12 +34,12 @@ class IsMember extends AbstractSpecification
         $this->user = $user;
     }
 
-    public function getRule()
+    public function getRule(): string
     {
         return 'members.id = :member_user_id';
     }
 
-    public function getParameters()
+    public function getParameters(): array
     {
         return ['member_user_id' => $this->user->getId()];
     }

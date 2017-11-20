@@ -61,7 +61,7 @@ class Violation
         return $this->analysis;
     }
 
-    public function setAnalysis(Analysis $analysis)
+    public function setAnalysis(Analysis $analysis): void
     {
         $this->analysis = $analysis;
     }

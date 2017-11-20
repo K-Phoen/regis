@@ -34,7 +34,7 @@ class DisableInspections
         $this->repositoriesRepo = $repositoriesRepo;
     }
 
-    public function handle(Command\Repository\DisableInspections $command)
+    public function handle(Command\Repository\DisableInspections $command): void
     {
         $repo = $command->getRepository();
         $repo->disableInspection();

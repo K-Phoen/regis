@@ -51,7 +51,7 @@ class DiffParser extends ParserBase
         return $this->files;
     }
 
-    protected function doParse()
+    protected function doParse(): void
     {
         $this->files = [];
 

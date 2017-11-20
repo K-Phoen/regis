@@ -36,7 +36,7 @@ class InspectionResultListener implements EventSubscriberInterface
         $this->producer = $producer;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             Event\InspectionStarted::class => 'onInspectionStatus',
@@ -45,7 +45,7 @@ class InspectionResultListener implements EventSubscriberInterface
         ];
     }
 
-    public function onInspectionStatus(KernelEvent\DomainEventWrapper $event)
+    public function onInspectionStatus(KernelEvent\DomainEventWrapper $event): void
     {
         /** @var Event\InspectionStarted|Event\InspectionFinished|Event\InspectionFailed $domainEvent */
         $domainEvent = $event->getDomainEvent();

@@ -46,7 +46,7 @@ class Analysis
         $this->type = $type;
     }
 
-    public function addViolation(Violation $violation)
+    public function addViolation(Violation $violation): void
     {
         $violation->setAnalysis($this);
         $this->violations[] = $violation;

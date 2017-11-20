@@ -56,7 +56,7 @@ class UserProvider implements UserProviderInterface
         return $this->loadUserByUsername($user->accountId());
     }
 
-    public function supportsClass($class)
+    public function supportsClass($class): bool
     {
         return $class instanceof User;
     }

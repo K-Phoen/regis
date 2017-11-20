@@ -30,5 +30,5 @@ interface Repositories
     /**
      * @return Model\Repository[]
      */
-    public function forUser(Kernel\User $user);
+    public function forUser(Kernel\User $user): iterable;
 }

@@ -42,7 +42,7 @@ class Repository implements VcsRepository
         $this->filesystem = $filesystem;
     }
 
-    public function checkout(string $revision)
+    public function checkout(string $revision): void
     {
         $this->repository->run('fetch');
         $this->repository->getWorkingCopy()->checkout($revision);

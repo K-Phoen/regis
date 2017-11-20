@@ -43,7 +43,7 @@ class DoctrineTeams implements Repository\Teams
         $this->rulerz = $rulerz;
     }
 
-    public function save(Entity\Team $team)
+    public function save(Entity\Team $team): void
     {
         $this->em->persist($team);
 
