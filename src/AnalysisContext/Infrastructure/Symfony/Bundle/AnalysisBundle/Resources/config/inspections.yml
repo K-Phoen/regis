@@ -3,7 +3,11 @@ services:
         class: Regis\AnalysisContext\Application\Inspector
         arguments:
             - '@regis.vcs.git'
+            - '@regis.tools.composer'
             - [ '@regis.inspection.code_sniffer', '@regis.inspection.phpmd', '@regis.inspection.phpstan' ]
+            - '@logger'
+        tags:
+            - { name: monolog.logger, channel: analysis }
 
     regis.inspection.phpstan:
         class: Regis\AnalysisContext\Application\Inspection\Phpstan
@@ -33,4 +37,9 @@ services:
     regis.tools.phpmd:
         class: Regis\AnalysisContext\Infrastructure\PhpMd\PhpMd
         arguments: [ '%phpmd_binary%' ]
+        public: false
+
+    regis.tools.composer:
+        class: Regis\AnalysisContext\Infrastructure\Composer\Composer
+        arguments: [ '%composer_binary%' ]
         public: false

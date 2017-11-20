@@ -48,6 +48,11 @@ class Repository implements VcsRepository
         $this->repository->getWorkingCopy()->checkout($revision);
     }
 
+    public function root(): string
+    {
+        return $this->repository->getPath();
+    }
+
     public function locateFile(string $name): string
     {
         $repositoryPath = $this->repository->getPath();

@@ -20,31 +20,9 @@
 
 declare(strict_types=1);
 
-namespace Regis\AnalysisContext\Application\Vcs;
+namespace Regis\AnalysisContext\Application;
 
-use Regis\AnalysisContext\Domain\Model\Git as Model;
-
-interface Repository
+interface Composer
 {
-    /**
-     * @return string Absolute path to the repository root.
-     */
-    public function root(): string;
-
-    public function checkout(string $revision): void;
-
-    public function getDiff(Model\Revisions $revisions): Model\Diff;
-
-    /**
-     * Locates a file in the repository.
-     *
-     * @note Currently only looks at the repository root.
-     *
-     * @param string $name the name of the file to locate
-     *
-     * @return string absolute path to the file
-     *
-     * @throws FileNotFound
-     */
-    public function locateFile(string $name): string;
+    public function install(string $workingDirectory): void;
 }

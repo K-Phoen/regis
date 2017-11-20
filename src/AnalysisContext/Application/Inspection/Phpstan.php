@@ -52,9 +52,11 @@ class Phpstan implements Inspection
             $configFile = null;
         }
 
+        $runnerEnv = new RunnerEnv($repository->root());
+
         /** @var Model\Diff\File $file */
         foreach ($diff->getAddedPhpFiles() as $file) {
-            $report = $this->phpstan->execute($file->getNewName(), $configFile);
+            $report = $this->phpstan->execute($runnerEnv, $file->getNewName(), $configFile);
 
             foreach ($report as $entry) {
                 try {

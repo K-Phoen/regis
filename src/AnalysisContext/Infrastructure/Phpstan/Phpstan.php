@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Infrastructure\Phpstan;
 
 use Regis\AnalysisContext\Application\Inspection\PhpstanRunner;
+use Regis\AnalysisContext\Application\Inspection\RunnerEnv;
 use Symfony\Component\Process\Process;
 
 class Phpstan implements PhpstanRunner
@@ -34,14 +35,14 @@ class Phpstan implements PhpstanRunner
         $this->phpstanBin = $phpCsBin;
     }
 
-    public function execute(string $fileName, string $configFile = null): \Traversable
+    public function execute(RunnerEnv $env, string $fileName, string $configFile = null): iterable
     {
         $process = new Process(sprintf(
             '%s analyse --no-progress %s --errorFormat=checkstyle %s',
             escapeshellarg($this->phpstanBin),
             $configFile !== null ? '--configuration='.escapeshellarg($configFile) : '--level=7',
             escapeshellarg($fileName)
-        ));
+        ), $env->workingDir());
         $process->run();
 
         yield from $this->processResults($fileName, $process->getOutput());

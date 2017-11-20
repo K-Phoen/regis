@@ -20,31 +20,19 @@
 
 declare(strict_types=1);
 
-namespace Regis\AnalysisContext\Application\Vcs;
+namespace Regis\AnalysisContext\Application\Inspection;
 
-use Regis\AnalysisContext\Domain\Model\Git as Model;
-
-interface Repository
+class RunnerEnv
 {
-    /**
-     * @return string Absolute path to the repository root.
-     */
-    public function root(): string;
+    private $workingDir;
 
-    public function checkout(string $revision): void;
+    public function __construct(string $workingDir)
+    {
+        $this->workingDir = $workingDir;
+    }
 
-    public function getDiff(Model\Revisions $revisions): Model\Diff;
-
-    /**
-     * Locates a file in the repository.
-     *
-     * @note Currently only looks at the repository root.
-     *
-     * @param string $name the name of the file to locate
-     *
-     * @return string absolute path to the file
-     *
-     * @throws FileNotFound
-     */
-    public function locateFile(string $name): string;
+    public function workingDir(): string
+    {
+        return $this->workingDir;
+    }
 }

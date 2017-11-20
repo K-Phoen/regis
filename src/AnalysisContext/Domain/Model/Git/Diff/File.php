@@ -80,7 +80,7 @@ class File
         return $this->oldName;
     }
 
-    public function getNewName()
+    public function getNewName(): string
     {
         return $this->newName;
     }
