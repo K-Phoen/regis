@@ -24,8 +24,8 @@ namespace Regis\AnalysisContext\Domain\Entity;
 
 class Violation
 {
-    const WARNING = 10;
-    const ERROR = 20;
+    public const WARNING = 10;
+    public const ERROR = 20;
 
     private $id;
     private $severity;

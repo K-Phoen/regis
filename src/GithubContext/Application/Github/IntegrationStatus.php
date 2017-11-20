@@ -24,7 +24,7 @@ namespace Regis\GithubContext\Application\Github;
 
 class IntegrationStatus
 {
-    const STATUS_CONTEXT = 'regis/pr';
+    public const STATUS_CONTEXT = 'regis/pr';
 
     private $state;
     private $description;

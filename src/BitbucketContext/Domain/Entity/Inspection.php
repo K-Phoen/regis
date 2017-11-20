@@ -26,10 +26,10 @@ use Regis\Kernel\Uuid;
 
 abstract class Inspection
 {
-    const STATUS_SCHEDULED = 'scheduled';
-    const STATUS_STARTED = 'started';
-    const STATUS_FINISHED = 'finished';
-    const STATUS_FAILED = 'failed';
+    public const STATUS_SCHEDULED = 'scheduled';
+    public const STATUS_STARTED = 'started';
+    public const STATUS_FINISHED = 'finished';
+    public const STATUS_FAILED = 'failed';
 
     private $id;
     private $report;

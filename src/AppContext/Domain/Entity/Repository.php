@@ -27,8 +27,8 @@ use Regis\Kernel;
 
 class Repository
 {
-    const TYPE_GITHUB = 'github';
-    const TYPE_BITBUCKET = 'bitbucket';
+    public const TYPE_GITHUB = 'github';
+    public const TYPE_BITBUCKET = 'bitbucket';
 
     private $id;
     private $identifier;

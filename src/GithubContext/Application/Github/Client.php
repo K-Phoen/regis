@@ -26,13 +26,13 @@ use Regis\GithubContext\Domain\Model;
 
 interface Client
 {
-    const INTEGRATION_PENDING = 'pending';
-    const INTEGRATION_SUCCESS = 'success';
-    const INTEGRATION_FAILURE = 'failure';
-    const INTEGRATION_ERROR = 'error';
+    public const INTEGRATION_PENDING = 'pending';
+    public const INTEGRATION_SUCCESS = 'success';
+    public const INTEGRATION_FAILURE = 'failure';
+    public const INTEGRATION_ERROR = 'error';
 
-    const READONLY_KEY = 'readonly_key';
-    const WRITE_KEY = 'write_key';
+    public const READONLY_KEY = 'readonly_key';
+    public const WRITE_KEY = 'write_key';
 
     public function setIntegrationStatus(Model\RepositoryIdentifier $repository, string $head, IntegrationStatus $status);
 

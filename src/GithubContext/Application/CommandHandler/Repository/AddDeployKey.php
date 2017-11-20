@@ -30,7 +30,7 @@ use Regis\GithubContext\Domain\Repository\Repositories;
 
 class AddDeployKey
 {
-    const KEY_TITLE = 'Regis - Private repositories';
+    private const KEY_TITLE = 'Regis - Private repositories';
 
     private $githubClientFactory;
     private $repositoriesRepo;

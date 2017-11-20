@@ -27,7 +27,7 @@ use Regis\GithubContext\Domain\Model;
 
 class Repository
 {
-    const TYPE_GITHUB = 'github';
+    public const TYPE_GITHUB = 'github';
 
     private $id;
     private $identifier;

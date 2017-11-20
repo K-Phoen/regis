@@ -30,7 +30,7 @@ use Regis\AnalysisContext\Domain\Entity\Violation;
 
 class CodeSniffer implements Inspection
 {
-    const CONFIG_FILE = 'phpcs.xml';
+    public const CONFIG_FILE = 'phpcs.xml';
 
     private $codeSniffer;
     private $config;

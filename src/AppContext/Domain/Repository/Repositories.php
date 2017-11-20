@@ -27,8 +27,8 @@ use Regis\AppContext\Domain\Entity;
 
 interface Repositories
 {
-    const MODE_FETCH_NOTHING = 0;
-    const MODE_FETCH_RELATIONS = 1;
+    public const MODE_FETCH_NOTHING = 0;
+    public const MODE_FETCH_RELATIONS = 1;
 
     public function save(Entity\Repository $team);
 

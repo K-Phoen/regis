@@ -29,7 +29,7 @@ use Regis\BitbucketContext\Domain\Repository\Repositories;
 
 class AddDeployKey
 {
-    const KEY_TITLE = 'Regis deploy key';
+    private const KEY_TITLE = 'Regis deploy key';
 
     private $githubClientFactory;
     private $repositoriesRepo;
