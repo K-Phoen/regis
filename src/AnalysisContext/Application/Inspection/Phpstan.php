@@ -24,13 +24,14 @@ namespace Regis\AnalysisContext\Application\Inspection;
 
 use Regis\AnalysisContext\Application\Inspection;
 use Regis\AnalysisContext\Application\Vcs;
+use Regis\AnalysisContext\Application\Process\Env;
 use Regis\AnalysisContext\Domain\Model\Exception\LineNotInDiff;
 use Regis\AnalysisContext\Domain\Model\Git as Model;
 use Regis\AnalysisContext\Domain\Entity\Violation;
 
 class Phpstan implements Inspection
 {
-    const CONFIG_FILE = 'phpstan.neon';
+    private const CONFIG_FILE = 'phpstan.neon';
 
     private $phpstan;
 
@@ -52,7 +53,7 @@ class Phpstan implements Inspection
             $configFile = null;
         }
 
-        $runnerEnv = new RunnerEnv($repository->root());
+        $runnerEnv = new Env($repository->root());
 
         /** @var Model\Diff\File $file */
         foreach ($diff->getAddedPhpFiles() as $file) {

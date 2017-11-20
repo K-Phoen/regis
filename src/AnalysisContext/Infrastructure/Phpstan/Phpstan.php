@@ -23,32 +23,34 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Infrastructure\Phpstan;
 
 use Regis\AnalysisContext\Application\Inspection\PhpstanRunner;
-use Regis\AnalysisContext\Application\Inspection\RunnerEnv;
-use Symfony\Component\Process\Process;
+use Regis\AnalysisContext\Application\Process\Runner as ProcessRunner;
+use Regis\AnalysisContext\Application\Process\Env;
 
 class Phpstan implements PhpstanRunner
 {
+    private $processRunner;
     private $phpstanBin;
 
-    public function __construct(string $phpCsBin)
+    public function __construct(ProcessRunner $processRunner, string $phpstanBin)
     {
-        $this->phpstanBin = $phpCsBin;
+        $this->processRunner = $processRunner;
+        $this->phpstanBin = $phpstanBin;
     }
 
-    public function execute(RunnerEnv $env, string $fileName, string $configFile = null): iterable
+    public function execute(Env $env, string $fileName, ?string $configFile): iterable
     {
-        $process = new Process(sprintf(
-            '%s analyse --no-progress %s --errorFormat=checkstyle %s',
-            escapeshellarg($this->phpstanBin),
-            $configFile !== null ? '--configuration='.escapeshellarg($configFile) : '--level=7',
-            escapeshellarg($fileName)
-        ), $env->workingDir());
-        $process->run();
+        $output = $this->processRunner->run($this->phpstanBin, [
+            'analyse',
+            '--no-progress',
+            $configFile !== null ? '--configuration='.$configFile : '--level=7',
+            '--errorFormat=checkstyle',
+            $fileName,
+        ], $env);
 
-        yield from $this->processResults($fileName, $process->getOutput());
+        yield from $this->processResults($fileName, $output);
     }
 
-    private function processResults(string $originalFileName, string $xmlReport): \Traversable
+    private function processResults(string $originalFileName, string $xmlReport): iterable
     {
         $xml = new \SimpleXMLElement($xmlReport);
 

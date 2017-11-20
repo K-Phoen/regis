@@ -23,10 +23,15 @@ declare(strict_types=1);
 namespace Tests\Regis\AnalysisContext\Infrastructure\Phpstan;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
+use Regis\AnalysisContext\Application\Process\Env;
 use Regis\AnalysisContext\Infrastructure\Phpstan\Phpstan;
+use Regis\AnalysisContext\Infrastructure\Process\SymfonyProcessRunner;
 
 class PhpstanTest extends TestCase
 {
+    private $workingDir;
+    private $phpstan;
     private $filename;
 
     public function setUp()
@@ -40,8 +45,12 @@ $f = function () use ($foo) {
 CODE
         ;
 
-        $this->filename = tempnam(sys_get_temp_dir(), 'regis_');
+        $this->workingDir = sys_get_temp_dir();
+        $this->filename = tempnam($this->workingDir, 'regis_');
         file_put_contents($this->filename, $source);
+
+        $logger = $this->createMock(LoggerInterface::class);
+        $this->phpstan = new Phpstan(new SymfonyProcessRunner($logger), APP_ROOT_DIR.'/vendor/bin/phpstan');
     }
 
     public function tearDown()
@@ -51,8 +60,6 @@ CODE
 
     public function testReportsAreGenerated()
     {
-        $phpstan = new Phpstan(APP_ROOT_DIR.'/vendor/bin/phpstan');
-
         $this->assertSame([
             [
                 'file' => $this->filename,
@@ -61,6 +68,6 @@ CODE
                 'severity' => 'error',
                 'message' => 'Anonymous function has an unused use $foo.',
             ],
-        ], iterator_to_array($phpstan->execute($this->filename)));
+        ], iterator_to_array($this->phpstan->execute(new Env($this->workingDir), $this->filename, null)));
     }
 }

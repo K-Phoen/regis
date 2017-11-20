@@ -24,6 +24,13 @@ services:
         arguments: [ '@regis.tools.phpmd', '%regis.config.inspections.phpmd%' ]
         public: false
 
+    regis.tools.process_runner:
+        class: Regis\AnalysisContext\Infrastructure\Process\SymfonyProcessRunner
+        arguments: ['@logger']
+        public: false
+        tags:
+            - { name: monolog.logger, channel: analysis }
+
     regis.tools.code_sniffer:
         class: Regis\AnalysisContext\Infrastructure\CodeSniffer\CodeSniffer
         arguments: ['%phpcs_binary%']
@@ -31,7 +38,7 @@ services:
 
     regis.tools.phpstan:
         class: Regis\AnalysisContext\Infrastructure\Phpstan\Phpstan
-        arguments: [ '%phpstan_binary%' ]
+        arguments: [ '@regis.tools.process_runner', '%phpstan_binary%' ]
         public: false
 
     regis.tools.phpmd:
