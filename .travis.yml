@@ -15,7 +15,6 @@ branches:
         - master
 
 php:
-    - 7.0
     - 7.1
 
 matrix:
