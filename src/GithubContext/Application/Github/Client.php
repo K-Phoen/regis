@@ -26,21 +26,21 @@ use Regis\GithubContext\Domain\Model;
 
 interface Client
 {
-    const INTEGRATION_PENDING = 'pending';
-    const INTEGRATION_SUCCESS = 'success';
-    const INTEGRATION_FAILURE = 'failure';
-    const INTEGRATION_ERROR = 'error';
+    public const INTEGRATION_PENDING = 'pending';
+    public const INTEGRATION_SUCCESS = 'success';
+    public const INTEGRATION_FAILURE = 'failure';
+    public const INTEGRATION_ERROR = 'error';
 
-    const READONLY_KEY = 'readonly_key';
-    const WRITE_KEY = 'write_key';
+    public const READONLY_KEY = 'readonly_key';
+    public const WRITE_KEY = 'write_key';
 
     public function setIntegrationStatus(Model\RepositoryIdentifier $repository, string $head, IntegrationStatus $status);
 
-    public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key, string $type);
+    public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key, string $type): void;
 
-    public function createWebhook(Model\RepositoryIdentifier $repository, string $url, $secret = null);
+    public function createWebhook(Model\RepositoryIdentifier $repository, string $url, $secret = null): void;
 
-    public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment);
+    public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment): void;
 
     public function listRepositories(): \Traversable;
 

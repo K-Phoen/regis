@@ -30,7 +30,7 @@ use Regis\AnalysisContext\Domain\Entity\Violation;
 
 class PhpMd implements Inspection
 {
-    const CONFIG_FILE = 'phpmd-ruleset.xml';
+    public const CONFIG_FILE = 'phpmd-ruleset.xml';
 
     /** @var PhpMdRunner */
     private $phpMd;

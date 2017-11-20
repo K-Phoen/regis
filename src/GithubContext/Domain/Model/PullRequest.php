@@ -47,7 +47,7 @@ class PullRequest
         $this->base = $base;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'repository_identifier' => $this->repository->toArray(),

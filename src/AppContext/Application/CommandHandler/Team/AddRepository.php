@@ -36,7 +36,7 @@ class AddRepository
         $this->repositoriesRepo = $repositoriesRepo;
     }
 
-    public function handle(Command\Team\AddRepository $command)
+    public function handle(Command\Team\AddRepository $command): void
     {
         $newRepo = $this->repositoriesRepo->find($command->getNewRepositoryId());
 

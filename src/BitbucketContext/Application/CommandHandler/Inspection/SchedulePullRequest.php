@@ -43,7 +43,7 @@ class SchedulePullRequest
         $this->clientFactory = $clientFactory;
     }
 
-    public function handle(Command\Inspection\SchedulePullRequest $command)
+    public function handle(Command\Inspection\SchedulePullRequest $command): void
     {
         $pullRequest = $command->getPullRequest();
         /** @var Entity\Repository $repository */

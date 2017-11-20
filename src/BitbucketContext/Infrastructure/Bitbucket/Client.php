@@ -62,7 +62,7 @@ class Client implements BitbucketClient
         }
     }
 
-    public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key)
+    public function addDeployKey(Model\RepositoryIdentifier $repository, string $title, string $key): void
     {
         $this->logger->info('Adding new deploy key for repository {repository} -- {key_title}', [
             'owner_id' => $this->user->accountId(),
@@ -78,7 +78,7 @@ class Client implements BitbucketClient
         $this->decodeResponse($response);
     }
 
-    public function createWebhook(Model\RepositoryIdentifier $repository, string $url)
+    public function createWebhook(Model\RepositoryIdentifier $repository, string $url): void
     {
         $this->logger->info('Creating webhook for repository {repository}: {url}', [
             'owner_id' => $this->user->accountId(),
@@ -104,7 +104,7 @@ class Client implements BitbucketClient
         $this->decodeResponse($response);
     }
 
-    public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment)
+    public function sendComment(Model\PullRequest $pullRequest, Model\ReviewComment $comment): void
     {
         $this->logger->info('Sending review comment for PR {pull_request} -- {commit_id}@{path}:{position} -- {comment}', [
             'owner_id' => $this->user->accountId(),
@@ -167,7 +167,7 @@ class Client implements BitbucketClient
         );
     }
 
-    public function setBuildStatus(Model\RepositoryIdentifier $repository, BuildStatus $status, string $revision)
+    public function setBuildStatus(Model\RepositoryIdentifier $repository, BuildStatus $status, string $revision): void
     {
         $this->logger->info('Setting build status to {state} for repository {repository}', [
             'repository' => $repository->value(),
@@ -201,7 +201,7 @@ class Client implements BitbucketClient
         }
     }
 
-    private function hydrateRepository(array $data)
+    private function hydrateRepository(array $data): Model\Repository
     {
         $cloneEndpoint = array_filter($data['links']['clone'], function (array $endpoint) {
             return $endpoint['name'] === 'ssh';

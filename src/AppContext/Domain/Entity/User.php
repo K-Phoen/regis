@@ -45,18 +45,12 @@ class User implements Kernel\User, UserInterface
         return $this->id;
     }
 
-    /**
-     * @return GithubProfile|null
-     */
-    public function getGithubProfile()
+    public function getGithubProfile(): ?GithubProfile
     {
         return $this->githubProfile;
     }
 
-    /**
-     * @return BitbucketProfile|null
-     */
-    public function getBitbucketProfile()
+    public function getBitbucketProfile(): ?BitbucketProfile
     {
         return $this->bitbucketProfile;
     }
@@ -79,7 +73,7 @@ class User implements Kernel\User, UserInterface
     /**
      * {@inheritdoc}
      */
-    public function getRoles()
+    public function getRoles(): array
     {
         return $this->roles;
     }
@@ -87,7 +81,7 @@ class User implements Kernel\User, UserInterface
     /**
      * {@inheritdoc}
      */
-    public function getPassword()
+    public function getPassword(): string
     {
         return '';
     }
@@ -103,7 +97,7 @@ class User implements Kernel\User, UserInterface
     /**
      * {@inheritdoc}
      */
-    public function getUsername()
+    public function getUsername(): string
     {
         return $this->id;
     }
@@ -111,7 +105,7 @@ class User implements Kernel\User, UserInterface
     /**
      * {@inheritdoc}
      */
-    public function eraseCredentials()
+    public function eraseCredentials(): void
     {
     }
 }

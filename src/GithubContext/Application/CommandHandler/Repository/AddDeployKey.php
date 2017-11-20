@@ -30,7 +30,7 @@ use Regis\GithubContext\Domain\Repository\Repositories;
 
 class AddDeployKey
 {
-    const KEY_TITLE = 'Regis - Private repositories';
+    private const KEY_TITLE = 'Regis - Private repositories';
 
     private $githubClientFactory;
     private $repositoriesRepo;
@@ -41,7 +41,7 @@ class AddDeployKey
         $this->repositoriesRepo = $repositoriesRepo;
     }
 
-    public function handle(Command\Repository\AddDeployKey $command)
+    public function handle(Command\Repository\AddDeployKey $command): void
     {
         /** @var Entity\Repository $repository */
         $repository = $this->repositoriesRepo->find($command->getRepositoryIdentifier());

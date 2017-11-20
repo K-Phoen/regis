@@ -36,7 +36,7 @@ class RepositoryIdentifier
         $this->value = $value;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'identifier' => $this->value,
@@ -48,7 +48,7 @@ class RepositoryIdentifier
         return $this->value;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->value;
     }

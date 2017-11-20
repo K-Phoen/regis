@@ -36,7 +36,7 @@ class AddMember
         $this->usersRepo = $usersRepo;
     }
 
-    public function handle(Command\Team\AddMember $command)
+    public function handle(Command\Team\AddMember $command): void
     {
         $newMember = $this->usersRepo->findById($command->getNewMemberId());
 

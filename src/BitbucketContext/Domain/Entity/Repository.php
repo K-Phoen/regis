@@ -61,12 +61,13 @@ class Repository
         return $this->isInspectionEnabled;
     }
 
-    public function disableInspection()
+    // TODO should not be here
+    public function disableInspection(): void
     {
         $this->isInspectionEnabled = false;
     }
 
-    public function enableInspection()
+    public function enableInspection(): void
     {
         $this->isInspectionEnabled = true;
     }

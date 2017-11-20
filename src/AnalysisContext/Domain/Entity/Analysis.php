@@ -26,9 +26,9 @@ use Regis\Kernel;
 
 class Analysis
 {
-    const STATUS_OK = 'ok';
-    const STATUS_WARNING = 'warning';
-    const STATUS_ERROR = 'error';
+    public const STATUS_OK = 'ok';
+    public const STATUS_WARNING = 'warning';
+    public const STATUS_ERROR = 'error';
 
     private $id;
     private $report;
@@ -46,17 +46,17 @@ class Analysis
         $this->type = $type;
     }
 
-    public function addViolation(Violation $violation)
+    public function addViolation(Violation $violation): void
     {
         $violation->setAnalysis($this);
         $this->violations[] = $violation;
 
         if ($violation->isError()) {
-            $this->errorsCount += 1;
+            $this->errorsCount++;
         }
 
         if ($violation->isWarning()) {
-            $this->warningsCount += 1;
+            $this->warningsCount++;
         }
     }
 

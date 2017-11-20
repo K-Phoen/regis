@@ -53,7 +53,7 @@ class Leave implements Command\SecureCommandBySpecification
         return (new Team\IsOwner($user))->not();
     }
 
-    public function getTargetToSecure()
+    public function getTargetToSecure(): Entity\Team
     {
         return $this->team;
     }

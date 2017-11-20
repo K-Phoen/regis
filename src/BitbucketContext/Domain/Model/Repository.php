@@ -47,7 +47,7 @@ class Repository
         $this->publicUrl = $publicUrl;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'identifier' => $this->identifier->toArray(),

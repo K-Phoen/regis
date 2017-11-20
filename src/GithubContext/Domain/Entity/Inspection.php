@@ -26,12 +26,12 @@ use Regis\Kernel\Uuid;
 
 abstract class Inspection
 {
-    const TYPE_GITHUB_PR = 'github_pr';
+    public const TYPE_GITHUB_PR = 'github_pr';
 
-    const STATUS_SCHEDULED = 'scheduled';
-    const STATUS_STARTED = 'started';
-    const STATUS_FINISHED = 'finished';
-    const STATUS_FAILED = 'failed';
+    public const STATUS_SCHEDULED = 'scheduled';
+    public const STATUS_STARTED = 'started';
+    public const STATUS_FINISHED = 'finished';
+    public const STATUS_FAILED = 'failed';
 
     private $id;
     private $report;
@@ -98,18 +98,12 @@ abstract class Inspection
         return $this->createdAt;
     }
 
-    /**
-     * @return \DateTimeInterface|null
-     */
-    public function getStartedAt()
+    public function getStartedAt(): ?\DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    /**
-     * @return \DateTimeInterface|null
-     */
-    public function getFinishedAt()
+    public function getFinishedAt(): ?\DateTimeInterface
     {
         return $this->finishedAt;
     }

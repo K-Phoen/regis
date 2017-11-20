@@ -24,9 +24,9 @@ namespace Regis\AnalysisContext\Domain\Model\Git\Diff;
 
 class Change
 {
-    const LINE_CONTEXT = 0;
-    const LINE_REMOVE = -1;
-    const LINE_ADD = 1;
+    public const LINE_CONTEXT = 0;
+    public const LINE_REMOVE = -1;
+    public const LINE_ADD = 1;
 
     protected $rangeOldStart;
     protected $rangeOldCount;

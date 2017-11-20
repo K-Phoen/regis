@@ -35,7 +35,7 @@ class SendViolationsAsComments
         $this->reporter = $reporter;
     }
 
-    public function handle(Command\Inspection\SendViolationsAsComments $command)
+    public function handle(Command\Inspection\SendViolationsAsComments $command): void
     {
         $inspection = $command->getInspection();
         $repository = $inspection->getRepository();

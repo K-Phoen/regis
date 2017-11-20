@@ -36,7 +36,7 @@ class BitbucketActions implements Actions
         $this->bus = $bus;
     }
 
-    public function createWebhook(Entity\Repository $repository, string $hookUrl)
+    public function createWebhook(Entity\Repository $repository, string $hookUrl): void
     {
         $command = new Command\Repository\CreateWebhook(
             new RepositoryIdentifier($repository->getIdentifier()),

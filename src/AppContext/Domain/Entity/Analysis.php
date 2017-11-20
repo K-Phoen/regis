@@ -26,9 +26,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 class Analysis
 {
-    const STATUS_OK = 'ok';
-    const STATUS_WARNING = 'warning';
-    const STATUS_ERROR = 'error';
+    public const STATUS_OK = 'ok';
+    public const STATUS_WARNING = 'warning';
+    public const STATUS_ERROR = 'error';
 
     private $id;
     private $type;
@@ -90,7 +90,7 @@ class Analysis
         return $this->violationsMap[sprintf('%s:%d', $file, $line)];
     }
 
-    private function buildViolationsMap()
+    private function buildViolationsMap(): void
     {
         $this->violationsMap = [];
 

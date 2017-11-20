@@ -37,7 +37,7 @@ class InMemoryRepositories implements Repository\Repositories
         }
     }
 
-    public function save(Entity\Repository $team)
+    public function save(Entity\Repository $team): void
     {
         $this->repositories[$team->getIdentifier()] = $team;
     }

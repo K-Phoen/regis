@@ -29,7 +29,7 @@ class DoctrinePullRequestInspections implements Repository\PullRequestInspection
 {
     use RepositoryHelper;
 
-    public function save(Entity\PullRequestInspection $inspections)
+    public function save(Entity\PullRequestInspection $inspections): void
     {
         $this->entityManager()->persist($inspections);
         $this->entityManager()->flush();

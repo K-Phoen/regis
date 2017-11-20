@@ -34,13 +34,13 @@ class AccessibleThroughTeam extends AbstractSpecification
         $this->user = $user;
     }
 
-    public function getRule()
+    public function getRule(): string
     {
         // TODO I took a shortcut here.
         return 'teams.id IN :teams_ids';
     }
 
-    public function getParameters()
+    public function getParameters(): array
     {
         $teamsIds = array_map(function (Entity\Team $team) {
             return $team->getId();

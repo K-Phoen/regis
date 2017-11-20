@@ -24,9 +24,9 @@ namespace Regis\BitbucketContext\Application\Bitbucket;
 
 class BuildStatus
 {
-    const STATE_SUCCESSFUL = 'SUCCESSFUL';
-    const STATE_INPROGRESS = 'INPROGRESS';
-    const STATE_FAILED = 'FAILED';
+    public const STATE_SUCCESSFUL = 'SUCCESSFUL';
+    public const STATE_INPROGRESS = 'INPROGRESS';
+    public const STATE_FAILED = 'FAILED';
 
     private $key;
     private $state;

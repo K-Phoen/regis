@@ -44,7 +44,7 @@ class Repository
         $this->cloneUrl = $cloneUrl;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'identifier' => $this->identifier->toArray(),

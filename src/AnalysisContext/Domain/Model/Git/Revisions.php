@@ -38,7 +38,7 @@ class Revisions
         $this->head = $head;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
         return [
             'base' => $this->base,

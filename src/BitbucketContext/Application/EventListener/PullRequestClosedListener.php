@@ -37,7 +37,7 @@ class PullRequestClosedListener implements EventSubscriberInterface
         $this->commandBus = $commandBus;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             Event\PullRequestRejected::class => 'onPullRequestClosed',
@@ -45,7 +45,7 @@ class PullRequestClosedListener implements EventSubscriberInterface
         ];
     }
 
-    public function onPullRequestClosed(DomainEventWrapper $event)
+    public function onPullRequestClosed(DomainEventWrapper $event): void
     {
         /** @var Event\PullRequestRejected|Event\PullRequestMerged $domainEvent */
         $domainEvent = $event->getDomainEvent();

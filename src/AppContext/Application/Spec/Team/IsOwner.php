@@ -34,12 +34,12 @@ class IsOwner extends AbstractSpecification
         $this->user = $user;
     }
 
-    public function getRule()
+    public function getRule(): string
     {
         return 'owner.id = :owner_user_id';
     }
 
-    public function getParameters()
+    public function getParameters(): array
     {
         return ['owner_user_id' => $this->user->accountId()];
     }

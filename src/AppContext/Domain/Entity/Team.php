@@ -74,22 +74,22 @@ class Team
         return $this->members;
     }
 
-    public function addMember(User $newMember)
+    public function addMember(User $newMember): void
     {
         $this->members->add($newMember);
     }
 
-    public function removeMember(User $member)
+    public function removeMember(User $member): void
     {
         $this->members->removeElement($member);
     }
 
-    public function addRepository(Repository $repository)
+    public function addRepository(Repository $repository): void
     {
         $this->repositories->add($repository);
     }
 
-    public function removeRepository(Repository $repository)
+    public function removeRepository(Repository $repository): void
     {
         $this->repositories->removeElement($repository);
     }

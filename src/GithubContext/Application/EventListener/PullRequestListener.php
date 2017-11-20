@@ -40,7 +40,7 @@ class PullRequestListener implements EventSubscriberInterface
         $this->commandBus = $commandBus;
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             Event\PullRequestOpened::class => 'onPullRequestUpdated',
@@ -49,7 +49,7 @@ class PullRequestListener implements EventSubscriberInterface
         ];
     }
 
-    public function onPullRequestUpdated(DomainEventWrapper $event)
+    public function onPullRequestUpdated(DomainEventWrapper $event): void
     {
         /** @var Event\PullRequestOpened|Event\PullRequestSynced $domainEvent */
         $domainEvent = $event->getDomainEvent();
@@ -58,7 +58,7 @@ class PullRequestListener implements EventSubscriberInterface
         $this->commandBus->handle($command);
     }
 
-    public function onPullRequestClosed(DomainEventWrapper $event)
+    public function onPullRequestClosed(DomainEventWrapper $event): void
     {
         /** @var Event\PullRequestClosed $domainEvent */
         $domainEvent = $event->getDomainEvent();

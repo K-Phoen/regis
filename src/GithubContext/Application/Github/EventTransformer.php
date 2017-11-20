@@ -31,10 +31,10 @@ use Regis\GithubContext\Domain\Model;
  */
 class EventTransformer
 {
-    const TYPE_PULL_REQUEST = 'pull_request';
-    const ACTION_OPEN_PULL_REQUEST = 'opened';
-    const ACTION_CLOSE_PULL_REQUEST = 'closed';
-    const ACTION_SYNC_PULL_REQUEST = 'synchronize';
+    private const TYPE_PULL_REQUEST = 'pull_request';
+    private const ACTION_OPEN_PULL_REQUEST = 'opened';
+    private const ACTION_CLOSE_PULL_REQUEST = 'closed';
+    private const ACTION_SYNC_PULL_REQUEST = 'synchronize';
 
     public function transform(Request $request)
     {

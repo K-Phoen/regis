@@ -39,22 +39,22 @@ class ViolationsCache
         return (bool) $this->redis->sismember($this->getPullRequestKey($pullRequest), $this->getViolationKey($comment));
     }
 
-    public function save(Model\ReviewComment $comment, Model\PullRequest $pullRequest)
+    public function save(Model\ReviewComment $comment, Model\PullRequest $pullRequest): void
     {
         $this->redis->sadd($this->getPullRequestKey($pullRequest), [$this->getViolationKey($comment)]);
     }
 
-    public function clear(Model\PullRequest $pullRequest)
+    public function clear(Model\PullRequest $pullRequest): void
     {
         $this->redis->del([$this->getPullRequestKey($pullRequest)]);
     }
 
-    private function getPullRequestKey(Model\PullRequest $pullRequest)
+    private function getPullRequestKey(Model\PullRequest $pullRequest): string
     {
         return sprintf('%s#%d', $pullRequest->getRepository()->value(), $pullRequest->getNumber());
     }
 
-    private function getViolationKey(Model\ReviewComment $comment)
+    private function getViolationKey(Model\ReviewComment $comment): string
     {
         return md5(
             sprintf('%s:%d -- %s', $comment->file(), $comment->line(), $comment->content())

@@ -90,7 +90,7 @@ class File
         return $this->newIndex;
     }
 
-    public function isBinary()
+    public function isBinary(): bool
     {
         return $this->isBinary;
     }
@@ -144,6 +144,6 @@ class File
     {
         $extension = pathinfo($this->getNewName(), PATHINFO_EXTENSION);
 
-        return in_array(strtolower($extension), ['php', 'phps'], true);
+        return \in_array(strtolower($extension), ['php', 'phps'], true);
     }
 }

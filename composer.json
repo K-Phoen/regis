@@ -16,11 +16,11 @@
     },
     "config": {
         "platform": {
-            "php": "7.0"
+            "php": "7.1"
         }
     },
     "require": {
-        "php": ">=7.0",
+        "php": ">=7.1",
         "symfony/symfony": "3.2.*",
         "doctrine/orm": "^2.5",
         "doctrine/doctrine-bundle": "^1.6",

@@ -38,7 +38,7 @@ class CreateWebhook
         $this->repositoriesRepo = $repositoriesRepo;
     }
 
-    public function handle(Command\Repository\CreateWebhook $command)
+    public function handle(Command\Repository\CreateWebhook $command): void
     {
         /** @var Entity\Repository $repository */
         $repository = $this->repositoriesRepo->find($command->getRepository()->value());

@@ -26,7 +26,7 @@ use Regis\BitbucketContext\Domain\Entity;
 
 interface PullRequestInspections
 {
-    public function save(Entity\PullRequestInspection $inspection);
+    public function save(Entity\PullRequestInspection $inspection): void;
 
     public function find(string $id): Entity\PullRequestInspection;
 }

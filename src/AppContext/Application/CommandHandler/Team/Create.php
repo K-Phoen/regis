@@ -35,7 +35,7 @@ class Create
         $this->teamsRepo = $teamsRepo;
     }
 
-    public function handle(Command\Team\Create $command)
+    public function handle(Command\Team\Create $command): void
     {
         $team = new Entity\Team($command->getOwner(), $command->getName());
 

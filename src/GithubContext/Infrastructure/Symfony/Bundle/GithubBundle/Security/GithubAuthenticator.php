@@ -33,6 +33,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\UserProviderInterface;
 use Regis\GithubContext\Application\Command;
 use Regis\Kernel;
@@ -61,7 +62,7 @@ class GithubAuthenticator extends SocialAuthenticator
         return $this->fetchAccessToken($this->getGithubClient());
     }
 
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function getUser($credentials, UserProviderInterface $userProvider): UserInterface
     {
         /** @var GithubResourceOwner $githubUser */
         $githubUser = $this->getGithubClient()->fetchUserFromToken($credentials);
@@ -86,7 +87,7 @@ class GithubAuthenticator extends SocialAuthenticator
     /**
      * {@inheritdoc}
      */
-    public function start(Request $request, AuthenticationException $authException = null)
+    public function start(Request $request, AuthenticationException $authException = null): Response
     {
         return new RedirectResponse($this->router->generate('login'));
     }
@@ -94,7 +95,7 @@ class GithubAuthenticator extends SocialAuthenticator
     /**
      * {@inheritdoc}
      */
-    public function onAuthenticationFailure(Request $request, AuthenticationException $exception)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): Response
     {
         // TODO fixme
         return new Response('', Response::HTTP_FORBIDDEN);
@@ -103,7 +104,7 @@ class GithubAuthenticator extends SocialAuthenticator
     /**
      * {@inheritdoc}
      */
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, $providerKey): Response
     {
         return new RedirectResponse($this->router->generate('repositories_list'));
     }

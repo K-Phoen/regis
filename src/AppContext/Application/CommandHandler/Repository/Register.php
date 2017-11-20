@@ -39,7 +39,7 @@ class Register
         $this->randomGenerator = $generator;
     }
 
-    public function handle(Command\Repository\Register $command)
+    public function handle(Command\Repository\Register $command): Entity\Repository
     {
         try {
             return $this->repositoriesRepo->find($command->getIdentifier());

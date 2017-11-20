@@ -24,7 +24,7 @@ namespace Regis\AppContext\Domain\Entity;
 
 class Violation
 {
-    const ERROR = 20;
+    private const ERROR = 20;
 
     private $id;
     private $severity;

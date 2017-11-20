@@ -31,10 +31,10 @@ use Regis\BitbucketContext\Domain\Model;
  */
 class EventTransformer
 {
-    const ACTION_OPEN_PULL_REQUEST = 'pullrequest:created';
-    const ACTION_MERGE_PULL_REQUEST = 'pullrequest:fulfilled';
-    const ACTION_REJECT_PULL_REQUEST = 'pullrequest:rejected';
-    const ACTION_UPDATE_PULL_REQUEST = 'pullrequest:updated';
+    private const ACTION_OPEN_PULL_REQUEST = 'pullrequest:created';
+    private const ACTION_MERGE_PULL_REQUEST = 'pullrequest:fulfilled';
+    private const ACTION_REJECT_PULL_REQUEST = 'pullrequest:rejected';
+    private const ACTION_UPDATE_PULL_REQUEST = 'pullrequest:updated';
 
     public function transform(Request $request)
     {

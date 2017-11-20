@@ -24,13 +24,13 @@ namespace Regis\GithubContext\Application\Github;
 
 class IntegrationStatus
 {
-    const STATUS_CONTEXT = 'regis/pr';
+    public const STATUS_CONTEXT = 'regis/pr';
 
     private $state;
     private $description;
     private $targetUrl;
 
-    public function __construct(string $state, string $description, $targetUrl = null)
+    public function __construct(string $state, string $description, ?string $targetUrl = null)
     {
         $this->state = $state;
         $this->description = $description;
@@ -47,10 +47,7 @@ class IntegrationStatus
         return $this->description;
     }
 
-    /**
-     * @return string|null
-     */
-    public function getTargetUrl()
+    public function getTargetUrl(): ?string
     {
         return $this->targetUrl;
     }

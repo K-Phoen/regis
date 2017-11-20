@@ -34,7 +34,10 @@ class PayloadValidator
         $this->repositoriesRepo = $repositoriesRepo;
     }
 
-    public function validate(Request $request)
+    /**
+     * @throws Exception\PayloadSignature
+     */
+    public function validate(Request $request): void
     {
         $signature = $request->headers->get('X-Hub-Signature');
 
@@ -58,7 +61,7 @@ class PayloadValidator
             throw Exception\PayloadSignature::invalid();
         }
 
-        list($algorithm, $hash) = $signatureParts;
+        [$algorithm, $hash] = $signatureParts;
         if (!in_array($algorithm, hash_algos(), true)) {
             throw Exception\PayloadSignature::unknownAlgorithm($algorithm);
         }

@@ -24,10 +24,10 @@ namespace Regis\AnalysisContext\Domain\Entity;
 
 class Inspection
 {
-    const STATUS_SCHEDULED = 'scheduled';
-    const STATUS_STARTED = 'started';
-    const STATUS_FINISHED = 'finished';
-    const STATUS_FAILED = 'failed';
+    public const STATUS_SCHEDULED = 'scheduled';
+    public const STATUS_STARTED = 'started';
+    public const STATUS_FINISHED = 'finished';
+    public const STATUS_FAILED = 'failed';
 
     private $id;
     private $report;
@@ -37,7 +37,7 @@ class Inspection
     private $type;
     private $failureTrace = '';
 
-    public function id()
+    public function id(): string
     {
         return $this->id;
     }
@@ -47,10 +47,7 @@ class Inspection
         return $this->status;
     }
 
-    /**
-     * @return Report|null
-     */
-    public function report()
+    public function report(): ?Report
     {
         return $this->report;
     }
@@ -60,18 +57,12 @@ class Inspection
         return $this->failureTrace;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function startedAt()
+    public function startedAt(): ?\DateTimeInterface
     {
         return $this->startedAt;
     }
 
-    /**
-     * @return \DateTime|null
-     */
-    public function finishedAt()
+    public function finishedAt(): ?\DateTimeInterface
     {
         return $this->finishedAt;
     }
@@ -81,7 +72,7 @@ class Inspection
         return $this->type;
     }
 
-    public function start()
+    public function start(): void
     {
         if ($this->startedAt !== null) {
             throw new \LogicException('This inspection is already started');
@@ -91,7 +82,7 @@ class Inspection
         $this->status = self::STATUS_STARTED;
     }
 
-    public function finish(Report $report)
+    public function finish(Report $report): void
     {
         if ($this->finishedAt !== null) {
             throw new \LogicException('This inspection is already finished');
@@ -102,7 +93,7 @@ class Inspection
         $this->report = $report;
     }
 
-    public function fail(\Exception $e)
+    public function fail(\Exception $e): void
     {
         if ($this->finishedAt !== null) {
             throw new \LogicException('This inspection is already finished');

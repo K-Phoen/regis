@@ -27,7 +27,7 @@ use Regis\AppContext\Domain\Entity;
 
 interface Teams
 {
-    public function save(Entity\Team $team);
+    public function save(Entity\Team $team): void;
 
     public function matching(Specification $spec): \Traversable;
 

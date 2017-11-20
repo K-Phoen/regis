@@ -38,7 +38,7 @@ class DoctrineRepositories implements Repository\Repositories
         $this->em = $em;
     }
 
-    public function save(Entity\Repository $team)
+    public function save(Entity\Repository $team): void
     {
         $this->em->persist($team);
         $this->em->flush();

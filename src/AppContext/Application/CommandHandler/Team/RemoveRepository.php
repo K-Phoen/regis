@@ -36,7 +36,7 @@ class RemoveRepository
         $this->repositoriesRepo = $repositoriesRepo;
     }
 
-    public function handle(Command\Team\RemoveRepository $command)
+    public function handle(Command\Team\RemoveRepository $command): void
     {
         $repo = $this->repositoriesRepo->find($command->getRepositoryId());
 

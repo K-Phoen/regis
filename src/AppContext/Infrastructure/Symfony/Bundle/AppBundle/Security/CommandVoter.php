@@ -38,12 +38,12 @@ class CommandVoter extends Voter
         $this->rulerz = $rulerz;
     }
 
-    protected function supports($attribute, $subject)
+    protected function supports($attribute, $subject): bool
     {
         return strpos($attribute, 'COMMAND_') === 0;
     }
 
-    protected function voteOnAttribute($attribute, $subject, TokenInterface $token)
+    protected function voteOnAttribute($attribute, $subject, TokenInterface $token): bool
     {
         $commandClassName = $this->attributeToCommandClass($attribute);
 

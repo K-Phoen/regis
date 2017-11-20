@@ -34,7 +34,7 @@ class EnableInspections
         $this->repositoriesRepo = $repositoriesRepo;
     }
 
-    public function handle(Command\Repository\EnableInspections $command)
+    public function handle(Command\Repository\EnableInspections $command): void
     {
         $repo = $command->getRepository();
         $repo->enableInspection();

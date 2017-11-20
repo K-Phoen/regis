@@ -38,7 +38,7 @@ class DuplicationGuard implements Reporter
         $this->violationsCache = $violationsCache;
     }
 
-    public function report(Entity\Repository $repository, Model\ReviewComment $comment, Model\PullRequest $pullRequest)
+    public function report(Entity\Repository $repository, Model\ReviewComment $comment, Model\PullRequest $pullRequest): void
     {
         if ($this->violationsCache->has($comment, $pullRequest)) {
             return;

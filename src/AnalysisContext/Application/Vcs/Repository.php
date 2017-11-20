@@ -26,7 +26,7 @@ use Regis\AnalysisContext\Domain\Model\Git as Model;
 
 interface Repository
 {
-    public function checkout(string $revision);
+    public function checkout(string $revision): void;
 
     public function getDiff(Model\Revisions $revisions): Model\Diff;
 
