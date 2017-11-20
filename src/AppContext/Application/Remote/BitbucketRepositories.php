@@ -41,12 +41,12 @@ class BitbucketRepositories implements Repositories
         $this->usersRepo = $usersRepo;
     }
 
-    public function forUser(Kernel\User $user): \Traversable
+    public function forUser(Kernel\User $user): iterable
     {
         try {
             $bitbucketUser = $this->usersRepo->findByAccountId($user->accountId());
         } catch (BitbucketException\NotFound $e) {
-            return new \ArrayIterator([]);
+            return [];
         }
 
         $bitbucketClient = $this->clientFactory->createForUser($bitbucketUser);

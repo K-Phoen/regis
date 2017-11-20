@@ -41,12 +41,12 @@ class GithubRepositories implements Repositories
         $this->usersRepo = $usersRepo;
     }
 
-    public function forUser(Kernel\User $user): \Traversable
+    public function forUser(Kernel\User $user): iterable
     {
         try {
             $githubUser = $this->usersRepo->findByAccountId($user->accountId());
         } catch (GithubException\NotFound $e) {
-            return new \ArrayIterator([]);
+            return [];
         }
 
         $githubClient = $this->clientFactory->createForUser($githubUser);

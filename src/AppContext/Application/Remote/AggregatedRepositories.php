@@ -36,7 +36,7 @@ class AggregatedRepositories implements Repositories
         $this->sources = $sources;
     }
 
-    public function forUser(Kernel\User $user): \Traversable
+    public function forUser(Kernel\User $user): iterable
     {
         foreach ($this->sources as $source) {
             yield from $source->forUser($user);
