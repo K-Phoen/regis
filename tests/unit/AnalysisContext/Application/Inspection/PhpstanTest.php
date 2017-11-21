@@ -24,7 +24,8 @@ namespace Tests\Regis\AnalysisContext\Application\Inspection;
 
 use Regis\AnalysisContext\Application\Inspection\Phpstan;
 use Regis\AnalysisContext\Application\Inspection\PhpstanRunner;
-use Regis\AnalysisContext\Application\Vcs\Repository;
+use Regis\AnalysisContext\Application\Process\Env;
+use Regis\AnalysisContext\Application\Vcs;
 use Regis\AnalysisContext\Domain\Entity;
 use Regis\AnalysisContext\Domain\Model\Exception\LineNotInDiff;
 
@@ -39,7 +40,7 @@ class PhpstanTest extends InspectionTestCase
     public function setUp()
     {
         $this->phpstan = $this->createMock(PhpstanRunner::class);
-        $this->vcsRepository = $this->createMock(Repository::class);
+        $this->vcsRepository = $this->repository();
 
         $this->inspection = new Phpstan($this->phpstan);
     }
@@ -58,15 +59,40 @@ class PhpstanTest extends InspectionTestCase
         $this->assertEmpty($violations);
     }
 
-    public function testWithASingleAddedFileButNoViolation()
+    public function testItUsesTheDefaultRulesetIfNoneIsFoundInTheRepository()
     {
         $file = $this->file('test.php');
         $diff = $this->diff([$file]);
 
+        $this->vcsRepository->expects($this->once())
+            ->method('locateFile')
+            ->with(Phpstan::CONFIG_FILE)
+            ->willThrowException(new Vcs\FileNotFound());
+
         $this->phpstan->expects($this->once())
             ->method('execute')
-            ->with('test.php')
-            ->will($this->returnValue(new \ArrayIterator([])));
+            ->with($this->isInstanceOf(Env::class), 'test.php', null)
+            ->willReturn(new \ArrayIterator());
+
+        $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $diff));
+
+        $this->assertEmpty($violations);
+    }
+
+    public function testItUsesTheConfigFileFromTheRepositoryWhenItExists()
+    {
+        $file = $this->file('test.php');
+        $diff = $this->diff([$file]);
+
+        $this->vcsRepository->expects($this->once())
+            ->method('locateFile')
+            ->with(Phpstan::CONFIG_FILE)
+            ->willReturn($configPath = '/some/full/path/'.Phpstan::CONFIG_FILE);
+
+        $this->phpstan->expects($this->once())
+            ->method('execute')
+            ->with($this->isInstanceOf(Env::class), 'test.php', $configPath)
+            ->willReturn(new \ArrayIterator());
 
         $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $diff));
 
@@ -89,8 +115,8 @@ class PhpstanTest extends InspectionTestCase
 
         $this->phpstan->expects($this->once())
             ->method('execute')
-            ->with('test.php')
-            ->will($this->returnValue(new \ArrayIterator([
+            ->with($this->isInstanceOf(Env::class), 'test.php', $this->anything())
+            ->willReturn(new \ArrayIterator([
                 // the first one is configured not to be in the diff
                 [
                     'line' => 12,
@@ -104,7 +130,7 @@ class PhpstanTest extends InspectionTestCase
                     'line' => 24,
                     'message' => 'another message',
                 ],
-            ])));
+            ]));
 
         $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $diff));
 

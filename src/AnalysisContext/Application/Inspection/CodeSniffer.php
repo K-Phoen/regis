@@ -76,7 +76,7 @@ class CodeSniffer implements Inspection
         }
     }
 
-    private function buildViolations(Model\Diff\File $file, array $report): \Traversable
+    private function buildViolations(Model\Diff\File $file, array $report): iterable
     {
         foreach ($report['messages'] as $message) {
             try {

@@ -77,7 +77,7 @@ class PhpMd implements Inspection
         }
     }
 
-    private function buildViolations(Model\Diff\File $file, iterable $report): \Traversable
+    private function buildViolations(Model\Diff\File $file, iterable $report): iterable
     {
         foreach ($report as $violation) {
             try {

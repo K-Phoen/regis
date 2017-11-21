@@ -24,7 +24,7 @@ namespace Tests\Regis\AnalysisContext\Application\Inspection;
 
 use Regis\AnalysisContext\Application\Inspection\CodeSniffer;
 use Regis\AnalysisContext\Application\Inspection\CodeSnifferRunner;
-use Regis\AnalysisContext\Application\Vcs\Repository;
+use Regis\AnalysisContext\Application\Process\Env;
 use Regis\AnalysisContext\Application\Vcs;
 use Regis\AnalysisContext\Domain\Entity;
 use Regis\AnalysisContext\Domain\Model\Exception\LineNotInDiff;
@@ -42,7 +42,7 @@ class CodeSnifferTest extends InspectionTestCase
     public function setUp()
     {
         $this->codeSniffer = $this->createMock(CodeSnifferRunner::class);
-        $this->vcsRepository = $this->createMock(Repository::class);
+        $this->vcsRepository = $this->repository();
 
         $this->inspection = new CodeSniffer($this->codeSniffer, [
             'standards' => self::DEFAULT_STANDARDS,
@@ -70,7 +70,7 @@ class CodeSnifferTest extends InspectionTestCase
 
         $this->codeSniffer->expects($this->once())
             ->method('execute')
-            ->with('test.php', $this->anything())
+            ->with($this->isInstanceOf(Env::class), 'test.php', $this->anything())
             ->willReturn([
                 'files' => [],
             ]);
@@ -92,7 +92,7 @@ class CodeSnifferTest extends InspectionTestCase
 
         $this->codeSniffer->expects($this->once())
             ->method('execute')
-            ->with('test.php', $this->anything(), implode(',', self::DEFAULT_STANDARDS))
+            ->with($this->isInstanceOf(Env::class), 'test.php', implode(',', self::DEFAULT_STANDARDS))
             ->willReturn(['files' => []]);
 
         $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $diff));
@@ -112,7 +112,7 @@ class CodeSnifferTest extends InspectionTestCase
 
         $this->codeSniffer->expects($this->once())
             ->method('execute')
-            ->with('test.php', $this->anything(), $configPath)
+            ->with($this->isInstanceOf(Env::class), 'test.php', $configPath)
             ->willReturn(['files' => []]);
 
         $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $diff));
@@ -136,7 +136,7 @@ class CodeSnifferTest extends InspectionTestCase
 
         $this->codeSniffer->expects($this->once())
             ->method('execute')
-            ->with('test.php', $this->anything())
+            ->with($this->isInstanceOf(Env::class), 'test.php', $this->anything())
             ->willReturn([
                 'files' => [
                     [

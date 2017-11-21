@@ -24,8 +24,8 @@ namespace Tests\Regis\AnalysisContext\Application\Inspection;
 
 use Regis\AnalysisContext\Application\Inspection\PhpMd;
 use Regis\AnalysisContext\Application\Inspection\PhpMdRunner;
+use Regis\AnalysisContext\Application\Process\Env;
 use Regis\AnalysisContext\Application\Vcs;
-use Regis\AnalysisContext\Application\Vcs\Repository;
 use Regis\AnalysisContext\Domain\Entity;
 use Regis\AnalysisContext\Domain\Model\Exception\LineNotInDiff;
 
@@ -41,8 +41,8 @@ class PhpMdTest extends InspectionTestCase
 
     public function setUp()
     {
-        $this->phpMd = $this->getMockBuilder(PhpMdRunner::class)->getMock();
-        $this->vcsRepository = $this->createMock(Repository::class);
+        $this->phpMd = $this->createMock(PhpMdRunner::class);
+        $this->vcsRepository = $this->repository();
 
         $this->inspection = new PhpMd($this->phpMd, [
             'rulesets' => self::DEFAULT_RULESETS,
@@ -75,7 +75,7 @@ class PhpMdTest extends InspectionTestCase
 
         $this->phpMd->expects($this->once())
             ->method('execute')
-            ->with('test.php', $this->anything(), implode(',', self::DEFAULT_RULESETS))
+            ->with($this->isInstanceOf(Env::class), 'test.php', implode(',', self::DEFAULT_RULESETS))
             ->willReturn(new \ArrayIterator());
 
         $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $diff));
@@ -95,7 +95,7 @@ class PhpMdTest extends InspectionTestCase
 
         $this->phpMd->expects($this->once())
             ->method('execute')
-            ->with('test.php', $this->anything(), $configPath)
+            ->with($this->isInstanceOf(Env::class), 'test.php', $configPath)
             ->willReturn(new \ArrayIterator());
 
         $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $diff));
@@ -110,7 +110,7 @@ class PhpMdTest extends InspectionTestCase
 
         $this->phpMd->expects($this->once())
             ->method('execute')
-            ->with('test.php', $this->anything())
+            ->with($this->isInstanceOf(Env::class), 'test.php', $this->anything())
             ->willReturn(new \ArrayIterator());
 
         $violations = iterator_to_array($this->inspection->inspectDiff($this->vcsRepository, $diff));
@@ -134,7 +134,7 @@ class PhpMdTest extends InspectionTestCase
 
         $this->phpMd->expects($this->once())
             ->method('execute')
-            ->with('test.php', $this->anything())
+            ->with($this->isInstanceOf(Env::class), 'test.php', $this->anything())
             ->willReturn(new \ArrayIterator([
                 // the first one is configured not to be in the diff
                 [

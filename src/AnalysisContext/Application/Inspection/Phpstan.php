@@ -31,7 +31,7 @@ use Regis\AnalysisContext\Domain\Entity\Violation;
 
 class Phpstan implements Inspection
 {
-    private const CONFIG_FILE = 'phpstan.neon';
+    public const CONFIG_FILE = 'phpstan.neon';
 
     private $phpstan;
 
