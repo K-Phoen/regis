@@ -70,7 +70,5 @@ class RepositoryTest extends TestCase
         ], array_map(function (Model\Diff\File $file) {
             return $file->getNewName();
         }, $diff->getFiles()));
-
-        $this->assertNotSame('dummy content', $diff->getFiles()[0]->getNewContent());
     }
 }

@@ -32,18 +32,16 @@ class File
     private $oldIndex;
     private $newIndex;
     private $isBinary;
-    private $newBlob;
     /** @var Change[] */
     private $changes;
 
-    public function __construct($oldName, $newName, $oldIndex, $newIndex, bool $isBinary, Blob $newBlob, array $changes)
+    public function __construct(?string $oldName, ?string $newName, $oldIndex, $newIndex, bool $isBinary, array $changes)
     {
         $this->oldName = $oldName;
         $this->newName = $newName;
         $this->oldIndex = $oldIndex;
         $this->newIndex = $newIndex;
         $this->isBinary = $isBinary;
-        $this->newBlob = $newBlob;
         $this->changes = $changes;
     }
 
@@ -67,12 +65,12 @@ class File
         return null !== $this->oldName && null !== $this->newName;
     }
 
-    public function getOldName()
+    public function getOldName(): ?string
     {
         return $this->oldName;
     }
 
-    public function getNewName(): string
+    public function getNewName(): ?string
     {
         return $this->newName;
     }

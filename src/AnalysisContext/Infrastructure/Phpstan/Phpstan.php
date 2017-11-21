@@ -37,7 +37,7 @@ class Phpstan implements PhpstanRunner
         $this->phpstanBin = $phpstanBin;
     }
 
-    public function execute(Env $env, string $fileName, ?string $configFile): iterable
+    public function execute(Env $env, string $fileName, ?string $configFile): \Traversable
     {
         $output = $this->processRunner->run($this->phpstanBin, [
             'analyse',

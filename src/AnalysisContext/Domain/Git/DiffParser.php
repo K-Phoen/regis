@@ -163,12 +163,7 @@ class DiffParser extends ParserBase
                 $changes[] = new Diff\Change($rangeOldStart, $rangeOldCount, $rangeNewStart, $rangeNewCount, $lines);
             }
 
-            $this->files[] = new Diff\File($oldName, $newName, $oldIndex, $newIndex, $isBinary, $this->getEmptyBlob(), $changes);
+            $this->files[] = new Diff\File($oldName, $newName, $oldIndex, $newIndex, $isBinary, $changes);
         }
-    }
-
-    private function getEmptyBlob(): Blob
-    {
-        return new Blob('dummy_hash', 'dummy content', 'text/plain');
     }
 }

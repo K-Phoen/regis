@@ -26,5 +26,5 @@ use Regis\AnalysisContext\Application\Process\Env;
 
 interface PhpstanRunner
 {
-    public function execute(Env $env, string $fileName, ?string $configFile): iterable;
+    public function execute(Env $env, string $fileName, ?string $configFile): \Traversable;
 }

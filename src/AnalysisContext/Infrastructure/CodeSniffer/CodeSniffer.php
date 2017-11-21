@@ -44,8 +44,6 @@ class CodeSniffer implements CodeSnifferRunner
             '--report=json',
             $fileName,
         ], $env);
-        echo $result;
-
 
         return json_decode($result, true);
     }

@@ -22,47 +22,56 @@ declare(strict_types=1);
 
 namespace Tests\Regis\AnalysisContext\Infrastructure\PhpMd;
 
-use PHPUnit\Framework\TestCase;
+use Regis\AnalysisContext\Application\Process\Env;
 use Regis\AnalysisContext\Infrastructure\PhpMd\PhpMd;
+use Tests\Regis\AnalysisContext\Infrastructure\InspectionRunnerTestCase;
 
-class PhpMdTest extends TestCase
+class PhpMdTest extends InspectionRunnerTestCase
 {
     const RULESETS = ['codesize', 'unusedcode', 'naming', 'controversial', 'design', 'cleancode'];
 
-    /**
-     * @dataProvider filesDataProvider
-     */
-    public function testReportsAreGenerated(string $fileName, string $fileContent, array $expectedReports)
+    /** @var PhpMd */
+    private $phpmd;
+
+    protected function files(): array
     {
-        $phpMd = new PhpMd(APP_ROOT_DIR.'/vendor/bin/phpmd');
-
-        $reports = iterator_to_array($phpMd->execute($fileName, $fileContent, implode(',', self::RULESETS)));
-        $this->assertSame($expectedReports, $reports);
-    }
-
-    public function filesDataProvider()
-    {
-        list($violations, $fileContent) = $this->fileWithTwoViolations();
-
         return [
-            ['test.php', $fileContent, $violations],
-        ];
-    }
-
-    private function fileWithTwoViolations()
-    {
-        $content = '<?php
+            'test.php' => <<<'CODE'
+<?php
 
 class Foo {
     public function bar() {
         $variableNameObviouslyTooLongToBeUseful = "foo";
     }
 }
-';
+CODE
+            ,
+        ];
+    }
 
-        $violations = [
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->phpmd = new PhpMd($this->processRunner(), APP_ROOT_DIR.'/vendor/bin/phpmd');
+    }
+
+    /**
+     * @dataProvider filesDataProvider
+     */
+    public function testReportsAreGenerated(string $fileName, array $expectedReports)
+    {
+        $env = new Env($this->workingDir());
+
+        $reports = iterator_to_array($this->phpmd->execute($env, $this->path($fileName), implode(',', self::RULESETS)));
+        $this->assertSame($expectedReports, $reports);
+    }
+
+    public function filesDataProvider()
+    {
+        $testViolations = [
             [
-                'file' => 'test.php',
+                'file' => $this->path('test.php'),
                 'beginLine' => 5,
                 'endLine' => 5,
                 'rule' => 'UnusedLocalVariable',
@@ -72,7 +81,7 @@ class Foo {
                 'description' => 'Avoid unused local variables such as \'$variableNameObviouslyTooLongToBeUseful\'.',
             ],
             [
-                'file' => 'test.php',
+                'file' => $this->path('test.php'),
                 'beginLine' => 5,
                 'endLine' => 5,
                 'rule' => 'LongVariable',
@@ -83,6 +92,8 @@ class Foo {
             ],
         ];
 
-        return [$violations, $content];
+        return [
+            ['test.php', $testViolations],
+        ];
     }
 }

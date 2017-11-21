@@ -22,52 +22,46 @@ declare(strict_types=1);
 
 namespace Tests\Regis\AnalysisContext\Infrastructure\Phpstan;
 
-use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 use Regis\AnalysisContext\Application\Process\Env;
 use Regis\AnalysisContext\Infrastructure\Phpstan\Phpstan;
-use Regis\AnalysisContext\Infrastructure\Process\SymfonyProcessRunner;
+use Tests\Regis\AnalysisContext\Infrastructure\InspectionRunnerTestCase;
 
-class PhpstanTest extends TestCase
+class PhpstanTest extends InspectionRunnerTestCase
 {
-    private $workingDir;
+    /** @var Phpstan */
     private $phpstan;
-    private $filename;
 
-    public function setUp()
+    protected function files(): array
     {
-        $source = <<<'CODE'
+        return [
+            'test.php' => <<<'CODE'
 <?php
 
 $foo = 42;
 $f = function () use ($foo) {
 };
 CODE
-        ;
-
-        $this->workingDir = sys_get_temp_dir();
-        $this->filename = tempnam($this->workingDir, 'regis_');
-        file_put_contents($this->filename, $source);
-
-        $logger = $this->createMock(LoggerInterface::class);
-        $this->phpstan = new Phpstan(new SymfonyProcessRunner($logger), APP_ROOT_DIR.'/vendor/bin/phpstan');
+            ,
+        ];
     }
 
-    public function tearDown()
+    public function setUp()
     {
-        unlink($this->filename);
+        parent::setUp();
+
+        $this->phpstan = new Phpstan($this->processRunner(), APP_ROOT_DIR.'/vendor/bin/phpstan');
     }
 
     public function testReportsAreGenerated()
     {
         $this->assertSame([
             [
-                'file' => $this->filename,
+                'file' => $this->path('test.php'),
                 'line' => 4,
                 'column' => 1,
                 'severity' => 'error',
                 'message' => 'Anonymous function has an unused use $foo.',
             ],
-        ], iterator_to_array($this->phpstan->execute(new Env($this->workingDir), $this->filename, null)));
+        ], iterator_to_array($this->phpstan->execute(new Env($this->workingDir()), $this->path('test.php'), null)));
     }
 }

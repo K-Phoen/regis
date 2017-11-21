@@ -26,5 +26,5 @@ use Regis\AnalysisContext\Application\Process\Env;
 
 interface PhpMdRunner
 {
-    public function execute(Env $env, string $fileName, string $ruleset): iterable;
+    public function execute(Env $env, string $fileName, string $ruleset): \Traversable;
 }

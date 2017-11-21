@@ -39,7 +39,7 @@ class PhpMd implements PhpMdRunner
         $this->tempDir = $tempDir ?: sys_get_temp_dir();
     }
 
-    public function execute(Env $env, string $fileName, string $ruleset): iterable
+    public function execute(Env $env, string $fileName, string $ruleset): \Traversable
     {
         $result = $this->processRunner->run($this->phpmdBin, [$fileName, 'xml', $ruleset], $env);
 
