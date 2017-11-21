@@ -37,7 +37,7 @@ class Inspector
     /** @var Inspection[] */
     private $inspections;
 
-    public function __construct(Git $git, Composer $composer, array $inspections = [], Logger $logger)
+    public function __construct(Git $git, Composer $composer, array $inspections, Logger $logger)
     {
         $this->git = $git;
         $this->composer = $composer;
