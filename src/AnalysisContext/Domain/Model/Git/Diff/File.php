@@ -47,14 +47,6 @@ class File
         $this->changes = $changes;
     }
 
-    public function replaceNewContent(Blob $blob): self
-    {
-        $clone = clone $this;
-        $clone->newBlob = $blob;
-
-        return $clone;
-    }
-
     public function isRename(): bool
     {
         return $this->isModification() && $this->oldName !== $this->newName;
@@ -93,16 +85,6 @@ class File
     public function isBinary(): bool
     {
         return $this->isBinary;
-    }
-
-    public function getNewBlob(): Blob
-    {
-        return $this->newBlob;
-    }
-
-    public function getNewContent(): string
-    {
-        return $this->newBlob->getContent();
     }
 
     /**

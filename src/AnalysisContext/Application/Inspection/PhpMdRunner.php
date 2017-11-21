@@ -22,7 +22,9 @@ declare(strict_types=1);
 
 namespace Regis\AnalysisContext\Application\Inspection;
 
+use Regis\AnalysisContext\Application\Process\Env;
+
 interface PhpMdRunner
 {
-    public function execute(string $fileName, string $fileContent, string $ruleset): \Traversable;
+    public function execute(Env $env, string $fileName, string $ruleset): iterable;
 }

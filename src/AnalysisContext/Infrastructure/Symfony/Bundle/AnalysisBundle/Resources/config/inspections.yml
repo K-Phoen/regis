@@ -33,7 +33,7 @@ services:
 
     regis.tools.code_sniffer:
         class: Regis\AnalysisContext\Infrastructure\CodeSniffer\CodeSniffer
-        arguments: ['%phpcs_binary%']
+        arguments: ['@regis.tools.process_runner', '%phpcs_binary%']
         public: false
 
     regis.tools.phpstan:
@@ -43,7 +43,7 @@ services:
 
     regis.tools.phpmd:
         class: Regis\AnalysisContext\Infrastructure\PhpMd\PhpMd
-        arguments: [ '%phpmd_binary%' ]
+        arguments: [ '@regis.tools.process_runner', '%phpmd_binary%' ]
         public: false
 
     regis.tools.composer:

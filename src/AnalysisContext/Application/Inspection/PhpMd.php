@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Application\Inspection;
 
 use Regis\AnalysisContext\Application\Inspection;
+use Regis\AnalysisContext\Application\Process\Env;
 use Regis\AnalysisContext\Application\Vcs;
 use Regis\AnalysisContext\Domain\Model\Exception\LineNotInDiff;
 use Regis\AnalysisContext\Domain\Model\Git as Model;
@@ -57,9 +58,11 @@ class PhpMd implements Inspection
             $ruleset = implode(',', $this->config['rulesets']);
         }
 
+        $runnerEnv = new Env($repository->root());
+
         /** @var Model\Diff\File $file */
         foreach ($diff->getAddedPhpFiles() as $file) {
-            $report = $this->phpMd->execute($file->getNewName(), $file->getNewContent(), $ruleset);
+            $report = $this->phpMd->execute($runnerEnv, $file->getNewName(), $ruleset);
 
             yield from $this->buildViolations($file, $report);
         }
@@ -74,7 +77,7 @@ class PhpMd implements Inspection
         }
     }
 
-    private function buildViolations(Model\Diff\File $file, \Traversable $report): \Traversable
+    private function buildViolations(Model\Diff\File $file, iterable $report): \Traversable
     {
         foreach ($report as $violation) {
             try {

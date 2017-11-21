@@ -23,29 +23,30 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Infrastructure\CodeSniffer;
 
 use Regis\AnalysisContext\Application\Inspection\CodeSnifferRunner;
-use Symfony\Component\Process\Process;
+use Regis\AnalysisContext\Application\Process\Runner as ProcessRunner;
+use Regis\AnalysisContext\Application\Process\Env;
 
 class CodeSniffer implements CodeSnifferRunner
 {
+    private $processRunner;
     private $phpcsBin;
 
-    public function __construct(string $phpCsBin)
+    public function __construct(ProcessRunner $processRunner, string $phpCsBin)
     {
+        $this->processRunner = $processRunner;
         $this->phpcsBin = $phpCsBin;
     }
 
-    public function execute(string $fileName, string $fileContent, string $standards): array
+    public function execute(Env $env, string $fileName, string $standards): iterable
     {
-        $process = new Process(sprintf(
-            '%s --standard=%s --report=json --stdin-path=%s',
-            escapeshellarg($this->phpcsBin),
-            $standards,
-            escapeshellarg($fileName)
-        ));
+        $result = $this->processRunner->run($this->phpcsBin, [
+            '--standard='.$standards,
+            '--report=json',
+            $fileName,
+        ], $env);
+        echo $result;
 
-        $process->setInput($fileContent);
-        $process->run();
 
-        return json_decode($process->getOutput(), true);
+        return json_decode($result, true);
     }
 }

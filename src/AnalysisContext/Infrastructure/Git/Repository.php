@@ -69,25 +69,6 @@ class Repository implements VcsRepository
     {
         $gitDiff = $this->repository->getDiff(sprintf('%s..%s', $revisions->getBase(), $revisions->getHead()));
 
-        $diff = Model\Diff::fromRawDiff($revisions, $gitDiff->getRawDiff());
-
-        return $this->augmentWithFileContents($diff);
-    }
-
-    private function augmentWithFileContents(Model\Diff $diff): Model\Diff
-    {
-        $files = array_map(function (Model\Diff\File $file) {
-            if ($file->isDeletion() || $file->isRename()) {
-                return $file;
-            }
-
-            $blob = $this->repository->getBlob($file->getNewIndex());
-
-            return $file->replaceNewContent(
-                new Model\Blob($blob->getHash(), $blob->getContent(), $blob->getMimetype())
-            );
-        }, $diff->getFiles());
-
-        return new Model\Diff($diff->getRevisions(), $files, $diff->getRawDiff());
+        return Model\Diff::fromRawDiff($revisions, $gitDiff->getRawDiff());
     }
 }
