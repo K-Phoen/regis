@@ -24,7 +24,6 @@ namespace Tests\Regis\AnalysisContext\Domain\Model\Git\Diff;
 
 use PHPUnit\Framework\TestCase;
 use Regis\AnalysisContext\Domain\Git\DiffParser;
-use Regis\AnalysisContext\Domain\Model\Git\Blob;
 use Regis\AnalysisContext\Domain\Model\Git\Diff\File;
 
 class FileTest extends TestCase

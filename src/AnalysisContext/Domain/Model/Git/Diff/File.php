@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Domain\Model\Git\Diff;
 
 use Regis\AnalysisContext\Domain\Model\Exception\LineNotInDiff;
-use Regis\AnalysisContext\Domain\Model\Git\Blob;
 
 class File
 {
