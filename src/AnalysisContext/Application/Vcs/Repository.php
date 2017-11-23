@@ -26,6 +26,11 @@ use Regis\AnalysisContext\Domain\Model\Git as Model;
 
 interface Repository
 {
+    /**
+     * @return string Absolute path to the repository root.
+     */
+    public function root(): string;
+
     public function checkout(string $revision): void;
 
     public function getDiff(Model\Revisions $revisions): Model\Diff;

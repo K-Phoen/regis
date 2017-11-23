@@ -24,14 +24,13 @@ namespace Tests\Regis\AnalysisContext\Domain\Model\Git\Diff;
 
 use PHPUnit\Framework\TestCase;
 use Regis\AnalysisContext\Domain\Git\DiffParser;
-use Regis\AnalysisContext\Domain\Model\Git\Blob;
 use Regis\AnalysisContext\Domain\Model\Git\Diff\File;
 
 class FileTest extends TestCase
 {
     public function testDeletionsAreDetected()
     {
-        $diffFile = new File('old-name.php', null, 'old index', 'new index', false, $blob = $this->getBlob(), []);
+        $diffFile = new File('old-name.php', null, 'old index', 'new index', false, []);
 
         $this->assertTrue($diffFile->isDeletion());
         $this->assertFalse($diffFile->isRename());
@@ -39,14 +38,12 @@ class FileTest extends TestCase
         $this->assertFalse($diffFile->isCreation());
         $this->assertSame('old-name.php', $diffFile->getOldName());
         $this->assertNull($diffFile->getNewName());
-        $this->assertSame($blob, $diffFile->getNewBlob());
-        $this->assertSame('blob content', $diffFile->getNewContent());
         $this->assertFalse($diffFile->isBinary());
     }
 
     public function testRenamesAreDetected()
     {
-        $diffFile = new File('old-name.php', 'new-name.php', 'old index', 'new index', false, $this->getBlob(), []);
+        $diffFile = new File('old-name.php', 'new-name.php', 'old index', 'new index', false, []);
 
         $this->assertFalse($diffFile->isDeletion());
         $this->assertTrue($diffFile->isRename());
@@ -56,7 +53,7 @@ class FileTest extends TestCase
 
     public function testACreationIsNotARename()
     {
-        $diffFile = new File(null, 'new-name.php', 'old index', 'new index', false, $this->getBlob(), []);
+        $diffFile = new File(null, 'new-name.php', 'old index', 'new index', false, []);
 
         $this->assertFalse($diffFile->isDeletion());
         $this->assertFalse($diffFile->isRename());
@@ -69,7 +66,7 @@ class FileTest extends TestCase
      */
     public function testIsPhpWithPhpFiles(string $newFileName)
     {
-        $diffFile = new File(null, $newFileName, 'old index', 'new index', false, $this->getBlob(), []);
+        $diffFile = new File(null, $newFileName, 'old index', 'new index', false, []);
 
         $this->assertTrue($diffFile->isPhp());
     }
@@ -79,7 +76,7 @@ class FileTest extends TestCase
      */
     public function testIsPhpWithNonPhpFiles(string $newFileName)
     {
-        $diffFile = new File(null, $newFileName, 'old index', 'new index', false, $this->getBlob(), []);
+        $diffFile = new File(null, $newFileName, 'old index', 'new index', false, []);
 
         $this->assertFalse($diffFile->isPhp());
     }
@@ -110,7 +107,7 @@ class FileTest extends TestCase
      */
     public function testFindPositionForLineFailsIfTheLineIsNotInTheDiff()
     {
-        $diffFile = new File(null, 'new-name.php', 'old index', 'new index', false, $this->getBlob(), []);
+        $diffFile = new File(null, 'new-name.php', 'old index', 'new index', false, []);
 
         $diffFile->findPositionForLine(42);
     }
@@ -304,13 +301,5 @@ index d62fdc2..cfad9e1 100644
             [$diff6, 30, 5],
             [$diff6, 47, 16],
         ];
-    }
-
-    private function getBlob(): Blob
-    {
-        $blob = $this->createMock(Blob::class);
-        $blob->method('getContent')->willReturn('blob content');
-
-        return $blob;
     }
 }

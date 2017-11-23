@@ -23,6 +23,7 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Application\Inspection;
 
 use Regis\AnalysisContext\Application\Inspection;
+use Regis\AnalysisContext\Application\Process\Env;
 use Regis\AnalysisContext\Application\Vcs;
 use Regis\AnalysisContext\Domain\Model\Exception\LineNotInDiff;
 use Regis\AnalysisContext\Domain\Model\Git as Model;
@@ -54,9 +55,11 @@ class CodeSniffer implements Inspection
             $standards = implode(',', $this->config['standards']);
         }
 
+        $runnerEnv = new Env($repository->root());
+
         /** @var Model\Diff\File $file */
         foreach ($diff->getAddedPhpFiles() as $file) {
-            $report = $this->codeSniffer->execute($file->getNewName(), $file->getNewContent(), $standards);
+            $report = $this->codeSniffer->execute($runnerEnv, $file->getNewName(), $standards);
 
             foreach ($report['files'] as $fileReport) {
                 yield from $this->buildViolations($file, $fileReport);
@@ -73,7 +76,7 @@ class CodeSniffer implements Inspection
         }
     }
 
-    private function buildViolations(Model\Diff\File $file, array $report): \Traversable
+    private function buildViolations(Model\Diff\File $file, array $report): iterable
     {
         foreach ($report['messages'] as $message) {
             try {

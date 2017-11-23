@@ -20,11 +20,29 @@
 
 declare(strict_types=1);
 
-namespace Regis\AnalysisContext\Application\Inspection;
+namespace Regis\AnalysisContext\Application\Process;
 
-use Regis\AnalysisContext\Application\Process\Env;
-
-interface PhpstanRunner
+class Env
 {
-    public function execute(Env $env, string $fileName, ?string $configFile): \Traversable;
+    public const DEFAULT_TIMEOUT = 60;
+
+    private $workingDir;
+    /** @var int Timeout in seconds. */
+    private $timeout;
+
+    public function __construct(string $workingDir, int $timeout = self::DEFAULT_TIMEOUT)
+    {
+        $this->workingDir = $workingDir;
+        $this->timeout = $timeout;
+    }
+
+    public function workingDir(): string
+    {
+        return $this->workingDir;
+    }
+
+    public function timeout(): int
+    {
+        return $this->timeout;
+    }
 }

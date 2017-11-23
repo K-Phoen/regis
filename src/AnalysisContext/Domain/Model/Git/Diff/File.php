@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Domain\Model\Git\Diff;
 
 use Regis\AnalysisContext\Domain\Model\Exception\LineNotInDiff;
-use Regis\AnalysisContext\Domain\Model\Git\Blob;
 
 class File
 {
@@ -32,27 +31,17 @@ class File
     private $oldIndex;
     private $newIndex;
     private $isBinary;
-    private $newBlob;
     /** @var Change[] */
     private $changes;
 
-    public function __construct($oldName, $newName, $oldIndex, $newIndex, bool $isBinary, Blob $newBlob, array $changes)
+    public function __construct(?string $oldName, ?string $newName, $oldIndex, $newIndex, bool $isBinary, array $changes)
     {
         $this->oldName = $oldName;
         $this->newName = $newName;
         $this->oldIndex = $oldIndex;
         $this->newIndex = $newIndex;
         $this->isBinary = $isBinary;
-        $this->newBlob = $newBlob;
         $this->changes = $changes;
-    }
-
-    public function replaceNewContent(Blob $blob): self
-    {
-        $clone = clone $this;
-        $clone->newBlob = $blob;
-
-        return $clone;
     }
 
     public function isRename(): bool
@@ -75,12 +64,12 @@ class File
         return null !== $this->oldName && null !== $this->newName;
     }
 
-    public function getOldName()
+    public function getOldName(): ?string
     {
         return $this->oldName;
     }
 
-    public function getNewName()
+    public function getNewName(): ?string
     {
         return $this->newName;
     }
@@ -93,16 +82,6 @@ class File
     public function isBinary(): bool
     {
         return $this->isBinary;
-    }
-
-    public function getNewBlob(): Blob
-    {
-        return $this->newBlob;
-    }
-
-    public function getNewContent(): string
-    {
-        return $this->newBlob->getContent();
     }
 
     /**

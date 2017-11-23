@@ -20,31 +20,39 @@
 
 declare(strict_types=1);
 
-namespace Regis\AnalysisContext\Infrastructure\CodeSniffer;
+namespace Regis\AnalysisContext\Infrastructure\Composer;
 
-use Regis\AnalysisContext\Application\Inspection\CodeSnifferRunner;
-use Regis\AnalysisContext\Application\Process\Runner as ProcessRunner;
+use Regis\AnalysisContext\Application\Composer as ComposerRunner;
 use Regis\AnalysisContext\Application\Process\Env;
+use Regis\AnalysisContext\Application\Process\Runner;
+use Symfony\Component\Filesystem\Filesystem;
 
-class CodeSniffer implements CodeSnifferRunner
+class Composer implements ComposerRunner
 {
-    private $processRunner;
-    private $phpcsBin;
+    private const INSTALL_TIMEOUT = 4 * 60; // 4 minutes in seconds
 
-    public function __construct(ProcessRunner $processRunner, string $phpCsBin)
+    private $composerBin;
+    private $processRunner;
+    private $fs;
+
+    public function __construct(Runner $processRunner, string $composerBin, Filesystem $filesystem = null)
     {
         $this->processRunner = $processRunner;
-        $this->phpcsBin = $phpCsBin;
+        $this->composerBin = $composerBin;
+        $this->fs = $filesystem ?: new Filesystem();
     }
 
-    public function execute(Env $env, string $fileName, string $standards): iterable
+    public function install(string $workingDirectory): void
     {
-        $result = $this->processRunner->run($this->phpcsBin, [
-            '--standard='.$standards,
-            '--report=json',
-            $fileName,
-        ], $env);
+        if (!$this->fs->exists($workingDirectory.'/composer.json')) {
+            return;
+        }
 
-        return json_decode($result, true);
+        $this->processRunner->run($this->composerBin, [
+            'install',
+            '-o',
+            '--ignore-platform-reqs',
+            '--no-interaction',
+        ], new Env($workingDirectory, self::INSTALL_TIMEOUT));
     }
 }

@@ -23,6 +23,8 @@ declare(strict_types=1);
 namespace Tests\Regis\AnalysisContext\Application;
 
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
+use Regis\AnalysisContext\Application\Composer;
 use Regis\AnalysisContext\Application\Inspection;
 use Regis\AnalysisContext\Application\Inspector;
 use Regis\AnalysisContext\Domain\Entity\Violation;
@@ -32,8 +34,11 @@ use Regis\AnalysisContext\Application\Vcs;
 class InspectorTest extends TestCase
 {
     const REVISION_HEAD = 'revision head hash';
+    const REPO_ROOT = 'repo-root-dir';
 
     private $git;
+    private $composer;
+    private $logger;
     private $repository;
     private $gitRepository;
     private $diff;
@@ -42,6 +47,8 @@ class InspectorTest extends TestCase
     public function setUp()
     {
         $this->git = $this->createMock(Vcs\Git::class);
+        $this->composer = $this->createMock(Composer::class);
+        $this->logger = $this->createMock(LoggerInterface::class);
         $this->gitRepository = $this->createMock(Vcs\Repository::class);
 
         $this->diff = $this->createMock(Model\Git\Diff::class);
@@ -51,15 +58,20 @@ class InspectorTest extends TestCase
         $this->revisions->method('getHead')->willReturn(self::REVISION_HEAD);
         $this->git->method('getRepository')->with($this->repository)->willReturn($this->gitRepository);
         $this->gitRepository->method('getDiff')->with($this->revisions)->willReturn($this->diff);
+        $this->gitRepository->method('root')->willReturn(self::REPO_ROOT);
     }
 
-    public function testItStartsByCheckoutOutTheGitRepo()
+    public function testItStartsByPreparingTheRepo()
     {
-        $inspector = new Inspector($this->git);
+        $inspector = new Inspector($this->git, $this->composer, [], $this->logger);
 
         $this->gitRepository->expects($this->once())
             ->method('checkout')
             ->with(self::REVISION_HEAD);
+
+        $this->composer->expects($this->once())
+            ->method('install')
+            ->with(self::REPO_ROOT);
 
         $inspector->inspect($this->repository, $this->revisions);
     }
@@ -82,7 +94,7 @@ class InspectorTest extends TestCase
             ->with($this->gitRepository, $this->diff)
             ->willReturn(new \ArrayIterator([$violation2]));
 
-        $inspector = new Inspector($this->git, [$inspection1, $inspection2]);
+        $inspector = new Inspector($this->git, $this->composer, [$inspection1, $inspection2], $this->logger);
         $report = $inspector->inspect($this->repository, $this->revisions);
 
         $this->assertCount(2, iterator_to_array($report->violations()));

@@ -22,45 +22,46 @@ declare(strict_types=1);
 
 namespace Tests\Regis\AnalysisContext\Infrastructure\Phpstan;
 
-use PHPUnit\Framework\TestCase;
+use Regis\AnalysisContext\Application\Process\Env;
 use Regis\AnalysisContext\Infrastructure\Phpstan\Phpstan;
+use Tests\Regis\AnalysisContext\Infrastructure\InspectionRunnerTestCase;
 
-class PhpstanTest extends TestCase
+class PhpstanTest extends InspectionRunnerTestCase
 {
-    private $filename;
+    /** @var Phpstan */
+    private $phpstan;
 
-    public function setUp()
+    protected function files(): array
     {
-        $source = <<<'CODE'
+        return [
+            'test.php' => <<<'CODE'
 <?php
 
 $foo = 42;
 $f = function () use ($foo) {
 };
 CODE
-        ;
-
-        $this->filename = tempnam(sys_get_temp_dir(), 'regis_');
-        file_put_contents($this->filename, $source);
+            ,
+        ];
     }
 
-    public function tearDown()
+    public function setUp()
     {
-        unlink($this->filename);
+        parent::setUp();
+
+        $this->phpstan = new Phpstan($this->processRunner(), APP_ROOT_DIR.'/vendor/bin/phpstan');
     }
 
     public function testReportsAreGenerated()
     {
-        $phpstan = new Phpstan(APP_ROOT_DIR.'/vendor/bin/phpstan');
-
         $this->assertSame([
             [
-                'file' => $this->filename,
+                'file' => $this->path('test.php'),
                 'line' => 4,
                 'column' => 1,
                 'severity' => 'error',
                 'message' => 'Anonymous function has an unused use $foo.',
             ],
-        ], iterator_to_array($phpstan->execute($this->filename)));
+        ], iterator_to_array($this->phpstan->execute(new Env($this->workingDir()), $this->path('test.php'), null)));
     }
 }

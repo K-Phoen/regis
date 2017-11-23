@@ -20,11 +20,9 @@
 
 declare(strict_types=1);
 
-namespace Regis\AnalysisContext\Application\Inspection;
+namespace Regis\AnalysisContext\Application;
 
-use Regis\AnalysisContext\Application\Process\Env;
-
-interface PhpstanRunner
+interface Composer
 {
-    public function execute(Env $env, string $fileName, ?string $configFile): \Traversable;
+    public function install(string $workingDirectory): void;
 }

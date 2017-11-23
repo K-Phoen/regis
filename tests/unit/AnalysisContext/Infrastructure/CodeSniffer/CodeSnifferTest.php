@@ -22,49 +22,59 @@ declare(strict_types=1);
 
 namespace Tests\Regis\AnalysisContext\Infrastructure\CodeSniffer;
 
-use PHPUnit\Framework\TestCase;
+use Regis\AnalysisContext\Application\Process\Env;
 use Regis\AnalysisContext\Infrastructure\CodeSniffer\CodeSniffer;
+use Tests\Regis\AnalysisContext\Infrastructure\InspectionRunnerTestCase;
 
-class CodeSnifferTest extends TestCase
+class CodeSnifferTest extends InspectionRunnerTestCase
 {
     const STANDARDS = 'psr1,psr2';
 
-    /**
-     * @dataProvider filesDataProvider
-     */
-    public function testReportsAreGenerated(string $fileName, string $fileContent, array $expectedReports)
+    /** @var CodeSniffer */
+    private $codesniffer;
+
+    protected function files(): array
     {
-        $phpcs = new CodeSniffer(APP_ROOT_DIR.'/vendor/bin/phpcs');
-
-        $this->assertSame($expectedReports, $phpcs->execute($fileName, $fileContent, self::STANDARDS));
-    }
-
-    public function filesDataProvider()
-    {
-        list($violations, $fileContent) = $this->fileWithTwoViolations();
-
         return [
-            ['test.php', $fileContent, $violations],
-        ];
-    }
-
-    private function fileWithTwoViolations()
-    {
-        $content = '<?php
+            'test.php' => <<<'CODE'
+<?php
 
 if(true) {
 echo "Coucou";
 }
-';
 
-        $violations = [
+CODE
+            ,
+        ];
+    }
+
+    public function setUp()
+    {
+        parent::setUp();
+
+        $this->codesniffer = new CodeSniffer($this->processRunner(), APP_ROOT_DIR.'/vendor/bin/phpcs');
+    }
+
+    /**
+     * @dataProvider filesDataProvider
+     */
+    public function testReportsAreGenerated(string $fileName, array $expectedReports)
+    {
+        $env = new Env($this->workingDir());
+
+        $this->assertSame($expectedReports, $this->codesniffer->execute($env, $this->path($fileName), self::STANDARDS));
+    }
+
+    public function filesDataProvider()
+    {
+        $testViolations = [
             'totals' => [
                 'errors' => 2,
                 'warnings' => 0,
                 'fixable' => 2,
             ],
             'files' => [
-                'test.php' => [
+                $this->path('test.php') => [
                     'errors' => 2,
                     'warnings' => 0,
                     'messages' => [
@@ -91,6 +101,8 @@ echo "Coucou";
             ],
         ];
 
-        return [$violations, $content];
+        return [
+            ['test.php', $testViolations],
+        ];
     }
 }

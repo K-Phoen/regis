@@ -23,39 +23,27 @@ declare(strict_types=1);
 namespace Regis\AnalysisContext\Infrastructure\PhpMd;
 
 use Regis\AnalysisContext\Application\Inspection\PhpMdRunner;
-use Symfony\Component\Process\Process;
+use Regis\AnalysisContext\Application\Process\Runner as ProcessRunner;
+use Regis\AnalysisContext\Application\Process\Env;
 
 class PhpMd implements PhpMdRunner
 {
+    private $processRunner;
     private $phpmdBin;
     private $tempDir;
 
-    public function __construct(string $phpCsBin, string $tempDir = null)
+    public function __construct(ProcessRunner $processRunner, string $phpCsBin, string $tempDir = null)
     {
+        $this->processRunner = $processRunner;
         $this->phpmdBin = $phpCsBin;
         $this->tempDir = $tempDir ?: sys_get_temp_dir();
     }
 
-    public function execute(string $fileName, string $fileContent, string $ruleset): \Traversable
+    public function execute(Env $env, string $fileName, string $ruleset): \Traversable
     {
-        $tempFile = sprintf('%s/%s', $this->tempDir, uniqid('phpmd_', true).str_replace('/', '', $fileName));
+        $result = $this->processRunner->run($this->phpmdBin, [$fileName, 'xml', $ruleset], $env);
 
-        file_put_contents($tempFile, $fileContent);
-
-        try {
-            $process = new Process(sprintf(
-                '%s %s xml %s',
-                escapeshellarg($this->phpmdBin),
-                escapeshellarg($tempFile),
-                escapeshellarg($ruleset)
-            ));
-
-            $process->run();
-        } finally {
-            unlink($tempFile);
-        }
-
-        yield from $this->processResults($fileName, $process->getOutput());
+        yield from $this->processResults($fileName, $result);
     }
 
     private function processResults(string $originalFileName, string $xmlReport): \Traversable

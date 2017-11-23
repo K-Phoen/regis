@@ -15,6 +15,7 @@ parameters:
     # access over private repositories (`repo` scope)
     github_api_token: ~
 
+    composer_binary: '%kernel.root_dir%/../bin/composer'
     git_binary: /usr/bin/git
     repositories_directory: '%kernel.root_dir%/../var/repositories'
 
