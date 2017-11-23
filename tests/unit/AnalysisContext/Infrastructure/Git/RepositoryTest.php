@@ -20,10 +20,11 @@
 
 declare(strict_types=1);
 
-namespace Tests\Regis\AnalysisContext\Infrastructure\Vcs;
+namespace Tests\Regis\AnalysisContext\Infrastructure\Git;
 
 use PHPUnit\Framework\TestCase;
 use Gitonomy\Git as Gitonomy;
+use Regis\AnalysisContext\Application\Vcs\FileNotFound;
 use Regis\AnalysisContext\Domain\Model\Git as Model;
 use Regis\AnalysisContext\Infrastructure\Git\Repository;
 use Symfony\Component\Filesystem\Filesystem;
@@ -49,6 +50,42 @@ class RepositoryTest extends TestCase
             ->with('revision hash');
 
         $repository->checkout('revision hash');
+    }
+
+    public function testRoot()
+    {
+        $gitonomyRepository = $this->createMock(Gitonomy\Repository::class);
+        $repository = new Repository($gitonomyRepository, new Filesystem());
+
+        $gitonomyRepository->method('getPath')->willReturn('/repo/root/dir');
+
+        $this->assertSame('/repo/root/dir', $repository->root());
+    }
+
+    public function testLocateFileRaisesAnErrorWhenTheFileDoesNotExist()
+    {
+        $fs = $this->createMock(Filesystem::class);
+        $gitonomyRepository = $this->createMock(Gitonomy\Repository::class);
+        $repository = new Repository($gitonomyRepository, $fs);
+
+        $gitonomyRepository->method('getPath')->willReturn('/repo/root/dir');
+        $fs->method('exists')->with('/repo/root/dir/filename')->willReturn(false);
+
+        $this->expectException(FileNotFound::class);
+
+        $repository->locateFile('filename');
+    }
+
+    public function testLocateFileReturnsAnAbsolutePathWhenTheFileExists()
+    {
+        $fs = $this->createMock(Filesystem::class);
+        $gitonomyRepository = $this->createMock(Gitonomy\Repository::class);
+        $repository = new Repository($gitonomyRepository, $fs);
+
+        $gitonomyRepository->method('getPath')->willReturn('/repo/root/dir');
+        $fs->method('exists')->with('/repo/root/dir/filename')->willReturn(true);
+
+        $this->assertSame('/repo/root/dir/filename', $repository->locateFile('filename'));
     }
 
     public function testGetDiff()
