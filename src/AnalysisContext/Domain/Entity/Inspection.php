@@ -47,11 +47,6 @@ class Inspection
         return $this->status;
     }
 
-    public function report(): ?Report
-    {
-        return $this->report;
-    }
-
     public function failureTrace(): string
     {
         return $this->failureTrace;

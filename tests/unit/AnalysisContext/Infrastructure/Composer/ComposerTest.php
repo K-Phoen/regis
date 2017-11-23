@@ -20,34 +20,36 @@
 
 declare(strict_types=1);
 
-namespace Regis\AnalysisContext\Infrastructure\Composer;
+namespace Tests\Regis\AnalysisContext\Infrastructure\Composer;
 
-use Regis\AnalysisContext\Application\Composer as ComposerRunner;
+use PHPUnit\Framework\TestCase;
 use Regis\AnalysisContext\Application\Process\Env;
 use Regis\AnalysisContext\Application\Process\Runner;
+use Regis\AnalysisContext\Infrastructure\Composer\Composer;
 
-class Composer implements ComposerRunner
+class ComposerTest extends TestCase
 {
-    private const INSTALL_TIMEOUT = 4 * 60; // 4 minutes in seconds
+    private const COMPOSER_BIN = 'some-bin';
 
-    private $composerBin;
+    /** @var Runner */
     private $processRunner;
 
-    public function __construct(Runner $processRunner, string $composerBin)
+    /** @var Composer */
+    private $composer;
+
+    public function setUp()
     {
-        $this->processRunner = $processRunner;
-        $this->composerBin = $composerBin;
+        $this->processRunner = $this->createMock(Runner::class);
+
+        $this->composer = new Composer($this->processRunner, self::COMPOSER_BIN);
     }
 
-    public function install(string $workingDirectory): void
+    public function testItInstallsPackages()
     {
-        // TODO do nothing if there is no composer.json file
+        $this->processRunner->expects($this->once())
+            ->method('run')
+            ->with(self::COMPOSER_BIN, $this->anything(), $this->isInstanceOf(Env::class));
 
-        $this->processRunner->run($this->composerBin, [
-            'install',
-            '-o',
-            '--ignore-platform-reqs',
-            '--no-interaction',
-        ], new Env($workingDirectory, self::INSTALL_TIMEOUT));
+        $this->composer->install('some-working-dir');
     }
 }

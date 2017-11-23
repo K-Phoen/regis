@@ -48,5 +48,5 @@ services:
 
     regis.tools.composer:
         class: Regis\AnalysisContext\Infrastructure\Composer\Composer
-        arguments: [ '%composer_binary%' ]
+        arguments: [ '@regis.tools.process_runner', '%composer_binary%' ]
         public: false
