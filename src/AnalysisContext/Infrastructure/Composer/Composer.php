@@ -25,6 +25,7 @@ namespace Regis\AnalysisContext\Infrastructure\Composer;
 use Regis\AnalysisContext\Application\Composer as ComposerRunner;
 use Regis\AnalysisContext\Application\Process\Env;
 use Regis\AnalysisContext\Application\Process\Runner;
+use Symfony\Component\Filesystem\Filesystem;
 
 class Composer implements ComposerRunner
 {
@@ -32,16 +33,20 @@ class Composer implements ComposerRunner
 
     private $composerBin;
     private $processRunner;
+    private $fs;
 
-    public function __construct(Runner $processRunner, string $composerBin)
+    public function __construct(Runner $processRunner, string $composerBin, Filesystem $filesystem = null)
     {
         $this->processRunner = $processRunner;
         $this->composerBin = $composerBin;
+        $this->fs = $filesystem ?: new Filesystem();
     }
 
     public function install(string $workingDirectory): void
     {
-        // TODO do nothing if there is no composer.json file
+        if (!$this->fs->exists($workingDirectory.'/composer.json')) {
+            return;
+        }
 
         $this->processRunner->run($this->composerBin, [
             'install',

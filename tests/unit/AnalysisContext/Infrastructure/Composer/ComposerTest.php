@@ -26,6 +26,7 @@ use PHPUnit\Framework\TestCase;
 use Regis\AnalysisContext\Application\Process\Env;
 use Regis\AnalysisContext\Application\Process\Runner;
 use Regis\AnalysisContext\Infrastructure\Composer\Composer;
+use Symfony\Component\Filesystem\Filesystem;
 
 class ComposerTest extends TestCase
 {
@@ -33,6 +34,8 @@ class ComposerTest extends TestCase
 
     /** @var Runner */
     private $processRunner;
+    /** @var Filesystem */
+    private $fs;
 
     /** @var Composer */
     private $composer;
@@ -40,15 +43,27 @@ class ComposerTest extends TestCase
     public function setUp()
     {
         $this->processRunner = $this->createMock(Runner::class);
+        $this->fs = $this->createMock(Filesystem::class);
 
-        $this->composer = new Composer($this->processRunner, self::COMPOSER_BIN);
+        $this->composer = new Composer($this->processRunner, self::COMPOSER_BIN, $this->fs);
     }
 
-    public function testItInstallsPackages()
+    public function testItInstallsPackagesIfAComposerjsonIsPresent()
     {
+        $this->fs->method('exists')->with('some-working-dir/composer.json')->willReturn(true);
+
         $this->processRunner->expects($this->once())
             ->method('run')
             ->with(self::COMPOSER_BIN, $this->anything(), $this->isInstanceOf(Env::class));
+
+        $this->composer->install('some-working-dir');
+    }
+
+    public function testItDoesNothingIfNoComposerjsonIsFound()
+    {
+        $this->fs->method('exists')->with('some-working-dir/composer.json')->willReturn(false);
+
+        $this->processRunner->expects($this->never())->method('run');
 
         $this->composer->install('some-working-dir');
     }
