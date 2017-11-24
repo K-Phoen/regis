@@ -20,17 +20,17 @@
 
 declare(strict_types=1);
 
-namespace Regis\GithubContext\Application\Worker;
+namespace Regis\BitbucketContext\Infrastructure\Worker;
 
-use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
-use PhpAmqpLib\Message\AMQPMessage;
-use Regis\GithubContext\Domain\Entity\Inspection;
-use Regis\GithubContext\Domain\Repository\PullRequestInspections;
-use Regis\GithubContext\Application\Event;
-use Regis\Kernel\Event\DomainEventWrapper;
+use Swarrot\Broker\Message;
+use Swarrot\Processor\ProcessorInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
+use Regis\BitbucketContext\Domain\Entity\Inspection;
+use Regis\BitbucketContext\Domain\Repository\PullRequestInspections;
+use Regis\BitbucketContext\Application\Event;
+use Regis\Kernel\Event\DomainEventWrapper;
 
-class AnalysisStatusRunner implements ConsumerInterface
+class AnalysisStatusRunner implements ProcessorInterface
 {
     private $inspectionsRepo;
     private $dispatcher;
@@ -41,9 +41,9 @@ class AnalysisStatusRunner implements ConsumerInterface
         $this->dispatcher = $dispatcher;
     }
 
-    public function execute(AMQPMessage $msg)
+    public function process(Message $message, array $options)
     {
-        $event = json_decode($msg->getBody(), true);
+        $event = json_decode($message->getBody(), true);
         $inspection = $this->inspectionsRepo->find($event['inspection_id']);
 
         switch ($inspection->getStatus()) {
@@ -63,6 +63,6 @@ class AnalysisStatusRunner implements ConsumerInterface
                 throw new \LogicException(sprintf('Unknown inspection status: "%s"', $inspection->getStatus()));
         }
 
-        $this->dispatcher->dispatch(get_class($domainEvent), new DomainEventWrapper($domainEvent));
+        $this->dispatcher->dispatch(\get_class($domainEvent), new DomainEventWrapper($domainEvent));
     }
 }

@@ -18,13 +18,14 @@ class AppKernel extends Kernel
             new KPhoen\RulerZBundle\KPhoenRulerZBundle(),
             new League\Tactician\Bundle\TacticianBundle(),
 
-            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
+            new Swarrot\SwarrotBundle\SwarrotBundle(),
             new Snc\RedisBundle\SncRedisBundle(),
 
             new KnpU\OAuth2ClientBundle\KnpUOAuth2ClientBundle(),
 
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
 
+            new Regis\Kernel\Infrastructure\Symfony\Bundle\KernelBundle\RegisKernelBundle(),
             new Regis\AnalysisContext\Infrastructure\Symfony\Bundle\AnalysisBundle\RegisAnalysisBundle(),
             new Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\RegisGithubBundle(),
             new Regis\BitbucketContext\Infrastructure\Symfony\Bundle\BitbucketBundle\RegisBitbucketBundle(),

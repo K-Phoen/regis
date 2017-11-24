@@ -22,9 +22,9 @@ declare(strict_types=1);
 
 namespace Regis\GithubContext\Application\CommandHandler\Inspection;
 
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Application\Github\ClientFactory;
+use Regis\GithubContext\Application\Worker\MessagePublisher;
 use Regis\GithubContext\Domain\Entity;
 use Regis\GithubContext\Domain\Model\PullRequest;
 use Regis\GithubContext\Domain\Repository;
@@ -36,7 +36,7 @@ class SchedulePullRequest
     private $inspectionsRepo;
     private $clientFactory;
 
-    public function __construct(ProducerInterface $producer, Repository\Repositories $repositoriesRepo, Repository\PullRequestInspections $inspectionsRepo, ClientFactory $clientFactory)
+    public function __construct(MessagePublisher $producer, Repository\Repositories $repositoriesRepo, Repository\PullRequestInspections $inspectionsRepo, ClientFactory $clientFactory)
     {
         $this->producer = $producer;
         $this->repositoriesRepo = $repositoriesRepo;
@@ -61,7 +61,7 @@ class SchedulePullRequest
         // FIXME probably broken for forked repositories
 
         // and schedule it
-        $this->producer->publish(json_encode([
+        $this->producer->scheduleInspection([
             'inspection_id' => $inspection->getId(),
             'repository' => [
                 'identifier' => $repository->getIdentifier(),
@@ -71,7 +71,7 @@ class SchedulePullRequest
                 'base' => $pullRequest->getBase(),
                 'head' => $pullRequest->getHead(),
             ],
-        ]));
+        ]);
     }
 
     private function findRepositoryCloneUrl(Entity\Repository $repository, PullRequest $pullRequest): string

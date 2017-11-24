@@ -1,0 +1,4 @@
+services:
+    regis.kernel.worker.message_publisher:
+        class: Regis\Kernel\Infrastructure\Worker\SwarrotMessagePublisher
+        arguments: ["@swarrot.publisher"]

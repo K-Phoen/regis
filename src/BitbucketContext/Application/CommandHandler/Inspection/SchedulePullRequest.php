@@ -22,11 +22,11 @@ declare(strict_types=1);
 
 namespace Regis\BitbucketContext\Application\CommandHandler\Inspection;
 
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Regis\BitbucketContext\Application\Command;
 use Regis\BitbucketContext\Application\Bitbucket\ClientFactory;
 use Regis\BitbucketContext\Domain\Entity;
 use Regis\BitbucketContext\Domain\Repository;
+use Regis\Kernel\Worker\MessagePublisher;
 
 class SchedulePullRequest
 {
@@ -35,7 +35,7 @@ class SchedulePullRequest
     private $inspectionsRepo;
     private $clientFactory;
 
-    public function __construct(ProducerInterface $producer, Repository\Repositories $repositoriesRepo, Repository\PullRequestInspections $inspectionsRepo, ClientFactory $clientFactory)
+    public function __construct(MessagePublisher $producer, Repository\Repositories $repositoriesRepo, Repository\PullRequestInspections $inspectionsRepo, ClientFactory $clientFactory)
     {
         $this->producer = $producer;
         $this->repositoriesRepo = $repositoriesRepo;
@@ -60,7 +60,7 @@ class SchedulePullRequest
         // FIXME probably broken for forked repositories
 
         // and schedule it
-        $this->producer->publish(json_encode([
+        $this->producer->scheduleInspection([
             'inspection_id' => $inspection->getId(),
             'repository' => [
                 'identifier' => $repository->getIdentifier(),
@@ -70,7 +70,7 @@ class SchedulePullRequest
                 'base' => $pullRequest->getBase(),
                 'head' => $pullRequest->getHead(),
             ],
-        ]));
+        ]);
     }
 
     private function findRepositoryCloneUrl(Entity\Repository $repository): string
