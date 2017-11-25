@@ -63,8 +63,8 @@ class DoctrineRepositories implements Repository\Repositories
         $qb = $this->repo()->createQueryBuilder('r');
 
         $qb
-            ->where('r.identifier = :identifier')
-            ->setParameter('identifier', $id);
+            ->where('r.id = :id')
+            ->setParameter('id', $id);
 
         if ($mode === self::MODE_FETCH_RELATIONS) {
             $qb

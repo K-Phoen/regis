@@ -92,25 +92,21 @@ teams_repository_search:
     options:   { expose: true }
 
 repositories_detail:
-    path:      /repositories/{identifier}
+    path:      /repositories/{id}
     defaults:  { _controller: RegisAppBundle:Repositories:detail }
-    requirements: { identifier: "[^/]+(/[^/]+)?" }
     methods:   GET
 
 repositories_setup_webhook:
-    path:      /repositories/{identifier}/webhook/setup
+    path:      /repositories/{id}/webhook/setup
     defaults:  { _controller: RegisAppBundle:Repositories:setupWebhook }
-    requirements: { identifier: "[^/]+(/[^/]+)?" }
     methods:   POST
 
 repositories_disable_inspections:
-    path:      /repositories/{identifier}/inspections/disable
+    path:      /repositories/{id}/inspections/disable
     defaults:  { _controller: RegisAppBundle:Repositories:disableInspections }
-    requirements: { identifier: "[^/]+(/[^/]+)?" }
     methods:   POST
 
 repositories_enable_inspections:
-    path:      /repositories/{identifier}/inspections/enable
+    path:      /repositories/{id}/inspections/enable
     defaults:  { _controller: RegisAppBundle:Repositories:enableInspections }
-    requirements: { identifier: "[^/]+(/[^/]+)?" }
     methods:   POST

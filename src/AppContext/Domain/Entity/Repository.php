@@ -61,7 +61,7 @@ class Repository
 
     public function getId(): string
     {
-        return $this->type;
+        return $this->id;
     }
 
     public function getType(): string
