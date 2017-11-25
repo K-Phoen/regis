@@ -24,10 +24,10 @@ namespace Regis\GithubContext\Application\CommandHandler\Inspection;
 
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Application\Github\ClientFactory;
-use Regis\GithubContext\Application\Worker\MessagePublisher;
 use Regis\GithubContext\Domain\Entity;
 use Regis\GithubContext\Domain\Model\PullRequest;
 use Regis\GithubContext\Domain\Repository;
+use Regis\Kernel\Worker\MessagePublisher;
 
 class SchedulePullRequest
 {
