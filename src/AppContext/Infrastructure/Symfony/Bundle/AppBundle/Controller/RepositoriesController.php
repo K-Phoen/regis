@@ -49,10 +49,10 @@ class RepositoriesController extends Controller
         ]);
     }
 
-    public function detailAction($identifier)
+    public function detailAction(string $id)
     {
         // TODO check access rights
-        $repository = $this->get('regis.app.repository.repositories')->find($identifier, Repositories::MODE_FETCH_RELATIONS);
+        $repository = $this->get('regis.app.repository.repositories')->find($id, Repositories::MODE_FETCH_RELATIONS);
 
         return $this->render('@RegisApp/Repositories/detail.html.twig', [
             'repository' => $repository,
@@ -69,7 +69,7 @@ class RepositoriesController extends Controller
 
         $this->addFlash('info', 'Webhook setup.');
 
-        return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
+        return $this->redirectToRoute('repositories_detail', ['id' => $repository->getId()]);
     }
 
     public function disableInspectionsAction(Entity\Repository $repository)
@@ -78,7 +78,7 @@ class RepositoriesController extends Controller
 
         $this->addFlash('info', 'Inspections disabled.');
 
-        return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
+        return $this->redirectToRoute('repositories_detail', ['id' => $repository->getId()]);
     }
 
     public function enableInspectionsAction(Entity\Repository $repository)
@@ -87,6 +87,6 @@ class RepositoriesController extends Controller
 
         $this->addFlash('info', 'Inspections enabled.');
 
-        return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
+        return $this->redirectToRoute('repositories_detail', ['id' => $repository->getId()]);
     }
 }

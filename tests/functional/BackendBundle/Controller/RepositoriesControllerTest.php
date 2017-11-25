@@ -54,7 +54,7 @@ class RepositoriesControllerTest extends WebTestCase
         $client = static::createClient();
         $this->logIn($client, 'K-Phoen');
 
-        $crawler = $client->request('GET', '/backend/repositories/K-Phoen/regis');
+        $crawler = $client->request('GET', '/backend/repositories/f733e45a-6fc7-404b-879d-656d68e0498d');
 
         $this->assertTrue($client->getResponse()->isSuccessful());
         $this->assertGreaterThan(

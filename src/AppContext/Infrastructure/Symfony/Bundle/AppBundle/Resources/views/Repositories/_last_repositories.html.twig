@@ -3,7 +3,7 @@
 <ul class="nav nav-sidebar">
     {% for repo in repositories %}
         <li>
-            <a href="{{ path('repositories_detail', {identifier: repo.identifier}) }}">
+            <a href="{{ path('repositories_detail', {id: repo.id}) }}">
                 <span class="label label-primary">{{ utils.repository_type(repo) }}</span>
                 {{ repo.name }}
             </a>
