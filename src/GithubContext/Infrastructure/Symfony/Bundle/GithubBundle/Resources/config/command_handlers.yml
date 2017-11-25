@@ -14,7 +14,7 @@ services:
     regis.github.command_handler.inspections.schedule:
         class: Regis\GithubContext\Application\CommandHandler\Inspection\SchedulePullRequest
         arguments:
-            - '@old_sound_rabbit_mq.analysis_inspection_producer'
+            - '@regis.kernel.worker.message_publisher'
             - '@regis.github.repository.repositories'
             - '@regis.github.repository.pull_request_inspections'
             - '@regis.github.client_factory'

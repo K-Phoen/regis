@@ -1,6 +1,6 @@
 services:
     regis.analysis.inspection_result_listener:
         class: Regis\AnalysisContext\Application\EventListener\InspectionResultListener
-        arguments: [ "@old_sound_rabbit_mq.analysis_status_producer" ]
+        arguments: [ "@regis.kernel.worker.message_publisher" ]
         tags:
             - { name: kernel.event_subscriber }

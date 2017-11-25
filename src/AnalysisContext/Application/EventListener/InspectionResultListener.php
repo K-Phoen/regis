@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace Regis\AnalysisContext\Application\EventListener;
 
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
+use Regis\Kernel\Worker\MessagePublisher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Regis\Kernel\Event as KernelEvent;
 use Regis\AnalysisContext\Application\Event;
@@ -31,7 +31,7 @@ class InspectionResultListener implements EventSubscriberInterface
 {
     private $producer;
 
-    public function __construct(ProducerInterface $producer)
+    public function __construct(MessagePublisher $producer)
     {
         $this->producer = $producer;
     }
@@ -51,10 +51,6 @@ class InspectionResultListener implements EventSubscriberInterface
         $domainEvent = $event->getDomainEvent();
         $inspection = $domainEvent->getInspection();
 
-        $routingKey = sprintf('analysis.%s.status', $inspection->type());
-
-        $this->producer->publish(json_encode([
-            'inspection_id' => $inspection->id(),
-        ]), $routingKey);
+        $this->producer->notifyInspectionOver($inspection->id(), $inspection->type());
     }
 }

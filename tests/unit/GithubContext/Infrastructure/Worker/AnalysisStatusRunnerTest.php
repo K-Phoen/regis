@@ -20,21 +20,21 @@
 
 declare(strict_types=1);
 
-namespace Tests\Regis\BitbucketContext\Application\Worker;
+namespace Tests\Regis\GithubContext\Infrastructure\Worker;
 
-use PhpAmqpLib\Message\AMQPMessage;
 use PHPUnit\Framework\TestCase;
-use Regis\BitbucketContext\Application\Worker\AnalysisStatusRunner;
-use Regis\BitbucketContext\Domain\Entity\PullRequestInspection;
+use Regis\GithubContext\Infrastructure\Worker\AnalysisStatusRunner;
+use Regis\GithubContext\Domain\Entity\PullRequestInspection;
+use Swarrot\Broker\Message;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface as EventDispatcher;
 use Regis\Kernel\Event\DomainEventWrapper;
-use Regis\BitbucketContext\Domain\Entity\Inspection;
-use Regis\BitbucketContext\Domain\Repository\PullRequestInspections;
-use Regis\BitbucketContext\Application\Event;
+use Regis\GithubContext\Domain\Entity\Inspection;
+use Regis\GithubContext\Domain\Repository\PullRequestInspections;
+use Regis\GithubContext\Application\Event;
 
 class AnalysisStatusRunnerTest extends TestCase
 {
-    const INSPECTION_ID = 'inspection-id';
+    private const INSPECTION_ID = 'inspection-id';
 
     private $inspectionsRepo;
     private $dispatcher;
@@ -50,7 +50,7 @@ class AnalysisStatusRunnerTest extends TestCase
 
     public function testItConvertsInspectionStartedEvents()
     {
-        $message = $this->amqpMessage(self::INSPECTION_ID);
+        $message = $this->message(self::INSPECTION_ID);
         $inspection = $this->inspection(Inspection::STATUS_STARTED);
 
         $this->inspectionsRepo->method('find')->with(self::INSPECTION_ID)->willReturn($inspection);
@@ -64,12 +64,12 @@ class AnalysisStatusRunnerTest extends TestCase
                 return true;
             }));
 
-        $this->worker->execute($message);
+        $this->worker->process($message, []);
     }
 
     public function testItConvertsInspectionFinishedEvents()
     {
-        $message = $this->amqpMessage(self::INSPECTION_ID);
+        $message = $this->message(self::INSPECTION_ID);
         $inspection = $this->inspection(Inspection::STATUS_FINISHED);
 
         $this->inspectionsRepo->method('find')->with(self::INSPECTION_ID)->willReturn($inspection);
@@ -83,12 +83,12 @@ class AnalysisStatusRunnerTest extends TestCase
                 return true;
             }));
 
-        $this->worker->execute($message);
+        $this->worker->process($message, []);
     }
 
     public function testItConvertsInspectionFailedEvents()
     {
-        $message = $this->amqpMessage(self::INSPECTION_ID);
+        $message = $this->message(self::INSPECTION_ID);
         $inspection = $this->inspection(Inspection::STATUS_FAILED);
 
         $this->inspectionsRepo->method('find')->with(self::INSPECTION_ID)->willReturn($inspection);
@@ -102,12 +102,12 @@ class AnalysisStatusRunnerTest extends TestCase
                 return true;
             }));
 
-        $this->worker->execute($message);
+        $this->worker->process($message, []);
     }
 
     public function testItRaisesAnErrorForUnknownInspectionStatuses()
     {
-        $message = $this->amqpMessage(self::INSPECTION_ID);
+        $message = $this->message(self::INSPECTION_ID);
         $inspection = $this->inspection('unknown status');
 
         $this->inspectionsRepo->method('find')->with(self::INSPECTION_ID)->willReturn($inspection);
@@ -115,12 +115,12 @@ class AnalysisStatusRunnerTest extends TestCase
         $this->dispatcher->expects($this->never())->method('dispatch');
         $this->expectException(\LogicException::class);
 
-        $this->worker->execute($message);
+        $this->worker->process($message, []);
     }
 
-    private function amqpMessage(string $inspectionId)
+    private function message(string $inspectionId): Message
     {
-        return new AMQPMessage(json_encode([
+        return new Message(json_encode([
             'inspection_id' => $inspectionId,
         ]));
     }

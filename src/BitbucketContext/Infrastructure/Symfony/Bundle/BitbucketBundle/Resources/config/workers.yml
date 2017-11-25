@@ -1,4 +1,4 @@
 services:
     regis.bitbucket.worker.analysis_status:
-        class: Regis\BitbucketContext\Application\Worker\AnalysisStatusRunner
+        class: Regis\BitbucketContext\Infrastructure\Worker\AnalysisStatusRunner
         arguments: ["@regis.bitbucket.repository.pull_request_inspections", "@event_dispatcher"]

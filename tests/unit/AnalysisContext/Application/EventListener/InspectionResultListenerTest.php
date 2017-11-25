@@ -22,12 +22,12 @@ declare(strict_types=1);
 
 namespace Tests\Regis\AnalysisContext\Application\EventListener;
 
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use PHPUnit\Framework\TestCase;
 use Regis\AnalysisContext\Application\EventListener\InspectionResultListener;
 use Regis\AnalysisContext\Application\Event;
 use Regis\AnalysisContext\Domain\Entity\Inspection;
 use Regis\Kernel\Event\DomainEventWrapper;
+use Regis\Kernel\Worker\MessagePublisher;
 use Tests\Regis\Helper\ObjectManipulationHelper;
 
 class InspectionResultListenerTest extends TestCase
@@ -39,7 +39,7 @@ class InspectionResultListenerTest extends TestCase
 
     public function setUp()
     {
-        $this->producer = $this->createMock(ProducerInterface::class);
+        $this->producer = $this->createMock(MessagePublisher::class);
 
         $this->listener = new InspectionResultListener($this->producer);
     }
@@ -76,13 +76,8 @@ class InspectionResultListenerTest extends TestCase
         $event = new DomainEventWrapper($domainEvent);
 
         $this->producer->expects($this->once())
-            ->method('publish')
-            ->with($this->callback(function ($payload) {
-                $this->assertJson($payload);
-                $this->assertJsonStringEqualsJsonString('{"inspection_id": "inspection-id"}', $payload);
-
-                return true;
-            }), 'analysis.github_pr.status');
+            ->method('notifyInspectionOver')
+            ->with('inspection-id', 'github_pr');
 
         $this->listener->onInspectionStatus($event);
     }

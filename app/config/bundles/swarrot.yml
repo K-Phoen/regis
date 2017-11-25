@@ -1,0 +1,73 @@
+swarrot:
+    provider: amqp_lib
+
+    default_connection: default
+    default_command: swarrot.command.base # Swarrot\SwarrotBundle\Command\SwarrotCommand
+
+    logger: logger # logger or channel logger like monolog.logger.[my_channel]
+
+    connections:
+        default:
+            host: "%rabbitmq_host%"
+            port: "%rabbitmq_port%"
+            login: "%rabbitmq_user%"
+            password: "%rabbitmq_password%"
+            vhost: regis_vhost
+
+    consumers:
+        analysis_inspection:
+            processor: regis.analysis.worker.inspection_analysis
+            queue: analysis-inspection
+
+            middleware_stack: # order matters
+                 - configurator: swarrot.processor.max_messages
+                   extras: { max_messages: 100 }
+                 - configurator: swarrot.processor.max_execution_time
+                   extras: { max_execution_time: 300 }
+                 - configurator: swarrot.processor.doctrine_connection
+                   extras: { doctrine_ping: true, doctrine_close_master: true }
+                 - configurator: swarrot.processor.doctrine_object_manager
+                 - configurator: swarrot.processor.exception_catcher
+                 - configurator: swarrot.processor.ack
+                   extras: { requeue_on_error: false }
+
+        github_analysis_status:
+            processor: regis.github.worker.analysis_status
+            queue: gh-analysis-status
+
+            middleware_stack: # order matters
+                 - configurator: swarrot.processor.max_messages
+                   extras: { max_messages: 100 }
+                 - configurator: swarrot.processor.max_execution_time
+                   extras: { max_execution_time: 300 }
+                 - configurator: swarrot.processor.doctrine_connection
+                   extras: { doctrine_ping: true, doctrine_close_master: true }
+                 - configurator: swarrot.processor.doctrine_object_manager
+                 - configurator: swarrot.processor.exception_catcher
+                 - configurator: swarrot.processor.ack
+                   extras: { requeue_on_error: false }
+
+        bitbucket_analysis_status:
+            processor: regis.bitbucket.worker.analysis_status
+            queue: bitbucket-analysis-status
+
+            middleware_stack: # order matters
+                 - configurator: swarrot.processor.max_messages
+                   extras: { max_messages: 100 }
+                 - configurator: swarrot.processor.max_execution_time
+                   extras: { max_execution_time: 300 }
+                 - configurator: swarrot.processor.doctrine_connection
+                   extras: { doctrine_ping: true, doctrine_close_master: true }
+                 - configurator: swarrot.processor.doctrine_object_manager
+                 - configurator: swarrot.processor.exception_catcher
+                 - configurator: swarrot.processor.ack
+                   extras: { requeue_on_error: false }
+
+    messages_types:
+        analysis_inspection:
+            connection: default
+            exchange: analysis-inspection
+
+        analysis_status:
+            connection: default
+            exchange: analysis-status

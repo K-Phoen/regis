@@ -20,30 +20,18 @@
 
 declare(strict_types=1);
 
-namespace Regis\AnalysisContext\Application\Worker;
+namespace Regis\Kernel\Infrastructure\Symfony\Bundle\KernelBundle\DependencyInjection;
 
-use League\Tactician\CommandBus;
-use OldSound\RabbitMqBundle\RabbitMq\ConsumerInterface;
-use PhpAmqpLib\Message\AMQPMessage;
-use Regis\AnalysisContext\Application\Command;
-use Regis\AnalysisContext\Domain\Model;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 
-class InspectionRunner implements ConsumerInterface
+class RegisKernelExtension extends Extension
 {
-    private $commandBus;
-
-    public function __construct(CommandBus $commandBus)
+    public function load(array $configs, ContainerBuilder $container): void
     {
-        $this->commandBus = $commandBus;
-    }
-
-    public function execute(AMQPMessage $msg)
-    {
-        $event = json_decode($msg->getBody(), true);
-
-        $repository = Model\Git\Repository::fromArray($event['repository']);
-        $revisions = Model\Git\Revisions::fromArray($event['revisions']);
-
-        $this->commandBus->handle(new Command\InspectRevisions($event['inspection_id'], $repository, $revisions));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('workers.yml');
     }
 }
