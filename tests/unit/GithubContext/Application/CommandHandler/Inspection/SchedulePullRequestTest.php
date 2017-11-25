@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace Tests\Regis\GithubContext\Application\CommandHandler\Inspection;
 
 use PHPUnit\Framework\TestCase;
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Regis\GithubContext\Application\Command;
 use Regis\GithubContext\Application\CommandHandler;
 use Regis\GithubContext\Application\Github\Client;

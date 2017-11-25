@@ -20,35 +20,35 @@
 
 declare(strict_types=1);
 
-namespace Tests\Regis\AnalysisContext\Application\Worker;
+namespace Tests\Regis\AnalysisContext\Infrastructure\Worker;
 
 use PHPUnit\Framework\TestCase;
 use League\Tactician\CommandBus;
-use PhpAmqpLib\Message\AMQPMessage;
-use Regis\AnalysisContext\Application\Worker\InspectionRunner;
+use Regis\AnalysisContext\Infrastructure\Worker\InspectionRunner;
 use Regis\AnalysisContext\Application\Command;
+use Swarrot\Broker\Message;
 
 class InspectionRunnerTest extends TestCase
 {
-    const INSPECTION_ID = 'c72aa79a-283e-4f91-b2b0-6f98d49d3a91';
-    const REVISIONS_HEAD = '9a18f878a4de4688d0938461bc05bf985c35a236';
-    const REVISIONS_BASE = '4750665fa7efb4dbfadc0b23812f944a7e25fb66';
-    const REPOSITORY_CLONE_URL = 'git@github.com:K-Phoen/regis-test.git';
-    const REPOSITORY_IDENTIFIER = 'K-Phoen/regis-test';
+    private const INSPECTION_ID = 'c72aa79a-283e-4f91-b2b0-6f98d49d3a91';
+    private const REVISIONS_HEAD = '9a18f878a4de4688d0938461bc05bf985c35a236';
+    private const REVISIONS_BASE = '4750665fa7efb4dbfadc0b23812f944a7e25fb66';
+    private const REPOSITORY_CLONE_URL = 'git@github.com:K-Phoen/regis-test.git';
+    private const REPOSITORY_IDENTIFIER = 'K-Phoen/regis-test';
 
     private $commandBus;
     private $worker;
 
     public function setUp()
     {
-        $this->commandBus = $this->getMockBuilder(CommandBus::class)->disableOriginalConstructor()->getMock();
+        $this->commandBus = $this->createMock(CommandBus::class);
 
         $this->worker = new InspectionRunner($this->commandBus);
     }
 
     public function testItRunsTheInspectionViaTheCommandBus()
     {
-        $message = $this->createMock(AMQPMessage::class);
+        $message = $this->createMock(Message::class);
         $message->method('getBody')->willReturn($this->message());
 
         $this->commandBus->expects($this->once())
@@ -63,7 +63,7 @@ class InspectionRunnerTest extends TestCase
                 return true;
             }));
 
-        $this->worker->execute($message);
+        $this->worker->process($message, []);
     }
 
     private function message(): string

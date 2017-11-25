@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace Tests\Regis\BitbucketContext\Application\CommandHandler\Inspection;
 
 use PHPUnit\Framework\TestCase;
-use OldSound\RabbitMqBundle\RabbitMq\ProducerInterface;
 use Regis\BitbucketContext\Application\Command;
 use Regis\BitbucketContext\Application\CommandHandler;
 use Regis\BitbucketContext\Application\Bitbucket\Client;
@@ -31,13 +30,14 @@ use Regis\BitbucketContext\Application\Bitbucket\ClientFactory;
 use Regis\BitbucketContext\Domain\Entity;
 use Regis\BitbucketContext\Domain\Model;
 use Regis\BitbucketContext\Domain\Repository;
+use Regis\Kernel\Worker\MessagePublisher;
 use Tests\Regis\Helper\ObjectManipulationHelper;
 
 class SchedulePullRequestTest extends TestCase
 {
     use ObjectManipulationHelper;
 
-    private $producer;
+    private $messagePublisher;
     private $repositoriesRepo;
     private $inspectionsRepo;
     private $clientFactory;
@@ -53,7 +53,7 @@ class SchedulePullRequestTest extends TestCase
 
     public function setUp()
     {
-        $this->producer = $this->createMock(ProducerInterface::class);
+        $this->messagePublisher = $this->createMock(MessagePublisher::class);
         $this->repositoriesRepo = $this->createMock(Repository\Repositories::class);
         $this->inspectionsRepo = $this->createMock(Repository\PullRequestInspections::class);
         $this->clientFactory = $this->createMock(ClientFactory::class);
@@ -66,7 +66,7 @@ class SchedulePullRequestTest extends TestCase
         $this->repositoriesRepo->method('find')->with($this->repositoryIdentifier)->willReturn($this->repository);
 
         $this->handler = new CommandHandler\Inspection\SchedulePullRequest(
-            $this->producer,
+            $this->messagePublisher,
             $this->repositoriesRepo,
             $this->inspectionsRepo,
             $this->clientFactory
@@ -79,7 +79,7 @@ class SchedulePullRequestTest extends TestCase
 
         $this->repository->disableInspection();
 
-        $this->producer->expects($this->never())->method('publish');
+        $this->messagePublisher->expects($this->never())->method('scheduleInspection');
         $this->inspectionsRepo->expects($this->never())->method('save');
 
         $this->handler->handle($command);
@@ -113,13 +113,9 @@ class SchedulePullRequestTest extends TestCase
                 return true;
             }));
 
-        $this->producer->expects($this->once())
-            ->method('publish')
-            ->with($this->callback(function (string $jsonPayload) {
-                $this->assertJson($jsonPayload);
-
-                $payload = json_decode($jsonPayload, true);
-
+        $this->messagePublisher->expects($this->once())
+            ->method('scheduleInspection')
+            ->with($this->callback(function (array $payload) {
                 $this->assertArrayHasKey('inspection_id', $payload);
                 $this->assertArrayHasKey('repository', $payload);
                 $this->assertArrayHasKey('revisions', $payload);
