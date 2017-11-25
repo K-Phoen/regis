@@ -22,13 +22,19 @@ php composer.phar install
 ```
 
 You will be asked to configure a few parameters like the configuration options
-to use to connect to Redis, Rabbit MQ, etc.
+to use to connect to Redis, RabbitMQ, etc.
 
 If you use Docker, setting up these services will be easier. A `docker-compose.yml`
 file is provided and can be launched using:
 
 ```
 docker-compose -f docker/docker-compose.yml up
+```
+
+Then, configure RabbitMQ using the following command:
+
+```
+docker-compose -f docker/docker-compose.yml run web ./vendor/bin/rabbit vhost:mapping:create --host rabbit --user admin app/config/rabbitmq_vhost.yml
 ```
 
 Regis is now accessible at http://localhost:8080/app_dev.php

@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c8a748c902795d948137b9e22e561a8",
+    "content-hash": "44fbb184fb22d82b8647abd34adf17e6",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -3627,6 +3627,56 @@
             ],
             "description": "Composer plugin that provides efficient querying for installed package versions (no runtime IO)",
             "time": "2017-09-06T15:24:43+00:00"
+        },
+        {
+            "name": "odolbeau/rabbit-mq-admin-toolkit",
+            "version": "v4.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/odolbeau/rabbit-mq-admin-toolkit.git",
+                "reference": "6ab1d332da3fee02f316b12bc5ac68ab773cd679"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/odolbeau/rabbit-mq-admin-toolkit/zipball/6ab1d332da3fee02f316b12bc5ac68ab773cd679",
+                "reference": "6ab1d332da3fee02f316b12bc5ac68ab773cd679",
+                "shasum": ""
+            },
+            "require": {
+                "swarrot/swarrot": "~2.0|~3.0",
+                "symfony/console": "^2.7|^3.0",
+                "symfony/yaml": "^2.4|^3.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "~1.12",
+                "phpunit/phpunit": "^5.7"
+            },
+            "bin": [
+                "rabbit"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Bab\\RabbitMq": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "RabbitMQ administration toolkit",
+            "keywords": [
+                "AMQP",
+                "admin",
+                "rabbitmq",
+                "toolkit"
+            ],
+            "time": "2017-11-13T15:37:43+00:00"
         },
         {
             "name": "paragonie/random_compat",

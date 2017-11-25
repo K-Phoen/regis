@@ -12,7 +12,7 @@ swarrot:
             port: "%rabbitmq_port%"
             login: "%rabbitmq_user%"
             password: "%rabbitmq_password%"
-            vhost: "%rabbitmq_vhost%"
+            vhost: regis_vhost
 
     consumers:
         analysis_inspection:

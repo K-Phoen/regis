@@ -1,0 +1,29 @@
+regis_vhost:
+    parameters:
+        with_dl: false # If true, all queues will have a dl and the corresponding mapping with the exchange "dl"
+        with_unroutable: false # If true, all exchange will be declared with an unroutable config
+
+    exchanges:
+        analysis-inspection:
+            type: direct
+            durable: true
+
+        analysis-status:
+            type: direct
+            durable: true
+
+    queues:
+        analysis-inspection:
+            durable: true
+            bindings:
+                - { exchange: analysis-inspection }
+
+        gh-analysis-status:
+            durable: true
+            bindings:
+                - { exchange: analysis-status, routing_key: analysis.github_pr.status }
+
+        bitbucket-analysis-status:
+            durable: true
+            bindings:
+                - { exchange: analysis-status, routing_key: analysis.bitbucket_pr.status }

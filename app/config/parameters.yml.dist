@@ -23,7 +23,6 @@ parameters:
     rabbitmq_port: 5672
     rabbitmq_user: 'joe'
     rabbitmq_password: 'la frite'
-    rabbitmq_vhost: regis_vhost
 
     database_host: ~
     database_port: 5432

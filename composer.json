@@ -49,6 +49,7 @@
 
         "php-amqplib/php-amqplib": "^2.7",
         "swarrot/swarrot-bundle": "^1.5",
+        "odolbeau/rabbit-mq-admin-toolkit": "^4.0",
 
         "snc/redis-bundle": "2.x-dev",
         "predis/predis": "^1.1",
