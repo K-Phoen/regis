@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace Tests\Regis\BitbucketContext\Infrastructure\Worker;
 
-use PhpAmqpLib\Message\AMQPMessage;
 use PHPUnit\Framework\TestCase;
 use Regis\BitbucketContext\Infrastructure\Worker\AnalysisStatusRunner;
 use Regis\BitbucketContext\Domain\Entity\PullRequestInspection;

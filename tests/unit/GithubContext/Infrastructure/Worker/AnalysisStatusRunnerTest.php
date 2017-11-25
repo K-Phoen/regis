@@ -22,7 +22,6 @@ declare(strict_types=1);
 
 namespace Tests\Regis\GithubContext\Infrastructure\Worker;
 
-use PhpAmqpLib\Message\AMQPMessage;
 use PHPUnit\Framework\TestCase;
 use Regis\GithubContext\Infrastructure\Worker\AnalysisStatusRunner;
 use Regis\GithubContext\Domain\Entity\PullRequestInspection;
