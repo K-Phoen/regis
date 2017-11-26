@@ -18,6 +18,8 @@ parameters:
     phpstan_binary: '%kernel.root_dir%/../vendor/bin/phpstan'
     composer_binary: '%kernel.root_dir%/../vendor/bin/composer'
 
+    repositories_directory: '%kernel.root_dir%/../var/repositories'
+
 framework:
     #esi:             ~
     #translator:      { fallbacks: ["%locale%"] }

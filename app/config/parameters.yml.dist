@@ -16,7 +16,6 @@ parameters:
     github_api_token: ~
 
     git_binary: /usr/bin/git
-    repositories_directory: '%kernel.root_dir%/../var/repositories'
 
     rabbitmq_host: rabbit
     rabbitmq_port: 5672
@@ -30,10 +29,6 @@ parameters:
     database_password: ~
 
     redis_host: redis
-
-    admin_password: ThisPasswordIsNotSoSecretChangeIt
-
-    test_repo_secret: ~
 
     # to be able to generate correct URLs from the console
     router.request_context.host: example.org
