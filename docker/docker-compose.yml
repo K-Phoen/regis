@@ -34,6 +34,9 @@ services:
             dockerfile: Dockerfile-web
         env_file:
             - ../.env
+        environment:
+            - SYMFONY_ENV=dev
+            - SYMFONY_DEBUG=1
         depends_on:
             - rabbit
             - db
@@ -48,6 +51,9 @@ services:
             dockerfile: Dockerfile-web
         env_file:
             - ../.env
+        environment:
+            - SYMFONY_ENV=dev
+            - SYMFONY_DEBUG=1
         depends_on:
             - rabbit
             - redis
@@ -62,6 +68,9 @@ services:
             dockerfile: Dockerfile-web
         env_file:
             - ../.env
+        environment:
+            - SYMFONY_ENV=dev
+            - SYMFONY_DEBUG=1
         depends_on:
             - rabbit
             - redis
@@ -76,6 +85,9 @@ services:
             dockerfile: Dockerfile-web
         env_file:
             - ../.env
+        environment:
+            - SYMFONY_ENV=dev
+            - SYMFONY_DEBUG=1
         depends_on:
             - rabbit
             - inspection_worker

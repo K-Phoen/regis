@@ -2,11 +2,6 @@
 # Set parameters here that may be different on each deployment target of the app, e.g. development, staging, production.
 # http://symfony.com/doc/current/best_practices/configuration.html#infrastructure-related-configuration
 parameters:
-    # A secret key that's used to generate certain security-related tokens
-    secret: ThisTokenIsNotSoSecretChangeIt
-
-    git_binary: /usr/bin/git
-
     rabbitmq_host: rabbit
     rabbitmq_port: 5672
     rabbitmq_user: 'joe'

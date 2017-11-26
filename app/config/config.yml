@@ -1,5 +1,4 @@
 imports:
-    - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: bundles/knpu_oauth2_client.yml }
     - { resource: bundles/kphoen_rulerz.yml }
@@ -17,6 +16,7 @@ parameters:
     phpmd_binary: '%kernel.root_dir%/../vendor/bin/phpmd'
     phpstan_binary: '%kernel.root_dir%/../vendor/bin/phpstan'
     composer_binary: '%kernel.root_dir%/../vendor/bin/composer'
+    git_binary: /usr/bin/git
 
     repositories_directory: '%kernel.root_dir%/../var/repositories'
 
@@ -28,7 +28,7 @@ parameters:
 framework:
     #esi:             ~
     #translator:      { fallbacks: ["%locale%"] }
-    secret:          "%secret%"
+    secret: "%env(APP_SECRET)%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
@@ -61,6 +61,7 @@ twig:
 doctrine:
     dbal:
         url: "%env(DATABASE_URL)%"
+        charset: UTF8
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"

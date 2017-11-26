@@ -1,8 +1,9 @@
 <?php
 
-$loader = require __DIR__.'/app/autoload.php';
+$loader = require __DIR__.'/vendor/autoload.php';
 
 $env = getenv('SYMFONY_ENV') ?: 'dev';
+
 $kernel = new AppKernel($env, getenv('SYMFONY_DEBUG') ?: true);
 $kernel->boot();
 

@@ -9,8 +9,8 @@ functionaltests: db
 
 db:
 	rm -f ./var/test_db.sqlite || true
-	vendor/bin/phinx migrate --environment=test
-	vendor/bin/phinx seed:run --environment=test
+	SYMFONY_ENV=test vendor/bin/phinx migrate
+	SYMFONY_ENV=test vendor/bin/phinx seed:run
 
 phpmd:
 	./vendor/bin/phpmd src,tests text phpmd-ruleset.xml
