@@ -11,18 +11,12 @@ parameters:
     bitbucket_client_id: ~
     bitbucket_client_secret: ~
 
-    # Create one there https://github.com/settings/tokens and give it full
-    # access over private repositories (`repo` scope)
-    github_api_token: ~
-
     git_binary: /usr/bin/git
 
     rabbitmq_host: rabbit
     rabbitmq_port: 5672
     rabbitmq_user: 'joe'
     rabbitmq_password: 'la frite'
-
-    redis_host: redis
 
     # to be able to generate correct URLs from the console
     router.request_context.host: example.org

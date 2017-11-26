@@ -3,11 +3,11 @@ snc_redis:
         violations:
             type: predis
             alias: violations
-            dsn: redis://%redis_host%
+            dsn: "%env(REDIS_URL)%"
         sessions:
             type: predis
             alias: sessions
-            dsn: redis://%redis_host%
+            dsn: "%env(REDIS_URL)%"
 
     session:
         client: sessions
