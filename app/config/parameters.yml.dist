@@ -22,12 +22,6 @@ parameters:
     rabbitmq_user: 'joe'
     rabbitmq_password: 'la frite'
 
-    database_host: ~
-    database_port: 5432
-    database_name: ~
-    database_user: ~
-    database_password: ~
-
     redis_host: redis
 
     # to be able to generate correct URLs from the console
