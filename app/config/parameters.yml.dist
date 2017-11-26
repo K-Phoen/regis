@@ -5,12 +5,6 @@ parameters:
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
 
-    github_oauth_client_id: ~
-    github_oauth_client_secret: ~
-
-    bitbucket_client_id: ~
-    bitbucket_client_secret: ~
-
     git_binary: /usr/bin/git
 
     rabbitmq_host: rabbit

@@ -2,6 +2,7 @@
 /bin/composer
 /build/
 /phpunit.xml
+/.env
 /var/*
 !/var/cache
 /var/cache/*
