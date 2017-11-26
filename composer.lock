@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3124dd1b231c8a280add3bd0aa816a56",
+    "content-hash": "6f417bf3eff380836d21826b440b0bd9",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -5160,25 +5160,26 @@
         },
         {
             "name": "robmorgan/phinx",
-            "version": "v0.9.1",
+            "version": "dev-master",
             "source": {
                 "type": "git",
                 "url": "https://github.com/cakephp/phinx.git",
-                "reference": "c1d51fd065af3aa3fabd684ce561cd9c38281eb8"
+                "reference": "454238f901234d31152393f5cee6b7dfc708e9be"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/cakephp/phinx/zipball/c1d51fd065af3aa3fabd684ce561cd9c38281eb8",
-                "reference": "c1d51fd065af3aa3fabd684ce561cd9c38281eb8",
+                "url": "https://api.github.com/repos/cakephp/phinx/zipball/454238f901234d31152393f5cee6b7dfc708e9be",
+                "reference": "454238f901234d31152393f5cee6b7dfc708e9be",
                 "shasum": ""
             },
             "require": {
                 "php": ">=5.4",
-                "symfony/config": "~2.8|~3.0",
-                "symfony/console": "~2.8|~3.0",
-                "symfony/yaml": "~2.8|~3.0"
+                "symfony/config": "~2.8|~3.0|~4.0",
+                "symfony/console": "~2.8|~3.0|~4.0",
+                "symfony/yaml": "~2.8|~3.0|~4.0"
             },
             "require-dev": {
+                "cakephp/cakephp-codesniffer": "^3.0",
                 "phpunit/phpunit": "^4.8.26|^5.0"
             },
             "bin": [
@@ -5226,7 +5227,7 @@
                 "migrations",
                 "phinx"
             ],
-            "time": "2017-09-09T13:54:33+00:00"
+            "time": "2017-11-20T13:03:36+00:00"
         },
         {
             "name": "seld/cli-prompt",
@@ -8127,6 +8128,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
+        "robmorgan/phinx": 20,
         "snc/redis-bundle": 20,
         "roave/security-advisories": 20
     },

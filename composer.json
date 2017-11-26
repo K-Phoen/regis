@@ -35,7 +35,7 @@
         "incenteev/composer-parameter-handler": "^2.0",
         "symfony/dotenv": "^3.3",
 
-        "robmorgan/phinx": "^0.9",
+        "robmorgan/phinx": "dev-master",
 
         "league/tactician-bundle": "~1.0",
         "league/tactician-logger": "^0.10",
