@@ -16,6 +16,7 @@ parameters:
     phpcs_binary: '%kernel.root_dir%/../vendor/bin/phpcs'
     phpmd_binary: '%kernel.root_dir%/../vendor/bin/phpmd'
     phpstan_binary: '%kernel.root_dir%/../vendor/bin/phpstan'
+    composer_binary: '%kernel.root_dir%/../vendor/bin/composer'
 
 framework:
     #esi:             ~

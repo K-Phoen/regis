@@ -41,6 +41,7 @@
         "squizlabs/php_codesniffer": "^2.6",
         "phpmd/phpmd": "^2.4",
         "phpstan/phpstan": "^0.8",
+        "composer/composer": "^1.5",
 
         "php-http/guzzle6-adapter": "^1.1",
         "knplabs/github-api": "^2.6",
