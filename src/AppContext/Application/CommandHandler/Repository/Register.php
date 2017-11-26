@@ -42,7 +42,7 @@ class Register
     public function handle(Command\Repository\Register $command): Entity\Repository
     {
         try {
-            return $this->repositoriesRepo->find($command->getIdentifier());
+            return $this->repositoriesRepo->findByIdentifier($command->getType(), $command->getIdentifier());
         } catch (Exception\NotFound $e) {
             // the repository does not exist yet, we can continue and create it.
         }
