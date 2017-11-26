@@ -5,7 +5,7 @@ Regis\AppContext\Domain\Entity\Analysis:
     id:
         id:
             type: guid
-            generator: { strategy: UUID }
+            generator: { strategy: NONE }
 
     fields:
         type:

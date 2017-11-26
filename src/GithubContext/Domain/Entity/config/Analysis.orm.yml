@@ -5,13 +5,12 @@ Regis\GithubContext\Domain\Entity\Analysis:
     id:
         id:
             type: guid
-            generator: { strategy: UUID }
+            generator: { strategy: NONE }
 
     oneToMany:
         violations:
           targetEntity: Violation
           mappedBy: analysis
-          cascade: [ 'persist', 'merge' ]
 
     manyToOne:
         report:
