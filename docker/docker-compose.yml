@@ -32,6 +32,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile-web
+        env_file:
+            - ../.env
         depends_on:
             - rabbit
             - db
@@ -44,6 +46,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile-web
+        env_file:
+            - ../.env
         depends_on:
             - rabbit
             - redis
@@ -56,6 +60,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile-web
+        env_file:
+            - ../.env
         depends_on:
             - rabbit
             - redis
@@ -68,6 +74,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile-web
+        env_file:
+            - ../.env
         depends_on:
             - rabbit
             - inspection_worker

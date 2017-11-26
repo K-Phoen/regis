@@ -20,6 +20,11 @@ parameters:
 
     repositories_directory: '%kernel.root_dir%/../var/repositories'
 
+    # to be able to generate correct URLs from the console
+    router.request_context.host: "%env(REGIS_HOST)%"
+    router.request_context.scheme: "%env(REGIS_SCHEME)%"
+    router.request_context.base_url: "%env(REGIS_BASE_URL)%"
+
 framework:
     #esi:             ~
     #translator:      { fallbacks: ["%locale%"] }
