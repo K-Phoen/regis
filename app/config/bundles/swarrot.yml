@@ -8,11 +8,7 @@ swarrot:
 
     connections:
         default:
-            host: "%rabbitmq_host%"
-            port: "%rabbitmq_port%"
-            login: "%rabbitmq_user%"
-            password: "%rabbitmq_password%"
-            vhost: regis_vhost
+            url: "%env(RABBITMQ_URL)%"
 
     consumers:
         analysis_inspection:

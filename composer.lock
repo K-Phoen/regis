@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6f417bf3eff380836d21826b440b0bd9",
+    "content-hash": "3e1e231338ac063ebdba1c9fea246096",
     "packages": [
         {
             "name": "clue/stream-filter",
@@ -5805,16 +5805,16 @@
         },
         {
             "name": "swarrot/swarrot-bundle",
-            "version": "v1.5.0",
+            "version": "dev-connection-with-url",
             "source": {
                 "type": "git",
-                "url": "https://github.com/swarrot/SwarrotBundle.git",
-                "reference": "84ed2c6193daa000209de873d91b61044cbec654"
+                "url": "https://github.com/K-Phoen/SwarrotBundle.git",
+                "reference": "f2fec8fdbe6f8d2ca31f7a682964ec5135ff42c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/swarrot/SwarrotBundle/zipball/84ed2c6193daa000209de873d91b61044cbec654",
-                "reference": "84ed2c6193daa000209de873d91b61044cbec654",
+                "url": "https://api.github.com/repos/K-Phoen/SwarrotBundle/zipball/f2fec8fdbe6f8d2ca31f7a682964ec5135ff42c4",
+                "reference": "f2fec8fdbe6f8d2ca31f7a682964ec5135ff42c4",
                 "shasum": ""
             },
             "require": {
@@ -5845,7 +5845,6 @@
                     "Swarrot\\SwarrotBundle\\": ""
                 }
             },
-            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -5860,7 +5859,10 @@
                 "bundle",
                 "swarrot"
             ],
-            "time": "2017-10-31T17:07:21+00:00"
+            "support": {
+                "source": "https://github.com/K-Phoen/SwarrotBundle/tree/connection-with-url"
+            },
+            "time": "2017-11-26T21:47:16+00:00"
         },
         {
             "name": "symfony/dotenv",
@@ -8129,6 +8131,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "robmorgan/phinx": 20,
+        "swarrot/swarrot-bundle": 20,
         "snc/redis-bundle": 20,
         "roave/security-advisories": 20
     },
