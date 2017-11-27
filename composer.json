@@ -71,7 +71,7 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "git@github.com:K-Phoen/SwarrotBundle.git"
+            "url": "https://github.com/K-Phoen/SwarrotBundle.git"
         }
     ],
     "require-dev": {
