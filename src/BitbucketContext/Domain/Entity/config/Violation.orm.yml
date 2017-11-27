@@ -5,7 +5,7 @@ Regis\BitbucketContext\Domain\Entity\Violation:
     id:
         id:
             type: guid
-            generator: { strategy: UUID }
+            generator: { strategy: NONE }
 
     fields:
         file:

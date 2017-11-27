@@ -36,12 +36,12 @@ class SwarrotMessagePublisher implements MessagePublisher
         $this->publisher = $publisher;
     }
 
-    public function scheduleInspection(array $message)
+    public function scheduleInspection(array $message): void
     {
         $this->publisher->publish(Message::TYPE_ANALYSIS_INSPECTION, $this->message($message));
     }
 
-    public function notifyInspectionOver(string $inspectionId, string $inspectionType)
+    public function notifyInspectionOver(string $inspectionId, string $inspectionType): void
     {
         $this->publisher->publish(Message::TYPE_ANALYSIS_STATUS, $this->message([
             'inspection_id' => $inspectionId,

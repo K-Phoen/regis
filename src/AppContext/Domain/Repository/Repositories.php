@@ -38,4 +38,6 @@ interface Repositories
      * @throws \Regis\AppContext\Domain\Repository\Exception\NotFound
      */
     public function find(string $id, $mode = self::MODE_FETCH_NOTHING): Entity\Repository;
+
+    public function findByIdentifier(string $type, string $identifier): Entity\Repository;
 }

@@ -51,8 +51,8 @@ class RegisterTest extends TestCase
         $user = $this->createMock(Kernel\User::class);
 
         $this->repositoriesRepo
-            ->method('find')
-            ->with('some identifier')
+            ->method('findByIdentifier')
+            ->with(Entity\Repository::TYPE_GITHUB, 'some identifier')
             ->willThrowException(new Exception\NotFound());
 
         $this->repositoriesRepo->expects($this->once())
@@ -77,8 +77,8 @@ class RegisterTest extends TestCase
         $repository = $this->createMock(Entity\Repository::class);
 
         $this->repositoriesRepo->expects($this->once())
-            ->method('find')
-            ->with('some identifier')
+            ->method('findByIdentifier')
+            ->with(Entity\Repository::TYPE_GITHUB, 'some identifier')
             ->willReturn($repository);
 
         $command = new Command\Repository\Register($user, Entity\Repository::TYPE_GITHUB, 'some identifier', 'some name', 'shared secret');
@@ -88,12 +88,11 @@ class RegisterTest extends TestCase
     public function testItGeneratesASecretIfNoneIsGiven()
     {
         $user = $this->createMock(Kernel\User::class);
-        $repository = $this->createMock(Entity\Repository::class);
         $generatedSecret = 'totally random string, trust me';
 
         $this->repositoriesRepo
-            ->method('find')
-            ->with('some identifier')
+            ->method('findByIdentifier')
+            ->with(Entity\Repository::TYPE_GITHUB, 'some identifier')
             ->willThrowException(new Exception\NotFound());
 
         $this->randomGenerator->method('randomString')->willReturn($generatedSecret);

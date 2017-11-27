@@ -1,5 +1,4 @@
 imports:
-    - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: bundles/knpu_oauth2_client.yml }
     - { resource: bundles/kphoen_rulerz.yml }
@@ -17,11 +16,19 @@ parameters:
     phpmd_binary: '%kernel.root_dir%/../vendor/bin/phpmd'
     phpstan_binary: '%kernel.root_dir%/../vendor/bin/phpstan'
     composer_binary: '%kernel.root_dir%/../vendor/bin/composer'
+    git_binary: /usr/bin/git
+
+    repositories_directory: '%kernel.root_dir%/../var/repositories'
+
+    # to be able to generate correct URLs from the console
+    router.request_context.host: "%env(REGIS_HOST)%"
+    router.request_context.scheme: "%env(REGIS_SCHEME)%"
+    router.request_context.base_url: "%env(REGIS_BASE_URL)%"
 
 framework:
     #esi:             ~
     #translator:      { fallbacks: ["%locale%"] }
-    secret:          "%secret%"
+    secret: "%env(APP_SECRET)%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: ~
@@ -38,9 +45,7 @@ framework:
     default_locale:  "%locale%"
     trusted_hosts:   ~
     session:
-        # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-        handler_id:  session.handler.native_file
-        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        handler_id: snc_redis.session.handler
     fragments:       ~
     http_method_override: true
     assets: ~
@@ -55,13 +60,8 @@ twig:
 # Doctrine Configuration
 doctrine:
     dbal:
-        driver:   pdo_pgsql
-        host:     "%database_host%"
-        port:     "%database_port%"
-        dbname:   "%database_name%"
-        user:     "%database_user%"
-        password: "%database_password%"
-        charset:  UTF8
+        url: "%env(DATABASE_URL)%"
+        charset: UTF8
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"

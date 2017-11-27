@@ -20,9 +20,13 @@ php:
 matrix:
     fast_finish: true
 
+env:
+    - COMPOSER_OPTS="--optimize-autoloader --no-interaction"
+
 install:
-    - composer install --optimize-autoloader --no-interaction
-    - if [ "$TRAVIS_PHP_VERSION" = "7.1" ]; then composer require satooshi/php-coveralls '^1.0'; fi
+    - cp .env.dist .env
+    - composer install $COMPOSER_OPTS
+    - if [ "$TRAVIS_PHP_VERSION" = "7.1" ]; then composer require $COMPOSER_OPTS satooshi/php-coveralls '^1.0'; fi
 
 script:
     - make tests

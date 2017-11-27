@@ -24,7 +24,7 @@ namespace Regis\Kernel\Worker;
 
 interface MessagePublisher
 {
-    public function scheduleInspection(array $message);
+    public function scheduleInspection(array $message): void;
 
-    public function notifyInspectionOver(string $inspectionId, string $inspectionType);
+    public function notifyInspectionOver(string $inspectionId, string $inspectionType): void;
 }

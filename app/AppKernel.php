@@ -36,10 +36,28 @@ class AppKernel extends Kernel
             $bundles[] = new Symfony\Bundle\DebugBundle\DebugBundle();
             $bundles[] = new Symfony\Bundle\WebProfilerBundle\WebProfilerBundle();
             $bundles[] = new Sensio\Bundle\DistributionBundle\SensioDistributionBundle();
-            $bundles[] = new Sensio\Bundle\GeneratorBundle\SensioGeneratorBundle();
         }
 
         return $bundles;
+    }
+
+    public function boot()
+    {
+        $env = $this->getEnvironment();
+        $possibleEnvFiles = [
+            // Order matters
+            __DIR__.'/../.env',
+            __DIR__.'/../.env.'.$env,
+        ];
+        $dotenv = new \Symfony\Component\Dotenv\Dotenv();
+
+        foreach ($possibleEnvFiles as $envFile) {
+            if (file_exists($envFile)) {
+                $dotenv->load($envFile);
+            }
+        }
+
+        return parent::boot();
     }
 
     public function getRootDir()

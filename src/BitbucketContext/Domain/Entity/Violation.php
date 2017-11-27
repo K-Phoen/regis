@@ -25,8 +25,14 @@ namespace Regis\BitbucketContext\Domain\Entity;
 class Violation
 {
     private $id;
+
+    /** @var string */
     private $file;
+
+    /** @var int */
     private $line;
+
+    /** @var string */
     private $description;
 
     /** @var Analysis */

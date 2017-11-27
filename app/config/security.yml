@@ -27,7 +27,7 @@ security:
             switch_user: true
             anonymous: ~
             remember_me:
-                secret: '%secret%'
+                secret: "%env(APP_SECRET)%"
                 always_remember_me: true
             guard:
                 authenticators:

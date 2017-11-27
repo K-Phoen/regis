@@ -60,6 +60,6 @@ class RepositoryCreatorController extends Controller
 
         $this->addFlash('info', 'Repository added.');
 
-        return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
+        return $this->redirectToRoute('repositories_detail', ['id' => $repository->getId()]);
     }
 }

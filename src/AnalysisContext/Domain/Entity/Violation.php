@@ -22,6 +22,8 @@ declare(strict_types=1);
 
 namespace Regis\AnalysisContext\Domain\Entity;
 
+use Regis\Kernel\Uuid;
+
 class Violation
 {
     public const WARNING = 10;
@@ -49,6 +51,7 @@ class Violation
 
     public function __construct(int $severity, string $file, int $line, int $position, string $description)
     {
+        $this->id = Uuid::create();
         $this->severity = $severity;
         $this->file = $file;
         $this->line = $line;

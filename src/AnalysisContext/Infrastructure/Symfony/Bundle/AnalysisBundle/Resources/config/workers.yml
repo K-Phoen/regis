@@ -1,8 +1,4 @@
 services:
-    regis.analysis.worker.inspection_event:
-        class: Regis\AnalysisContext\Application\Worker\InspectionRunner
-        arguments: ['@tactician.commandbus']
-
     regis.analysis.worker.inspection_analysis:
         class: Regis\AnalysisContext\Infrastructure\Worker\InspectionRunner
         arguments: ['@tactician.commandbus']

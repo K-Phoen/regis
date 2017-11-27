@@ -32,7 +32,10 @@ class Analysis
     /** @var ArrayCollection<Violation> */
     private $violations = [];
 
+    /** @var int */
     private $errorsCount;
+
+    /** @var int */
     private $warningsCount;
 
     /**

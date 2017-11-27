@@ -83,6 +83,21 @@ class DoctrineRepositories implements Repository\Repositories
         return $repository;
     }
 
+    public function findByIdentifier(string $type, string $identifier): Entity\Repository
+    {
+        /** @var Entity\Repository|null $repository */
+        $repository = $this->repo()->findOneBy([
+            'type' => $type,
+            'identifier' => $identifier,
+        ]);
+
+        if ($repository === null) {
+            throw Repository\Exception\NotFound::forIdentifier($identifier);
+        }
+
+        return $repository;
+    }
+
     private function repo(): EntityRepository
     {
         return $this->em->getRepository(Entity\Repository::class);
