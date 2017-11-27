@@ -30,7 +30,11 @@ class Report
 
     /** @var ArrayCollection<Analysis> */
     private $analyses;
+
+    /** @var int */
     private $warningsCount;
+
+    /** @var int */
     private $errorsCount;
 
     public function getId(): string
