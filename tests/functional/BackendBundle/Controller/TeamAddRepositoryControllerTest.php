@@ -61,9 +61,10 @@ class TeamAddRepositoryControllerTest extends WebTestCase
             ['', []],
             ['no-match', []],
 
-            ['K-P', ['K-Phoen/regis']],
-            ['k-phoe', ['K-Phoen/regis']],
-            ['regis', ['K-Phoen/regis']],
+            // f733e45a-6fc7-404b-879d-656d68e0498d is K-Phoen/regis
+            ['K-P', ['f733e45a-6fc7-404b-879d-656d68e0498d']],
+            ['k-phoe', ['f733e45a-6fc7-404b-879d-656d68e0498d']],
+            ['regis', ['f733e45a-6fc7-404b-879d-656d68e0498d']],
         ];
     }
 }

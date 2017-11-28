@@ -80,7 +80,7 @@ class TeamAddRepositoryController extends Controller
             // TODO eurk
             $results = array_map(function (Entity\Repository $repo) {
                 return [
-                    'identifier' => $repo->getIdentifier(),
+                    'identifier' => $repo->getId(),
                     'name' => $repo->getName(),
                 ];
             }, iterator_to_array($results));

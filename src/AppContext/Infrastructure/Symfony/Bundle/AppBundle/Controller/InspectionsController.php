@@ -39,7 +39,7 @@ class InspectionsController extends Controller
 
         $this->addFlash('info', 'Inspection retried.');
 
-        return $this->redirectToRoute('repositories_detail', ['identifier' => $repository->getIdentifier()]);
+        return $this->redirectToRoute('repositories_detail', ['id' => $repository->getId()]);
     }
 
     public function detailAction(Entity\Inspection $inspection)
