@@ -18,8 +18,6 @@ swarrot:
             middleware_stack: # order matters
                  - configurator: swarrot.processor.max_messages
                    extras: { max_messages: 100 }
-                 - configurator: swarrot.processor.max_execution_time
-                   extras: { max_execution_time: 300 }
                  - configurator: swarrot.processor.doctrine_connection
                    extras: { doctrine_ping: true, doctrine_close_master: true }
                  - configurator: swarrot.processor.doctrine_object_manager
@@ -34,8 +32,6 @@ swarrot:
             middleware_stack: # order matters
                  - configurator: swarrot.processor.max_messages
                    extras: { max_messages: 100 }
-                 - configurator: swarrot.processor.max_execution_time
-                   extras: { max_execution_time: 300 }
                  - configurator: swarrot.processor.doctrine_connection
                    extras: { doctrine_ping: true, doctrine_close_master: true }
                  - configurator: swarrot.processor.doctrine_object_manager
@@ -50,8 +46,6 @@ swarrot:
             middleware_stack: # order matters
                  - configurator: swarrot.processor.max_messages
                    extras: { max_messages: 100 }
-                 - configurator: swarrot.processor.max_execution_time
-                   extras: { max_execution_time: 300 }
                  - configurator: swarrot.processor.doctrine_connection
                    extras: { doctrine_ping: true, doctrine_close_master: true }
                  - configurator: swarrot.processor.doctrine_object_manager
