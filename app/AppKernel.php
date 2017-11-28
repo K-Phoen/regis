@@ -25,6 +25,8 @@ class AppKernel extends Kernel
 
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
 
+            new Sentry\SentryBundle\SentryBundle(),
+
             new Regis\Kernel\Infrastructure\Symfony\Bundle\KernelBundle\RegisKernelBundle(),
             new Regis\AnalysisContext\Infrastructure\Symfony\Bundle\AnalysisBundle\RegisAnalysisBundle(),
             new Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\RegisGithubBundle(),
