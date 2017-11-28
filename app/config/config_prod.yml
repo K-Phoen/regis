@@ -17,6 +17,10 @@ monolog:
             type: fingers_crossed
             action_level: info
             handler: nested
+        sentry:
+            type: raven
+            dsn: "%env(SENTRY_DSN)%"
+            level: alert
         nested:
             type: stream
             path: "php://stderr"
