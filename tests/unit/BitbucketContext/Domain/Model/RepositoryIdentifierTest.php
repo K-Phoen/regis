@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Regis\BitbucketContext\Domain\Entity;
+namespace Tests\Regis\BitbucketContext\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
 use Regis\BitbucketContext\Domain\Model\RepositoryIdentifier;

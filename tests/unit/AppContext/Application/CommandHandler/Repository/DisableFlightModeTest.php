@@ -32,7 +32,7 @@ use Regis\Kernel;
 class DisableFlightModeTest extends TestCase
 {
     private $repositoriesRepo;
-    /** @var CommandHandler\Repository\DisableInspections */
+    /** @var CommandHandler\Repository\DisableFlightMode */
     private $handler;
 
     public function setUp()

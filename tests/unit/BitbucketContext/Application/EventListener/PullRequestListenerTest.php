@@ -65,7 +65,7 @@ class PullRequestListenerTest extends TestCase
     public function testItSendsTheRightCommandToTheBusWhenAPRIsUpdated()
     {
         $pr = $this->createMock(PullRequest::class);
-        $event = new DomainEventWrapper(new Event\PullRequestUpdated($pr, 'before', 'after'));
+        $event = new DomainEventWrapper(new Event\PullRequestUpdated($pr));
 
         $this->bus->expects($this->once())
             ->method('handle')

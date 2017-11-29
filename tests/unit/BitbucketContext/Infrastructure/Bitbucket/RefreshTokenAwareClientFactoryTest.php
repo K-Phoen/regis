@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Regis\BitbucketContext\Infrastructure\Github;
+namespace Tests\Regis\BitbucketContext\Infrastructure\Bitbucket;
 
 use League\OAuth2\Client\Provider\AbstractProvider;
 use League\OAuth2\Client\Token\AccessToken;
