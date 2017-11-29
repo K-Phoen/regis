@@ -35,12 +35,12 @@ use Regis\BitbucketContext\Domain\Entity;
 
 class PullRequestBuildStatusListenerTest extends TestCase
 {
-    const INSPECTION_HEAD = 'inspection HEAD sha';
-    const INSPECTION_URL = 'inspection-url';
+    private const INSPECTION_HEAD = 'inspection HEAD sha';
+    private const INSPECTION_URL = 'inspection-url';
 
-    const WITH_ERRORS = 1;
-    const WITH_WARNINGS = 2;
-    const WITH_NO_REPORT = 4;
+    private const WITH_ERRORS = 1;
+    private const WITH_WARNINGS = 2;
+    private const WITH_NO_REPORT = 4;
 
     /** @var ClientFactory */
     private $bitbucketClientFactory;
@@ -124,6 +124,22 @@ class PullRequestBuildStatusListenerTest extends TestCase
 
         $inspection->method('getRepository')->willReturn($repository);
         $repository->method('isInspectionEnabled')->willReturn(false);
+
+        $this->bitbucketClient->expects($this->never())->method('setBuildStatus');
+
+        $this->listener->onInspectionStarted($event);
+    }
+
+    public function testItDoesNothingIfTheRepositoryIsInFlightMode()
+    {
+        $inspection = $this->createMock(Entity\PullRequestInspection::class);
+        $repository = $this->createMock(Entity\Repository::class);
+        $domainEvent = new Event\InspectionStarted($inspection);
+        $event = new DomainEventWrapper($domainEvent);
+
+        $inspection->method('getRepository')->willReturn($repository);
+        $repository->method('isInspectionEnabled')->willReturn(true);
+        $repository->method('isFlightModeEnabled')->willReturn(true);
 
         $this->bitbucketClient->expects($this->never())->method('setBuildStatus');
 

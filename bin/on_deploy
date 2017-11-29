@@ -1,0 +1,5 @@
+#!/bin/bash
+
+PROJECT_ROOT="$(dirname $0)/../"
+
+./$PROJECT_ROOT/vendor/bin/phinx migrate

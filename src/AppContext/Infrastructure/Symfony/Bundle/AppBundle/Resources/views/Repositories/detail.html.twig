@@ -38,10 +38,46 @@
                         </form>
                     {% endif %}
                 {% endif %}
+
+                {% if is_granted('COMMAND_REPOSITORY::ENABLE_FLIGHT_MODE', repository) or is_granted('COMMAND_REPOSITORY::DISABLE_FLIGHT_MODE', repository) %}
+                    {% if repository.flightModeEnabled %}
+                        <form method="POST" action="{{ path('repositories_disable_flight_mode', {'id': repository.id}) }}" class="force-inline">
+                            <input type="submit" class="btn btn-warning btn-sm" value="Disable flight mode" />
+                        </form>
+                    {% else %}
+                        <form method="POST" action="{{ path('repositories_enable_flight_mode', {'id': repository.id}) }}" class="force-inline">
+                            <input type="submit" class="btn btn-primary btn-sm" value="Enable flight mode" />
+                        </form>
+                    {% endif %}
+                {% endif %}
             </td>
         </tr>
     </table>
 </div>
+
+{% if repository.flightModeEnabled %}
+    <div class="alert alert-warning" role="alert">
+        <p>
+            <b>This repository is in flight mode.</b>
+        </p>
+
+        <p>
+            Pull requests will still be inspected and the results will be available
+            using this interface but Regis will not send any comment to {{ repository.type }}.<br />
+            Usually, this mode is useful during the set-up phase and can be dismissed
+            after: it allows to configure Regis without bothering your teammates
+            with CI failures caused by a misconfiguration.
+        </p>
+
+        {% if is_granted('COMMAND_REPOSITORY::DISABLE_FLIGHT_MODE', repository) %}
+        <p>
+            <form method="POST" action="{{ path('repositories_disable_flight_mode', {'id': repository.id}) }}" class="force-inline">
+                <input type="submit" class="btn btn-warning btn-sm" value="Disable flight mode" />
+            </form>
+        </p>
+        {% endif %}
+    </div>
+{% endif %}
 
 <h2>Inspections</h2>
 

@@ -20,23 +20,24 @@
 
 declare(strict_types=1);
 
-namespace Tests\Regis\GithubContext\Domain\Entity;
+namespace Tests\Regis\AppContext\Application\Command\Repository;
 
 use PHPUnit\Framework\TestCase;
-use Regis\GithubContext\Domain\Entity\Repository;
+use RulerZ\Spec\Specification;
+use Regis\AppContext\Application\Command;
+use Regis\AppContext\Domain\Entity;
 
-class RepositoryTest extends TestCase
+class EnableFlightModeTest extends TestCase
 {
-    public function testItCanChangeTheSecret()
+    public function testCommandIsSecured()
     {
-        $repository = new Repository();
+        $user = $this->createMock(Entity\User::class);
+        $repo = $this->createMock(Entity\Repository::class);
 
-        $repository->newSharedSecret('some secret');
+        $command = new Command\Repository\EnableFlightMode($repo);
 
-        $this->assertSame('some secret', $repository->getSharedSecret());
-
-        $repository->newSharedSecret('new secret');
-
-        $this->assertSame('new secret', $repository->getSharedSecret());
+        $this->assertInstanceOf(Command\SecureCommandBySpecification::class, $command);
+        $this->assertInstanceOf(Specification::class, $command::executionAuthorizedFor($user));
+        $this->assertSame($repo, $command->getTargetToSecure());
     }
 }

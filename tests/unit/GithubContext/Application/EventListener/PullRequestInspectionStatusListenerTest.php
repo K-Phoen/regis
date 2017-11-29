@@ -197,6 +197,22 @@ class PullRequestInspectionStatusListenerTest extends TestCase
         $this->listener->onInspectionStarted($event);
     }
 
+    public function testItDoesNothingIfTheRepositoryIsInFlightMode()
+    {
+        $inspection = $this->createMock(Entity\PullRequestInspection::class);
+        $repository = $this->createMock(Entity\Repository::class);
+        $domainEvent = new Event\InspectionStarted($inspection);
+        $event = new DomainEventWrapper($domainEvent);
+
+        $inspection->method('getRepository')->willReturn($repository);
+        $repository->method('isInspectionEnabled')->willReturn(true);
+        $repository->method('isFlightModeEnabled')->willReturn(true);
+
+        $this->ghClient->expects($this->never())->method('setIntegrationStatus');
+
+        $this->listener->onInspectionStarted($event);
+    }
+
     public function testItSetsTheIntegrationStatusAsErroredWhenAnInspectionFails()
     {
         $inspection = $this->createInspection();

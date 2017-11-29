@@ -109,7 +109,7 @@ class PullRequestBuildStatusListener implements EventSubscriberInterface
 
     private function setBuildStatus(Entity\Repository $repository, BuildStatus $status, string $head): void
     {
-        if (!$repository->isInspectionEnabled()) {
+        if (!$repository->isInspectionEnabled() || $repository->isFlightModeEnabled()) {
             return;
         }
 

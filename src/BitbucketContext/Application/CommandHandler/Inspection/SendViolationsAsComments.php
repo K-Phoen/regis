@@ -40,7 +40,7 @@ class SendViolationsAsComments
         $inspection = $command->getInspection();
         $repository = $inspection->getRepository();
 
-        if (!$inspection->hasReport()) {
+        if (!$inspection->hasReport() || $repository->isFlightModeEnabled()) {
             return;
         }
 

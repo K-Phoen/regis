@@ -23,6 +23,9 @@ Regis\AppContext\Domain\Entity\Repository:
         isInspectionEnabled:
             type: boolean
             options: { default: 1 }
+        isFlightModeEnabled:
+            type: boolean
+            options: { default: 0 }
 
     manyToMany:
         teams:

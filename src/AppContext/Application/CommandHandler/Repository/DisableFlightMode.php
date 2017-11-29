@@ -20,23 +20,25 @@
 
 declare(strict_types=1);
 
-namespace Tests\Regis\GithubContext\Domain\Entity;
+namespace Regis\AppContext\Application\CommandHandler\Repository;
 
-use PHPUnit\Framework\TestCase;
-use Regis\GithubContext\Domain\Entity\Repository;
+use Regis\AppContext\Application\Command;
+use Regis\AppContext\Domain\Repository;
 
-class RepositoryTest extends TestCase
+class DisableFlightMode
 {
-    public function testItCanChangeTheSecret()
+    private $repositoriesRepo;
+
+    public function __construct(Repository\Repositories $repositoriesRepo)
     {
-        $repository = new Repository();
+        $this->repositoriesRepo = $repositoriesRepo;
+    }
 
-        $repository->newSharedSecret('some secret');
+    public function handle(Command\Repository\DisableFlightMode $command): void
+    {
+        $repo = $command->getRepository();
+        $repo->disableFlightMode();
 
-        $this->assertSame('some secret', $repository->getSharedSecret());
-
-        $repository->newSharedSecret('new secret');
-
-        $this->assertSame('new secret', $repository->getSharedSecret());
+        $this->repositoriesRepo->save($repo);
     }
 }

@@ -29,7 +29,10 @@ class Repository
 {
     private $id;
     private $identifier;
-    private $isInspectionEnabled = true;
+    /** @var bool */
+    private $isInspectionEnabled;
+    /** @var bool */
+    private $isFlightModeEnabled;
     /** @var ArrayCollection */
     private $inspections;
 
@@ -59,6 +62,11 @@ class Repository
     public function isInspectionEnabled(): bool
     {
         return $this->isInspectionEnabled;
+    }
+
+    public function isFlightModeEnabled(): bool
+    {
+        return $this->isFlightModeEnabled;
     }
 
     // TODO should not be here

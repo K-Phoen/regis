@@ -20,23 +20,34 @@
 
 declare(strict_types=1);
 
-namespace Tests\Regis\GithubContext\Domain\Entity;
+namespace Regis\AppContext\Application\Command\Repository;
 
-use PHPUnit\Framework\TestCase;
-use Regis\GithubContext\Domain\Entity\Repository;
+use RulerZ\Spec\Specification;
+use Regis\AppContext\Application\Command;
+use Regis\AppContext\Application\Spec\Repository;
+use Regis\AppContext\Domain\Entity;
 
-class RepositoryTest extends TestCase
+class EnableFlightMode implements Command\SecureCommandBySpecification
 {
-    public function testItCanChangeTheSecret()
+    private $repository;
+
+    public function __construct(Entity\Repository $repository)
     {
-        $repository = new Repository();
+        $this->repository = $repository;
+    }
 
-        $repository->newSharedSecret('some secret');
+    public function getRepository(): Entity\Repository
+    {
+        return $this->repository;
+    }
 
-        $this->assertSame('some secret', $repository->getSharedSecret());
+    public static function executionAuthorizedFor(Entity\User $user): Specification
+    {
+        return new Repository\IsOwner($user);
+    }
 
-        $repository->newSharedSecret('new secret');
-
-        $this->assertSame('new secret', $repository->getSharedSecret());
+    public function getTargetToSecure(): Entity\Repository
+    {
+        return $this->repository;
     }
 }
