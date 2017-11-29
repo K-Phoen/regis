@@ -44,20 +44,14 @@ class PullRequestInspectionStatusListenerTest extends TestCase
     const WITH_WARNINGS = 2;
     const WITH_NO_REPORT = 4;
 
-    /** @var ClientFactory */
     private $ghClientFactory;
-    /** @var Client */
     private $ghClient;
-    /** @var UrlGenerator */
     private $urlGenerator;
-    /** @var Repository\Repositories */
     private $repoRepository;
-    /** @var Entity\Repository */
     private $repositoryEntity;
-    /** @var RepositoryIdentifier */
     private $repositoryIdentifier;
-    /** @var PullRequest */
     private $pr;
+
     /** @var PullRequestInspectionStatusListener */
     private $listener;
 
