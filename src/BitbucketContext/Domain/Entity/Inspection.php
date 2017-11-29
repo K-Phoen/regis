@@ -42,6 +42,9 @@ abstract class Inspection
     private $head;
     private $failureTrace = '';
 
+    /**
+     * @return static
+     */
     protected static function createForRevisions(Repository $repository, string $head, string $base): self
     {
         $inspection = new static();
