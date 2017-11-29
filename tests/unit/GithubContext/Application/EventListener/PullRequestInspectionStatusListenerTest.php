@@ -282,9 +282,32 @@ class PullRequestInspectionStatusListenerTest extends TestCase
         $this->listener->onInspectionFinished($event);
     }
 
-    public function testItSetsTheIntegrationStatusAsFailedWhenAnInspectionFinishesWithWarnings()
+    public function testItSetsTheIntegrationStatusAsSuccessWhenAnInspectionFinishesWithOnlyWarnings()
     {
         $inspection = $this->createInspection(self::WITH_WARNINGS);
+        $domainEvent = new Event\InspectionFinished($inspection);
+        $event = new DomainEventWrapper($domainEvent);
+
+        $this->ghClient->expects($this->once())
+            ->method('setIntegrationStatus')
+            ->with(
+                $this->repositoryIdentifier,
+                self::INSPECTION_HEAD,
+                $this->callback(function (IntegrationStatus $status) {
+                    $this->assertSame(Client::INTEGRATION_SUCCESS, $status->getState());
+                    $this->assertContains('no error but', $status->getDescription());
+                    $this->assertSame(self::INSPECTION_URL, $status->getTargetUrl());
+
+                    return true;
+                })
+            );
+
+        $this->listener->onInspectionFinished($event);
+    }
+
+    public function testItSetsTheIntegrationStatusAsSuccessWhenAnInspectionFinishesWithWarningsAndErrors()
+    {
+        $inspection = $this->createInspection(self::WITH_WARNINGS | self::WITH_ERRORS);
         $domainEvent = new Event\InspectionFinished($inspection);
         $event = new DomainEventWrapper($domainEvent);
 
