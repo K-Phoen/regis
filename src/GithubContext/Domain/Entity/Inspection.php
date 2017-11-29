@@ -46,6 +46,9 @@ abstract class Inspection
 
     abstract public function getType(): string;
 
+    /**
+     * @return static
+     */
     protected static function createForRevisions(Repository $repository, string $head, string $base): self
     {
         $inspection = new static();

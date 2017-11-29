@@ -31,7 +31,7 @@ use Regis\AppContext\Domain\Repository;
 class LeaveTest extends TestCase
 {
     private $teamsRepo;
-    /** @var CommandHandler\Team\RemoveMember */
+    /** @var CommandHandler\Team\Leave */
     private $handler;
 
     public function setUp()

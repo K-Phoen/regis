@@ -20,7 +20,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Regis\AppContext\Infrastructure\Remote;
+namespace Tests\Regis\AppContext\Application\Remote;
 
 use PHPUnit\Framework\TestCase;
 use Regis\AppContext\Domain\Entity\User;
