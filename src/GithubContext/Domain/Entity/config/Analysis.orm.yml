@@ -7,9 +7,11 @@ Regis\GithubContext\Domain\Entity\Analysis:
             type: guid
             generator: { strategy: NONE }
 
-    oneToMany:
+    fields:
         type:
             type: string
+
+    oneToMany:
         violations:
           targetEntity: Violation
           mappedBy: analysis
