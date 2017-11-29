@@ -81,7 +81,8 @@
         "symfony/phpunit-bridge": "^3.0",
         "phpunit/phpunit": "^6.4",
         "m6web/redis-mock": "^2.0",
-        "phpstan/phpstan-doctrine": "^0.9"
+        "phpstan/phpstan-doctrine": "^0.9",
+        "phpstan/phpstan-phpunit": "^0.9"
     },
     "scripts": {
         "post-install-cmd": [
