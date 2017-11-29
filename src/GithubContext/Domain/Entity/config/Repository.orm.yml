@@ -20,7 +20,8 @@ Regis\GithubContext\Domain\Entity\Repository:
             type: string
         isInspectionEnabled:
             type: boolean
-            options: { default: 1 }
+        isFlightModeEnabled:
+            type: boolean
 
     manyToOne:
         owner:

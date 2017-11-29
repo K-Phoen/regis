@@ -134,7 +134,7 @@ class PullRequestInspectionStatusListener implements EventSubscriberInterface
 
     private function setIntegrationStatus(Entity\Repository $repository, string $head, IntegrationStatus $status): void
     {
-        if (!$repository->isInspectionEnabled()) {
+        if (!$repository->isInspectionEnabled() || $repository->isFlightModeEnabled()) {
             return;
         }
 

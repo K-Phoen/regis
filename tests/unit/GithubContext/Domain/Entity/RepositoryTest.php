@@ -27,8 +27,6 @@ use Regis\GithubContext\Domain\Entity\Repository;
 
 class RepositoryTest extends TestCase
 {
-    const OWNER_NAME = 'K-Phoen';
-
     public function testItCanChangeTheSecret()
     {
         $repository = new Repository();

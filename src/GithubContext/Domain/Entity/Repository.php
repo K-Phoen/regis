@@ -33,7 +33,10 @@ class Repository
     private $identifier;
     private $type = self::TYPE_GITHUB;
     private $sharedSecret;
-    private $isInspectionEnabled = true;
+    /** @var bool */
+    private $isInspectionEnabled;
+    /** @var bool */
+    private $isFlightModeEnabled;
     /** @var ArrayCollection */
     private $inspections;
 
@@ -90,6 +93,12 @@ class Repository
         return $this->isInspectionEnabled;
     }
 
+    public function isFlightModeEnabled(): bool
+    {
+        return $this->isFlightModeEnabled;
+    }
+
+    // TODO should not be here
     public function disableInspection(): void
     {
         $this->isInspectionEnabled = false;

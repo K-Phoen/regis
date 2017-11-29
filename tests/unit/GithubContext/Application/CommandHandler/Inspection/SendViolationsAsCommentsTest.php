@@ -86,4 +86,21 @@ class SendViolationsAsCommentsTest extends TestCase
 
         $this->handler->handle($command);
     }
+
+    public function testAnInspectionForAFlightModeRepositoryTriggersNothing()
+    {
+        $inspection = $this->createMock(PullRequestInspection::class);
+        $repository = $this->createMock(Repository::class);
+
+        $inspection->method('hasReport')->willReturn(true);
+        $inspection->method('getRepository')->willReturn($repository);
+
+        $repository->method('isFlightModeEnabled')->willReturn(true);
+
+        $this->reporter->expects($this->never())->method('report');
+
+        $command = new Command\Inspection\SendViolationsAsComments($inspection);
+
+        $this->handler->handle($command);
+    }
 }
