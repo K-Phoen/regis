@@ -29,11 +29,11 @@ class Analysis
     private $id;
     private $report;
 
+    /** @var string */
+    private $type;
+
     /** @var ArrayCollection<Violation> */
     private $violations = [];
-
-    private $errorsCount;
-    private $warningsCount;
 
     /**
      * @return Violation[]
@@ -43,23 +43,8 @@ class Analysis
         return $this->violations->toArray();
     }
 
-    public function hasErrors(): bool
+    public function type(): string
     {
-        return $this->errorsCount !== 0;
-    }
-
-    public function hasWarnings(): bool
-    {
-        return $this->warningsCount !== 0;
-    }
-
-    public function warningsCount(): int
-    {
-        return $this->warningsCount;
-    }
-
-    public function errorsCount(): int
-    {
-        return $this->errorsCount;
+        return $this->type;
     }
 }

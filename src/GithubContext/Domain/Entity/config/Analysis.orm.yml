@@ -8,6 +8,8 @@ Regis\GithubContext\Domain\Entity\Analysis:
             generator: { strategy: NONE }
 
     oneToMany:
+        type:
+            type: string
         violations:
           targetEntity: Violation
           mappedBy: analysis

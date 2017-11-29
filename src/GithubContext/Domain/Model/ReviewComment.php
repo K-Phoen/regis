@@ -32,7 +32,9 @@ class ReviewComment
 
     public static function fromViolation(Violation $violation): self
     {
-        return new static($violation->file(), $violation->position(), $violation->description());
+        $formattedComment = sprintf("**[%s]**\n```\n%s\n```", $violation->analysis()->type(), $violation->description());
+
+        return new static($violation->file(), $violation->position(), $formattedComment);
     }
 
     public function __construct(string $file, int $position, string $content)
