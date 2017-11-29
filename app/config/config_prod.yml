@@ -1,4 +1,5 @@
 imports:
+    - { resource: bundles/sentry.yml }
     - { resource: config.yml }
 
 #doctrine:
