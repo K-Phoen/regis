@@ -43,7 +43,7 @@
 
         "squizlabs/php_codesniffer": "^2.6",
         "phpmd/phpmd": "^2.4",
-        "phpstan/phpstan": "^0.8",
+        "phpstan/phpstan": "^0.9",
         "composer/composer": "^1.5",
 
         "php-http/guzzle6-adapter": "^1.1",
@@ -81,7 +81,7 @@
         "symfony/phpunit-bridge": "^3.0",
         "phpunit/phpunit": "^6.4",
         "m6web/redis-mock": "^2.0",
-        "phpstan/phpstan-doctrine": "^0.8.0"
+        "phpstan/phpstan-doctrine": "^0.9"
     },
     "scripts": {
         "post-install-cmd": [
