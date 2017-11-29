@@ -38,6 +38,18 @@
                         </form>
                     {% endif %}
                 {% endif %}
+
+                {% if is_granted('COMMAND_REPOSITORY::ENABLE_FLIGHT_MODE', repository) or is_granted('COMMAND_REPOSITORY::DISABLE_FLIGHT_MODE', repository) %}
+                    {% if repository.flightModeEnabled %}
+                        <form method="POST" action="{{ path('repositories_disable_flight_mode', {'id': repository.id}) }}" class="force-inline">
+                            <input type="submit" class="btn btn-warning btn-sm" value="Disable flight mode" />
+                        </form>
+                    {% else %}
+                        <form method="POST" action="{{ path('repositories_enable_flight_mode', {'id': repository.id}) }}" class="force-inline">
+                            <input type="submit" class="btn btn-primary btn-sm" value="Enable flight mode" />
+                        </form>
+                    {% endif %}
+                {% endif %}
             </td>
         </tr>
     </table>

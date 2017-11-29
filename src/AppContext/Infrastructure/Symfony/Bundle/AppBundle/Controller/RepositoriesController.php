@@ -89,4 +89,22 @@ class RepositoriesController extends Controller
 
         return $this->redirectToRoute('repositories_detail', ['id' => $repository->getId()]);
     }
+
+    public function disableFlightModeAction(Entity\Repository $repository)
+    {
+        $this->get('tactician.commandbus')->handle(new Command\Repository\DisableFlightMode($repository));
+
+        $this->addFlash('info', 'Flight mode disabled.');
+
+        return $this->redirectToRoute('repositories_detail', ['id' => $repository->getId()]);
+    }
+
+    public function enableFlightModeAction(Entity\Repository $repository)
+    {
+        $this->get('tactician.commandbus')->handle(new Command\Repository\EnableFlightMode($repository));
+
+        $this->addFlash('info', 'Flight mode enabled.');
+
+        return $this->redirectToRoute('repositories_detail', ['id' => $repository->getId()]);
+    }
 }

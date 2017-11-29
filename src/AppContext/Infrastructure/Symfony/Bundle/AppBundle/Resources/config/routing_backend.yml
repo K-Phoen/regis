@@ -110,3 +110,13 @@ repositories_enable_inspections:
     path:      /repositories/{id}/inspections/enable
     defaults:  { _controller: RegisAppBundle:Repositories:enableInspections }
     methods:   POST
+
+repositories_disable_flight_mode:
+    path: /repositories/{id}/flight-mode/disable
+    defaults: { _controller: RegisAppBundle:Repositories:disableFlightMode }
+    methods: POST
+
+repositories_enable_flight_mode:
+    path: /repositories/{id}/flight-mode/enable
+    defaults: { _controller: RegisAppBundle:Repositories:enableFlightMode }
+    methods: POST
