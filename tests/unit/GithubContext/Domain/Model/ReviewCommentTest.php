@@ -23,10 +23,15 @@ declare(strict_types=1);
 namespace Tests\Regis\GithubContext\Domain\Model;
 
 use PHPUnit\Framework\TestCase;
+use Regis\GithubContext\Domain\Entity\Analysis;
+use Regis\GithubContext\Domain\Entity\Violation;
 use Regis\GithubContext\Domain\Model\ReviewComment;
+use Tests\Regis\Helper\ObjectManipulationHelper;
 
 class ReviewCommentTest extends TestCase
 {
+    use ObjectManipulationHelper;
+
     public function testConstruction()
     {
         $comment = new ReviewComment('file.php', 2, 'comment content');
@@ -34,5 +39,24 @@ class ReviewCommentTest extends TestCase
         $this->assertSame('file.php', $comment->getFile());
         $this->assertSame(2, $comment->getPosition());
         $this->assertSame('comment content', $comment->getContent());
+    }
+
+    public function testConstructionFromViolation()
+    {
+        $violation = new Violation();
+        $analysis = new Analysis();
+
+        $this->setPrivateValue($analysis, 'type', 'phpstan');
+
+        $this->setPrivateValue($violation, 'analysis', $analysis);
+        $this->setPrivateValue($violation, 'file', 'file.php');
+        $this->setPrivateValue($violation, 'position', 2);
+        $this->setPrivateValue($violation, 'description', 'comment content');
+
+        $comment = ReviewComment::fromViolation($violation);
+
+        $this->assertSame('file.php', $comment->getFile());
+        $this->assertSame(2, $comment->getPosition());
+        $this->assertSame("**[phpstan]**\n```\ncomment content\n```", $comment->getContent());
     }
 }
