@@ -36,6 +36,7 @@ class Repository
     private $type;
     private $sharedSecret;
     private $isInspectionEnabled = true;
+    private $isFlightModeEnabled = false;
     /** @var ArrayCollection */
     private $inspections;
     /** @var ArrayCollection */
@@ -112,5 +113,20 @@ class Repository
     public function enableInspection(): void
     {
         $this->isInspectionEnabled = true;
+    }
+
+    public function isFlightModeEnabled(): bool
+    {
+        return $this->isFlightModeEnabled;
+    }
+
+    public function disableFlightMode(): void
+    {
+        $this->isFlightModeEnabled = false;
+    }
+
+    public function enableFlightMode(): void
+    {
+        $this->isFlightModeEnabled = true;
     }
 }
