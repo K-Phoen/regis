@@ -60,6 +60,9 @@ class Vcs implements Git
             $gitRepo = Gitonomy\Admin::cloneTo($repositoryPath, $repository->getCloneUrl(), false, $this->gitonomyOptions);
         } else {
             $gitRepo = new Gitonomy\Repository($repositoryPath, $this->gitonomyOptions);
+
+            // Ensure that the current remote is the right one. This is needed to fetch code from forks.
+            $gitRepo->run('remote', ['set-url', 'origin', $repository->getCloneUrl()]);
         }
 
         $gitRepo->setLogger($this->logger);

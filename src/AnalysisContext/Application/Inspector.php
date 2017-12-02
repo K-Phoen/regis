@@ -49,6 +49,7 @@ class Inspector
     {
         $this->logger->info('Checking out repository {repository} to revision {revision}', [
             'repository' => $repository->getIdentifier(),
+            'clone_url' => $repository->getCloneUrl(),
             'revision' => $revisions->getHead(),
         ]);
         $gitRepository = $this->git->getRepository($repository);
