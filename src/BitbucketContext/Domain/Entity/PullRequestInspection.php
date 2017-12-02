@@ -28,10 +28,10 @@ class PullRequestInspection extends Inspection
 {
     private $pullRequestNumber;
 
-    public static function create(Repository $repository, Model\PullRequest $pullRequest): self
+    public static function create(Repository $repository, Model\PullRequest $pullRequest, int $number): self
     {
         /** @var PullRequestInspection $inspection */
-        $inspection = parent::createForRevisions($repository, $pullRequest->getHead(), $pullRequest->getBase());
+        $inspection = parent::createForRevisions($repository, $pullRequest->getHead(), $pullRequest->getBase(), $number);
         $inspection->pullRequestNumber = $pullRequest->getNumber();
 
         return $inspection;
