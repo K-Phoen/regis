@@ -38,6 +38,7 @@ class Inspection
     private $report;
     private $status;
     private $repository;
+    private $number;
     private $createdAt;
     private $startedAt;
     private $finishedAt;
@@ -49,6 +50,11 @@ class Inspection
     public function getId(): string
     {
         return $this->id;
+    }
+
+    public function getNumber(): int
+    {
+        return $this->number;
     }
 
     // TODO

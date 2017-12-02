@@ -29,9 +29,9 @@ class DoctrinePullRequestInspections implements Repository\PullRequestInspection
 {
     use RepositoryHelper;
 
-    public function save(Entity\PullRequestInspection $inspections): void
+    public function save(Entity\PullRequestInspection $inspection): void
     {
-        $this->entityManager()->persist($inspections);
+        $this->entityManager()->persist($inspection);
         $this->entityManager()->flush();
     }
 
@@ -47,5 +47,18 @@ class DoctrinePullRequestInspections implements Repository\PullRequestInspection
         }
 
         return $inspection;
+    }
+
+    public function nextBuildNumber(Entity\Repository $repository): int
+    {
+        $qb = $this->entityManager()->createQueryBuilder();
+
+        $qb
+            ->select('MAX(inspection.number)')
+            ->from(Entity\PullRequestInspection::class, 'inspection')
+            ->where('inspection.repository = :repository')
+            ->setParameter('repository', $repository);
+
+        return $qb->getQuery()->getSingleScalarResult() + 1;
     }
 }

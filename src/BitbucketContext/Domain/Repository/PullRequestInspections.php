@@ -29,4 +29,6 @@ interface PullRequestInspections
     public function save(Entity\PullRequestInspection $inspection): void;
 
     public function find(string $id): Entity\PullRequestInspection;
+
+    public function nextBuildNumber(Entity\Repository $repository): int;
 }

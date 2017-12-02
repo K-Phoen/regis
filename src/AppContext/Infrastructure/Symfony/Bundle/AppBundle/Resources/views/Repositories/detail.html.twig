@@ -99,7 +99,7 @@
             <tr class="{{ utils.class_for_integration_status(inspection.status) }}">
                 <td>
                     <span class="label label-primary">{{ utils.inspection_type(inspection) }}</span>
-                    <a href="{{ path('inspection_detail', {'id': inspection.id}) }}">{{ inspection.id }}</a>
+                    <a href="{{ path('inspection_detail', {'id': inspection.id}) }}">#{{ inspection.number }}</a>
                 </td>
                 <td>{{ inspection.createdAt|date }}</td>
                 <td>

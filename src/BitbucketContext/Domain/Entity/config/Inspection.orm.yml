@@ -17,6 +17,9 @@ Regis\BitbucketContext\Domain\Entity\Inspection:
             generator: { strategy: NONE }
 
     fields:
+        number:
+            type: integer
+            column: build_number
         createdAt:
             type: datetimetz
         startedAt:

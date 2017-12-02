@@ -109,6 +109,11 @@ class SchedulePullRequestTest extends TestCase
         ]);
 
         $this->inspectionsRepo->expects($this->once())
+            ->method('nextBuildNumber')
+            ->with($this->repository)
+            ->willReturn(2);
+
+        $this->inspectionsRepo->expects($this->once())
             ->method('save')
             ->with($this->callback(function (Entity\PullRequestInspection $inspection) {
                 $this->assertSame($this->repository, $inspection->getRepository());
