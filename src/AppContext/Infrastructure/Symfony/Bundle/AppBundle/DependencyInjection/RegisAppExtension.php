@@ -37,6 +37,7 @@ class RegisAppExtension extends Extension
         $loader->load('logs.yml');
         $loader->load('remote.yml');
         $loader->load('repositories.yml');
+        $loader->load('twig.yml');
         $loader->load('security.yml');
     }
 }

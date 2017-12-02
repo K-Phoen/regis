@@ -1,0 +1,6 @@
+services:
+    regis.twig_extension.date:
+        class: Regis\AppContext\Infrastructure\Symfony\Twig\DurationExtension
+        public: false
+        tags:
+            - { name: twig.extension }

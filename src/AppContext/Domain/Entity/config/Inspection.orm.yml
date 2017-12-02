@@ -13,9 +13,6 @@ Regis\AppContext\Domain\Entity\Inspection:
             column: build_number
         createdAt:
             type: datetimetz
-        startedAt:
-            type: datetimetz
-            nullable: true
         finishedAt:
             type: datetimetz
             nullable: true

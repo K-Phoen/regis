@@ -96,6 +96,11 @@ repositories_detail:
     defaults:  { _controller: RegisAppBundle:Repositories:detail }
     methods:   GET
 
+repositories_config:
+    path: /repositories/{id}/config
+    defaults:  { _controller: RegisAppBundle:Repositories:configuration }
+    methods: GET
+
 repositories_setup_webhook:
     path:      /repositories/{id}/webhook/setup
     defaults:  { _controller: RegisAppBundle:Repositories:setupWebhook }

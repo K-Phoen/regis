@@ -1,0 +1,65 @@
+{% extends '::layout.html.twig' %}
+
+{% import '::utils.html.twig' as utils %}
+
+{% block content %}
+<h1 class="page-header">« {{ repository.name }} »</h1>
+
+{% if repository.flightModeEnabled %}
+    {% include 'RegisAppBundle:Repositories:_flight_mode_notification.html.twig' %}
+{% endif %}
+
+<h2>Configuration</h2>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <tr>
+            <th>Type</th>
+            <td><span class="label label-primary">{{ utils.repository_type(repository) }}</span></td>
+        </tr>
+        <tr>
+            <th>Remote identifier</th>
+            <td><code>{{ repository.identifier }}</code></td>
+        </tr>
+        <tr>
+            <th>Shared secret</th>
+            <td><code>{{ repository.sharedSecret }}</code></td>
+        </tr>
+        <tr>
+            <th>Webhook URL</th>
+            <td><code>{{ url(repository.type~'_webhook') }}</code></td>
+        </tr>
+        <tr>
+            <th>Actions</th>
+            <td>
+                <form method="POST" action="{{ path('repositories_setup_webhook', {'id': repository.id}) }}" class="force-inline">
+                    <input type="submit" class="btn btn-warning btn-sm" value="Setup webhook" />
+                </form>
+                {% if is_granted('COMMAND_REPOSITORY::ENABLE_INSPECTIONS', repository) or is_granted('COMMAND_REPOSITORY::DISABLE_INSPECTIONS', repository) %}
+                    {% if repository.inspectionEnabled %}
+                        <form method="POST" action="{{ path('repositories_disable_inspections', {'id': repository.id}) }}" class="force-inline">
+                            <input type="submit" class="btn btn-warning btn-sm" value="Disable inspections" />
+                        </form>
+                    {% else %}
+                        <form method="POST" action="{{ path('repositories_enable_inspections', {'id': repository.id}) }}" class="force-inline">
+                            <input type="submit" class="btn btn-primary btn-sm" value="Enable inspections" />
+                        </form>
+                    {% endif %}
+                {% endif %}
+
+                {% if is_granted('COMMAND_REPOSITORY::ENABLE_FLIGHT_MODE', repository) or is_granted('COMMAND_REPOSITORY::DISABLE_FLIGHT_MODE', repository) %}
+                    {% if repository.flightModeEnabled %}
+                        <form method="POST" action="{{ path('repositories_disable_flight_mode', {'id': repository.id}) }}" class="force-inline">
+                            <input type="submit" class="btn btn-warning btn-sm" value="Disable flight mode" />
+                        </form>
+                    {% else %}
+                        <form method="POST" action="{{ path('repositories_enable_flight_mode', {'id': repository.id}) }}" class="force-inline">
+                            <input type="submit" class="btn btn-primary btn-sm" value="Enable flight mode" />
+                        </form>
+                    {% endif %}
+                {% endif %}
+            </td>
+        </tr>
+    </table>
+</div>
+{% endblock %}

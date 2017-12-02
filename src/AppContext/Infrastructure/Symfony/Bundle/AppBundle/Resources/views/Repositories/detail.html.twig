@@ -3,80 +3,15 @@
 {% import '::utils.html.twig' as utils %}
 
 {% block content %}
-<h1 class="page-header">« {{ repository.name }} »</h1>
-
-<h2>Configuration</h2>
-
-<div class="table-responsive">
-    <table class="table table-striped table-hover">
-        <tr>
-            <th>Remote identifier</th>
-            <td><code>{{ repository.identifier }}</code></td>
-        </tr>
-        <tr>
-            <th>Shared secret</th>
-            <td><code>{{ repository.sharedSecret }}</code></td>
-        </tr>
-        <tr>
-            <th>Webhook URL</th>
-            <td><code>{{ url(repository.type~'_webhook') }}</code></td>
-        </tr>
-        <tr>
-            <th>Actions</th>
-            <td>
-                <form method="POST" action="{{ path('repositories_setup_webhook', {'id': repository.id}) }}" class="force-inline">
-                    <input type="submit" class="btn btn-warning btn-sm" value="Setup webhook" />
-                </form>
-                {% if is_granted('COMMAND_REPOSITORY::ENABLE_INSPECTIONS', repository) or is_granted('COMMAND_REPOSITORY::DISABLE_INSPECTIONS', repository) %}
-                    {% if repository.inspectionEnabled %}
-                        <form method="POST" action="{{ path('repositories_disable_inspections', {'id': repository.id}) }}" class="force-inline">
-                            <input type="submit" class="btn btn-warning btn-sm" value="Disable inspections" />
-                        </form>
-                    {% else %}
-                        <form method="POST" action="{{ path('repositories_enable_inspections', {'id': repository.id}) }}" class="force-inline">
-                            <input type="submit" class="btn btn-primary btn-sm" value="Enable inspections" />
-                        </form>
-                    {% endif %}
-                {% endif %}
-
-                {% if is_granted('COMMAND_REPOSITORY::ENABLE_FLIGHT_MODE', repository) or is_granted('COMMAND_REPOSITORY::DISABLE_FLIGHT_MODE', repository) %}
-                    {% if repository.flightModeEnabled %}
-                        <form method="POST" action="{{ path('repositories_disable_flight_mode', {'id': repository.id}) }}" class="force-inline">
-                            <input type="submit" class="btn btn-warning btn-sm" value="Disable flight mode" />
-                        </form>
-                    {% else %}
-                        <form method="POST" action="{{ path('repositories_enable_flight_mode', {'id': repository.id}) }}" class="force-inline">
-                            <input type="submit" class="btn btn-primary btn-sm" value="Enable flight mode" />
-                        </form>
-                    {% endif %}
-                {% endif %}
-            </td>
-        </tr>
-    </table>
-</div>
+<h1 class="page-header">
+    « {{ repository.name }} »
+    <a href="{{ path('repositories_config', {id: repository.id}) }}" class="btn btn-default pull-right">
+        <i class="glyphicon glyphicon-cog"></i>
+    </a>
+</h1>
 
 {% if repository.flightModeEnabled %}
-    <div class="alert alert-warning" role="alert">
-        <p>
-            <b>This repository is in flight mode.</b>
-        </p>
-
-        <p>
-            Pull requests will still be inspected and the results will be available
-            using this interface but Regis will not send any comment to {{ repository.type }}.<br />
-            Usually, this mode is useful during the set-up phase and can be dismissed
-            after: it allows to configure Regis without bothering your teammates
-            with CI failures caused by a misconfiguration.
-        </p>
-
-        {% if is_granted('COMMAND_REPOSITORY::DISABLE_FLIGHT_MODE', repository) %}
-        <p>
-            <form method="POST" action="{{ path('repositories_disable_flight_mode', {'id': repository.id}) }}" class="force-inline">
-                <input type="submit" class="btn btn-warning btn-sm" value="Disable flight mode" />
-            </form>
-        </p>
-        {% endif %}
-    </div>
+    {% include 'RegisAppBundle:Repositories:_flight_mode_notification.html.twig' %}
 {% endif %}
 
 <h2>Inspections</h2>
@@ -87,8 +22,7 @@
             <tr>
                 <th>#</th>
                 <th>Created at</th>
-                <th>Started at</th>
-                <th>Finished at</th>
+                <th>Duration</th>
                 <th>Status</th>
                 <th>Result</th>
                 <th>Action</th>
@@ -103,15 +37,8 @@
                 </td>
                 <td>{{ inspection.createdAt|date }}</td>
                 <td>
-                    {% if inspection.startedAt %}
-                        {{ inspection.startedAt|date }}
-                    {% else %}
-                        -
-                    {% endif %}
-                </td>
-                <td>
-                    {% if inspection.finishedAt %}
-                        {{ inspection.finishedAt|date }}
+                    {% if inspection.finished %}
+                        {{ inspection.duration|duration }}
                     {% else %}
                         -
                     {% endif %}
@@ -127,7 +54,7 @@
                     {% endif %}
                 </td>
                 <td>
-                    {% if inspection.status == 'failed' or inspection.status == 'finished' %}
+                    {% if inspection.finished %}
                         <form method="POST" action="{{ path('inspection_retry', {'id': inspection.id}) }}" class="force-inline">
                             <input type="submit" class="btn btn-warning btn-sm" value="Retry" />
                         </form>

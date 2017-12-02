@@ -59,6 +59,15 @@ class RepositoriesController extends Controller
         ]);
     }
 
+    public function configurationAction(Entity\Repository $repository)
+    {
+        // TODO check access rights
+
+        return $this->render('@RegisApp/Repositories/configuration.html.twig', [
+            'repository' => $repository,
+        ]);
+    }
+
     public function setupWebhookAction(Entity\Repository $repository)
     {
         // TODO check access rights
