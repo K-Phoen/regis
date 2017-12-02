@@ -41,7 +41,7 @@ class PullRequestInspectionTest extends TestCase
 
     public function testItHasAType()
     {
-        $inspection = PullRequestInspection::create($this->repository, $this->pullRequest);
+        $inspection = PullRequestInspection::create($this->repository, $this->pullRequest, 4);
 
         $this->assertSame(PullRequestInspection::TYPE_GITHUB_PR, $inspection->getType());
     }
@@ -50,14 +50,14 @@ class PullRequestInspectionTest extends TestCase
     {
         $this->pullRequest->method('getNumber')->willReturn(42);
 
-        $inspection = PullRequestInspection::create($this->repository, $this->pullRequest);
+        $inspection = PullRequestInspection::create($this->repository, $this->pullRequest, 4);
 
         $this->assertSame(42, $inspection->getPullRequestNumber());
     }
 
     public function testItIsInitializedCorrectly()
     {
-        $inspection = PullRequestInspection::create($this->repository, $this->pullRequest);
+        $inspection = PullRequestInspection::create($this->repository, $this->pullRequest, 4);
 
         $this->assertNotEmpty($inspection->getId());
         $this->assertEmpty($inspection->getFailureTrace());
