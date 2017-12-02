@@ -54,8 +54,10 @@ class SchedulePullRequest
             return;
         }
 
+        $number = $this->inspectionsRepo->nextBuildNumber($repository);
+
         // create the inspection
-        $inspection = Entity\PullRequestInspection::create($repository, $pullRequest);
+        $inspection = Entity\PullRequestInspection::create($repository, $pullRequest, $number);
         $this->inspectionsRepo->save($inspection);
 
         // and schedule it

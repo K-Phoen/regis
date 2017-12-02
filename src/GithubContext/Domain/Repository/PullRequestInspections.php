@@ -26,6 +26,8 @@ use Regis\GithubContext\Domain\Entity;
 
 interface PullRequestInspections
 {
+    public function nextBuildNumber(Entity\Repository $repository): int;
+
     public function save(Entity\PullRequestInspection $inspection): void;
 
     public function find(string $id): Entity\PullRequestInspection;
