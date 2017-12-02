@@ -58,8 +58,6 @@ class SchedulePullRequest
         $inspection = Entity\PullRequestInspection::create($repository, $pullRequest);
         $this->inspectionsRepo->save($inspection);
 
-        // FIXME probably broken for forked repositories
-
         // and schedule it
         $this->producer->scheduleInspection([
             'inspection_id' => $inspection->getId(),
@@ -79,7 +77,9 @@ class SchedulePullRequest
         $githubClient = $this->clientFactory->createForRepository($repository);
 
         $prDetails = $githubClient->getPullRequestDetails($repository->toIdentifier(), $pullRequest->getNumber());
+        $repo = $prDetails['head']['repo'];
+        $urlType = $repo['private'] ? 'ssh_url' : 'clone_url';
 
-        return $prDetails['head']['repo']['private'] ? $prDetails['head']['repo']['ssh_url'] : $prDetails['head']['repo']['clone_url'];
+        return $repo[$urlType];
     }
 }
