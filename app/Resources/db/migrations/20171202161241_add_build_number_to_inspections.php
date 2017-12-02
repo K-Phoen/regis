@@ -25,7 +25,7 @@ class AddBuildNumberToInspections extends AbstractMigration
         $inspectionsTable
             ->addIndex(['repository_id', 'build_number'], [
                 'unique' => true,
-                'name' => 'idx_repository_build_number'
+                'name' => 'idx_repository_build_number',
             ])
             ->save();
     }
