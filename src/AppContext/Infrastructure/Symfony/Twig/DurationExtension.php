@@ -37,8 +37,8 @@ class DurationExtension extends AbstractExtension
     public function durationFilter(int $seconds, string $separator = ' '): string
     {
         $units = [
-            'year(s)' => 365*24*3600,
-            'day(s)' => 24*3600,
+            'year(s)' => 365 * 24 * 3600,
+            'day(s)' => 24 * 3600,
             'hour(s)' => 3600,
             'min' => 60,
             'sec' => 1,
@@ -54,7 +54,6 @@ class DurationExtension extends AbstractExtension
                 $parts[] = $value.' '.$unitLabel;
             }
         }
-
 
         return implode($separator, $parts);
     }
