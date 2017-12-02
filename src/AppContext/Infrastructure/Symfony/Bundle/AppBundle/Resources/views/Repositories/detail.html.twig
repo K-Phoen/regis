@@ -22,8 +22,7 @@
             <tr>
                 <th>#</th>
                 <th>Created at</th>
-                <th>Started at</th>
-                <th>Finished at</th>
+                <th>Duration</th>
                 <th>Status</th>
                 <th>Result</th>
                 <th>Action</th>
@@ -38,15 +37,8 @@
                 </td>
                 <td>{{ inspection.createdAt|date }}</td>
                 <td>
-                    {% if inspection.startedAt %}
-                        {{ inspection.startedAt|date }}
-                    {% else %}
-                        -
-                    {% endif %}
-                </td>
-                <td>
-                    {% if inspection.finishedAt %}
-                        {{ inspection.finishedAt|date }}
+                    {% if inspection.finished %}
+                        {{ inspection.duration|duration }}
                     {% else %}
                         -
                     {% endif %}
@@ -62,7 +54,7 @@
                     {% endif %}
                 </td>
                 <td>
-                    {% if inspection.status == 'failed' or inspection.status == 'finished' %}
+                    {% if inspection.finished %}
                         <form method="POST" action="{{ path('inspection_retry', {'id': inspection.id}) }}" class="force-inline">
                             <input type="submit" class="btn btn-warning btn-sm" value="Retry" />
                         </form>

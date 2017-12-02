@@ -39,8 +39,9 @@ class Inspection
     private $status;
     private $repository;
     private $number;
+    /** @var \DateTime */
     private $createdAt;
-    private $startedAt;
+    /** @var \DateTimeInterface|null */
     private $finishedAt;
     private $type;
     private $base;
@@ -91,19 +92,23 @@ class Inspection
         return $this->status;
     }
 
-    public function getCreatedAt(): \DateTimeInterface
+    public function createdAt(): \DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function getStartedAt(): ?\DateTimeInterface
+    public function finished(): bool
     {
-        return $this->startedAt;
+        return $this->finishedAt !== null;
     }
 
-    public function getFinishedAt(): ?\DateTimeInterface
+    public function duration(): int
     {
-        return $this->finishedAt;
+        if (!$this->finished()) {
+            throw new \LogicException('The inspection is not finished');
+        }
+
+        return $this->finishedAt->getTimestamp() - $this->createdAt->getTimestamp();
     }
 
     public function getHead(): string
