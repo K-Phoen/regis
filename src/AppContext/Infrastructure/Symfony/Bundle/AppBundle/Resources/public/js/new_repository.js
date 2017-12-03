@@ -8,10 +8,14 @@
 
         $(repositories).each(function(i, repository) {
             list.append(
-                '<li>' +
-                    '<a class="name" href="'+ repository.publicUrl +'">' + repository.name + '</a>'+
-                    '<button type="button" data-type="'+repository.type+'" data-name="'+repository.name+'" data-identifier="'+repository.identifier+'" class="add-repository btn btn-primary btn-xs">Add</button>' +
-                '</li>'
+                '<div class="repository">' +
+                    '<div class="name">' +
+                        repository.name +
+                    '</div>'+
+                    '<div class="actions">' +
+                        '<a data-type="'+repository.type+'" data-name="'+repository.name+'" data-identifier="'+repository.identifier+'" class="add-repository btn btn-success">Add</a>' +
+                    '</div>' +
+                '</div>'
             );
         });
     }

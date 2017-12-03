@@ -108,28 +108,39 @@ body {
  * New repository page
  */
 
-ul#repositories-list {
-  list-style-type: none;
-  padding: 0;
+#new-repository .repository {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  border-bottom: 1px solid #e1e1e1;
+  font-size: 1.8rem;
 }
 
-ul#repositories-list li {
-  display: table-row;
-  line-height: 2.5rem;
-  padding: 5px;
+#new-repository .repository:hover {
+  background-color: #f9f9f9;
 }
 
-ul#repositories-list .name, ul#repositories-list li:hover > .add-repository {
-  display: table-cell;
+#new-repository .repository .name {
+  flex: 5;
 }
 
-ul#repositories-list .add-repository {
+#new-repository .repository .actions {
+  flex: 2;
+  text-align: right;
+}
+
+#new-repository .repository .actions .btn {
+  padding-left: 25px;
+  padding-right: 25px;
+  font-size: 1.8rem;
+}
+
+#repositories-list .actions {
   display: none;
-  margin-left: 1rem;
 }
 
-ul#repositories-list li:hover {
-  background-color: #f5f5f5;
+#repositories-list .repository:hover > .actions {
+  display: inline;
 }
 
 /*

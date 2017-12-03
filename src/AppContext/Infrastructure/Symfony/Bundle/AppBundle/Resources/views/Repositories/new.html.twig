@@ -1,20 +1,22 @@
 {% extends '::layout.html.twig' %}
 
-{% block content %}
-<h1 class="page-header">New repository</h1>
+{% block page_id %}new-repository{% endblock %}
 
-<form class="form-inline">
+{% block content %}
+<h1 class="page-header">Select a repository</h1>
+
+<form>
     <div class="form-group">
         <div class="input-group">
             <div class="input-group-addon"><span class="glyphicon glyphicon-search"></span></div>
-            <input type="text" class="form-control" id="repository-search" placeholder="Search…">
+            <input type="text" class="input-lg form-control" id="repository-search" placeholder="Search…">
         </div>
     </div>
 </form>
 
-<ul id="repositories-list">
-    <li>Loading...</li>
-</ul>
+<div id="repositories-list">
+    <span>Loading...</span>
+</div>
 
 <form style="display: none" id="repository-create" action="{{ path('repositories_create') }}" method="POST">
     <input type="hidden" name="type"  />
