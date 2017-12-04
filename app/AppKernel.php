@@ -29,7 +29,7 @@ class AppKernel extends Kernel
             new Regis\AnalysisContext\Infrastructure\Symfony\Bundle\AnalysisBundle\RegisAnalysisBundle(),
             new Regis\GithubContext\Infrastructure\Symfony\Bundle\GithubBundle\RegisGithubBundle(),
             new Regis\BitbucketContext\Infrastructure\Symfony\Bundle\BitbucketBundle\RegisBitbucketBundle(),
-            new Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\RegisAppBundle(),
+            new Regis\AppContext\Infrastructure\Bundle\AppBundle\RegisAppBundle(),
         ];
 
         if ($this->getEnvironment() === 'prod') {

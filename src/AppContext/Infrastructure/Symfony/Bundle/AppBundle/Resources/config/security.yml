@@ -1,4 +1,0 @@
-services:
-    regis.app.user_account_provider:
-        class: Regis\AppContext\Infrastructure\Symfony\Bundle\AppBundle\Security\UserProvider
-        arguments: ["@regis.app.repository.users"]

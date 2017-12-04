@@ -71,7 +71,7 @@ class DoctrineRepositories implements Repository\Repositories
                 ->addSelect(['i', 'report'])
                 ->leftJoin('r.inspections', 'i')
                 ->leftJoin('i.report', 'report')
-                ->orderBy('i.createdAt', 'DESC');
+                ->orderBy('i.number', 'DESC');
         }
 
         $repository = $qb->getQuery()->getOneOrNullResult();
