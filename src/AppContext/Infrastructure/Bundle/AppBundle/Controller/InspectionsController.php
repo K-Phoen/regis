@@ -29,6 +29,8 @@ use Regis\AppContext\Domain\Entity;
 
 class InspectionsController extends Controller
 {
+    // TODO handle retries for bitbucket
+    // TODO check rights
     public function retryAction(GhEntity\PullRequestInspection $inspection)
     {
         /** @var Entity\Repository $repository */
@@ -42,6 +44,7 @@ class InspectionsController extends Controller
         return $this->redirectToRoute('repositories_detail', ['id' => $repository->getId()]);
     }
 
+    // TODO check rights
     public function detailAction(Entity\Inspection $inspection)
     {
         return $this->render('@RegisApp/Inspections/detail.html.twig', [

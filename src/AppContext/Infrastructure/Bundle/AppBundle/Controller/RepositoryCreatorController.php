@@ -46,6 +46,7 @@ class RepositoryCreatorController extends Controller
         ]);
     }
 
+    // TODO what happens if the repository is already registered by another user (spoiler: bad things!)
     public function createAction(Request $request)
     {
         $command = new Command\Repository\Register(

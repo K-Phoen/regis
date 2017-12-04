@@ -54,9 +54,6 @@ class TeamAddRepositoryController extends Controller
         return $this->redirectToRoute('teams_list');
     }
 
-    /**
-     * TODO check authorizations
-     */
     public function removeRepositoryAction(Request $request, Entity\Team $team)
     {
         $command = new Command\Team\RemoveRepository($team, $request->request->get('repository_id'));
